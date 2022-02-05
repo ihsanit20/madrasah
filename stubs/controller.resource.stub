@@ -1,0 +1,90 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+use App\Http\Resources\{{ model }}Resource;
+use {{ namespacedModel }};
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class {{ class }} extends Controller
+{
+    public function index()
+    {
+        $collections = {{ model }}::query()
+            ->filter()
+            ->sort(request()->sort_by ?? 'id', request()->sort_direction ?? 'asc')
+            ->search(['id']);
+
+        return Inertia::render('{{ model }}/Index', [
+            'collections' => {{ model }}Resource::collection($collections->paginate(request()->perpage ?? 100)->onEachSide(1)->appends(request()->input())),
+            'filters' => $this->getFilterProperty(),
+        ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('{{ model }}/Create', [
+            '{{ modelVariable }}' => new {{ model }}(),
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        ${{ modelVariable }} = {{ model }}::create($this->validateData($request));
+
+        return redirect()
+            ->route('collections.show', ${{ modelVariable }}->id)
+            ->with('status', 'The record has been added successfully.');
+    }
+
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        {{ model }}Resource::withoutWrapping();
+
+        return Inertia::render('{{ model }}/Show', [
+            '{{ modelVariable }}' => new {{ model }}Resource(${{ modelVariable }}),
+        ]);
+    }
+
+    public function edit({{ model }} ${{ modelVariable }})
+    {
+        return Inertia::render('{{ model }}/Edit', [
+            '{{ modelVariable }}' => ${{ modelVariable }},
+        ]);
+    }
+
+    public function update(Request $request, {{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->update($this->validateData($request, ${{ modelVariable }}->id));
+
+        return redirect()
+            ->route('collections.show', ${{ modelVariable }}->id)
+            ->with('status', 'The record has been update successfully.');
+    }
+
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->delete();
+
+        return redirect()
+            ->route('collections.index')
+            ->with('status', 'The record has been delete successfully.');
+    }
+
+    protected function getFilterProperty()
+    {
+        return [
+            //
+        ];
+    }
+
+    private function validateData($request, $id = '')
+    {
+        return $request->validate([
+            //
+        ]);
+    }
+
+}

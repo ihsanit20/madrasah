@@ -4,14 +4,27 @@
     </header>
 
     <div class="mx-auto flex max-w-6xl">
-        <nav class="bg-white">
+        <nav class="flex-shrink-0 flex-grow-0 bg-white">
             <app-navigation :navigation="navigation" />
         </nav>
 
-        <main class="flex-grow space-y-2 px-4 py-2">
-            <h2 v-if="$slots.header" class="text-xl font-bold text-gray-800">
-                <slot name="header" />
-            </h2>
+        <main class="flex-shrink flex-grow space-y-2 px-2 py-2 md:px-4">
+            <div class="flex items-end justify-between gap-1.5">
+                <h2
+                    v-if="pageTitle"
+                    class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
+                >
+                    {{ pageTitle }}
+                </h2>
+                <Link
+                    v-if="addNewHref"
+                    :href="addNewHref"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                >
+                    <span>+</span>
+                    <span class="hidden md:block">Add New</span>
+                </Link>
+            </div>
 
             <slot />
         </main>
@@ -23,16 +36,19 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import AppFooter from "./Footer/Index.vue";
 import AppHeader from "./Header/Index.vue";
 import AppNavigation from "./Navigation/Index.vue";
 
 export default {
     components: {
+        Link,
         AppFooter,
         AppHeader,
         AppNavigation,
     },
+    props: ["pageTitle", "addNewHref"],
     data() {
         return {
             navigation: false,

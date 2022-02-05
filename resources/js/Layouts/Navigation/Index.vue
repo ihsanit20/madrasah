@@ -11,7 +11,11 @@
             </span>
         </nav-link>
 
-        <nav-link href="/" class="flex items-center gap-2">
+        <nav-link
+            :href="route('classes.index')"
+            :active="route().current('classes.*')"
+            class="flex items-center gap-2"
+        >
             <ClassSvg class="h-5 w-5" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 Classes

@@ -1,34 +1,27 @@
 <template>
-    <Head title="Classes" />
+    <Head title="Subject" />
 
-    <app-layout pageTitle="Classes" :addNewHref="route('classes.create')">
+    <app-layout pageTitle="Subjects" :addNewHref="route('subjects.create')">
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
             :columns="columns"
         >
-            <template #default="{ item: classes }">
+            <template #default="{ item: subject }">
                 <td class="sticky left-0 bg-white px-3 py-2 text-left">
-                    {{ classes.id }}
+                    {{ subject.id }}
                 </td>
-                <td class="px-3 py-2 text-left">{{ classes.name }}</td>
-                <td class="px-3 py-2 text-left">
-                    {{
-                        Object.values(classes.subjects)
-                            .map((item) => item.name)
-                            .join(", ")
-                            .toString()
-                    }}
-                </td>
+                <td class="px-3 py-2 text-left">{{ subject.name }}</td>
+                <td class="px-3 py-2 text-left">{{ subject.className }}</td>
                 <td class="px-3 py-1.5">
                     <div
                         class="flex items-center justify-center gap-1 md:gap-2"
                     >
                         <action-button-show
-                            :href="route('classes.show', classes.id)"
+                            :href="route('subjects.show', subject.id)"
                         />
                         <action-button-edit
-                            :href="route('classes.edit', classes.id)"
+                            :href="route('subjects.edit', subject.id)"
                         />
                     </div>
                 </td>
@@ -66,7 +59,7 @@ export default {
             columns: [
                 { title: "ID", align: "left", sticky: true },
                 { title: "Name", align: "left" },
-                { title: "Subjects", align: "left" },
+                { title: "Class", align: "left" },
                 { title: "Action", align: "center" },
             ],
         };

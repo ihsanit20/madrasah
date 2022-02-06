@@ -1,8 +1,8 @@
 <template>
     <Head title="Classes" />
 
-    <app-layout :pageTitle="classes.name">
-        <form-component :data="{ classes }" module-action="update" />
+    <app-layout pageTitle="Edit Class">
+        <form-component :data="data" module-action="update" />
     </app-layout>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     },
 
     props: {
-        classes: {
+        data: {
             type: Object,
             default: {},
         },

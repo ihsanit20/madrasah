@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassesResource;
 use App\Models\Classes;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ClassesController extends Controller
@@ -27,7 +28,9 @@ class ClassesController extends Controller
     public function create()
     {
         return Inertia::render('Classes/Create', [
-            'classes' => new Classes(),
+            'data' => [
+                'classes' => new Classes(),
+            ]
         ]);
     }
 
@@ -45,14 +48,20 @@ class ClassesController extends Controller
         ClassesResource::withoutWrapping();
 
         return Inertia::render('Classes/Show', [
-            'classes' => new ClassesResource($class),
+            'data' => [
+                'classes' => new ClassesResource($class),
+            ]
         ]);
     }
 
     public function edit(Classes $class)
     {
+        ClassesResource::withoutWrapping();
+
         return Inertia::render('Classes/Edit', [
-            'classes' => $class,
+            'data' => [
+                'classes' => new ClassesResource($class),
+            ]
         ]);
     }
 
@@ -87,6 +96,7 @@ class ClassesController extends Controller
             'name' => [
                 'required',
                 'string',
+                Rule::unique(Classes::class, 'name')->ignore($id),
             ]
         ]);
     }

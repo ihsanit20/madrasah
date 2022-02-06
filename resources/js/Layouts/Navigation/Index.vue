@@ -22,6 +22,17 @@
             </span>
         </nav-link>
 
+        <nav-link
+            :href="route('subjects.index')"
+            :active="route().current('subjects.*')"
+            class="flex items-center gap-2"
+        >
+            <StudentSvg class="h-5 w-5" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                Subjects
+            </span>
+        </nav-link>
+
         <nav-link href="/" class="flex items-center gap-2">
             <StudentSvg class="h-5 w-5" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">

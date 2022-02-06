@@ -1,7 +1,7 @@
 <template>
-    <Head title="Doctor" />
+    <Head title="Subject" />
 
-    <app-layout pageTitle="Create Class">
+    <app-layout pageTitle="Create Subject">
         <form-component :data="data" module-action="store" />
     </app-layout>
 </template>

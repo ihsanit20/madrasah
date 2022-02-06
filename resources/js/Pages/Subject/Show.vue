@@ -1,27 +1,22 @@
 <template>
-    <Head title="Classes" />
+    <Head title="Subject" />
 
-    <app-layout>
+    <app-layout :pageTitle="data.subject.name">
         <div class="overflow-auto">
             <table class="table-auto rounded border bg-white shadow">
                 <show-table-row heading="ID">
-                    {{ data.classes.id }}
+                    {{ data.subject.id }}
+                </show-table-row>
+                <show-table-row heading="Class">
+                    {{ data.subject.className }}
                 </show-table-row>
                 <show-table-row heading="Name">
-                    {{ data.classes.name }}
-                </show-table-row>
-                <show-table-row heading="Subjects">
-                    <div
-                        v-for="(subject, index) in data.classes.subjects"
-                        :key="index"
-                    >
-                        {{ index + 1 }}. {{ subject.name }}
-                    </div>
+                    {{ data.subject.name }}
                 </show-table-row>
                 <show-table-row heading="Action">
                     <div class="flex items-center justify-start gap-1 md:gap-2">
                         <action-button-edit
-                            :href="route('classes.edit', data.classes.id)"
+                            :href="route('subjects.edit', data.subject.id)"
                         />
                     </div>
                 </show-table-row>

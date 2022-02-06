@@ -7,7 +7,8 @@
                 >
                     <th
                         v-if="serialColumn"
-                        class="sticky left-0 bg-blue-600 px-3 py-2 text-left"
+                        class="bg-blue-600 px-3 py-2 text-left"
+                        :class="{ 'sticky left-0': true }"
                     >
                         SL
                     </th>
@@ -20,6 +21,7 @@
                             'text-left': column.align == 'left',
                             'text-center': column.align == 'center',
                             'text-right': column.align == 'right',
+                            'sticky left-0': column.sticky,
                         }"
                     >
                         {{ column.title }}
@@ -37,7 +39,8 @@
                 >
                     <td
                         v-if="serialColumn"
-                        class="sticky left-0 bg-white px-3 py-2 text-left"
+                        class="bg-white px-3 py-2 text-left"
+                        :class="{ 'sticky left-0': true }"
                     >
                         {{
                             collections.meta.total +
@@ -86,7 +89,7 @@ export default {
     props: {
         serialColumn: {
             type: Boolean,
-            default: true,
+            default: false,
         },
         bottomLinks: {
             type: Boolean,

@@ -12,21 +12,22 @@ class {{ class }} extends Controller
 {
     public function index()
     {
-        $collections = {{ model }}::query()
-            ->filter()
-            ->sort(request()->sort_by ?? 'id', request()->sort_direction ?? 'asc')
-            ->search(['id']);
+        $collections = {{ model }}::query();
 
         return Inertia::render('{{ model }}/Index', [
-            'collections' => {{ model }}Resource::collection($collections->paginate(request()->perpage ?? 100)->onEachSide(1)->appends(request()->input())),
-            'filters' => $this->getFilterProperty(),
+            'data' => [
+                'collections'   => {{ model }}Resource::collection($collections->paginate()->appends(request()->input())),
+                'filters'       => $this->getFilterProperty(),
+            ]
         ]);
     }
 
     public function create()
     {
         return Inertia::render('{{ model }}/Create', [
-            '{{ modelVariable }}' => new {{ model }}(),
+            'data' => [
+                '{{ modelVariable }}' => new {{ model }}(),
+            ]
         ]);
     }
 
@@ -44,14 +45,20 @@ class {{ class }} extends Controller
         {{ model }}Resource::withoutWrapping();
 
         return Inertia::render('{{ model }}/Show', [
-            '{{ modelVariable }}' => new {{ model }}Resource(${{ modelVariable }}),
+            'data' => [
+                '{{ modelVariable }}' => new {{ model }}Resource(${{ modelVariable }}),
+            ]
         ]);
     }
 
     public function edit({{ model }} ${{ modelVariable }})
     {
+        {{ model }}Resource::withoutWrapping();
+
         return Inertia::render('{{ model }}/Edit', [
-            '{{ modelVariable }}' => ${{ modelVariable }},
+            'data' => [
+                '{{ modelVariable }}' => new {{ model }}Resource(${{ modelVariable }}),
+            ]
         ]);
     }
 

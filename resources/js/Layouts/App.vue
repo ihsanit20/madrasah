@@ -8,7 +8,9 @@
             <app-navigation :navigation="navigation" />
         </nav>
 
-        <main class="flex-shrink flex-grow space-y-2 px-2 py-2 md:px-4">
+        <main
+            class="flex-shrink flex-grow space-y-2 overflow-auto px-2 py-2 md:px-4"
+        >
             <div class="flex items-end justify-between gap-1.5">
                 <h2
                     v-if="pageTitle"

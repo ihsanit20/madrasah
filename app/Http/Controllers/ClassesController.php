@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassesResource;
 use App\Models\Classes;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -28,15 +29,15 @@ class ClassesController extends Controller
     public function create()
     {
         return Inertia::render('Classes/Create', [
-            'data' => [
-                'classes' => new Classes(),
-            ]
+            'data' => $this->data(new Classes())
         ]);
     }
 
     public function store(Request $request)
     {
         $class = Classes::create($this->validateData($request));
+
+        $this->storeSubjects($class->id, $request->subjects);
 
         return redirect()
             ->route('classes.show', $class->id)
@@ -56,18 +57,16 @@ class ClassesController extends Controller
 
     public function edit(Classes $class)
     {
-        ClassesResource::withoutWrapping();
-
         return Inertia::render('Classes/Edit', [
-            'data' => [
-                'classes' => new ClassesResource($class),
-            ]
+            'data' => $this->data($class)
         ]);
     }
 
     public function update(Request $request, Classes $class)
     {
         $class->update($this->validateData($request, $class->id));
+        
+        $this->storeSubjects($class->id, $request->subjects);
 
         return redirect()
             ->route('classes.show', $class->id)
@@ -83,7 +82,16 @@ class ClassesController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
-    protected function getFilterProperty()
+    private function data($class)
+    {
+        ClassesResource::withoutWrapping();
+        
+        return [
+            'classes' => new ClassesResource($class),
+        ];
+    }
+
+    private function getFilterProperty()
     {
         return [
             //
@@ -99,6 +107,28 @@ class ClassesController extends Controller
                 Rule::unique(Classes::class, 'name')->ignore($id),
             ]
         ]);
+    }
+    
+    private function storeSubjects($class_id, $subjects)
+    {
+        Subject::where('class_id', $class_id)->delete();
+
+        if(!is_array($subjects)) {
+            return;
+        }
+
+        foreach($subjects as $subject) {
+            Subject::onlyTrashed()->updateOrCreate(
+                [
+                    'class_id' => $class_id,
+                    'code' => $subject['code'],
+                ],
+                [
+                    'name' => $subject['name'],
+                    'deleted_at' => NULL,
+                ]
+            );
+        }
     }
 
 }

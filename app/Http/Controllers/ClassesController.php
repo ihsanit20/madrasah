@@ -118,7 +118,7 @@ class ClassesController extends Controller
         }
 
         foreach($subjects as $subject) {
-            Subject::onlyTrashed()->updateOrCreate(
+            Subject::withTrashed()->updateOrCreate(
                 [
                     'class_id' => $class_id,
                     'code' => $subject['code'],

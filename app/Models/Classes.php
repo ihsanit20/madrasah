@@ -23,4 +23,9 @@ class Classes extends Model
     {
         return $this->hasMany(Subject::class, 'class_id');
     }
+
+    public function fees()
+    {
+        return $this->hasMany(Fee::class, 'class_id');
+    }
 }

@@ -16,8 +16,10 @@ class ClassesResource extends JsonResource
     {
         return [
             'id'        => $this->id,
-            'name'      => $this->name,
-            'subjects'  => SubjectResource::collection($this->subjects)
+            'name'      => (string) ($this->name ?? ''),
+            'code'      => (string) ($this->code ?? ''),
+            'subjects'  => SubjectResource::collection($this->subjects),
+            'fees'      => FeeResource::collection($this->fees),
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassesResource;
 use App\Models\Classes;
+use App\Models\Fee;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -37,7 +38,9 @@ class ClassesController extends Controller
     {
         $class = Classes::create($this->validateData($request));
 
-        $this->storeSubjects($class->id, $request->subjects);
+        $this->storeSubject($class->id, $request->subjects);
+
+        $this->storeFee($class->id, $request->fees);
 
         return redirect()
             ->route('classes.show', $class->id)
@@ -66,7 +69,9 @@ class ClassesController extends Controller
     {
         $class->update($this->validateData($request, $class->id));
         
-        $this->storeSubjects($class->id, $request->subjects);
+        $this->storeSubject($class->id, $request->subjects);
+
+        $this->storeFee($class->id, $request->fees);
 
         return redirect()
             ->route('classes.show', $class->id)
@@ -105,11 +110,15 @@ class ClassesController extends Controller
                 'required',
                 'string',
                 Rule::unique(Classes::class, 'name')->ignore($id),
-            ]
+            ],
+            'code' => [
+                'required',
+                Rule::unique(Classes::class, 'code')->ignore($id),
+            ],
         ]);
     }
     
-    private function storeSubjects($class_id, $subjects)
+    private function storeSubject($class_id, $subjects)
     {
         Subject::where('class_id', $class_id)->delete();
 
@@ -120,12 +129,35 @@ class ClassesController extends Controller
         foreach($subjects as $subject) {
             Subject::withTrashed()->updateOrCreate(
                 [
-                    'class_id' => $class_id,
-                    'code' => $subject['code'],
+                    'class_id'      => $class_id,
+                    'code'          => $subject['code'],
                 ],
                 [
-                    'name' => $subject['name'],
-                    'deleted_at' => NULL,
+                    'name'          => $subject['name'],
+                    'deleted_at'    => NULL,
+                ]
+            );
+        }
+    }
+    
+    private function storeFee($class_id, $fees)
+    {
+        Fee::where('class_id', $class_id)->delete();
+
+        if(!is_array($fees)) {
+            return;
+        }
+
+        foreach($fees as $fee) {
+            Fee::onlyTrashed()->updateOrCreate(
+                [
+                    'class_id'      => $class_id,
+                ],
+                [
+                    'name'          => $fee['name'],
+                    'period'        => $fee['period'],
+                    'amount'        => $fee['amount'],
+                    'deleted_at'    => NULL,
                 ]
             );
         }

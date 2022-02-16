@@ -7,11 +7,16 @@
                 <h2 class="flex-shrink text-lg font-bold text-sky-600">
                     {{ data.classes.name }}
                 </h2>
-                <p
-                    class="flex-shrink-0 rounded border px-1 font-semibold text-gray-500"
-                >
-                    ID: {{ data.classes.id }}
-                </p>
+                <div class="flex items-center gap-2">
+                    <p
+                        class="flex-shrink-0 rounded border px-1 font-semibold text-gray-500"
+                    >
+                        ID: {{ data.classes.id }}
+                    </p>
+                    <action-button-edit
+                        :href="route('classes.edit', data.classes.id)"
+                    />
+                </div>
             </div>
             <hr class="my-1" />
             <p class="text-xs text-gray-400 md:text-base">
@@ -39,31 +44,26 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="overflow-auto">
-            <table class="table-auto rounded border bg-white shadow">
-                <show-table-row heading="ID">
-                    {{ data.classes.id }}
-                </show-table-row>
-                <show-table-row heading="Name">
-                    {{ data.classes.name }}
-                </show-table-row>
-                <show-table-row heading="Subjects">
+            <div class="py-4">
+                <h3 class="bg-gray-200 py-1 px-3 text-gray-700">Fees</h3>
+                <div class="grid gap-2 py-2">
                     <div
-                        v-for="(subject, index) in data.classes.subjects"
+                        v-for="(fee, index) in data.classes.fees"
                         :key="index"
+                        class="flex items-center justify-between gap-2 rounded p-4 shadow"
                     >
-                        {{ index + 1 }}. {{ subject.name }}
+                        <h5 class="text-xs text-gray-500 md:text-sm">
+                            {{ fee.name }}
+                        </h5>
+                        <p class="text-lg font-bold text-gray-700">
+                            {{ fee.period }}
+                        </p>
+                        <p class="text-lg font-bold text-gray-700">
+                            {{ fee.amount }}
+                        </p>
                     </div>
-                </show-table-row>
-                <show-table-row heading="Action">
-                    <div class="flex items-center justify-start gap-1 md:gap-2">
-                        <action-button-edit
-                            :href="route('classes.edit', data.classes.id)"
-                        />
-                    </div>
-                </show-table-row>
-            </table>
+                </div>
+            </div>
         </div>
     </app-layout>
 </template>

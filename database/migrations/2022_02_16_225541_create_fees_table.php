@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassesTable extends Migration
+class CreateFeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateClassesTable extends Migration
      */
     public function up()
     {
-        Schema::create('classes', function (Blueprint $table) {
+        Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code')->nullable();
+            $table->unsignedTinyInteger('class_id');
+            $table->string("name");
+            $table->unsignedTinyInteger('period')->comment('1=Montly, 2=Anualy');
+            $table->float("amount");
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +31,6 @@ class CreateClassesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists('fees');
     }
 }

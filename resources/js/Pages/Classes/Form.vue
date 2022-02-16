@@ -1,116 +1,74 @@
 <template>
-    <div class="w-full max-w-md rounded border bg-white p-4 shadow">
+    <div class="w-full max-w-lg rounded border bg-white p-4 shadow">
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="">
             <div class="grid gap-4">
                 <div class="flex gap-2">
-                    <div class="relative flex-grow">
-                        <Label
-                            class="absolute -top-2 left-2.5 bg-white px-0.5"
-                            value="Name"
-                        />
+                    <form-group class="flex-grow" label="Name">
                         <Input
                             type="text"
                             class="block w-full"
                             v-model="form.name"
                             required
                         />
-                    </div>
-                    <div class="relative w-14">
-                        <Label
-                            class="absolute -top-2 left-2.5 bg-white px-0.5"
-                            value="Code"
-                        />
+                    </form-group>
+                    <form-group class="w-14" label="Code">
                         <Input
                             type="number"
                             class="block w-full text-center"
                             v-model="form.code"
                             required
                         />
-                    </div>
+                    </form-group>
                 </div>
-                <div class="relative">
-                    <Label
-                        class="absolute -top-2 left-2.5 bg-white px-0.5"
-                        value="Subjects"
-                    />
-                    <div class="flex flex-col gap-2 rounded border px-2 py-3">
-                        <div
-                            v-for="(subject, index) in form.subjects"
-                            :key="index"
-                            class="flex items-center gap-2 rounded border border-dashed border-gray-300 px-2 py-3"
-                        >
-                            <div class="relative w-20">
-                                <Label
-                                    class="absolute -top-2 left-2.5 bg-white px-0.5"
-                                    value="Code"
-                                />
-                                <Input
-                                    type="number"
-                                    class="block w-full text-center"
-                                    v-model="subject.code"
-                                    required
-                                />
-                            </div>
-                            <div class="relative flex-grow">
-                                <Label
-                                    class="absolute -top-2 left-2.5 bg-white px-0.5"
-                                    value="Name"
-                                />
-                                <Input
-                                    type="text"
-                                    class="block w-full"
-                                    v-model="subject.name"
-                                    required
-                                />
-                            </div>
-                            <div class="flex-grow-0">
-                                <TrashIcon
-                                    @click="removeSubjectSlot(index)"
-                                    class="h-5 w-5 cursor-pointer text-red-600"
-                                />
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-end">
-                            <button
-                                @click="addSubjectSlot"
-                                type="button"
-                                class="rounded border px-3 py-1"
+                <form-slot-group
+                    label="Subjects"
+                    :collections="form.subjects"
+                    :addSlotMethod="addSubjectSlot"
+                >
+                    <template #default="{ item: subject }">
+                        <form-group class="w-20" label="Code">
+                            <Input
+                                type="number"
+                                class="block w-full text-center"
+                                v-model="subject.code"
+                                required
+                            />
+                        </form-group>
+                        <form-group class="flex-grow" label="Name">
+                            <Input
+                                type="text"
+                                class="block w-full"
+                                v-model="subject.name"
+                                required
+                            />
+                        </form-group>
+                    </template>
+                </form-slot-group>
+                <form-slot-group
+                    label="Fees"
+                    :collections="form.fees"
+                    :addSlotMethod="addFeeSlot"
+                >
+                    <template #default="{ item: fee }">
+                        <div class="flex flex-col gap-2 md:flex-row">
+                            <form-group
+                                class="w-full flex-grow md:w-auto"
+                                label="Fee Name"
                             >
-                                (+) Add Slot
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative">
-                    <Label
-                        class="absolute -top-2 left-2.5 bg-white px-0.5"
-                        value="Fees"
-                    />
-                    <div class="flex flex-col gap-2 rounded border px-2 py-3">
-                        <div
-                            v-for="(fee, index) in form.fees"
-                            :key="index"
-                            class="flex flex-col items-center gap-2 rounded border border-dashed border-gray-300 px-2 py-3 md:flex-row"
-                        >
-                            <div class="relative w-full flex-grow md:w-auto">
-                                <Label
-                                    class="absolute -top-2 left-2.5 bg-white px-0.5"
-                                    value="Fee Name"
-                                />
                                 <Input
                                     type="text"
                                     class="block w-full"
                                     v-model="fee.name"
                                     required
                                 />
-                            </div>
+                            </form-group>
                             <div
                                 class="flex w-full items-center gap-2 md:w-auto"
                             >
-                                <div
-                                    class="relative flex-grow md:w-32 md:flex-grow-0"
+                                <form-group
+                                    class="flex-grow md:w-32 md:flex-grow-0"
                                 >
                                     <Select
                                         v-model="fee.period"
@@ -120,38 +78,19 @@
                                         <option value="1">Monthly</option>
                                         <option value="2">Annual</option>
                                     </Select>
-                                </div>
-                                <div class="relative w-20">
-                                    <Label
-                                        class="absolute -top-2 left-2.5 bg-white px-0.5"
-                                        value="Amount"
-                                    />
+                                </form-group>
+                                <form-group class="w-20" label="Amount">
                                     <Input
                                         type="number"
                                         class="block w-full text-center"
                                         v-model="fee.amount"
                                         required
                                     />
-                                </div>
-                                <div class="flex-grow-0">
-                                    <TrashIcon
-                                        @click="removeFeeSlot(index)"
-                                        class="h-5 w-5 cursor-pointer text-red-600"
-                                    />
-                                </div>
+                                </form-group>
                             </div>
                         </div>
-                        <div class="flex items-center justify-end">
-                            <button
-                                @click="addFeeSlot"
-                                type="button"
-                                class="rounded border px-3 py-1"
-                            >
-                                (+) Add Slot
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    </template>
+                </form-slot-group>
             </div>
 
             <hr class="my-4 w-full" />
@@ -171,20 +110,25 @@
 
 <script>
 import ValidationErrors from "@/Components/ValidationErrors.vue";
-import { TrashIcon } from "@heroicons/vue/outline";
-import Label from "@/Components/Label.vue";
+import { TrashIcon, PlusCircleIcon } from "@heroicons/vue/outline";
 import Button from "@/Components/Button.vue";
 import Input from "@/Components/Input.vue";
 import Select from "@/Components/Select.vue";
+import AddButton from "@/Components/AddButton.vue";
+import FormSlotGroup from "@/Components/FormSlotGroup.vue";
+import FormGroup from "@/Components/FormGroup.vue";
 
 export default {
     components: {
         ValidationErrors,
-        Label,
         Button,
         Input,
         Select,
         TrashIcon,
+        PlusCircleIcon,
+        AddButton,
+        FormSlotGroup,
+        FormGroup,
     },
     props: {
         moduleAction: String,
@@ -205,6 +149,7 @@ export default {
         return {
             form: this.$inertia.form({
                 name: this.data.classes.name,
+                code: this.data.classes.code,
                 subjects: [],
                 fees: [],
             }),
@@ -223,12 +168,6 @@ export default {
                 period: "",
                 amount: "",
             });
-        },
-        removeSubjectSlot(index) {
-            this.form.subjects.splice(index, 1);
-        },
-        removeFeeSlot(index) {
-            this.form.fees.splice(index, 1);
         },
         submit() {
             if (this.moduleAction == "store") {

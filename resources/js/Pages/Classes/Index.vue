@@ -8,19 +8,19 @@
             :columns="columns"
         >
             <template #default="{ item: classes }">
-                <td class="sticky left-0 bg-white px-3 py-2 text-left">
+                <table-td class="text-left">
                     {{ classes.id }}
-                </td>
-                <td class="px-3 py-2 text-left">{{ classes.name }}</td>
-                <td class="px-3 py-2 text-left">
-                    {{
-                        Object.values(classes.subjects)
-                            .map((item) => item.name)
-                            .join(", ")
-                            .toString()
-                    }}
-                </td>
-                <td class="px-3 py-1.5">
+                </table-td>
+                <table-td class="text-left">
+                    {{ classes.name }}
+                </table-td>
+                <table-td class="text-center">
+                    {{ Object.keys(classes.subjects).length }}
+                </table-td>
+                <table-td class="text-center">
+                    {{ Object.keys(classes.fees).length }}
+                </table-td>
+                <table-td class="text-center">
                     <div
                         class="flex items-center justify-center gap-1 md:gap-2"
                     >
@@ -31,7 +31,7 @@
                             :href="route('classes.edit', classes.id)"
                         />
                     </div>
-                </td>
+                </table-td>
             </template>
         </simple-table>
     </app-layout>
@@ -44,6 +44,7 @@ import SimpleTable from "@/Components/SimpleTable.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";
+import TableTd from "@/Components/TableTd.vue";
 
 export default {
     components: {
@@ -54,6 +55,7 @@ export default {
         ActionButtonShow,
         ActionButtonEdit,
         AddNewButton,
+        TableTd,
     },
     props: {
         data: {
@@ -64,9 +66,10 @@ export default {
     data() {
         return {
             columns: [
-                { title: "ID", align: "left", sticky: true },
+                { title: "ID", align: "left" },
                 { title: "Name", align: "left" },
-                { title: "Subjects", align: "left" },
+                { title: "Subjects", align: "center" },
+                { title: "Fees", align: "center" },
                 { title: "Action", align: "center" },
             ],
         };

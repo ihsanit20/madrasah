@@ -1,70 +1,70 @@
 <template>
-    <div class="relative overflow-auto">
-        <table class="w-full min-w-max table-auto">
-            <thead>
-                <tr
-                    class="bg-blue-600 text-sm uppercase leading-normal text-white"
-                >
-                    <th
-                        v-if="serialColumn"
-                        class="bg-blue-600 px-3 py-2 text-left"
-                        :class="{ 'sticky left-0': true }"
+    <div class="flex flex-col">
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden">
+                    <table
+                        class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700"
                     >
-                        SL
-                    </th>
+                        <thead class="bg-gray-300 dark:bg-gray-700">
+                            <tr>
+                                <th
+                                    v-if="serialColumn"
+                                    class="py-3 px-6 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-400"
+                                >
+                                    SL
+                                </th>
+                                <th
+                                    v-for="(column, index) in columns"
+                                    :key="index"
+                                    class="py-3 px-6 text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-400"
+                                    :class="{
+                                        'text-left': column.align == 'left',
+                                        'text-center': column.align == 'center',
+                                        'text-right': column.align == 'right',
+                                    }"
+                                >
+                                    {{ column.title }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800"
+                        >
+                            <tr
+                                v-for="(item, index) in collections.data"
+                                :key="index"
+                                class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                            >
+                                <td
+                                    v-if="serialColumn"
+                                    class="whitespace-nowrap py-4 px-6 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                    {{
+                                        collections.meta.total +
+                                        1 -
+                                        (collections.meta.from + index)
+                                    }}
+                                </td>
 
-                    <th
-                        v-for="(column, index) in columns"
-                        :key="index"
-                        class="bg-blue-600 px-3 py-2"
-                        :class="{
-                            'text-left': column.align == 'left',
-                            'text-center': column.align == 'center',
-                            'text-right': column.align == 'right',
-                            'sticky left-0': column.sticky,
-                        }"
-                    >
-                        {{ column.title }}
-                    </th>
-
-                    <slot name="head" />
-                </tr>
-            </thead>
-
-            <tbody class="bg-white text-sm font-light text-gray-600">
-                <tr
-                    v-for="(item, index) in collections.data"
-                    :key="index"
-                    class="border-b border-gray-200 hover:bg-gray-50"
-                >
-                    <td
-                        v-if="serialColumn"
-                        class="bg-white px-3 py-2 text-left"
-                        :class="{ 'sticky left-0': true }"
-                    >
-                        {{
-                            collections.meta.total +
-                            1 -
-                            (collections.meta.from + index)
-                        }}
-                    </td>
-
-                    <slot :item="item" />
-                </tr>
-
-                <tr
-                    v-if="!collections.meta.total"
-                    class="border-b border-gray-200 hover:bg-gray-50"
-                >
-                    <td
-                        colspan="100"
-                        class="py-3 px-2 text-center text-red-500"
-                    >
-                        No data found !!
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                <slot :item="item" />
+                            </tr>
+                            <tr
+                                v-if="!collections.meta.total"
+                                class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                            >
+                                <td
+                                    colspan="100"
+                                    class="py-3 px-2 text-center text-red-500"
+                                >
+                                    No data found !!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div v-if="collections.meta.total && bottomLinks" class="w-full p-1">

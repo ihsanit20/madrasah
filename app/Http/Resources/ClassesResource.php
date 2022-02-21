@@ -15,11 +15,12 @@ class ClassesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => $this->id,
-            'name'      => (string) ($this->name ?? ''),
-            'code'      => (string) ($this->code ?? ''),
-            'subjects'  => SubjectResource::collection($this->subjects),
-            'fees'      => FeeResource::collection($this->fees),
+            'id'            => $this->id,
+            'name'          => (string) ($this->name ?? ''),
+            'code'          => (string) ($this->code ?? ''),
+            'description'   => (string) ($this->description ?? ''),
+            'subjects'      => SubjectResource::collection($this->subjects),
+            'fees'          => FeeResource::collection($this->fees),
         ];
     }
 }

@@ -2,7 +2,7 @@
     <Head title="Classes" />
 
     <app-layout pageTitle="Classes" :addNewHref="route('classes.create')">
-        <simple-table
+        <data-table
             :collections="data.collections"
             :filters="data.filters"
             :columns="columns"
@@ -33,14 +33,14 @@
                     </div>
                 </table-td>
             </template>
-        </simple-table>
+        </data-table>
     </app-layout>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/App.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import SimpleTable from "@/Components/SimpleTable.vue";
+import DataTable from "@/Components/DataTable.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";
@@ -49,7 +49,7 @@ import TableTd from "@/Components/TableTd.vue";
 export default {
     components: {
         AppLayout,
-        SimpleTable,
+        DataTable,
         Head,
         Link,
         ActionButtonShow,

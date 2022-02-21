@@ -15,12 +15,13 @@ class FeeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => $this->id,
-            'name'      => (string) ($this->name ?? ''),
-            'period'    => (string) ($this->period ?? ''),
-            'amount'    => (string) ($this->amount ?? ''),
-            'classId'   => (int) ($this->class_id ?? 0),
-            'className' => (string) ($this->class->name ?? ''),
+            'id'            => $this->id,
+            'name'          => (string) ($this->name ?? ''),
+            'period'        => (int) ($this->period ?? 0),
+            'periodName'    => (string) ($this->period_name ?? ''),
+            'amount'        => (double) ($this->amount ?? 0),
+            'classId'       => (int) ($this->class_id ?? 0),
+            'className'     => (string) ($this->class->name ?? ''),
         ];;
     }
 }

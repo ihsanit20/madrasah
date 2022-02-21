@@ -33,7 +33,7 @@
 <script>
 import AppLayout from "@/Layouts/App.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import SimpleTable from "@/Components/SimpleTable.vue";
+import SimpleTable from "@/Components/DataTable.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";

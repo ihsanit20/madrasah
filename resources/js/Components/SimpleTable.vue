@@ -32,7 +32,7 @@
                             class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800"
                         >
                             <tr
-                                v-for="(item, index) in collections.data"
+                                v-for="(item, index) in collections"
                                 :key="index"
                                 class="hover:bg-gray-100 dark:hover:bg-gray-700"
                             >
@@ -40,17 +40,13 @@
                                     v-if="serialColumn"
                                     class="whitespace-nowrap py-4 px-6 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    {{
-                                        collections.meta.total +
-                                        1 -
-                                        (collections.meta.from + index)
-                                    }}
+                                    {{ index + 1 }}
                                 </td>
 
                                 <slot :item="item" />
                             </tr>
                             <tr
-                                v-if="!collections.meta.total"
+                                v-if="!Object.keys(collections).length"
                                 class="hover:bg-gray-100 dark:hover:bg-gray-700"
                             >
                                 <td
@@ -66,40 +62,22 @@
             </div>
         </div>
     </div>
-
-    <div v-if="collections.meta.total && bottomLinks" class="w-full p-1">
-        <paginator-links :collections="collections" />
-    </div>
 </template>
 
 <script>
 import Label from "./Label.vue";
 import PaginatorLinks from "./PaginatorLinks.vue";
-import { usePage } from "@inertiajs/inertia-vue3";
 export default {
     components: {
         PaginatorLinks,
         Label,
-    },
-    computed: {
-        request() {
-            return usePage().props.value.request;
-        },
     },
     props: {
         serialColumn: {
             type: Boolean,
             default: false,
         },
-        bottomLinks: {
-            type: Boolean,
-            default: true,
-        },
         collections: {
-            type: Object,
-            default: {},
-        },
-        filters: {
             type: Object,
             default: {},
         },

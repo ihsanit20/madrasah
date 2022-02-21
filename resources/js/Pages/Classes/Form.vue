@@ -22,6 +22,16 @@
                         />
                     </form-group>
                 </div>
+
+                <form-group class="w-full" label="Description">
+                    <Textarea
+                        class="block w-full"
+                        v-model="form.description"
+                        rows="6"
+                        required
+                    ></Textarea>
+                </form-group>
+
                 <form-slot-group
                     label="Subjects"
                     :collections="form.subjects"
@@ -75,8 +85,15 @@
                                         class="block w-full"
                                     >
                                         <option value="">--Select--</option>
-                                        <option value="1">Monthly</option>
-                                        <option value="2">Annual</option>
+                                        <option
+                                            v-for="(
+                                                period, index
+                                            ) in data.periods"
+                                            :key="index"
+                                            :value="index"
+                                        >
+                                            {{ period }}
+                                        </option>
                                     </Select>
                                 </form-group>
                                 <form-group class="w-20" label="Amount">
@@ -114,6 +131,7 @@ import { TrashIcon, PlusCircleIcon } from "@heroicons/vue/outline";
 import Button from "@/Components/Button.vue";
 import Input from "@/Components/Input.vue";
 import Select from "@/Components/Select.vue";
+import Textarea from "@/Components/Textarea.vue";
 import AddButton from "@/Components/AddButton.vue";
 import FormSlotGroup from "@/Components/FormSlotGroup.vue";
 import FormGroup from "@/Components/FormGroup.vue";
@@ -124,6 +142,7 @@ export default {
         Button,
         Input,
         Select,
+        Textarea,
         TrashIcon,
         PlusCircleIcon,
         AddButton,
@@ -150,6 +169,7 @@ export default {
             form: this.$inertia.form({
                 name: this.data.classes.name,
                 code: this.data.classes.code,
+                description: this.data.classes.description,
                 subjects: [],
                 fees: [],
             }),

@@ -17,6 +17,7 @@ class CreateClassesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

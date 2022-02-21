@@ -93,6 +93,7 @@ class ClassesController extends Controller
         
         return [
             'classes' => new ClassesResource($class),
+            'periods' => Fee::getPeriod(),
         ];
     }
 
@@ -115,6 +116,7 @@ class ClassesController extends Controller
                 'required',
                 Rule::unique(Classes::class, 'code')->ignore($id),
             ],
+            'description' => '',
         ]);
     }
     

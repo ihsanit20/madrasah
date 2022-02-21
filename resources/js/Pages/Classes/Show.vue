@@ -9,9 +9,9 @@
                 </h2>
                 <div class="flex items-center gap-2">
                     <p
-                        class="flex-shrink-0 rounded border px-1 font-semibold text-gray-500"
+                        class="flex-shrink-0 rounded border px-2 font-semibold text-gray-500"
                     >
-                        ID: {{ data.classes.id }}
+                        Code: {{ data.classes.code }}
                     </p>
                     <action-button-edit
                         :href="route('classes.edit', data.classes.id)"
@@ -19,51 +19,45 @@
                 </div>
             </div>
             <hr class="my-1" />
-            <p class="text-xs text-gray-400 md:text-base">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reprehenderit id corrupti suscipit aperiam ea deserunt
-                perferendis, natus cum maiores, distinctio aliquam est facilis
-                pariatur esse officiis aut porro? Excepturi, fugiat.
-            </p>
-            <div class="py-4">
-                <h3 class="bg-gray-200 py-1 px-3 text-gray-700">
-                    Subjects &amp; Subject Code
-                </h3>
-                <div class="grid gap-2 py-2 md:grid-cols-2">
-                    <div
-                        v-for="(subject, index) in data.classes.subjects"
-                        :key="index"
-                        class="flex flex-col items-center justify-center rounded p-4 shadow"
-                    >
-                        <h5 class="text-xs text-gray-500 md:text-sm">
-                            {{ subject.name }}
-                        </h5>
-                        <p class="text-lg font-bold text-gray-700">
-                            {{ subject.code }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="py-4">
-                <h3 class="bg-gray-200 py-1 px-3 text-gray-700">Fees</h3>
-                <div class="grid gap-2 py-2">
-                    <div
-                        v-for="(fee, index) in data.classes.fees"
-                        :key="index"
-                        class="flex items-center justify-between gap-2 rounded p-4 shadow"
-                    >
-                        <h5 class="text-xs text-gray-500 md:text-sm">
-                            {{ fee.name }}
-                        </h5>
-                        <p class="text-lg font-bold text-gray-700">
-                            {{ fee.period }}
-                        </p>
-                        <p class="text-lg font-bold text-gray-700">
-                            {{ fee.amount }}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <p
+                class="text-xs text-gray-400 md:text-base"
+                v-html="data.classes.description"
+            ></p>
+
+            <simple-table
+                class="py-3"
+                :serialColumn="true"
+                :columns="subjectColumns"
+                :collections="data.classes.subjects"
+            >
+                <template #default="{ item: subject }">
+                    <table-td class="text-left">
+                        {{ subject.code }}
+                    </table-td>
+                    <table-td class="text-left">
+                        {{ subject.name }}
+                    </table-td>
+                </template>
+            </simple-table>
+
+            <simple-table
+                class="py-3"
+                :serialColumn="true"
+                :columns="feeColumns"
+                :collections="data.classes.fees"
+            >
+                <template #default="{ item: fee }">
+                    <table-td class="text-left">
+                        {{ fee.name }}
+                    </table-td>
+                    <table-td class="text-center">
+                        {{ fee.periodName }}
+                    </table-td>
+                    <table-td class="text-right">
+                        {{ fee.amount }} TK
+                    </table-td>
+                </template>
+            </simple-table>
         </div>
     </app-layout>
 </template>
@@ -73,6 +67,8 @@ import AppLayout from "@/Layouts/App.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import ShowTableRow from "@/Components/ShowTableRow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
+import SimpleTable from "@/Components/SimpleTable.vue";
+import TableTd from "@/Components/TableTd.vue";
 
 export default {
     components: {
@@ -80,12 +76,27 @@ export default {
         Head,
         ShowTableRow,
         ActionButtonEdit,
+        SimpleTable,
+        TableTd,
     },
     props: {
         data: {
             type: Object,
             default: {},
         },
+    },
+    data() {
+        return {
+            subjectColumns: [
+                { title: "Code", align: "left" },
+                { title: "Name", align: "left" },
+            ],
+            feeColumns: [
+                { title: "Fee", align: "left" },
+                { title: "Period", align: "center" },
+                { title: "Amount", align: "right" },
+            ],
+        };
     },
 };
 </script>

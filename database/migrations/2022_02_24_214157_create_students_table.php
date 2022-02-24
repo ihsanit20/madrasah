@@ -20,9 +20,9 @@ class CreateStudentsTable extends Migration
             $table->unsignedTinyInteger('gender')->nullable()->comment('1=Male, 2=Female');
             $table->string('birth_certificate')->nullable();
 
-            $table->unsignedBigInteger('father_info')->nullable();
-            $table->unsignedBigInteger('mother_info')->nullable();
-            $table->unsignedBigInteger('guardian_info')->nullable();
+            $table->unsignedBigInteger('father_info_id')->nullable();
+            $table->unsignedBigInteger('mother_info_id')->nullable();
+            $table->unsignedBigInteger('guardian_info_id')->nullable();
 
             $table->unsignedBigInteger('present_address_id')->nullable();
             $table->unsignedBigInteger('permanent_address_id')->nullable();

@@ -15,7 +15,7 @@ class CreateGuardiansTable extends Migration
     {
         Schema::create('guardians', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable()->comment('guardian/father/mother');
+            $table->string('name')->nullable()->comment('father/mother/guardian');
             $table->string('comment')->nullable()->comment('occupation/relation');
             $table->string('phone')->nullable();
             $table->timestamps();

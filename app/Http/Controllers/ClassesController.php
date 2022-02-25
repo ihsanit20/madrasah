@@ -16,7 +16,6 @@ class ClassesController extends Controller
     public function index()
     {
         $collections = Classes::query()
-            ->filter()
             ->latest();
 
         return Inertia::render('Classes/Index', [
@@ -36,7 +35,7 @@ class ClassesController extends Controller
 
     public function store(Request $request)
     {
-        $class = Classes::create($this->validateData($request));
+        $class = Classes::create($this->validatedData($request));
 
         $this->storeSubject($class->id, $request->subjects);
 
@@ -67,7 +66,7 @@ class ClassesController extends Controller
 
     public function update(Request $request, Classes $class)
     {
-        $class->update($this->validateData($request, $class->id));
+        $class->update($this->validatedData($request, $class->id));
         
         $this->storeSubject($class->id, $request->subjects);
 
@@ -104,7 +103,7 @@ class ClassesController extends Controller
         ];
     }
 
-    private function validateData($request, $id = '')
+    private function validatedData($request, $id = '')
     {
         return $request->validate([
             'name' => [

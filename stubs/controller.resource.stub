@@ -25,15 +25,13 @@ class {{ class }} extends Controller
     public function create()
     {
         return Inertia::render('{{ model }}/Create', [
-            'data' => [
-                '{{ modelVariable }}' => new {{ model }}(),
-            ]
+            'data' => $this->data(new {{ model }}())
         ]);
     }
 
     public function store(Request $request)
     {
-        ${{ modelVariable }} = {{ model }}::create($this->validateData($request));
+        ${{ modelVariable }} = {{ model }}::create($this->validatedData($request));
 
         return redirect()
             ->route('collections.show', ${{ modelVariable }}->id)
@@ -45,9 +43,7 @@ class {{ class }} extends Controller
         {{ model }}Resource::withoutWrapping();
 
         return Inertia::render('{{ model }}/Show', [
-            'data' => [
-                '{{ modelVariable }}' => new {{ model }}Resource(${{ modelVariable }}),
-            ]
+            'data' => $this->data(${{ modelVariable }})
         ]);
     }
 
@@ -56,15 +52,13 @@ class {{ class }} extends Controller
         {{ model }}Resource::withoutWrapping();
 
         return Inertia::render('{{ model }}/Edit', [
-            'data' => [
-                '{{ modelVariable }}' => new {{ model }}Resource(${{ modelVariable }}),
-            ]
+            'data' => $this->data(${{ modelVariable }})
         ]);
     }
 
     public function update(Request $request, {{ model }} ${{ modelVariable }})
     {
-        ${{ modelVariable }}->update($this->validateData($request, ${{ modelVariable }}->id));
+        ${{ modelVariable }}->update($this->validatedData($request, ${{ modelVariable }}->id));
 
         return redirect()
             ->route('collections.show', ${{ modelVariable }}->id)
@@ -80,6 +74,15 @@ class {{ class }} extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
+    private function data($class)
+    {
+        {{ model }}Resource::withoutWrapping();
+        
+        return [
+            '{{ modelVariable }}' => new {{ model }}Resource($class),
+        ];
+    }
+
     protected function getFilterProperty()
     {
         return [
@@ -87,7 +90,7 @@ class {{ class }} extends Controller
         ];
     }
 
-    private function validateData($request, $id = '')
+    private function validatedData($request, $id = '')
     {
         return $request->validate([
             //

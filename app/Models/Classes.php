@@ -14,11 +14,6 @@ class Classes extends Model
 
     protected $guarded = [];
 
-    public function scopeFilter($query)
-    {
-        return $query;
-    }
-
     public function subjects()
     {
         return $this->hasMany(Subject::class, 'class_id');

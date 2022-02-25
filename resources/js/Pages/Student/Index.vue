@@ -1,30 +1,31 @@
 <template>
-    <Head title="Subject" />
+    <Head title="Student" />
 
-    <app-layout pageTitle="Subjects" :addNewHref="route('subjects.create')">
+    <app-layout pageTitle="Students" :addNewHref="route('students.create')">
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
             :columns="columns"
         >
-            <template #default="{ item: subject }">
-                <td class="sticky left-0 bg-white px-3 py-2 text-left">
-                    {{ subject.id }}
-                </td>
-                <td class="px-3 py-2 text-left">{{ subject.name }}</td>
-                <td class="px-3 py-2 text-left">{{ subject.className }}</td>
-                <td class="px-3 py-1.5">
+            <template #default="{ item: student }">
+                <table-td class="text-left">
+                    {{ student.id }}
+                </table-td>
+                <table-td class="text-left">
+                    {{ student.name }}
+                </table-td>
+                <table-td class="text-center">
                     <div
                         class="flex items-center justify-center gap-1 md:gap-2"
                     >
                         <action-button-show
-                            :href="route('subjects.show', subject.id)"
+                            :href="route('students.show', student.id)"
                         />
                         <action-button-edit
-                            :href="route('subjects.edit', subject.id)"
+                            :href="route('students.edit', student.id)"
                         />
                     </div>
-                </td>
+                </table-td>
             </template>
         </simple-table>
     </app-layout>
@@ -37,6 +38,7 @@ import SimpleTable from "@/Components/DataTable.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";
+import TableTd from "@/Components/TableTd.vue";
 
 export default {
     components: {
@@ -47,6 +49,7 @@ export default {
         ActionButtonShow,
         ActionButtonEdit,
         AddNewButton,
+        TableTd,
     },
     props: {
         data: {
@@ -59,7 +62,6 @@ export default {
             columns: [
                 { title: "ID", align: "left", sticky: true },
                 { title: "Name", align: "left" },
-                { title: "Class", align: "left" },
                 { title: "Action", align: "center" },
             ],
         };

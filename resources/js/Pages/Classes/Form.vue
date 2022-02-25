@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full max-w-lg rounded border bg-white p-4 shadow">
+    <div class="w-full max-w-3xl rounded border bg-white p-4 shadow">
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="">
@@ -62,7 +62,7 @@
                     :addSlotMethod="addFeeSlot"
                 >
                     <template #default="{ item: fee }">
-                        <div class="flex flex-col gap-2 md:flex-row">
+                        <div class="flex flex-grow flex-col gap-2 md:flex-row">
                             <form-group
                                 class="w-full flex-grow md:w-auto"
                                 label="Fee Name"
@@ -153,7 +153,7 @@ export default {
         moduleAction: String,
         buttonValue: {
             type: String,
-            default: "Submit",
+            default: "Save",
         },
         data: {
             type: Object,

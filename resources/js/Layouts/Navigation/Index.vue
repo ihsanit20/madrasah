@@ -22,7 +22,11 @@
             </span>
         </nav-link>
 
-        <nav-link href="/" class="flex items-center gap-2">
+        <nav-link
+            :href="route('students.index')"
+            :active="route().current('students.*')"
+            class="flex items-center gap-2"
+        >
             <StudentSvg class="h-5 w-5" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 Students

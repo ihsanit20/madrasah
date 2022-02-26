@@ -3,7 +3,7 @@
         <Label
             v-if="label"
             :value="label"
-            class="absolute -top-1.5 left-2.5 bg-white px-0.5 leading-4 line-clamp-1"
+            class="absolute -top-1 left-2 bg-white px-0.5 leading-3 line-clamp-1"
         />
         <slot />
     </div>

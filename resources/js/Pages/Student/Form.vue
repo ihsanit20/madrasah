@@ -3,7 +3,8 @@
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="">
-            <div class="grid gap-4 md:grid-cols-3">
+            <form-heading class="mb-2">Basic Information</form-heading>
+            <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
                 <form-group class="w-full md:col-span-2" label="Name">
                     <Input
                         type="text"
@@ -31,12 +32,31 @@
                         required
                     />
                 </form-group>
-                <form-group class="w-full">
-                    <Select class="block w-full" v-model="form.gender" required>
-                        <option value="">-- Gender --</option>
-                        <option :value="1">Male</option>
-                        <option :value="2">Female</option>
-                    </Select>
+                <form-group class="w-full" label="Gender">
+                    <div
+                        class="flex items-center gap-2 rounded-md border py-2 pl-2"
+                    >
+                        <label class="flex items-center gap-1">
+                            <Input
+                                v-model="form.gender"
+                                type="radio"
+                                name="gender"
+                                :value="1"
+                                required
+                            />
+                            <span>Male</span>
+                        </label>
+                        <label class="flex items-center gap-1">
+                            <Input
+                                v-model="form.gender"
+                                type="radio"
+                                name="gender"
+                                :value="2"
+                                required
+                            />
+                            <span>Female</span>
+                        </label>
+                    </div>
                 </form-group>
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-4 pb-2 md:grid-cols-3"
@@ -92,16 +112,20 @@
                         />
                     </form-group>
                 </form-group>
+            </div>
+
+            <form-heading class="mt-6 mb-2">Contact Information</form-heading>
+            <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-3 pb-2"
-                    label="Guardian's info"
+                    label="Financial Guardian"
                 >
                     <div
                         class="col-span-full flex items-center justify-center gap-3 md:justify-start"
                     >
                         <label class="flex items-center gap-1">
-                            <input
-                                v-model="guardianType"
+                            <Input
+                                v-model="form.guardianType"
                                 type="radio"
                                 name="guardian_info_type"
                                 :value="1"
@@ -110,8 +134,8 @@
                             <span>Father</span>
                         </label>
                         <label class="flex items-center gap-1">
-                            <input
-                                v-model="guardianType"
+                            <Input
+                                v-model="form.guardianType"
                                 type="radio"
                                 name="guardian_info_type"
                                 :value="2"
@@ -120,8 +144,8 @@
                             <span>Mother</span>
                         </label>
                         <label class="flex items-center gap-1">
-                            <input
-                                v-model="guardianType"
+                            <Input
+                                v-model="form.guardianType"
                                 type="radio"
                                 name="guardian_info_type"
                                 :value="3"
@@ -131,7 +155,7 @@
                         </label>
                     </div>
                     <div
-                        v-if="guardianType === 3"
+                        v-if="form.guardianType == 3"
                         class="grid gap-2 md:grid-cols-3"
                     >
                         <form-group class="w-full" label="Name">
@@ -160,6 +184,80 @@
                 </form-group>
             </div>
 
+            <form-heading class="mt-6 mb-2">Present Address</form-heading>
+            <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
+                <form-group>
+                    <Select class="block w-full">
+                        <option>-- Select Division --</option>
+                    </Select>
+                </form-group>
+                <form-group>
+                    <Select class="block w-full">
+                        <option>-- Select District --</option>
+                    </Select>
+                </form-group>
+                <form-group>
+                    <Select class="block w-full">
+                        <option>-- Select Area --</option>
+                    </Select>
+                </form-group>
+                <form-group label="Address" class="col-span-full">
+                    <Input type="text" class="block w-full" />
+                </form-group>
+            </div>
+
+            <form-heading class="mt-6 mb-2">Permanent Address</form-heading>
+            <form-group
+                class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-3 pb-2"
+                label="Financial Guardian"
+            >
+                <div
+                    class="col-span-full flex items-center justify-center gap-3 md:justify-start"
+                >
+                    <label class="mb-2 flex items-center justify-center gap-1">
+                        <Input
+                            v-model="form.is_same_address"
+                            type="radio"
+                            name="address"
+                            :value="1"
+                        />
+                        <span>Same as present</span>
+                    </label>
+                    <label class="mb-2 flex items-center justify-center gap-1">
+                        <Input
+                            v-model="form.is_same_address"
+                            type="radio"
+                            name="address"
+                            :value="2"
+                        />
+                        <span>Difference</span>
+                    </label>
+                </div>
+                <div
+                    v-if="form.is_same_address == 2"
+                    class="grid gap-x-2 gap-y-4 md:grid-cols-3"
+                >
+                    <form-group>
+                        <Select class="block w-full">
+                            <option>-- Select Division --</option>
+                        </Select>
+                    </form-group>
+                    <form-group>
+                        <Select class="block w-full">
+                            <option>-- Select District --</option>
+                        </Select>
+                    </form-group>
+                    <form-group>
+                        <Select class="block w-full">
+                            <option>-- Select Area --</option>
+                        </Select>
+                    </form-group>
+                    <form-group label="Address" class="col-span-full">
+                        <Input type="text" class="block w-full" />
+                    </form-group>
+                </div>
+            </form-group>
+
             <hr class="my-4 w-full" />
 
             <div class="flex items-center justify-end">
@@ -181,6 +279,7 @@ import Label from "@/Components/Label.vue";
 import Button from "@/Components/Button.vue";
 import Input from "@/Components/Input.vue";
 import Select from "@/Components/Select.vue";
+import FormHeading from "@/Components/FormHeading.vue";
 import FormGroup from "@/Components/FormGroup.vue";
 import FormSlotGroup from "@/Components/FormSlotGroup.vue";
 
@@ -191,6 +290,7 @@ export default {
         Button,
         Input,
         Select,
+        FormHeading,
         FormGroup,
         FormSlotGroup,
     },
@@ -207,7 +307,6 @@ export default {
     },
     data() {
         return {
-            guardianType: 0,
             form: this.$inertia.form({
                 name: this.data.student.name,
                 date_of_birth: this.data.student.date_of_birth,
@@ -223,11 +322,13 @@ export default {
                     comment: "",
                     phone: "",
                 },
+                guardianType: 0,
                 guardian_info: {
                     name: "",
                     comment: "",
                     phone: "",
                 },
+                is_same_address: 0,
             }),
         };
     },

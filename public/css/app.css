@@ -630,9 +630,6 @@ select {
 .left-2 {
   left: 0.5rem;
 }
-.-top-2 {
-  top: -0.5rem;
-}
 .z-0 {
   z-index: 0;
 }
@@ -737,6 +734,12 @@ select {
 }
 .mt-1 {
   margin-top: 0.25rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 .block {
   display: block;
@@ -845,20 +848,11 @@ select {
 .max-w-7xl {
   max-width: 80rem;
 }
-.max-w-lg {
-  max-width: 32rem;
+.max-w-3xl {
+  max-width: 48rem;
 }
 .max-w-2xl {
   max-width: 42rem;
-}
-.max-w-md {
-  max-width: 28rem;
-}
-.max-w-4xl {
-  max-width: 56rem;
-}
-.max-w-3xl {
-  max-width: 48rem;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -921,9 +915,6 @@ select {
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 .flex-col {
   flex-direction: column;
 }
@@ -935,9 +926,6 @@ select {
 }
 .items-center {
   align-items: center;
-}
-.justify-start {
-  justify-content: flex-start;
 }
 .justify-end {
   justify-content: flex-end;
@@ -962,6 +950,13 @@ select {
 }
 .gap-3 {
   gap: 0.75rem;
+}
+.gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+.gap-y-4 {
+  row-gap: 1rem;
 }
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
@@ -1033,9 +1028,6 @@ select {
 }
 .border-dashed {
   border-style: dashed;
-}
-.border-dotted {
-  border-style: dotted;
 }
 .border-gray-300 {
   --tw-border-opacity: 1;
@@ -1184,9 +1176,9 @@ select {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
 }
 .pt-8 {
   padding-top: 2rem;
@@ -1217,6 +1209,18 @@ select {
 }
 .pt-3 {
   padding-top: 0.75rem;
+}
+.pl-4 {
+  padding-left: 1rem;
+}
+.pl-2 {
+  padding-left: 0.5rem;
+}
+.pt-1 {
+  padding-top: 0.25rem;
+}
+.pt-2\.5 {
+  padding-top: 0.625rem;
 }
 .text-left {
   text-align: left;
@@ -1282,6 +1286,9 @@ select {
 }
 .leading-4 {
   line-height: 1rem;
+}
+.leading-3 {
+  line-height: .75rem;
 }
 .tracking-wider {
   letter-spacing: 0.05em;
@@ -1765,10 +1772,6 @@ input[type="number"] {
 
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .md\:grid-cols-6 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .md\:grid-cols-3 {

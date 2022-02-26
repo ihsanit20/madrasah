@@ -185,36 +185,39 @@
             </div>
 
             <form-heading class="mt-6 mb-2">Present Address</form-heading>
-            <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
-                <form-group>
-                    <Select class="block w-full">
-                        <option>-- Select Division --</option>
-                    </Select>
-                </form-group>
-                <form-group>
-                    <Select class="block w-full">
-                        <option>-- Select District --</option>
-                    </Select>
-                </form-group>
-                <form-group>
-                    <Select class="block w-full">
-                        <option>-- Select Area --</option>
-                    </Select>
-                </form-group>
-                <form-group label="Address" class="col-span-full">
-                    <Input type="text" class="block w-full" />
-                </form-group>
-            </div>
+            <form-group
+                class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-2 pb-2"
+            >
+                <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
+                    <form-group>
+                        <Select class="block w-full">
+                            <option>-- Select Division --</option>
+                        </Select>
+                    </form-group>
+                    <form-group>
+                        <Select class="block w-full">
+                            <option>-- Select District --</option>
+                        </Select>
+                    </form-group>
+                    <form-group>
+                        <Select class="block w-full">
+                            <option>-- Select Area --</option>
+                        </Select>
+                    </form-group>
+                    <form-group label="Address" class="col-span-full">
+                        <Input type="text" class="block w-full" />
+                    </form-group>
+                </div>
+            </form-group>
 
             <form-heading class="mt-6 mb-2">Permanent Address</form-heading>
             <form-group
-                class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-3 pb-2"
-                label="Financial Guardian"
+                class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-2 pb-2"
             >
                 <div
                     class="col-span-full flex items-center justify-center gap-3 md:justify-start"
                 >
-                    <label class="mb-2 flex items-center justify-center gap-1">
+                    <label class="flex items-center justify-center gap-1">
                         <Input
                             v-model="form.is_same_address"
                             type="radio"
@@ -223,7 +226,7 @@
                         />
                         <span>Same as present</span>
                     </label>
-                    <label class="mb-2 flex items-center justify-center gap-1">
+                    <label class="flex items-center justify-center gap-1">
                         <Input
                             v-model="form.is_same_address"
                             type="radio"

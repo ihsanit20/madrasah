@@ -4,8 +4,8 @@
 
         <form @submit.prevent="submit" class="">
             <form-heading class="mb-2">Basic Information</form-heading>
-            <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
-                <form-group class="w-full md:col-span-2" label="Name">
+            <div class="grid gap-x-2 gap-y-4 md:grid-cols-2">
+                <form-group class="w-full" label="Name">
                     <Input
                         type="text"
                         class="block w-full"
@@ -21,10 +21,7 @@
                         required
                     />
                 </form-group>
-                <form-group
-                    class="w-full md:col-span-2"
-                    label="Birth Certificate"
-                >
+                <form-group class="w-full" label="Birth Certificate">
                     <Input
                         type="number"
                         class="block w-full"
@@ -190,22 +187,58 @@
             >
                 <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
                     <form-group>
-                        <Select class="block w-full">
-                            <option>-- Select Division --</option>
+                        <Select
+                            class="block w-full"
+                            v-model="form.present_address.division"
+                            @change="presentAddressDivisionSelectHandler"
+                        >
+                            <option value="">-- Select Division --</option>
+                            <option
+                                v-for="division in present_address.divisions"
+                                :key="division.id"
+                                :value="division.id"
+                            >
+                                {{ division.name }}
+                            </option>
                         </Select>
                     </form-group>
                     <form-group>
-                        <Select class="block w-full">
-                            <option>-- Select District --</option>
+                        <Select
+                            class="block w-full"
+                            v-model="form.present_address.district"
+                            @change="presentAddressDistrictSelectHandler"
+                        >
+                            <option value="">-- Select District --</option>
+                            <option
+                                v-for="district in present_address.districts"
+                                :key="district.id"
+                                :value="district.id"
+                            >
+                                {{ district.name }}
+                            </option>
                         </Select>
                     </form-group>
                     <form-group>
-                        <Select class="block w-full">
-                            <option>-- Select Area --</option>
+                        <Select
+                            class="block w-full"
+                            v-model="form.present_address.area"
+                        >
+                            <option value="">-- Select Area --</option>
+                            <option
+                                v-for="area in present_address.areas"
+                                :key="area.id"
+                                :value="area.id"
+                            >
+                                {{ area.name }}
+                            </option>
                         </Select>
                     </form-group>
                     <form-group label="Address" class="col-span-full">
-                        <Input type="text" class="block w-full" />
+                        <Input
+                            type="text"
+                            class="block w-full"
+                            v-model="form.present_address.address"
+                        />
                     </form-group>
                 </div>
             </form-group>
@@ -218,45 +251,67 @@
                     class="col-span-full flex items-center justify-center gap-3 md:justify-start"
                 >
                     <label class="flex items-center justify-center gap-1">
-                        <Input
-                            v-model="form.is_same_address"
-                            type="radio"
-                            name="address"
-                            :value="1"
-                        />
+                        <Input @change="sameAsPresentHandler" type="checkbox" />
                         <span>Same as present</span>
-                    </label>
-                    <label class="flex items-center justify-center gap-1">
-                        <Input
-                            v-model="form.is_same_address"
-                            type="radio"
-                            name="address"
-                            :value="2"
-                        />
-                        <span>Difference</span>
                     </label>
                 </div>
                 <div
-                    v-if="form.is_same_address == 2"
+                    v-if="!form.is_same_address"
                     class="grid gap-x-2 gap-y-4 md:grid-cols-3"
                 >
                     <form-group>
-                        <Select class="block w-full">
-                            <option>-- Select Division --</option>
+                        <Select
+                            class="block w-full"
+                            v-model="form.permanent_address.division"
+                            @change="permanentAddressDivisionSelectHandler"
+                        >
+                            <option value="">-- Select Division --</option>
+                            <option
+                                v-for="division in permanent_address.divisions"
+                                :key="division.id"
+                                :value="division.id"
+                            >
+                                {{ division.name }}
+                            </option>
                         </Select>
                     </form-group>
                     <form-group>
-                        <Select class="block w-full">
-                            <option>-- Select District --</option>
+                        <Select
+                            class="block w-full"
+                            v-model="form.permanent_address.district"
+                            @change="permanentAddressDistrictSelectHandler"
+                        >
+                            <option value="">-- Select District --</option>
+                            <option
+                                v-for="district in permanent_address.districts"
+                                :key="district.id"
+                                :value="district.id"
+                            >
+                                {{ district.name }}
+                            </option>
                         </Select>
                     </form-group>
                     <form-group>
-                        <Select class="block w-full">
-                            <option>-- Select Area --</option>
+                        <Select
+                            class="block w-full"
+                            v-model="form.permanent_address.area"
+                        >
+                            <option value="">-- Select Area --</option>
+                            <option
+                                v-for="area in permanent_address.areas"
+                                :key="area.id"
+                                :value="area.id"
+                            >
+                                {{ area.name }}
+                            </option>
                         </Select>
                     </form-group>
                     <form-group label="Address" class="col-span-full">
-                        <Input type="text" class="block w-full" />
+                        <Input
+                            type="text"
+                            class="block w-full"
+                            v-model="form.permanent_address.address"
+                        />
                     </form-group>
                 </div>
             </form-group>
@@ -308,8 +363,27 @@ export default {
             default: {},
         },
     },
+    created() {
+        this.present_address.divisions = this.data.divisions;
+        this.present_address.districts = this.data.districts;
+        this.present_address.areas = this.data.areas;
+
+        this.permanent_address.divisions = this.data.divisions;
+        this.permanent_address.districts = this.data.districts;
+        this.permanent_address.areas = this.data.areas;
+    },
     data() {
         return {
+            present_address: {
+                divisions: "",
+                districts: "",
+                areas: "",
+            },
+            permanent_address: {
+                divisions: "",
+                districts: "",
+                areas: "",
+            },
             form: this.$inertia.form({
                 name: this.data.student.name,
                 date_of_birth: this.data.student.date_of_birth,
@@ -332,6 +406,18 @@ export default {
                     phone: "",
                 },
                 is_same_address: 0,
+                present_address: {
+                    division: "",
+                    district: "",
+                    area: "",
+                    address: "",
+                },
+                permanent_address: {
+                    division: "",
+                    district: "",
+                    area: "",
+                    address: "",
+                },
             }),
         };
     },
@@ -345,6 +431,71 @@ export default {
                     this.route("students.update", this.data.student.id)
                 );
             }
+        },
+        sameAsPresentHandler(event) {
+            this.form.is_same_address = event.target.checked;
+        },
+        presentAddressDivisionSelectHandler() {
+            if (this.form.present_address.division) {
+                this.present_address.districts = Object.values(
+                    this.data.districts
+                ).filter(
+                    (district) =>
+                        district.divisionId ==
+                        this.form.present_address.division
+                );
+            } else {
+                this.present_address.districts = this.data.districts;
+            }
+
+            this.form.present_address.district = "";
+
+            this.presentAddressDistrictSelectHandler();
+        },
+        presentAddressDistrictSelectHandler() {
+            if (this.form.present_address.district) {
+                this.present_address.areas = Object.values(
+                    this.data.areas
+                ).filter(
+                    (area) =>
+                        area.districtId == this.form.present_address.district
+                );
+            } else {
+                this.present_address.areas = this.data.areas;
+            }
+
+            this.form.present_address.area = "";
+        },
+        permanentAddressDivisionSelectHandler() {
+            if (this.form.permanent_address.division) {
+                this.permanent_address.districts = Object.values(
+                    this.data.districts
+                ).filter(
+                    (district) =>
+                        district.divisionId ==
+                        this.form.permanent_address.division
+                );
+            } else {
+                this.permanent_address.districts = this.data.districts;
+            }
+
+            this.form.permanent_address.district = "";
+
+            this.permanentAddressDistrictSelectHandler();
+        },
+        permanentAddressDistrictSelectHandler() {
+            if (this.form.permanent_address.district) {
+                this.permanent_address.areas = Object.values(
+                    this.data.areas
+                ).filter(
+                    (area) =>
+                        area.districtId == this.form.permanent_address.district
+                );
+            } else {
+                this.permanent_address.areas = this.data.areas;
+            }
+
+            this.form.permanent_address.area = "";
         },
     },
 };

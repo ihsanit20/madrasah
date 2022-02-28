@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AreaResource;
+use App\Http\Resources\DistrictResource;
+use App\Http\Resources\DivisionResource;
 use App\Http\Resources\StudentResource;
+use App\Models\Area;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,6 +30,8 @@ class StudentController extends Controller
 
     public function create()
     {
+        // return $this->data(new Student());
+
         return Inertia::render('Student/Create', [
             'data' => $this->data(new Student())
         ]);
@@ -31,6 +39,8 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        return $request;
+
         $student = Student::create($this->validatedData($request));
 
         return redirect()
@@ -43,14 +53,14 @@ class StudentController extends Controller
         StudentResource::withoutWrapping();
 
         return Inertia::render('Student/Show', [
-            'data' => $this->data($student)
+            'data' => [
+                'student' => new StudentResource($student),
+            ]
         ]);
     }
 
     public function edit(Student $student)
     {
-        StudentResource::withoutWrapping();
-
         return Inertia::render('Student/Edit', [
             'data' => $this->data($student)
         ]);
@@ -74,12 +84,15 @@ class StudentController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
-    private function data($class)
+    private function data($student)
     {
         StudentResource::withoutWrapping();
         
         return [
-            'student' => new StudentResource($class),
+            'student'   => new StudentResource($student),
+            'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
+            'districts' => DistrictResource::collection(District::orderBy('name')->get()),
+            'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
         ];
     }
 

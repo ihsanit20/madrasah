@@ -10,6 +10,7 @@ use App\Http\Resources\StudentResource;
 use App\Models\Area;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\Guardian;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -39,13 +40,61 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        return $request;
+        $father_info_id = $this->storeGuardianGetId($request->father_info);
 
-        $student = Student::create($this->validatedData($request));
+        $mother_info_id = $this->storeGuardianGetId($request->mother_info);
+
+        switch($request->guardianType) {
+            case 1:
+                $guardian_info_id = $father_info_id;
+                break;
+
+            case 2:
+                $guardian_info_id = $mother_info_id;
+                break;
+
+            case 3:
+                $guardian_info_id = $this->storeGuardianGetId($request->guardian_info);
+                break;
+
+            default:
+                $guardian_info_id = null;
+        }
+
+        $validated_data = $this->validatedData($request);
+
+        $student = Student::create(
+            $validated_data + [
+                'father_info_id'    => $father_info_id,
+                'mother_info_id'    => $mother_info_id,
+                'guardian_info_id'  => $guardian_info_id,
+            ]
+        );
+
+        return $student;
 
         return redirect()
             ->route('students.show', $student->id)
             ->with('status', 'The record has been added successfully.');
+    }
+
+    protected function storeGuardianGetId($guardian, $old_selected_id = '')
+    {
+        if($old_selected_id) {
+            Guardian::where('id', $old_selected_id)->delete();
+        }
+
+        $guardian = Guardian::onlyTrashed()->updateOrCreate(
+            [],
+            [
+                'name'          => $guardian['name'] ?? null,
+                'phone'         => $guardian['phone'] ?? null,
+                'comment'       => $guardian['comment'] ?? null,
+                'deleted_at'    => null,
+            ]
+        );
+
+        return $guardian->id ?? null;
     }
 
     public function show(Student $student)
@@ -106,7 +155,13 @@ class StudentController extends Controller
     private function validatedData($request, $id = '')
     {
         return $request->validate([
-            //
+            'name' => [
+                'required',
+                'string',
+            ],
+            'date_of_birth' => '',
+            'gender' => '',
+            'birth_certificate' => '',
         ]);
     }
 

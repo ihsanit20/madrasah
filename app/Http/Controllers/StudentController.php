@@ -43,10 +43,10 @@ class StudentController extends Controller
 
         $mother_info_id = $this->storeGuardianGetId($request->mother_info);
 
-        if ($request->guardianType == 1) {
+        if ($request->guardian_type == 1) {
             $guardian_info_id = $father_info_id;
         } 
-        elseif ($request->guardianType == 2) {
+        elseif ($request->guardian_type == 2) {
             $guardian_info_id = $father_info_id;
         }
         else {
@@ -59,10 +59,8 @@ class StudentController extends Controller
             ? $present_address_id
             : $this->storeAddressGetId($request->permanent_address);
 
-        $validated_data = $this->validatedData($request);
-
         $student = Student::create(
-            $validated_data + [
+            $this->validatedData($request) + [
                 'father_info_id'    => $father_info_id,
                 'mother_info_id'    => $mother_info_id,
                 'guardian_info_id'  => $guardian_info_id,
@@ -137,7 +135,36 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
-        $student->update($this->validatedData($request, $student->id));
+        $father_info_id = $this->storeGuardianGetId($request->father_info, $student->father_info_id);
+
+        $mother_info_id = $this->storeGuardianGetId($request->mother_info, $student->mother_info_id);
+
+        if ($request->guardian_type == 1) {
+            $guardian_info_id = $father_info_id;
+        } 
+        elseif ($request->guardian_type == 2) {
+            $guardian_info_id = $father_info_id;
+        }
+        else {
+            $guardian_info_id = $this->storeGuardianGetId($request->guardian_info, $student->guardian_info_id);
+        }
+
+        $present_address_id = $this->storeAddressGetId($request->present_address, $student->present_address_id);
+
+        $permanent_address_id = $request->is_same_address
+            ? $present_address_id
+            : $this->storeAddressGetId($request->permanent_address, $student->permanent_address_id);
+
+        $student->update(
+            $this->validatedData($request, $student->id) + [
+                'father_info_id'    => $father_info_id,
+                'mother_info_id'    => $mother_info_id,
+                'guardian_info_id'  => $guardian_info_id,
+            ] + [
+                'present_address_id'    => $present_address_id,
+                'permanent_address_id'  => $permanent_address_id,
+            ]
+        );
 
         return redirect()
             ->route('students.show', $student->id)

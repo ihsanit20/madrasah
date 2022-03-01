@@ -15,8 +15,24 @@ class StudentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => (int) $this->id,
-            'name'      => (string) ($this->name ?? ''),
+            'id'                    => (int) $this->id,
+            'name'                  => (string) ($this->name ?? ''),
+            'dateOfBirth'           => (string) ($this->date_of_birth ?? ''),
+            'gender'                => (int) ($this->gender ?? 0),
+            'genderText'            => (string) ($this->genderText ?? ''),
+            'birthCertificate'      => (string) ($this->birth_certificate ?? ''),
+            'fatherInfoId'          => (int) ($this->father_info_id ?? 0),
+            'fatherInfo'            => new GuardianResource($this->whenLoaded('father_info')),
+            'motherInfoId'          => (int) ($this->mother_info_id ?? 0),
+            'motherInfo'            => new GuardianResource($this->whenLoaded('mother_info')),
+            'guardianInfoId'        => (int) ($this->guardian_info_id ?? 0),
+            'guardianInfo'          => new GuardianResource($this->whenLoaded('guardian_info')),
+            'guardianType'          => (int) ($this->guardian_type ?? 3),
+            'presentAddressId'      => (int) ($this->present_address_id ?? 0),
+            'presentAddress'        => new AddressResource($this->whenLoaded('present_address')),
+            'permanentAddressId'    => (int) ($this->permanent_address_id ?? 0),
+            'permanentAddress'      => new AddressResource($this->whenLoaded('permanent_address')),
+            'isSameAddress'       => (boolean) ($this->is_same_address ?? 0),
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DistrictResource extends JsonResource
+class GuardianResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,9 @@ class DistrictResource extends JsonResource
         return [
             'id'            => (int) $this->id,
             'name'          => (string) ($this->name ?? ''),
-            'divisionId'    => (int) ($this->division_id ?? 0),
-            'divisionName'  => (string) ($this->division->name ?? ''),
-            'division'      => new DivisionResource($this->whenLoaded('division')),
-            'areas'         => AreaResource::collection($this->whenLoaded('areas')),
+            'phone'         => (string) ($this->phone ?? ''),
+            'occupation'    => (string) ($this->occupation ?? ''),
+            'relation'      => (string) ($this->relation ?? ''),
         ];
     }
 }

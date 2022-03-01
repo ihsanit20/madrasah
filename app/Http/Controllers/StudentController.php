@@ -7,6 +7,7 @@ use App\Http\Resources\AreaResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
 use App\Http\Resources\StudentResource;
+use App\Models\Address;
 use App\Models\Area;
 use App\Models\District;
 use App\Models\Division;
@@ -31,8 +32,6 @@ class StudentController extends Controller
 
     public function create()
     {
-        // return $this->data(new Student());
-
         return Inertia::render('Student/Create', [
             'data' => $this->data(new Student())
         ]);
@@ -44,22 +43,21 @@ class StudentController extends Controller
 
         $mother_info_id = $this->storeGuardianGetId($request->mother_info);
 
-        switch($request->guardianType) {
-            case 1:
-                $guardian_info_id = $father_info_id;
-                break;
-
-            case 2:
-                $guardian_info_id = $mother_info_id;
-                break;
-
-            case 3:
-                $guardian_info_id = $this->storeGuardianGetId($request->guardian_info);
-                break;
-
-            default:
-                $guardian_info_id = null;
+        if ($request->guardianType == 1) {
+            $guardian_info_id = $father_info_id;
+        } 
+        elseif ($request->guardianType == 2) {
+            $guardian_info_id = $father_info_id;
         }
+        else {
+            $guardian_info_id = $this->storeGuardianGetId($request->guardian_info);
+        }
+
+        $present_address_id = $this->storeAddressGetId($request->present_address);
+
+        $permanent_address_id = $request->is_same_address
+            ? $present_address_id
+            : $this->storeAddressGetId($request->permanent_address);
 
         $validated_data = $this->validatedData($request);
 
@@ -68,6 +66,9 @@ class StudentController extends Controller
                 'father_info_id'    => $father_info_id,
                 'mother_info_id'    => $mother_info_id,
                 'guardian_info_id'  => $guardian_info_id,
+            ] + [
+                'present_address_id'    => $present_address_id,
+                'permanent_address_id'  => $permanent_address_id,
             ]
         );
 
@@ -78,32 +79,51 @@ class StudentController extends Controller
             ->with('status', 'The record has been added successfully.');
     }
 
-    protected function storeGuardianGetId($guardian, $old_selected_id = '')
+    protected function storeGuardianGetId($guardian, $old_id = '')
     {
-        if($old_selected_id) {
-            Guardian::where('id', $old_selected_id)->delete();
+        if($old_id) {
+            Guardian::where('id', $old_id)->delete();
         }
 
-        $guardian = Guardian::onlyTrashed()->updateOrCreate(
+        $response = Guardian::onlyTrashed()->updateOrCreate(
             [],
             [
                 'name'          => $guardian['name'] ?? null,
                 'phone'         => $guardian['phone'] ?? null,
-                'comment'       => $guardian['comment'] ?? null,
+                'occupation'    => $guardian['occupation'] ?? null,
+                'relation'      => $guardian['relation'] ?? null,
                 'deleted_at'    => null,
             ]
         );
 
-        return $guardian->id ?? null;
+        return $response->id ?? null;
+    }
+
+    protected function storeAddressGetId($address, $old_id = '')
+    {
+        if($old_id) {
+            Address::where('id', $old_id)->delete();
+        }
+
+        $response = Address::onlyTrashed()->updateOrCreate(
+            [],
+            [
+                'area_id'       => $address['area'] ?? null,
+                'value'         => $address['address'] ?? null,
+                'deleted_at'    => null,
+            ]
+        );
+
+        return $response->id ?? null;
     }
 
     public function show(Student $student)
     {
-        StudentResource::withoutWrapping();
+        return $this->GetStudentResourceData($student);
 
         return Inertia::render('Student/Show', [
             'data' => [
-                'student' => new StudentResource($student),
+                'student' => $this->GetStudentResourceData($student),
             ]
         ]);
     }
@@ -133,16 +153,29 @@ class StudentController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
-    private function data($student)
+    protected function data($student)
     {
-        StudentResource::withoutWrapping();
-        
         return [
-            'student'   => new StudentResource($student),
+            'student'   => $this->GetStudentResourceData($student),
             'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
             'districts' => DistrictResource::collection(District::orderBy('name')->get()),
             'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
         ];
+    }
+
+    protected function GetStudentResourceData($student)
+    {
+        StudentResource::withoutWrapping();
+
+        return new StudentResource(
+            $student->load([
+                'father_info',
+                'mother_info',
+                'guardian_info',
+                'present_address.area.district.division',
+                'permanent_address.area.district.division',
+            ]
+        ));
     }
 
     protected function getFilterProperty()

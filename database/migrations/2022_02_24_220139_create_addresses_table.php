@@ -17,7 +17,6 @@ class CreateAddressesTable extends Migration
             $table->id();
             $table->foreignId('area_id')->constrained();
             $table->text('value')->nullable();
-            $table->morphs('addressable');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,6 +19,7 @@ class AreaResource extends JsonResource
             'name'          => (string) ($this->name ?? ''),
             'districtId'    => (int) ($this->district_id ?? 0),
             'districtName'  => (string) ($this->district->name ?? ''),
+            'district'      => new DistrictResource($this->whenLoaded('district')),
         ];
     }
 }

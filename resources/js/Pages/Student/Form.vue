@@ -39,6 +39,7 @@
                                 type="radio"
                                 name="gender"
                                 :value="1"
+                                :checked="form.gender == 1"
                                 required
                             />
                             <span>Male</span>
@@ -49,6 +50,7 @@
                                 type="radio"
                                 name="gender"
                                 :value="2"
+                                :checked="form.gender == 2"
                                 required
                             />
                             <span>Female</span>
@@ -78,7 +80,7 @@
                         <Input
                             type="text"
                             class="block w-full"
-                            v-model="form.father_info.comment"
+                            v-model="form.father_info.occupation"
                         />
                     </form-group>
                 </form-group>
@@ -105,7 +107,7 @@
                         <Input
                             type="text"
                             class="block w-full"
-                            v-model="form.mother_info.comment"
+                            v-model="form.mother_info.occupation"
                         />
                     </form-group>
                 </form-group>
@@ -122,37 +124,40 @@
                     >
                         <label class="flex items-center gap-1">
                             <Input
-                                v-model="form.guardianType"
+                                v-model="form.guardian_type"
                                 type="radio"
                                 name="guardian_info_type"
                                 :value="1"
+                                :checked="form.guardian_type == 1"
                                 required
                             />
                             <span>Father</span>
                         </label>
                         <label class="flex items-center gap-1">
                             <Input
-                                v-model="form.guardianType"
+                                v-model="form.guardian_type"
                                 type="radio"
                                 name="guardian_info_type"
                                 :value="2"
+                                :checked="form.guardian_type == 2"
                                 required
                             />
                             <span>Mother</span>
                         </label>
                         <label class="flex items-center gap-1">
                             <Input
-                                v-model="form.guardianType"
+                                v-model="form.guardian_type"
                                 type="radio"
                                 name="guardian_info_type"
                                 :value="3"
+                                :checked="form.guardian_type == 3"
                                 required
                             />
                             <span>Other</span>
                         </label>
                     </div>
                     <div
-                        v-if="form.guardianType == 3"
+                        v-if="form.guardian_type == 3"
                         class="grid gap-2 md:grid-cols-3"
                     >
                         <form-group class="w-full" label="Name">
@@ -174,7 +179,7 @@
                             <Input
                                 type="text"
                                 class="block w-full"
-                                v-model="form.guardian_info.comment"
+                                v-model="form.guardian_info.relation"
                             />
                         </form-group>
                     </div>
@@ -251,7 +256,11 @@
                     class="col-span-full flex items-center justify-center gap-3 md:justify-start"
                 >
                     <label class="flex items-center justify-center gap-1">
-                        <Input @change="sameAsPresentHandler" type="checkbox" />
+                        <Input
+                            @change="sameAsPresentHandler"
+                            type="checkbox"
+                            :checked="form.is_same_address"
+                        />
                         <span>Same as present</span>
                     </label>
                 </div>
@@ -371,6 +380,30 @@ export default {
         this.permanent_address.divisions = this.data.divisions;
         this.permanent_address.districts = this.data.districts;
         this.permanent_address.areas = this.data.areas;
+
+        if (this.moduleAction == "update") {
+            this.form.father_info = this.data.student.fatherInfo;
+            this.form.mother_info = this.data.student.motherInfo;
+            this.form.guardian_info = this.data.student.guardianInfo;
+
+            this.form.present_address.address =
+                this.data.student.presentAddress.value;
+            this.form.present_address.area =
+                this.data.student.presentAddress.areaId;
+            this.form.present_address.district =
+                this.data.student.presentAddress.area.districtId;
+            this.form.present_address.division =
+                this.data.student.presentAddress.area.district.divisionId;
+
+            this.form.permanent_address.address =
+                this.data.student.permanentAddress.value;
+            this.form.permanent_address.area =
+                this.data.student.permanentAddress.areaId;
+            this.form.permanent_address.district =
+                this.data.student.permanentAddress.area.districtId;
+            this.form.permanent_address.division =
+                this.data.student.permanentAddress.area.district.divisionId;
+        }
     },
     data() {
         return {
@@ -386,26 +419,38 @@ export default {
             },
             form: this.$inertia.form({
                 name: this.data.student.name,
-                date_of_birth: this.data.student.date_of_birth,
-                birth_certificate: this.data.student.birth_certificate,
-                gender: this.data.student.gender,
+                date_of_birth: this.data.student.dateOfBirth,
+                birth_certificate: this.data.student.birthCertificate,
+                gender:
+                    this.moduleAction == "update"
+                        ? this.data.student.gender
+                        : 0,
                 father_info: {
                     name: "",
-                    comment: "",
                     phone: "",
+                    occupation: "",
+                    relation: "Father",
                 },
                 mother_info: {
                     name: "",
-                    comment: "",
                     phone: "",
+                    occupation: "",
+                    relation: "Mother",
                 },
-                guardianType: 0,
+                guardian_type:
+                    this.moduleAction == "update"
+                        ? this.data.student.guardianType
+                        : 0,
                 guardian_info: {
                     name: "",
-                    comment: "",
                     phone: "",
+                    occupation: "",
+                    relation: "",
                 },
-                is_same_address: 0,
+                is_same_address:
+                    this.moduleAction == "update"
+                        ? this.data.student.isSameAddress
+                        : 0,
                 present_address: {
                     division: "",
                     district: "",

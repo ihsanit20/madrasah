@@ -14,6 +14,9 @@
                 <table-td class="text-left">
                     {{ student.name }}
                 </table-td>
+                <table-td class="text-left">
+                    {{ student.registration }}
+                </table-td>
                 <table-td class="text-center">
                     <div
                         class="flex items-center justify-center gap-1 md:gap-2"
@@ -62,6 +65,7 @@ export default {
             columns: [
                 { title: "ID", align: "left", sticky: true },
                 { title: "Name", align: "left" },
+                { title: "Registration", align: "left" },
                 { title: "Action", align: "center" },
             ],
         };

@@ -16,8 +16,10 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('date_of_birth')->nullable();
+            $table->string('registration')->nullable();
+
             $table->unsignedTinyInteger('gender')->nullable()->comment('1=Male, 2=Female');
+            $table->date('date_of_birth')->nullable();
             $table->string('birth_certificate')->nullable();
 
             $table->unsignedBigInteger('father_info_id')->nullable();

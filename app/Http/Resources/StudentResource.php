@@ -17,6 +17,7 @@ class StudentResource extends JsonResource
         return [
             'id'                    => (int) $this->id,
             'name'                  => (string) ($this->name ?? ''),
+            'registration'          => (string) ($this->registration ?? ''),
             'dateOfBirth'           => (string) ($this->date_of_birth ?? ''),
             'gender'                => (int) ($this->gender ?? 0),
             'genderText'            => (string) ($this->genderText ?? ''),

@@ -52,7 +52,7 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
-        return $this->formatedData($student);
+        // return $this->formatedData($student);
 
         return Inertia::render('Student/Show', [
             'data' => [

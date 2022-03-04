@@ -15,10 +15,13 @@ class AddressResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => (int) $this->id,
-            'value'     => (string) ($this->value ?? ''),
-            'areaId'    => (int) ($this->area_id ?? 0),
-            'area'      => new AreaResource($this->whenLoaded('area')),
+            'id'            => (int) $this->id,
+            'value'         => (string) ($this->value ?? ''),
+            'areaId'        => (int) ($this->area_id ?? 0),
+            'areaName'      => (string) ($this->area->name ?? ''),
+            'districtName'  => (string) ($this->area->district->name ?? ''),
+            'divisionName'  => (string) ($this->area->district->division->name ?? ''),
+            'area'          => new AreaResource($this->whenLoaded('area')),
         ];
     }
 }

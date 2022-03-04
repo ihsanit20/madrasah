@@ -21,6 +21,10 @@ class Student extends Model
         1 => 'Male',
         2 => 'Female',
     ];
+    
+    protected $casts = [
+        'date_of_birth' => 'date',
+    ];
 
     public static function getGenderArrayData()
     {

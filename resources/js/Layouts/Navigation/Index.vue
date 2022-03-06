@@ -33,6 +33,17 @@
             </span>
         </nav-link>
 
+        <nav-link
+            :href="route('admissions.index')"
+            :active="route().current('admissions.*')"
+            class="flex items-center gap-2"
+        >
+            <AdmissionSvg class="h-5 w-5" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                Admissions
+            </span>
+        </nav-link>
+
         <nav-link href="/" class="flex items-center gap-2">
             <MoneyReceiptSvg class="h-5 w-5" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -84,6 +95,7 @@ import { MenuIcon } from "@heroicons/vue/outline";
 import {
     ClassSvg,
     StudentSvg,
+    AdmissionSvg,
     MoneyReceiptSvg,
     PaymentSvg,
     TeacherSvg,
@@ -98,6 +110,7 @@ export default {
         MenuIcon,
         ClassSvg,
         StudentSvg,
+        AdmissionSvg,
         MoneyReceiptSvg,
         PaymentSvg,
         TeacherSvg,

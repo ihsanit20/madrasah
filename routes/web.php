@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -14,6 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resources([
         'classes'       => ClassesController::class,
         'students'      => StudentController::class,
+        'admissions'    => AdmissionController::class,
     ]);
 
 });

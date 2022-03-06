@@ -40,17 +40,15 @@ class {{ class }} extends Controller
 
     public function show({{ model }} ${{ modelVariable }})
     {
-        {{ model }}Resource::withoutWrapping();
-
         return Inertia::render('{{ model }}/Show', [
-            'data' => $this->formatedData($modelVariable)
+            'data' => [
+                '{{ modelVariable }}' => $this->formatedData(${{ modelVariable }})
+            ]
         ]);
     }
 
     public function edit({{ model }} ${{ modelVariable }})
     {
-        {{ model }}Resource::withoutWrapping();
-
         return Inertia::render('{{ model }}/Edit', [
             'data' => $this->data(${{ modelVariable }})
         ]);
@@ -74,18 +72,18 @@ class {{ class }} extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
-    protected function data({{ modelVariable }})
+    protected function data(${{ modelVariable }})
     {
         return [
-            '{{ modelVariable }}' => $this->formatedData({{ modelVariable }}),
+            '{{ modelVariable }}' => $this->formatedData(${{ modelVariable }}),
         ];
     }
 
-    protected function formatedData({{ modelVariable }})
+    protected function formatedData(${{ modelVariable }})
     {
         {{ model }}Resource::withoutWrapping();
 
-        return new {{ model }}Resource({{ modelVariable }});
+        return new {{ model }}Resource(${{ modelVariable }});
     }
 
     protected function getFilterProperty()

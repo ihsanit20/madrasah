@@ -1,4 +1,5 @@
 import AdminSvg from "./Admin.vue";
+import AdmissionSvg from "./Admission.vue";
 import ClassSvg from "./Class.vue";
 import MoneyReceiptSvg from "./MoneyReceipt.vue";
 import NoticeSvg from "./Notice.vue";
@@ -9,6 +10,7 @@ import TeacherSvg from "./Teacher.vue";
 
 export {
     AdminSvg,
+    AdmissionSvg,
     ClassSvg,
     MoneyReceiptSvg,
     NoticeSvg,

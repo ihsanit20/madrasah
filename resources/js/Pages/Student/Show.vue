@@ -113,10 +113,7 @@
 <script>
 import AppLayout from "@/Layouts/App.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import ShowTableRow from "@/Components/ShowTableRow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
-import SimpleTable from "@/Components/SimpleTable.vue";
-import TableTd from "@/Components/TableTd.vue";
 import FormHeading from "@/Components/FormHeading.vue";
 import InlineData from "@/Components/InlineData.vue";
 
@@ -124,10 +121,7 @@ export default {
     components: {
         AppLayout,
         Head,
-        ShowTableRow,
         ActionButtonEdit,
-        SimpleTable,
-        TableTd,
         FormHeading,
         InlineData,
     },

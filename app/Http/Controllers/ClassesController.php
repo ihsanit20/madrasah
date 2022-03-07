@@ -48,11 +48,9 @@ class ClassesController extends Controller
 
     public function show(Classes $class)
     {
-        ClassesResource::withoutWrapping();
-
         return Inertia::render('Classes/Show', [
             'data' => [
-                'classes' => new ClassesResource($class),
+                'classes' => $this->formatedData($class),
             ]
         ]);
     }
@@ -86,14 +84,19 @@ class ClassesController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
-    private function data($class)
+    protected function data($class)
     {
-        ClassesResource::withoutWrapping();
-        
         return [
-            'classes' => new ClassesResource($class),
+            'classes' => $this->formatedData($class),
             'periods' => Fee::getPeriod(),
         ];
+    }
+
+    protected function formatedData($class)
+    {
+        ClassesResource::withoutWrapping();
+
+        return new ClassesResource($class);
     }
 
     private function getFilterProperty()

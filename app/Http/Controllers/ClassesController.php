@@ -96,7 +96,10 @@ class ClassesController extends Controller
     {
         ClassesResource::withoutWrapping();
 
-        return new ClassesResource($class);
+        return new ClassesResource($class->load(
+            'subjects',
+            'fees',
+        ));
     }
 
     private function getFilterProperty()

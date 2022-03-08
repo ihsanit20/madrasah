@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdmissionResource;
+use App\Http\Resources\ClassesResource;
+use App\Http\Resources\StudentResource;
 use App\Models\Admission;
+use App\Models\Classes;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,6 +32,8 @@ class AdmissionController extends Controller
 
     public function create()
     {
+        //return $this->data(new Admission());
+        
         return Inertia::render('Admission/Create', [
             'data' => $this->data(new Admission())
         ]);
@@ -80,6 +86,8 @@ class AdmissionController extends Controller
     {
         return [
             'admission' => $this->formatedData($admission),
+            'classes'   => ClassesResource::collection(Classes::get()),
+            'students'  => StudentResource::collection(Student::get()),
         ];
     }
 

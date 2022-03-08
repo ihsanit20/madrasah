@@ -19,8 +19,12 @@ class ClassesResource extends JsonResource
             'name'          => (string) ($this->name ?? ''),
             'code'          => (string) ($this->code ?? ''),
             'description'   => (string) ($this->description ?? ''),
-            'subjects'      => SubjectResource::collection($this->subjects),
-            'fees'          => FeeResource::collection($this->fees),
+            'totalSubject'  => (int) ($this->total_subject ?? 0),
+            'totalFee'      => (int) ($this->total_fee ?? 0),
+            // 'subjects'      => SubjectResource::collection($this->subjects),
+            // 'fees'          => FeeResource::collection($this->fees),
+            'subjects'      => SubjectResource::collection($this->whenLoaded('subjects')),
+            'fees'          => FeeResource::collection($this->whenLoaded('fees')),
         ];
     }
 }

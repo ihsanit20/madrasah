@@ -15,10 +15,10 @@
                     {{ classes.name }}
                 </table-td>
                 <table-td class="text-center">
-                    {{ Object.keys(classes.subjects).length }}
+                    {{ classes.totalSubject }}
                 </table-td>
                 <table-td class="text-center">
-                    {{ Object.keys(classes.fees).length }}
+                    {{ classes.totalFee }}
                 </table-td>
                 <table-td class="text-center">
                     <div

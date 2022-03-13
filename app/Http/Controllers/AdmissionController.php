@@ -32,7 +32,7 @@ class AdmissionController extends Controller
 
     public function create()
     {
-        //return $this->data(new Admission());
+        // return $this->data(new Admission());
         
         return Inertia::render('Admission/Create', [
             'data' => $this->data(new Admission())
@@ -41,6 +41,8 @@ class AdmissionController extends Controller
 
     public function store(Request $request)
     {
+        return $this->validatedData($request);
+
         $admission = Admission::create($this->validatedData($request));
 
         return redirect()
@@ -66,6 +68,8 @@ class AdmissionController extends Controller
 
     public function update(Request $request, Admission $admission)
     {
+        return $this->validatedData($request, $admission->id);
+
         $admission->update($this->validatedData($request, $admission->id));
 
         return redirect()
@@ -87,7 +91,7 @@ class AdmissionController extends Controller
         return [
             'admission' => $this->formatedData($admission),
             'classes'   => ClassesResource::collection(Classes::get()),
-            'students'  => StudentResource::collection(Student::get()),
+            'students'  => StudentResource::collection(Student::with('father_info')->get()),
         ];
     }
 
@@ -108,7 +112,23 @@ class AdmissionController extends Controller
     protected function validatedData($request, $id = '')
     {
         return $request->validate([
-            //
+            'student_id' => [
+                'required',
+                'numeric',
+            ],
+            'class_id' => [
+                'required',
+                'numeric',
+            ],
+            'roll' => [
+                'required',
+                'numeric',
+            ],
+            'year' => [
+                'required',
+                'numeric',
+            ],
+            'resident' => '',
         ]);
     }
 

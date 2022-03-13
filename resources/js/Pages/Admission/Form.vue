@@ -1,21 +1,55 @@
 <template>
-    <div class="w-full max-w-3xl rounded border bg-white p-4 shadow">
+    <div class="w-full max-w-xs rounded border bg-white p-4 shadow">
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="">
-            <div class="grid gap-4 md:grid-cols-3">
-                <form-group label="Student">
+            <div class="grid gap-4 md:grid-cols-2">
+                <form-group label="Class" class="col-span-full">
+                    <Select class="block w-full" v-model="form.class_id">
+                        <optgroup
+                            v-for="classes in data.classes"
+                            :key="classes.id"
+                            :label="`Code: ${classes.code}`"
+                        >
+                            <option :value="classes.id">
+                                {{ classes.name }}
+                            </option>
+                        </optgroup>
+                    </Select>
+                </form-group>
+
+                <form-group label="Student" class="col-span-full">
                     <Select class="block w-full" v-model="form.student_id">
                         <optgroup
                             v-for="student in data.students"
                             :key="student.id"
-                            :label="student.registration"
+                            :label="`Father: ${student.fatherInfo.name}`"
                         >
                             <option :value="student.id">
                                 {{ student.name }}
                             </option>
                         </optgroup>
                     </Select>
+                </form-group>
+
+                <form-group label="Year">
+                    <Select class="block w-full" v-model="form.year">
+                        <option
+                            v-for="(year, index) in years"
+                            :key="index"
+                            :value="year"
+                        >
+                            {{ year }}
+                        </option>
+                    </Select>
+                </form-group>
+
+                <form-group label="Roll">
+                    <Input
+                        type="number"
+                        class="block w-full"
+                        v-model="form.roll"
+                    />
                 </form-group>
             </div>
 
@@ -65,7 +99,10 @@ export default {
             form: this.$inertia.form({
                 student_id: "",
                 class_id: "",
+                year: "",
+                roll: "",
             }),
+            years: [2020, 2021, 2022, 2023],
         };
     },
     methods: {

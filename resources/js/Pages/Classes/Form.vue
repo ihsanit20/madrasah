@@ -28,7 +28,6 @@
                         class="block w-full"
                         v-model="form.description"
                         rows="6"
-                        required
                     ></Textarea>
                 </form-group>
 

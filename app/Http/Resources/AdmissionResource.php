@@ -17,9 +17,12 @@ class AdmissionResource extends JsonResource
         return [
             'id'            => (int) $this->id,
             'roll'          => (int) ($this->roll ?? 0),
+            'studentId'     => (int) ($this->student_id ?? ''),
             'studentName'   => (string) ($this->student->name ?? ''),
+            'classId'       => (int) ($this->class_id ?? ''),
             'className'     => (string) ($this->class->name ?? ''),
             'year'          => (int) ($this->year ?? 0),
+            'resident'      => (boolean) ($this->resident ?? 0),
         ];
     }
 }

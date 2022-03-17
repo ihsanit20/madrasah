@@ -5,7 +5,11 @@
         <form @submit.prevent="submit" class="">
             <div class="grid gap-4 md:grid-cols-2">
                 <form-group label="Class" class="col-span-full">
-                    <Select class="block w-full" v-model="form.class_id">
+                    <Select
+                        required
+                        class="block w-full"
+                        v-model="form.class_id"
+                    >
                         <optgroup
                             v-for="classes in data.classes"
                             :key="classes.id"
@@ -19,7 +23,11 @@
                 </form-group>
 
                 <form-group label="Student" class="col-span-full">
-                    <Select class="block w-full" v-model="form.student_id">
+                    <Select
+                        required
+                        class="block w-full"
+                        v-model="form.student_id"
+                    >
                         <optgroup
                             v-for="student in data.students"
                             :key="student.id"
@@ -33,7 +41,7 @@
                 </form-group>
 
                 <form-group label="Year">
-                    <Select class="block w-full" v-model="form.year">
+                    <Select required class="block w-full" v-model="form.year">
                         <option
                             v-for="(year, index) in years"
                             :key="index"
@@ -46,11 +54,26 @@
 
                 <form-group label="Roll">
                     <Input
+                        required
                         type="number"
                         class="block w-full"
                         v-model="form.roll"
                     />
                 </form-group>
+
+                <label
+                    for="resident"
+                    class="col-span-full flex items-center gap-2"
+                >
+                    <Input
+                        id="resident"
+                        type="checkbox"
+                        @change="residentHandler"
+                        :value="1"
+                        :checked="form.resident"
+                    />
+                    Resident
+                </label>
             </div>
 
             <hr class="my-4 w-full" />
@@ -94,15 +117,24 @@ export default {
             default: {},
         },
     },
+    created() {
+        let year = new Date().getFullYear() + 1;
+
+        do {
+            this.years.push(year);
+            year--;
+        } while (year >= 2020);
+    },
     data() {
         return {
             form: this.$inertia.form({
-                student_id: "",
-                class_id: "",
-                year: "",
-                roll: "",
+                student_id: this.data.admission.studentId || "",
+                class_id: this.data.admission.classId || "",
+                year: this.data.admission.year || "",
+                roll: this.data.admission.roll || "",
+                resident: this.data.admission.resident ? 1 : 0,
             }),
-            years: [2020, 2021, 2022, 2023],
+            years: [],
         };
     },
     methods: {
@@ -115,6 +147,9 @@ export default {
                     this.route("admissions.update", this.data.admission.id)
                 );
             }
+        },
+        residentHandler(event) {
+            this.form.resident = event.target.checked ? 1 : 0;
         },
     },
 };

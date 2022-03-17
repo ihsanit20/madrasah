@@ -10,6 +10,7 @@ use App\Models\Admission;
 use App\Models\Classes;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class AdmissionController extends Controller
@@ -32,8 +33,6 @@ class AdmissionController extends Controller
 
     public function create()
     {
-        // return $this->data(new Admission());
-        
         return Inertia::render('Admission/Create', [
             'data' => $this->data(new Admission())
         ]);
@@ -41,8 +40,6 @@ class AdmissionController extends Controller
 
     public function store(Request $request)
     {
-        return $this->validatedData($request);
-
         $admission = Admission::create($this->validatedData($request));
 
         return redirect()
@@ -68,8 +65,6 @@ class AdmissionController extends Controller
 
     public function update(Request $request, Admission $admission)
     {
-        return $this->validatedData($request, $admission->id);
-
         $admission->update($this->validatedData($request, $admission->id));
 
         return redirect()
@@ -112,7 +107,7 @@ class AdmissionController extends Controller
     protected function validatedData($request, $id = '')
     {
         return $request->validate([
-            'student_id' => [
+            'year' => [
                 'required',
                 'numeric',
             ],
@@ -120,13 +115,21 @@ class AdmissionController extends Controller
                 'required',
                 'numeric',
             ],
+            'student_id' => [
+                'required',
+                'numeric',
+                Rule::unique(Admission::class, 'student_id')
+                    ->where('year', $request->year)
+                    ->where('class_id', $request->class_id)
+                    ->ignore($id),
+            ],
             'roll' => [
                 'required',
                 'numeric',
-            ],
-            'year' => [
-                'required',
-                'numeric',
+                Rule::unique(Admission::class, 'roll')
+                    ->where('year', $request->year)
+                    ->where('class_id', $request->class_id)
+                    ->ignore($id),
             ],
             'resident' => '',
         ]);

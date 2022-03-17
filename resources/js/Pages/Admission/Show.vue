@@ -2,7 +2,7 @@
     <Head title="Admission" />
 
     <app-layout pageTitle="View Admission">
-        <div class="max-w-2xl rounded border bg-white p-3 shadow md:p-4">
+        <div class="max-w-md rounded border bg-white p-3 shadow md:p-4">
             <div class="flex items-end justify-end">
                 <div class="flex items-center gap-2">
                     <action-button-edit
@@ -10,16 +10,21 @@
                     />
                 </div>
             </div>
-            <form-heading class="mb-2">Basic Information</form-heading>
-            <div class="grid md:grid-cols-2">
+            <form-heading class="mb-2">Admission Info</form-heading>
+            <div class="grid">
                 <inline-data
-                    title="Student's Name :"
-                    :value="data.admission.studentName"
-                />
-                <inline-data
-                    title="Student's Name :"
+                    title="Class :"
                     :value="data.admission.className"
                 />
+                <inline-data
+                    title="Student :"
+                    :value="data.admission.studentName"
+                />
+                <inline-data title="Roll :" :value="data.admission.roll" />
+
+                <inline-data title="Year :" :value="data.admission.year" />
+
+                <inline-data v-if="data.admission.resident" value="Resident" />
             </div>
         </div>
     </app-layout>

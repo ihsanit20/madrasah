@@ -13,9 +13,10 @@ class DashboardController extends Controller
     public function index() 
     {
         $counter = [
-            "classes"       => Classes::count(),
-            "students"      => Student::count(),
-            "admissions"    => Admission::count(),
+            "classes"           => Classes::count(),
+            "students"          => Student::count(),
+            "admissions"        => Admission::count(),
+            // "money-receipts"    => MoneyReceipt::count(),
         ];
 
         return Inertia::render('Dashboard/Index', [

@@ -21,7 +21,6 @@ class FeeResource extends JsonResource
             'periodName'    => (string) ($this->period_name ?? ''),
             'amount'        => (double) ($this->amount ?? 0),
             'classId'       => (int) ($this->class_id ?? 0),
-            'className'     => (string) ($this->class->name ?? ''),
         ];;
     }
 }

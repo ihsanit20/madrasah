@@ -21,6 +21,7 @@ class ClassesResource extends JsonResource
             'description'   => (string) ($this->description ?? ''),
             'totalSubject'  => (int) ($this->total_subject ?? 0),
             'totalFee'      => (int) ($this->total_fee ?? 0),
+            'totalStudent'  => (int) ($this->total_student ?? 0),
             'subjects'      => SubjectResource::collection($this->whenLoaded('subjects')),
             'fees'          => FeeResource::collection($this->whenLoaded('fees')),
         ];

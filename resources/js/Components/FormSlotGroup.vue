@@ -6,7 +6,7 @@
                 :key="index"
                 class="flex items-center gap-2 rounded border border-dashed border-gray-300 px-2 py-3"
             >
-                <slot :item="item" />
+                <slot :item="item" :index="index" :iteration="index + 1" />
                 <div class="flex-grow-0">
                     <TrashIcon
                         @click="removeSlot(index)"

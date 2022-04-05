@@ -1,7 +1,7 @@
 <template>
     <Head title="Student" />
 
-    <app-layout pageTitle="Edit Student">
+    <app-layout pageTitle="Admission form">
         <form-component :data="data" module-action="update" />
     </app-layout>
 </template>

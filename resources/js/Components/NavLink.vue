@@ -1,5 +1,9 @@
 <template>
-    <Link :href="href" class="py-1 text-sm font-medium" :class="classes">
+    <Link
+        :href="href"
+        class="py-1.5 text-sm font-medium text-gray-500 md:text-lg"
+        :class="classes"
+    >
         <slot />
     </Link>
 </template>

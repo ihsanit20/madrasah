@@ -26,12 +26,11 @@
 
             <simple-table
                 class="py-3"
-                :serialColumn="true"
                 :columns="subjectColumns"
                 :collections="data.classes.subjects"
             >
                 <template #default="{ item: subject }">
-                    <table-td class="text-left">
+                    <table-td class="text-center">
                         {{ subject.code }}
                     </table-td>
                     <table-td class="text-left">
@@ -42,7 +41,6 @@
 
             <simple-table
                 class="py-3"
-                :serialColumn="true"
                 :columns="feeColumns"
                 :collections="data.classes.fees"
             >
@@ -88,8 +86,10 @@ export default {
     data() {
         return {
             subjectColumns: [
-                { title: "Code", align: "left" },
-                { title: "Name", align: "left" },
+                { title: "Code", align: "center" },
+                { title: "Subject", align: "left" },
+                {},
+                {},
             ],
             feeColumns: [
                 { title: "Fee", align: "left" },

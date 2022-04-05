@@ -16,7 +16,7 @@ class ClassesController extends Controller
     public function index()
     {
         $collections = Classes::query()
-            ->latest();
+            ->oldest('code');
 
         return Inertia::render('Classes/Index', [
             'data' => [

@@ -1,19 +1,19 @@
 <template>
     <div
-        class="mx-auto flex max-w-6xl items-center justify-between gap-2 py-2 px-2"
+        class="mx-auto flex max-w-6xl items-center justify-between gap-2 py-2 px-2 md:py-3"
     >
         <MenuIcon @click="navigationController" class="h-6 w-6 md:hidden" />
 
         <Link
             :href="route($page.props.auth.user ? 'dashboard' : 'home')"
-            class="flex items-center gap-2"
+            class="flex h-full items-center gap-2 md:gap-4"
         >
-            <application-logo class="h-7 md:h-10" />
+            <application-logo class="h-full" />
 
             <h1
-                class="hidden text-xs font-bold text-gray-700 md:block md:text-lg"
+                class="hidden text-xs font-semibold text-gray-600 md:block md:text-2xl"
             >
-                Madrasha Name Here
+                Madrasah Management
             </h1>
         </Link>
 

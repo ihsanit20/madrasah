@@ -78,4 +78,9 @@ class Student extends Model
     {
         return $this->belongsTo(Address::class, 'permanent_address_id');
     }
+
+    public function admissions()
+    {
+        return $this->hasMany(Admission::class);
+    }
 }

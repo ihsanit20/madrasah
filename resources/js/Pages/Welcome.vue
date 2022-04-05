@@ -44,8 +44,8 @@
                 <span class="text-gray-700">R</span>
                 <span class="text-gray-400">A</span>
                 <span class="text-gray-300">S</span>
-                <span class="text-gray-50">H</span>
-                <span class="text-white">A</span>
+                <span class="text-gray-50">A</span>
+                <span class="text-white">H</span>
             </div>
         </div>
     </div>

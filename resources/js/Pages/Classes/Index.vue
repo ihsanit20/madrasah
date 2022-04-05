@@ -8,29 +8,25 @@
             :columns="columns"
         >
             <template #default="{ item: classes }">
-                <table-td class="text-left">
-                    {{ classes.id }}
+                <table-td class="text-center">
+                    {{ classes.code }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ classes.name }}
+                    <Link
+                        :href="route('classes.show', classes.id)"
+                        class="text-sky-600 hover:underline"
+                    >
+                        {{ classes.name }}
+                    </Link>
+                </table-td>
+                <table-td class="text-center">
+                    {{ classes.totalStudent }}
                 </table-td>
                 <table-td class="text-center">
                     {{ classes.totalSubject }}
                 </table-td>
                 <table-td class="text-center">
                     {{ classes.totalFee }}
-                </table-td>
-                <table-td class="text-center">
-                    <div
-                        class="flex items-center justify-center gap-1 md:gap-2"
-                    >
-                        <action-button-show
-                            :href="route('classes.show', classes.id)"
-                        />
-                        <action-button-edit
-                            :href="route('classes.edit', classes.id)"
-                        />
-                    </div>
                 </table-td>
             </template>
         </data-table>
@@ -66,11 +62,11 @@ export default {
     data() {
         return {
             columns: [
-                { title: "ID", align: "left" },
+                { title: "Code", align: "center" },
                 { title: "Name", align: "left" },
+                { title: "Students", align: "center" },
                 { title: "Subjects", align: "center" },
                 { title: "Fees", align: "center" },
-                { title: "Action", align: "center" },
             ],
         };
     },

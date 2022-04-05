@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AreaResource;
+use App\Http\Resources\ClassesResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Address;
+use App\Models\Admission;
 use App\Models\Area;
+use App\Models\Classes;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Guardian;
@@ -43,6 +46,12 @@ class StudentController extends Controller
             $this->validatedData($request)
             + $this->storeGuardian($request)
             + $this->storeAddress($request)
+        );
+
+        $student->admissions()->create(
+            $this->validatedAdmissionData($request)
+            + $this->getArrayOfNewClassRoll($student->id, $request->class_id)
+            + $this->getArrayOfSession($request->session)
         );
 
         return redirect()
@@ -95,6 +104,7 @@ class StudentController extends Controller
             'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
             'districts' => DistrictResource::collection(District::orderBy('name')->get()),
             'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
+            'classes'   => ClassesResource::collection(Classes::orderBy('code')->get()),
         ];
     }
 
@@ -130,6 +140,21 @@ class StudentController extends Controller
             'date_of_birth' => '',
             'gender' => '',
             'birth_certificate' => '',
+        ]);
+    }
+
+    protected function validatedAdmissionData($request, $id = '')
+    {
+        return $request->validate([
+            // 'session' => [
+            //     'required',
+            //     'string',
+            // ],
+            'class_id' => [
+                'required',
+                'numeric',
+            ],
+            'resident' => '',
         ]);
     }
 
@@ -221,6 +246,42 @@ class StudentController extends Controller
         );
 
         return $response->id ?? null;
+    }
+
+    protected function getArrayOfNewClassRoll($student_id, $class_id, $session = null)
+    {
+        return [
+            "roll" => $this->getLastClassRoll($student_id, $class_id, $session) + 1
+        ];
+    }
+
+    protected function getLastClassRoll($student_id, $class_id, $session = null)
+    {
+        $session = $session_id ?? $this->getCurrentSession();
+
+        $last_class_roll = 0;
+
+        $last_class_roll = Admission::query()
+            ->where([
+                'student_id'    => $student_id,
+                'class_id'      => $class_id,
+                'session'       => $session
+            ])
+            ->value('roll');
+
+        return $last_class_roll;
+    }
+
+    protected function getCurrentSession()
+    {
+        return "Ramadan 1443 - Shaban 1444";
+    }
+
+    protected function getArrayOfSession($session = null)
+    {
+        return [
+            "session" => $session ?? $this->getCurrentSession()
+        ];
     }
 
 }

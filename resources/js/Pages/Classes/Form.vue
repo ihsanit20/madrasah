@@ -13,7 +13,7 @@
                             required
                         />
                     </form-group>
-                    <form-group class="w-14" label="Code">
+                    <form-group class="w-24" label="Class Code">
                         <Input
                             type="number"
                             class="block w-full text-center"
@@ -25,9 +25,8 @@
 
                 <form-group class="w-full" label="Description">
                     <Textarea
-                        class="block w-full"
+                        class="block h-40 w-full text-xs md:h-32 md:text-sm"
                         v-model="form.description"
-                        rows="6"
                     ></Textarea>
                 </form-group>
 
@@ -37,7 +36,7 @@
                     :addSlotMethod="addSubjectSlot"
                 >
                     <template #default="{ item: subject }">
-                        <form-group class="w-20" label="Code">
+                        <form-group class="w-20" label="Code" :absolute="true">
                             <Input
                                 type="number"
                                 class="block w-full text-center"
@@ -45,7 +44,11 @@
                                 required
                             />
                         </form-group>
-                        <form-group class="flex-grow" label="Name">
+                        <form-group
+                            class="flex-grow"
+                            label="Name"
+                            :absolute="true"
+                        >
                             <Input
                                 type="text"
                                 class="block w-full"
@@ -65,6 +68,7 @@
                             <form-group
                                 class="w-full flex-grow md:w-auto"
                                 label="Fee Name"
+                                :absolute="true"
                             >
                                 <Input
                                     type="text"
@@ -95,7 +99,11 @@
                                         </option>
                                     </Select>
                                 </form-group>
-                                <form-group class="w-20" label="Amount">
+                                <form-group
+                                    class="w-20"
+                                    label="Amount"
+                                    :absolute="true"
+                                >
                                     <Input
                                         type="number"
                                         class="block w-full text-center"

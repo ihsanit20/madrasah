@@ -9,7 +9,7 @@
                             type="button"
                             class="flex items-center gap-1 rounded-md border border-transparent bg-white py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                         >
-                            <UserCircleIcon class="h-5 w-5" />
+                            <UserCircleIcon class="h-5 w-5 md:h-8 md:w-8" />
 
                             <span class="-mb-0.5 hidden md:block">
                                 {{ $page.props.auth.user.name }}

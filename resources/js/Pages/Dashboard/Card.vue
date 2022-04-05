@@ -1,7 +1,7 @@
 <template>
     <Link
         :href="href"
-        class="flex items-center gap-4 overflow-hidden rounded bg-white shadow-sm md:p-4"
+        class="flex items-center gap-3 overflow-hidden rounded bg-white p-3 shadow-sm md:p-6"
     >
         <div class="text-5xl text-gray-600">
             {{ counter }}

@@ -60,6 +60,7 @@
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-4 pb-2 md:grid-cols-3"
                     label="Father's info"
+                    :absolute="true"
                 >
                     <form-group class="w-full" label="Name">
                         <Input
@@ -87,6 +88,7 @@
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-4 pb-2 md:grid-cols-3"
                     label="Mother's info"
+                    :absolute="true"
                 >
                     <form-group class="w-full" label="Name">
                         <Input
@@ -118,6 +120,7 @@
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-3 pb-2"
                     label="Financial Guardian"
+                    :absolute="true"
                 >
                     <div
                         class="col-span-full flex items-center justify-center gap-3 md:justify-start"
@@ -325,6 +328,37 @@
                 </div>
             </form-group>
 
+            <form-heading class="mt-6 mb-2">Expectation</form-heading>
+            <div class="grid gap-2 md:grid-cols-2">
+                <form-group label="Class">
+                    <Select
+                        required
+                        class="block w-full"
+                        v-model="form.class_id"
+                    >
+                        <option value="">--Select Class--</option>
+                        <option
+                            v-for="classes in data.classes"
+                            :key="classes.id"
+                            :value="classes.id"
+                        >
+                            {{ classes.name }}
+                        </option>
+                    </Select>
+                </form-group>
+                <form-group label="Student Type">
+                    <Select
+                        required
+                        class="block w-full"
+                        v-model="form.resident"
+                    >
+                        <option value="">--Select Type--</option>
+                        <option :value="0">Non-Resident</option>
+                        <option :value="1">Resident</option>
+                    </Select>
+                </form-group>
+            </div>
+
             <hr class="my-4 w-full" />
 
             <div class="flex items-center justify-end">
@@ -463,6 +497,8 @@ export default {
                     area: "",
                     address: "",
                 },
+                class_id: "",
+                resident: "",
             }),
         };
     },

@@ -32,11 +32,9 @@
         </div>
     </header>
 
-    <div class="mx-auto flex max-w-6xl">
-        <main class="flex-shrink flex-grow space-y-4 overflow-auto px-2">
-            <slot />
-        </main>
-    </div>
+    <main class="flex-shrink flex-grow space-y-4 overflow-auto px-2">
+        <slot />
+    </main>
 
     <footer>
         <app-footer />

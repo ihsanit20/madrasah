@@ -9,7 +9,7 @@
         >
             **** স্ক্রলিং নোটিশ হবে এখানে *****
         </div>
-        <section class="grid gap-4 md:grid-cols-4">
+        <section class="mx-auto grid max-w-6xl gap-4 md:grid-cols-4">
             <div class="grid gap-4 md:col-span-3">
                 <div
                     class="relative h-80 w-full overflow-hidden rounded-lg bg-red-600 md:h-96"
@@ -44,12 +44,12 @@
                     </div>
                 </div>
                 <div
-                    class="rounded-lg border border-gray-700 bg-white p-4 text-center"
+                    class="rounded-lg border border-gray-400 bg-white p-4 text-center"
                 >
                     <h3 class="text-4xl font-bold text-rose-600">
                         নোটিশ বোর্ড
                     </h3>
-                    <p class="text-justify text-lg">
+                    <p class="pt-3 text-justify text-lg">
                         বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি জনপদের নাম।
                         এ দেশ তথ্য গোটা ভারত উপমহাদেশের আছে একটি গৌরবোজ্জ্বল
                         অতীত। এখানে নেতৃত্ব দিয়েছেন অনেক সৎ, যোগ্য এবং সুমহান
@@ -70,7 +70,7 @@
             </div>
             <div class="grid gap-4">
                 <div
-                    class="rounded-lg border border-gray-700 bg-white p-4 text-center"
+                    class="rounded-lg border border-gray-400 bg-white p-4 text-center"
                 >
                     <h3 class="text-2xl font-bold">অধ্যক্ষের বাণী</h3>
                     <p class="text-justify text-lg">
@@ -84,13 +84,13 @@
                 </div>
                 <div class="">
                     <arabic-calender
-                        class="w-full rounded-lg border border-gray-700"
+                        class="w-full rounded-lg border border-gray-400"
                     />
                 </div>
             </div>
         </section>
 
-        <section class="pt-4 pb-4 md:pt-8 md:pb-8">
+        <section class="mx-auto max-w-6xl pt-4 pb-4 md:pt-8 md:pb-8">
             <h2 class="my-6 text-center text-4xl font-bold text-blue-900">
                 আমাদের বিভাগসমূহ
             </h2>
@@ -168,8 +168,8 @@
             </div>
         </section>
 
-        <section class="pt-4 pb-4 md:pt-8 md:pb-8">
-            <div class="rounded-lg border border-gray-700 bg-white">
+        <section class="mx-auto max-w-6xl pt-4 pb-4 md:pt-8 md:pb-8">
+            <div class="rounded-lg border border-gray-400 bg-white">
                 <h2 class="mt-8 text-center text-4xl font-bold text-blue-900">
                     আমাদের কথা
                 </h2>
@@ -194,7 +194,7 @@
 
         <section class="bg-blue-900 pt-4 pb-4 text-white md:pt-8 md:pb-8">
             <div
-                class="flex flex-col items-center justify-between gap-4 px-8 py-4 text-justify text-lg md:flex-row"
+                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-8 py-4 text-justify text-lg md:flex-row"
             >
                 <div
                     class="order-2 flex-1 shrink grow space-y-2 text-center md:order-1 md:text-left"

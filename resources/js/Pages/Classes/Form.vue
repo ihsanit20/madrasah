@@ -25,7 +25,7 @@
 
                 <form-group class="w-full" label="Description">
                     <Textarea
-                        class="block h-40 w-full text-xs md:h-32 md:text-sm"
+                        class="block h-40 w-full text-sm md:h-32 md:text-lg"
                         v-model="form.description"
                     ></Textarea>
                 </form-group>

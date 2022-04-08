@@ -2,7 +2,7 @@
     <div
         class="mx-auto flex max-w-6xl items-center justify-between gap-2 py-2 px-2 md:py-3"
     >
-        <MenuIcon @click="navigationController" class="h-6 w-6 md:hidden" />
+        <!-- <MenuIcon @click="navigationController" class="h-6 w-6 md:hidden" /> -->
 
         <Link
             :href="route($page.props.auth.user ? 'dashboard' : 'home')"
@@ -11,15 +11,15 @@
             <application-logo class="h-full" />
 
             <h1
-                class="hidden text-xs font-semibold text-gray-600 md:block md:text-2xl"
+                class="hidden text-xs font-bold text-blue-900 md:block md:text-4xl"
             >
-                Madrasah Management
+                মাদরাসা সায়্যিদাতুল জান্নাত (রা.)
             </h1>
         </Link>
 
-        <search />
+        <!-- <search /> -->
 
-        <account />
+        <!-- <account /> -->
     </div>
 </template>
 

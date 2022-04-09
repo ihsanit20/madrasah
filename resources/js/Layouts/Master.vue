@@ -1,13 +1,13 @@
 <template>
-    <header class="sticky top-0 z-40 bg-white shadow-sm">
+    <header class="sticky top-0 z-40 overflow-hidden bg-white shadow-sm">
         <div
-            class="mx-auto flex max-w-6xl items-center justify-between gap-2 py-2 px-2 md:py-3"
+            class="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 py-2 px-2 md:py-3"
         >
             <Link
                 :href="route($page.props.auth.user ? 'dashboard' : 'home')"
-                class="flex h-full items-center gap-2 md:gap-4"
+                class="flex items-center gap-2 md:gap-4"
             >
-                <application-logo class="h-20" />
+                <application-logo class="h-12 md:h-20" />
 
                 <h1
                     class="hidden text-xs font-bold text-blue-900 md:block md:text-4xl"
@@ -16,19 +16,20 @@
                 </h1>
             </Link>
 
-            <dir class="flex gap-4">
+            <div class="flex gap-4">
                 <Link
-                    class="rounded-lg bg-orange-500 px-8 py-1.5 text-lg font-semibold text-white"
+                    href="#"
+                    class="w-28 rounded-lg bg-orange-500 py-1.5 text-center text-sm font-semibold text-white md:w-40 md:text-lg"
                 >
                     ভর্তির আবেদন
                 </Link>
                 <Link
                     :href="route('login')"
-                    class="rounded-lg bg-blue-900 px-8 py-1.5 text-lg font-semibold text-white"
+                    class="w-28 rounded-lg bg-blue-900 py-1.5 text-center text-sm font-semibold text-white md:w-40 md:text-lg"
                 >
                     লগইন
                 </Link>
-            </dir>
+            </div>
         </div>
     </header>
 

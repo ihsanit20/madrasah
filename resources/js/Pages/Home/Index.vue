@@ -3,11 +3,24 @@
 
     <app-layout>
         <div
-            class="bg-rose-600 py-2 text-white"
+            class="overflow-hidden bg-rose-600 py-2 text-white"
             behavior="scroll"
             scrollamount="5"
         >
-            **** স্ক্রলিং নোটিশ হবে এখানে *****
+            <div class="mx-auto w-full max-w-6xl overflow-hidden">
+                <div
+                    class="mx-auto w-full max-w-5xl animate-marquee-20 space-x-8 overflow-hidden whitespace-nowrap md:animate-marquee-40"
+                >
+                    <span>**** স্ক্রলিং নোটিশ হবে এখানে *****</span>
+                    <span
+                        >Lorem ipsum dolor sit amet consectetur adipisicing
+                        elit. Ipsam at, iste quos natus fugit reiciendis
+                        adipisci non eos blanditiis?</span
+                    >
+                    <span>**** স্ক্রলিং নোটিশ হবে এখানে *****</span>
+                    <span>**** স্ক্রলিং নোটিশ হবে এখানে *****</span>
+                </div>
+            </div>
         </div>
         <section class="mx-auto grid max-w-6xl gap-4 md:grid-cols-4">
             <div class="grid gap-4 md:col-span-3">
@@ -74,12 +87,7 @@
                 >
                     <h3 class="text-2xl font-bold">অধ্যক্ষের বাণী</h3>
                     <p class="text-justify text-lg">
-                        বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি জনপদের নাম।
-                        এ দেশ তথ্ যোগ্য ব্যক্তি বর্গের অভাব দৃশ্যমান। আবার দেখা
-                        যায় সর্বত্র সৎ কিংবা যোগ্য উভয় রকম মানুষের অভাব নেই।
-                        বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি জনপদের নাম।
-                        প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি জনপদের নাম। প্রায়
-                        শতকরা ৯০ ভাগ মুসলমানের একটি জনপদের নাম।
+                        {{ data.principalMessage }}
                     </p>
                 </div>
                 <div class="">

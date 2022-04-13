@@ -10,6 +10,8 @@ class Setting extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = [];
+
     public function getValueAttribute($value)
     {
         return $value ?? $this->dummy;
@@ -17,6 +19,6 @@ class Setting extends Model
 
     public function scopeProperty($query, $property)
     {
-        $query->where('name', $property);
+        $query->where('key', $property);
     }
 }

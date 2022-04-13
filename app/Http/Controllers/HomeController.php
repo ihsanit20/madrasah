@@ -18,6 +18,7 @@ class HomeController extends Controller
             'data' => [
                 'classes' => $classes,
                 'principalMessage' => Setting::property('principal-message')->first()->value,
+                'ourMessage' => Setting::property('our-message')->first()->value,
             ]
         ]);
 

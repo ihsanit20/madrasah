@@ -34,7 +34,7 @@ class SettingController extends Controller
         $setting = Setting::create($this->validatedData($request));
 
         return redirect()
-            ->route('collections.show', $setting->id)
+            ->route('settings.show', $setting->id)
             ->with('status', 'The record has been added successfully.');
     }
 
@@ -59,7 +59,7 @@ class SettingController extends Controller
         $setting->update($this->validatedData($request, $setting->id));
 
         return redirect()
-            ->route('collections.show', $setting->id)
+            ->route('settings.show', $setting->id)
             ->with('status', 'The record has been update successfully.');
     }
 
@@ -68,7 +68,7 @@ class SettingController extends Controller
         $setting->delete();
 
         return redirect()
-            ->route('collections.index')
+            ->route('settings.index')
             ->with('status', 'The record has been delete successfully.');
     }
 
@@ -96,7 +96,13 @@ class SettingController extends Controller
     protected function validatedData($request, $id = '')
     {
         return $request->validate([
-            //
+            'name' => [
+                'required',
+                'string',
+            ],
+            'value' => [
+                'required',
+            ]
         ]);
     }
 

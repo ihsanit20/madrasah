@@ -65,22 +65,7 @@
             </span>
         </nav-link>
 
-        <nav-link href="/" class="flex items-center gap-2 md:gap-4">
-            <AdminSvg class="h-6 w-6 md:h-8 md:w-8" />
-            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Admin &amp; Role
-            </span>
-        </nav-link>
-
-        <nav-link href="/" class="flex items-center gap-2 md:gap-4">
-            <NoticeSvg class="h-6 w-6 md:h-8 md:w-8" />
-            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Notice
-            </span>
-        </nav-link>
-
-        <nav-link
-            :href="route('settings.index')"
+        <dropdown-nav-link
             :active="route().current('settings.*')"
             class="flex items-center gap-2 md:gap-4"
         >
@@ -88,14 +73,40 @@
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 Settings
             </span>
-        </nav-link>
+            <template #items>
+                <nav-link
+                    :href="route('settings.index')"
+                    :active="route().current('settings.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <HomeIcon class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        Home Page
+                    </span>
+                </nav-link>
+
+                <nav-link href="/" class="flex items-center gap-2 md:gap-4">
+                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        Admin &amp; Role
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
     </div>
 </template>
 
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 import NavLink from "@/Components/NavLink.vue";
-import { MenuIcon } from "@heroicons/vue/outline";
+import { MenuIcon, HomeIcon } from "@heroicons/vue/outline";
+import DropdownNavLink from "@/Components/DropdownNavLink.vue";
 import {
     ClassSvg,
     StudentSvg,
@@ -112,6 +123,7 @@ export default {
         Link,
         NavLink,
         MenuIcon,
+        HomeIcon,
         ClassSvg,
         StudentSvg,
         AdmissionSvg,
@@ -121,6 +133,7 @@ export default {
         AdminSvg,
         NoticeSvg,
         SettingsSvg,
+        DropdownNavLink,
     },
     props: {
         navigation: {

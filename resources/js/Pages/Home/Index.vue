@@ -49,15 +49,28 @@
                         </Link>
                     </div>
                 </div>
+
                 <div
-                    class="rounded-lg border border-gray-400 bg-white pt-4 text-center"
+                    class="h-80 overflow-y-auto rounded-lg border border-gray-400 bg-white p-4 text-center"
                 >
                     <h3 class="text-2xl font-bold text-blue-900">
+                        {{ data.principalMessage.name }}
+                    </h3>
+                    <p class="text-justify text-lg">
+                        {{ data.principalMessage.value }}
+                    </p>
+                </div>
+            </div>
+            <div class="grid gap-4">
+                <div
+                    class="h-80 overflow-y-auto rounded-lg border border-gray-400 bg-white text-center md:h-96"
+                >
+                    <h3
+                        class="sticky top-0 z-10 bg-white pt-4 text-2xl font-bold text-blue-900"
+                    >
                         নোটিশ বোর্ড
                     </h3>
-                    <ul
-                        class="h-64 divide-y-2 overflow-y-auto px-4 text-justify text-lg"
-                    >
+                    <ul class="divide-y-2 px-4 text-justify text-lg">
                         <li
                             v-for="notice in data.notices"
                             :key="notice.id"
@@ -67,48 +80,60 @@
                                 <p class="text-xl font-bold text-orange-500">
                                     {{ notice.formatedDate }}
                                 </p>
-                                <h3 class="line-clamp-2 md:line-clamp-1">
+                                <h3 class="line-clamp-2">
                                     {{ notice.title }}
                                 </h3>
                             </Link>
                         </li>
-                        <li class="py-3" v-if="Object.keys(data.notices).length < 4">
+                        <li
+                            class="py-3"
+                            v-if="Object.keys(data.notices).length < 4"
+                        >
                             <Link href="#" class="block">
                                 <p class="text-xl font-bold text-orange-500">
                                     22 Apr 2020
                                 </p>
-                                <h3 class="line-clamp-1">
+                                <h3 class="line-clamp-2">
                                     বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি
                                     জনপদের নাম। এ দেশ তথ্য গোটা ভারত উপমহাদেশের
                                     আছে একটি গৌরবোজ্জ্বল অতীত।
                                 </h3>
                             </Link>
                         </li>
-                        <li class="py-3" v-if="Object.keys(data.notices).length < 3">
+                        <li
+                            class="py-3"
+                            v-if="Object.keys(data.notices).length < 3"
+                        >
                             <Link href="#" class="block">
                                 <p class="text-xl font-bold text-orange-500">
                                     22 Apr 2020
                                 </p>
-                                <h3 class="line-clamp-1">
+                                <h3 class="line-clamp-2">
                                     বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি
                                     জনপদের নাম। এ দেশ তথ্য গোটা ভারত উপমহাদেশের
                                     আছে একটি গৌরবোজ্জ্বল অতীত।
                                 </h3>
                             </Link>
                         </li>
-                        <li class="py-3" v-if="Object.keys(data.notices).length < 2">
+                        <li
+                            class="py-3"
+                            v-if="Object.keys(data.notices).length < 2"
+                        >
                             <Link href="#" class="block">
                                 <p class="text-xl font-bold text-orange-500">
                                     21 Apr 2020
                                 </p>
-                                <h3 class="line-clamp-1">
+                                <h3 class="line-clamp-2">
                                     বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি
                                     জনপদের নাম। এ দেশ তথ্য গোটা ভারত উপমহাদেশের
                                     আছে একটি গৌরবোজ্জ্বল অতীত।
                                 </h3>
                             </Link>
                         </li>
-                        <li class="py-3" v-if="Object.keys(data.notices).length < 1">
+                        <li
+                            class="py-3"
+                            v-if="Object.keys(data.notices).length < 1"
+                        >
                             <Link href="#" class="block">
                                 <p class="text-xl font-bold text-orange-500">
                                     20 Apr 2020
@@ -121,18 +146,6 @@
                             </Link>
                         </li>
                     </ul>
-                </div>
-            </div>
-            <div class="grid gap-4">
-                <div
-                    class="h-80 overflow-y-auto rounded-lg border border-gray-400 bg-white p-4 text-center md:h-96"
-                >
-                    <h3 class="text-2xl font-bold text-blue-900">
-                        {{ data.principalMessage.name }}
-                    </h3>
-                    <p class="text-justify text-lg">
-                        {{ data.principalMessage.value }}
-                    </p>
                 </div>
                 <div class="">
                     <arabic-calender

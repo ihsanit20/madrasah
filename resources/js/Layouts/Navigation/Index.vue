@@ -65,10 +65,7 @@
             </span>
         </nav-link>
 
-        <dropdown-nav-link
-            :active="route().current('settings.*')"
-            class="flex items-center gap-2 md:gap-4"
-        >
+        <dropdown-nav-link :active="route().current('settings.*')">
             <SettingsSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 Settings

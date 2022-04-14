@@ -100,9 +100,7 @@ class SettingController extends Controller
                 'required',
                 'string',
             ],
-            'value' => [
-                'required',
-            ]
+            'value' => '',
         ]);
     }
 

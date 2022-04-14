@@ -17,8 +17,10 @@ class HomeController extends Controller
         return Inertia::render('Home/Index', [
             'data' => [
                 'classes' => $classes,
-                'principalMessage' => Setting::property('principal-message')->first()->value,
-                'ourMessage' => Setting::property('our-message')->first()->value,
+                'principalMessage' => $this->getSettingProperty('principal-message'),
+                'noticeBoard' => $this->getSettingProperty('notice-board'),
+                'headline' => $this->getSettingProperty('headline'),
+                'ourMessage' => $this->getSettingProperty('our-message'),
             ]
         ]);
 

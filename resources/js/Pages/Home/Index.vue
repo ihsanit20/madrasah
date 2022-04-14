@@ -11,14 +11,7 @@
                 <div
                     class="mx-auto w-full max-w-5xl animate-marquee-20 space-x-8 overflow-hidden whitespace-nowrap md:animate-marquee-40"
                 >
-                    <span>**** স্ক্রলিং নোটিশ হবে এখানে *****</span>
-                    <span
-                        >Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Ipsam at, iste quos natus fugit reiciendis
-                        adipisci non eos blanditiis?</span
-                    >
-                    <span>**** স্ক্রলিং নোটিশ হবে এখানে *****</span>
-                    <span>**** স্ক্রলিং নোটিশ হবে এখানে *****</span>
+                    <span>{{ data.headline.value }}</span>
                 </div>
             </div>
         </div>
@@ -60,24 +53,10 @@
                     class="rounded-lg border border-gray-400 bg-white p-4 text-center"
                 >
                     <h3 class="text-4xl font-bold text-rose-600">
-                        নোটিশ বোর্ড
+                        {{ data.noticeBoard.name }}
                     </h3>
                     <p class="pt-3 text-justify text-lg">
-                        বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি জনপদের নাম।
-                        এ দেশ তথ্য গোটা ভারত উপমহাদেশের আছে একটি গৌরবোজ্জ্বল
-                        অতীত। এখানে নেতৃত্ব দিয়েছেন অনেক সৎ, যোগ্য এবং সুমহান
-                        ব্যক্তিবর্গ। কিন্তু কালের পরিবর্তনে আজ আমাদের সোনার দেশ
-                        তথা সমস্থ পৃথিবীতে সৎ এবং যোগ্য ব্যক্তি বর্গের অভাব
-                        দৃশ্যমান। আবার দেখা যায় সর্বত্র সৎ কিংবা যোগ্য উভয় রকম
-                        মানুষের অভাব নেই। বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের
-                        একটি জনপদের নাম। কিন্তু কালের পরিবর্তনে আজ আমাদের সোনার
-                        দেশ তথা সমস্থ পৃথিবীতে সৎ এবং যোগ্য ব্যক্তি বর্গের অভাব
-                        দৃশ্যমান। আবার দেখা যায় সর্বত্র সৎ কিংবা যোগ্য উভয় রকম
-                        মানুষের অভাব নেই। বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের
-                        একটি জনপদের নাম। আবার দেখা যায় সর্বত্র সৎ কিংবা যোগ্য
-                        উভয় রকম মানুষের অভাব নেই। বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ
-                        মুসলমানের একটি জনপদের নাম। প্রায় শতকরা ৯০ ভাগ মুসলমানের
-                        একটি জনপদের নাম।
+                        {{ data.noticeBoard.value }}
                     </p>
                 </div>
             </div>
@@ -85,9 +64,11 @@
                 <div
                     class="rounded-lg border border-gray-400 bg-white p-4 text-center"
                 >
-                    <h3 class="text-2xl font-bold">অধ্যক্ষের বাণী</h3>
+                    <h3 class="text-2xl font-bold">
+                        {{ data.principalMessage.name }}
+                    </h3>
                     <p class="text-justify text-lg">
-                        {{ data.principalMessage }}
+                        {{ data.principalMessage.value }}
                     </p>
                 </div>
                 <div class="">
@@ -179,10 +160,10 @@
         <section class="mx-auto max-w-6xl pt-4 pb-4 md:pt-8 md:pb-8">
             <div class="rounded-lg border border-gray-400 bg-white">
                 <h2 class="mt-8 text-center text-4xl font-bold text-blue-900">
-                    আমাদের কথা
+                    {{ data.ourMessage.name }}
                 </h2>
                 <div class="px-8 py-4 text-justify text-lg">
-                    {{ data.ourMessage }}
+                    {{ data.ourMessage.value }}
                 </div>
             </div>
         </section>

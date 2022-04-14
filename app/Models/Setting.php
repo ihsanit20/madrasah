@@ -12,11 +12,6 @@ class Setting extends Model
 
     protected $guarded = [];
 
-    public function getValueAttribute($value)
-    {
-        return $value ?? $this->dummy;
-    }
-
     public function scopeProperty($query, $property)
     {
         $query->where('key', $property);

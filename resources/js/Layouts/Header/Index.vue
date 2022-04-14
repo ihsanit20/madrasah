@@ -19,7 +19,7 @@
 
         <!-- <search /> -->
 
-        <!-- <account /> -->
+        <account v-if="hasAccount" />
     </div>
 </template>
 
@@ -39,6 +39,10 @@ export default {
     },
     props: {
         navigationController: Function,
+        hasAccount: {
+            type: Boolean,
+            default: false,
+        }
     },
 };
 </script>

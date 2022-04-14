@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex cursor-pointer items-center justify-between py-1.5 text-sm font-medium text-gray-500 md:text-lg"
+        class="flex cursor-pointer items-center justify-between gap-4 py-1.5 text-sm font-medium text-gray-500 md:text-lg"
         :class="classes"
         @click="open = !open"
     >
@@ -8,14 +8,14 @@
             <slot />
         </div>
         <ChevronDownIcon
-            class="hidden h-5 w-5 md:block"
-            :class="{ 'rotate-180': open || active }"
+            class="hidden h-5 w-5 transition-all ease-linear md:block"
+            :class="{ 'rotate-180': open }"
         />
     </div>
     <div
         class="flex flex-col items-center rounded bg-gray-100 md:items-start md:pl-4"
     >
-        <slot name="items" v-if="open || active" />
+        <slot name="items" v-if="open" />
     </div>
 </template>
 
@@ -27,6 +27,10 @@ export default {
     },
 
     props: ["active"],
+
+    created() {
+        this.open = this.active;
+    },
 
     data() {
         return {

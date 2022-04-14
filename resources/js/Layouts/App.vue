@@ -1,14 +1,15 @@
 <template>
-    <header class="sticky top-0 z-40 bg-white shadow-sm">
+    <header class="sticky top-0 z-40 bg-white shadow-sm print:hidden">
         <app-header
             class="h-10 md:h-20"
             :navigation-controller="navigationController"
+            :hasAccount="true"
         />
     </header>
 
     <div class="mx-auto flex max-w-6xl">
         <nav
-            class="-mt-10 min-h-screen flex-shrink-0 flex-grow-0 bg-white pt-10 md:-mt-20 md:pt-20"
+            class="-mt-10 min-h-screen flex-shrink-0 flex-grow-0 bg-white pt-10 md:-mt-20 md:pt-20  print:hidden"
         >
             <app-navigation :navigation="navigation" />
         </nav>
@@ -16,7 +17,7 @@
         <main
             class="flex-shrink flex-grow space-y-2 overflow-auto px-2 py-2 md:px-4 md:py-4"
         >
-            <div class="flex items-end justify-between gap-1.5">
+            <div class="flex items-end justify-between gap-1.5 print:hidden">
                 <h2
                     v-if="pageTitle"
                     class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"

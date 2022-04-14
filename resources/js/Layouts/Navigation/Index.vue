@@ -7,7 +7,7 @@
         >
             <MenuIcon class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Dashboard
+                ড্যাশবোর্ড
             </span>
         </nav-link>
 
@@ -18,7 +18,7 @@
         >
             <ClassSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Classes
+                ক্লাস/বিভাগ সমুহ
             </span>
         </nav-link>
 
@@ -29,7 +29,7 @@
         >
             <StudentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Students
+                শিক্ষার্থী তালিকা
             </span>
         </nav-link>
 
@@ -47,28 +47,60 @@
         <nav-link href="/" class="flex items-center gap-2 md:gap-4">
             <MoneyReceiptSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Mony Receipt
+                টাকা জমার রশিদ
             </span>
         </nav-link>
 
         <nav-link href="/" class="flex items-center gap-2 md:gap-4">
             <PaymentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Payment/Expence
+                ব্যয়/খরচ
             </span>
         </nav-link>
 
-        <nav-link href="/" class="flex items-center gap-2 md:gap-4">
+        <dropdown-nav-link :active="route().current('(staff||designations).*')">
             <TeacherSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Teachers &amp; Stuff
+                শিক্ষক ও স্টাফ
             </span>
-        </nav-link>
 
-        <dropdown-nav-link :active="route().current('settings.*')">
+            <template #items>
+                <nav-link
+                    :href="route('staff.index')"
+                    :active="route().current('staff.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        শিক্ষক/স্টাফ
+                    </span>
+                </nav-link>
+
+                <nav-link
+                    :href="route('designations.index')"
+                    :active="route().current('designations.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <IdentificationIcon class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        পদবিসমূহ
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
+
+        <dropdown-nav-link
+            :active="route().current('(settings||admins||notices).*')"
+        >
             <SettingsSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Settings
+                সেটিংস
             </span>
             <template #items>
                 <nav-link
@@ -81,17 +113,35 @@
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
-                        Home Page
+                        হোমপেজ সেটিং
                     </span>
                 </nav-link>
 
-                <nav-link href="/" class="flex items-center gap-2 md:gap-4">
+                <nav-link
+                    :href="route('notices.index')"
+                    :active="route().current('notices.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <NoticeSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        নোটিশ বোর্ড
+                    </span>
+                </nav-link>
+
+                <nav-link
+                    :href="route('admins.index')"
+                    :active="route().current('admins.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
                     <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
-                        Admin &amp; Role
+                        Admin
                     </span>
                 </nav-link>
             </template>
@@ -102,7 +152,7 @@
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 import NavLink from "@/Components/NavLink.vue";
-import { MenuIcon, HomeIcon } from "@heroicons/vue/outline";
+import { MenuIcon, HomeIcon, IdentificationIcon } from "@heroicons/vue/outline";
 import DropdownNavLink from "@/Components/DropdownNavLink.vue";
 import {
     ClassSvg,
@@ -121,6 +171,7 @@ export default {
         NavLink,
         MenuIcon,
         HomeIcon,
+        IdentificationIcon,
         ClassSvg,
         StudentSvg,
         AdmissionSvg,

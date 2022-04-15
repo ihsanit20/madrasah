@@ -10,7 +10,7 @@
             <template #default="{ item: setting }">
                 <table-td class="text-left">
                     <Link
-                        :href="route('settings.show', setting.id)"
+                        :href="route('settings.edit', setting.id)"
                         class="text-sky-600 hover:underline"
                     >
                         {{ setting.name }}

@@ -16,4 +16,9 @@ class Setting extends Model
     {
         $query->where('key', $property);
     }
+
+    public function scopeType($query, $type)
+    {
+        $query->where('type', $type);
+    }
 }

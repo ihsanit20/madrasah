@@ -28,48 +28,8 @@
                 <span class="font-bold">Print Notice</span>
             </button>
         </div>
-        <div class="max-w-3xl bg-white p-10">
-            <div class="mx-auto flex items-center justify-center gap-4">
-                <application-logo class="w-16" />
-                <div class="flex flex-col items-center justify-end space-y-1">
-                    <h1
-                        class="text-4xl font-bold text-blue-900 print:text-black"
-                    >
-                        মাদরাসা সায়্যিদাতুল জান্নাত (রা.)
-                    </h1>
-                    <p class="text-sm print:text-black">
-                        বাড়ি নং: ৪১/২৫, ব্লক: বি, চাঁনমিয়া হাউজিং, মোহাম্মাদপুর,
-                        ঢাকা-১২০৭
-                    </p>
-                </div>
-            </div>
-            <div class="mt-6 border border-gray-400 print:border-black"></div>
-            <div class="py-3 print:text-black">
-                তারিখ: <b>{{ data.notice.formatedDate }}</b>
-            </div>
-            <h2
-                class="mt-4 mb-2 text-center text-2xl font-bold print:text-black"
-            >
-                {{ data.notice.title }}
-            </h2>
-            <div
-                class="whitespace-pre-wrap text-justify print:text-black"
-                v-html="data.notice.body"
-            ></div>
-            <div class="mt-20 flex justify-end">
-                <div class="text-center">
-                    <div class="tex-lg font-bold print:text-black">
-                        {{ data.notice.staffName }}
-                    </div>
-                    <div class="print:text-black">
-                        ({{ data.notice.staff.designationTitle }})
-                    </div>
-                    <div class="print:text-black">
-                        মাদরাসা সায়্যিদাতুল জান্নাত (রা.)
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <NoticeTemplete :data="data" class="max-w-3xl" />
     </app-layout>
 </template>
 
@@ -81,6 +41,7 @@ import FormHeading from "@/Components/FormHeading.vue";
 import InlineData from "@/Components/InlineData.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Button from "@/Components/Button.vue";
+import NoticeTemplete from "@/Templete/Notice.vue";
 
 export default {
     components: {
@@ -91,6 +52,7 @@ export default {
         InlineData,
         ApplicationLogo,
         Button,
+        NoticeTemplete,
     },
     props: {
         data: {

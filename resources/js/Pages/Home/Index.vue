@@ -2,11 +2,7 @@
     <Head title="Dashboard" />
 
     <app-layout>
-        <div
-            class="overflow-hidden bg-rose-600 py-2 text-white"
-            behavior="scroll"
-            scrollamount="5"
-        >
+        <div class="overflow-hidden bg-rose-600 py-2 text-white">
             <div class="mx-auto w-full max-w-6xl overflow-hidden">
                 <div
                     class="mx-auto w-full max-w-5xl animate-marquee-20 space-x-8 overflow-hidden whitespace-nowrap md:animate-marquee-40"
@@ -255,11 +251,12 @@
                     class="order-2 flex-1 shrink grow space-y-2 text-center md:order-1 md:text-left"
                 >
                     <h3 class="text-xl font-bold md:text-3xl">
-                        মাদরাসা সায়্যিদাতুল জান্নাত (রা.)
+                        {{ $page.props.settings.siteName }}
                     </h3>
-                    <address class="text-sm font-semibold md:text-base">
-                        বাড়ি নং: ৪১/২৫, ব্লক: বি, চাঁনমিয়া হাউজিং, <br />
-                        মোহাম্মাদপুর, ঢাকা-১২০৭
+                    <address
+                        class="whitespace-pre text-sm font-semibold md:text-base"
+                    >
+                        {{ $page.props.settings.siteAddress }}
                     </address>
                 </div>
 

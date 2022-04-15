@@ -8,41 +8,59 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use function PHPUnit\Framework\returnSelf;
+
 class SettingController extends Controller
 {
-    public function index()
+    public function siteSetup()
     {
-        $collections = Setting::query();
+        return $this->index($this->getTypeByText(request()->segment(2)));
+    }
+
+    public function homePage()
+    {
+        return $this->index($this->getTypeByText(request()->segment(2)));
+    }
+
+    protected function getTypeByText($value)
+    {
+        switch($value) {
+            case 'site-setup':
+                return 1;
+            case 'home-page':
+                return 2;
+        }
+    }
+
+    protected function getRouteName($type)
+    {
+        switch($type) {
+            case 1:
+                return 'settings.site-setup';
+            case 2:
+                return 'settings.home-page';
+        }
+    }
+
+    protected function getPageTitle($type)
+    {
+        switch($type) {
+            case 1:
+                return 'সাইট সেটিং';
+            case 2:
+                return 'হোমপেজ সেটিং';
+        }
+    }
+
+    public function index($type)
+    {
+        $collections = Setting::query()->type($type);
 
         return Inertia::render('Setting/Index', [
             'data' => [
                 'collections'   => SettingResource::collection($collections->paginate()->appends(request()->input())),
                 'filters'       => $this->getFilterProperty(),
-            ]
-        ]);
-    }
-
-    public function create()
-    {
-        return Inertia::render('Setting/Create', [
-            'data' => $this->data(new Setting())
-        ]);
-    }
-
-    public function store(Request $request)
-    {
-        $setting = Setting::create($this->validatedData($request));
-
-        return redirect()
-            ->route('settings.show', $setting->id)
-            ->with('status', 'The record has been added successfully.');
-    }
-
-    public function show(Setting $setting)
-    {
-        return Inertia::render('Setting/Show', [
-            'data' => [
-                'setting' => $this->formatedData($setting)
+                'pageTitle'     => $this->getPageTitle($type)
             ]
         ]);
     }
@@ -59,17 +77,8 @@ class SettingController extends Controller
         $setting->update($this->validatedData($request, $setting->id));
 
         return redirect()
-            ->route('settings.show', $setting->id)
+            ->route($this->getRouteName($setting->type))
             ->with('status', 'The record has been update successfully.');
-    }
-
-    public function destroy(Setting $setting)
-    {
-        $setting->delete();
-
-        return redirect()
-            ->route('settings.index')
-            ->with('status', 'The record has been delete successfully.');
     }
 
     protected function data($setting)

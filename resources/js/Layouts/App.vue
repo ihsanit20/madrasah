@@ -1,7 +1,6 @@
 <template>
     <header class="sticky top-0 z-40 bg-white shadow-sm print:hidden">
         <app-header
-            class="h-10 md:h-20"
             :navigation-controller="navigationController"
             :hasAccount="true"
         />
@@ -9,7 +8,7 @@
 
     <div class="mx-auto flex max-w-6xl">
         <nav
-            class="-mt-10 min-h-screen flex-shrink-0 flex-grow-0 bg-white pt-10 md:-mt-20 md:pt-20  print:hidden"
+            class="-mt-10 min-h-screen flex-shrink-0 flex-grow-0 bg-white pt-10 print:hidden md:-mt-20 md:pt-20"
         >
             <app-navigation :navigation="navigation" />
         </nav>

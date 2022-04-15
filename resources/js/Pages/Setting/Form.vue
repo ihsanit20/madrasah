@@ -81,8 +81,6 @@ export default {
             let area = e.target;
             area.style.overflow = "hidden";
             area.style.height = area.scrollHeight + "px";
-            console.log(area.scrollHeight);
-            console.dir(area);
         },
     },
 };

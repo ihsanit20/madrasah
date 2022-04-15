@@ -9,12 +9,12 @@
                 :href="route('home')"
                 class="flex items-center gap-2 md:gap-4"
             >
-                <application-logo class="h-12 md:h-20" />
+                <application-logo class="h-12 md:h-16" />
 
                 <h1
                     class="hidden text-xs font-bold text-blue-900 md:block md:text-4xl"
                 >
-                    মাদরাসা সায়্যিদাতুল জান্নাত (রা.)
+                    {{ $page.props.settings.siteName }}
                 </h1>
             </Link>
 
@@ -35,7 +35,7 @@
         </div>
     </header>
 
-    <main class="flex-shrink flex-grow space-y-4 overflow-auto px-2">
+    <main class="flex-shrink flex-grow space-y-4 overflow-auto">
         <slot />
     </main>
 

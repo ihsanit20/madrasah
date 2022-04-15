@@ -28,11 +28,6 @@ class HomeController extends Controller
                 'ourMessage' => $this->getSettingProperty('our-message'),
             ]
         ]);
-
-        return Inertia::render('Welcome', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-        ]);
     }
 
     public function notice(Notice $notice)

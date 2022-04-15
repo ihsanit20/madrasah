@@ -4,16 +4,13 @@
     >
         <!-- <MenuIcon @click="navigationController" class="h-6 w-6 md:hidden" /> -->
 
-        <Link
-            :href="route($page.props.auth.user ? 'dashboard' : 'home')"
-            class="flex h-full items-center gap-2 md:gap-4"
-        >
-            <application-logo class="h-full" />
+        <Link :href="route('home')" class="flex items-center gap-2 md:gap-4">
+            <application-logo class="h-12 md:h-16" />
 
             <h1
                 class="hidden text-xs font-bold text-blue-900 md:block md:text-4xl"
             >
-                মাদরাসা সায়্যিদাতুল জান্নাত (রা.)
+                {{ $page.props.settings.siteName }}
             </h1>
         </Link>
 
@@ -42,7 +39,7 @@ export default {
         hasAccount: {
             type: Boolean,
             default: false,
-        }
+        },
     },
 };
 </script>

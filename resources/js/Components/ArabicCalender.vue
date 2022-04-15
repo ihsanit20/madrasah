@@ -2,7 +2,7 @@
     <div class="flex items-center justify-center overflow-hidden">
         <div class="w-full">
             <div class="rounded-t bg-white px-2 py-3 dark:bg-gray-800">
-                <div class="flex items-center justify-between px-4">
+                <div class="flex items-center justify-between">
                     <button
                         aria-label="calendar backward"
                         class="text-gray-800 hover:text-gray-400 focus:text-gray-400 dark:text-gray-100"
@@ -27,7 +27,7 @@
                     <div
                         class="flex items-center justify-center gap-2 text-lg font-bold text-gray-800 focus:outline-none dark:text-gray-100"
                     >
-                        <span>{{ calendar.currentMonth.en }}</span>
+                        <span>{{ calendar.currentMonth.bn }}</span>
                         <span>{{ calendar.currentYear }}</span>
                     </div>
 

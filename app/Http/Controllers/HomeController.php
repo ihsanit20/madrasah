@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\NoticeResource;
 use App\Models\Classes;
+use App\Models\HijriMonth;
 use App\Models\Notice;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -16,18 +17,27 @@ class HomeController extends Controller
     public function index()
     {
         $classes = Classes::get();
+
         $notices = Notice::query()
             ->whereDate('date', '<=', date('Y-m-d'))
             ->get();
 
         $today = date("d-m-Y");
+
+        // $today = "01-01-2022"; //testing
+
         $response = Http::get("https://api.aladhan.com/v1/gToH?date={$today}");
 
         $response = $response->object();
         
         $current_weekday = $response->data->gregorian->weekday->en;
+
         $current_day = $response->data->hijri->day;
+
         $current_month = $response->data->hijri->month;
+
+        $current_month->bn = HijriMonth::find($current_month->number)->bengali ?? '';
+
         $current_year = $response->data->hijri->year;
 
 

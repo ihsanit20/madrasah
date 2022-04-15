@@ -3,9 +3,9 @@
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="">
-            <form-heading class="mb-2">Basic Information</form-heading>
+            <form-heading class="mb-2">ব্যক্তিগত তথ্য</form-heading>
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-2">
-                <form-group class="w-full" label="Name">
+                <form-group class="w-full" label="শিক্ষার্থীর নাম">
                     <Input
                         type="text"
                         class="block w-full"
@@ -13,7 +13,7 @@
                         required
                     />
                 </form-group>
-                <form-group class="w-full" label="Date of Birth">
+                <form-group class="w-full" label="জন্ম তারিখ">
                     <Input
                         type="date"
                         class="block w-full"
@@ -21,7 +21,7 @@
                         required
                     />
                 </form-group>
-                <form-group class="w-full" label="Birth Certificate">
+                <form-group class="w-full" label="জন্ম নিবন্ধন নাম্বার">
                     <Input
                         type="number"
                         class="block w-full"
@@ -29,7 +29,7 @@
                         required
                     />
                 </form-group>
-                <form-group class="w-full" label="Gender">
+                <form-group class="w-full" label="লিঙ্গ">
                     <div
                         class="flex items-center gap-2 rounded-md border py-2 pl-2"
                     >
@@ -58,11 +58,9 @@
                     </div>
                 </form-group>
                 <form-group
-                    class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-4 pb-2 md:grid-cols-3"
-                    label="Father's info"
-                    :absolute="true"
+                    class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 py-2 md:grid-cols-3"
                 >
-                    <form-group class="w-full" label="Name">
+                    <form-group class="w-full" label="পিতার নাম">
                         <Input
                             type="text"
                             class="block w-full"
@@ -70,14 +68,14 @@
                             required
                         />
                     </form-group>
-                    <form-group class="w-full" label="Phone">
+                    <form-group class="w-full" label="মোবাইল নম্বর">
                         <Input
                             type="number"
                             class="block w-full"
                             v-model="form.father_info.phone"
                         />
                     </form-group>
-                    <form-group class="w-full" label="Occupation">
+                    <form-group class="w-full" label="পেশা">
                         <Input
                             type="text"
                             class="block w-full"
@@ -86,11 +84,9 @@
                     </form-group>
                 </form-group>
                 <form-group
-                    class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-4 pb-2 md:grid-cols-3"
-                    label="Mother's info"
-                    :absolute="true"
+                    class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 py-2 md:grid-cols-3"
                 >
-                    <form-group class="w-full" label="Name">
+                    <form-group class="w-full" label="মাতার নাম">
                         <Input
                             type="text"
                             class="block w-full"
@@ -98,14 +94,14 @@
                             required
                         />
                     </form-group>
-                    <form-group class="w-full" label="Phone">
+                    <form-group class="w-full" label="মোবাইল নম্বর">
                         <Input
                             type="number"
                             class="block w-full"
                             v-model="form.mother_info.phone"
                         />
                     </form-group>
-                    <form-group class="w-full" label="Occupation">
+                    <form-group class="w-full" label="পেশা">
                         <Input
                             type="text"
                             class="block w-full"
@@ -115,12 +111,10 @@
                 </form-group>
             </div>
 
-            <form-heading class="mt-6 mb-2">Contact Information</form-heading>
+            <form-heading class="mt-6 mb-2">অভিভাবক</form-heading>
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
                 <form-group
-                    class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-3 pb-2"
-                    label="Financial Guardian"
-                    :absolute="true"
+                    class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 py-2"
                 >
                     <div
                         class="col-span-full flex items-center justify-center gap-3 md:justify-start"
@@ -134,7 +128,7 @@
                                 :checked="form.guardian_type == 1"
                                 required
                             />
-                            <span>Father</span>
+                            <span>পিতা</span>
                         </label>
                         <label class="flex items-center gap-1">
                             <Input
@@ -145,7 +139,7 @@
                                 :checked="form.guardian_type == 2"
                                 required
                             />
-                            <span>Mother</span>
+                            <span>মাতা</span>
                         </label>
                         <label class="flex items-center gap-1">
                             <Input
@@ -156,14 +150,14 @@
                                 :checked="form.guardian_type == 3"
                                 required
                             />
-                            <span>Other</span>
+                            <span>অন্যান্য</span>
                         </label>
                     </div>
                     <div
                         v-if="form.guardian_type == 3"
                         class="grid gap-2 md:grid-cols-3"
                     >
-                        <form-group class="w-full" label="Name">
+                        <form-group class="w-full" label="অভিভাবকের নাম">
                             <Input
                                 type="text"
                                 class="block w-full"
@@ -171,14 +165,17 @@
                                 required
                             />
                         </form-group>
-                        <form-group class="w-full" label="Phone">
+                        <form-group class="w-full" label="মোমাইল নাম্বার">
                             <Input
                                 type="number"
                                 class="block w-full"
                                 v-model="form.guardian_info.phone"
                             />
                         </form-group>
-                        <form-group class="w-full" label="Relation">
+                        <form-group
+                            class="w-full"
+                            label="শিক্ষাথীর সাথে সম্পর্ক"
+                        >
                             <Input
                                 type="text"
                                 class="block w-full"
@@ -189,7 +186,7 @@
                 </form-group>
             </div>
 
-            <form-heading class="mt-6 mb-2">Present Address</form-heading>
+            <form-heading class="mt-6 mb-2">বর্তমান ঠিকানা</form-heading>
             <form-group
                 class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-2 pb-2"
             >
@@ -241,7 +238,10 @@
                             </option>
                         </Select>
                     </form-group>
-                    <form-group label="Address" class="col-span-full">
+                    <form-group
+                        label="বাসা নং, রোড, গ্রাম"
+                        class="col-span-full"
+                    >
                         <Input
                             type="text"
                             class="block w-full"
@@ -251,7 +251,7 @@
                 </div>
             </form-group>
 
-            <form-heading class="mt-6 mb-2">Permanent Address</form-heading>
+            <form-heading class="mt-6 mb-2">স্থায়ী ঠিকানা</form-heading>
             <form-group
                 class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-2 pb-2"
             >
@@ -264,7 +264,7 @@
                             type="checkbox"
                             :checked="form.is_same_address"
                         />
-                        <span>Same as present</span>
+                        <span>বর্তমান ও স্থায়ী ঠিকানা একই</span>
                     </label>
                 </div>
                 <div
@@ -318,7 +318,10 @@
                             </option>
                         </Select>
                     </form-group>
-                    <form-group label="Address" class="col-span-full">
+                    <form-group
+                        label="বাসা নং, রোড নং, গ্রাম"
+                        class="col-span-full"
+                    >
                         <Input
                             type="text"
                             class="block w-full"
@@ -328,9 +331,9 @@
                 </div>
             </form-group>
 
-            <form-heading class="mt-6 mb-2">Expectation</form-heading>
+            <form-heading class="mt-6 mb-2">যে ক্লাস/বিভাগে ভর্তি হতে ইচ্ছুক</form-heading>
             <div class="grid gap-2 md:grid-cols-2">
-                <form-group label="Class">
+                <form-group label="শ্রেণী/বিভাগ">
                     <Select
                         required
                         class="block w-full"
@@ -346,15 +349,15 @@
                         </option>
                     </Select>
                 </form-group>
-                <form-group label="Student Type">
+                <form-group label="শিক্ষার্থীর ধরন">
                     <Select
                         required
                         class="block w-full"
                         v-model="form.resident"
                     >
                         <option value="">--Select Type--</option>
-                        <option :value="0">Non-Resident</option>
-                        <option :value="1">Resident</option>
+                        <option :value="0">আবাসিক</option>
+                        <option :value="1">অনাবাসিক</option>
                     </Select>
                 </form-group>
             </div>

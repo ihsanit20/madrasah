@@ -1,7 +1,7 @@
 <template>
-    <Head title="Doctor" />
+    <Head title="ক্লাস/বিভাগ যোগ করুন" />
 
-    <app-layout pageTitle="Create Class">
+    <app-layout pageTitle="ক্লাস/বিভাগ যোগ করুন">
         <form-component :data="data" module-action="store" />
     </app-layout>
 </template>

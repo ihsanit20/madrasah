@@ -1,7 +1,7 @@
 <template>
     <Head title="Student" />
 
-    <app-layout pageTitle="Students" :addNewHref="route('students.create')">
+    <app-layout pageTitle="Students">
         <simple-table
             :collections="data.collections"
             :filters="data.filters"

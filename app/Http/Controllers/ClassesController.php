@@ -15,8 +15,7 @@ class ClassesController extends Controller
 {
     public function index()
     {
-        $collections = Classes::query()
-            ->oldest('code');
+        $collections = Classes::query();
 
         return Inertia::render('Classes/Index', [
             'data' => [
@@ -117,10 +116,6 @@ class ClassesController extends Controller
                 'string',
                 Rule::unique(Classes::class, 'name')->ignore($id),
             ],
-            'code' => [
-                'required',
-                Rule::unique(Classes::class, 'code')->ignore($id),
-            ],
             'description' => '',
         ]);
     }
@@ -134,13 +129,13 @@ class ClassesController extends Controller
         }
 
         foreach($subjects as $subject) {
-            Subject::withTrashed()->updateOrCreate(
+            Subject::onlyTrashed()->updateOrCreate(
                 [
                     'class_id'      => $class_id,
-                    'code'          => $subject['code'],
                 ],
                 [
                     'name'          => $subject['name'],
+                    'book'          => $subject['book'],
                     'deleted_at'    => NULL,
                 ]
             );

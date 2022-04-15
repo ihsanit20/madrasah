@@ -5,7 +5,7 @@
     >
         <PlusCircleIcon class="h-4 w-4" />
         <span class="-mb-1 text-sm">
-            <slot>New Slot</slot>
+            <slot>যোগ করুন</slot>
         </span>
     </button>
 </template>

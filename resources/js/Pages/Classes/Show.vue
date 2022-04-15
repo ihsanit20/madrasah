@@ -1,81 +1,57 @@
 <template>
-    <Head title="Classes" />
+    <Head title="ক্লাস/বিভাগ প্রিভিউ" />
 
-    <app-layout pageTitle="View Class">
-        <div class="max-w-2xl rounded border bg-white p-3 shadow md:p-4">
-            <div class="flex items-end justify-between">
-                <h2 class="flex-shrink text-lg font-bold text-sky-600">
-                    {{ data.classes.name }}
+    <app-layout>
+        <div class="max-w-2xl rounded p-3 md:p-4">
+            <div class="flex items-end justify-between gap-4 print:hidden">
+                <h2
+                    class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
+                >
+                    ক্লাস/বিভাগ প্রিভিউ
                 </h2>
-                <div class="flex items-center gap-2">
-                    <p
-                        class="flex-shrink-0 rounded border px-2 font-semibold text-gray-500"
-                    >
-                        Code: {{ data.classes.code }}
-                    </p>
-                    <action-button-edit
-                        :href="route('classes.edit', data.classes.id)"
-                    />
-                </div>
+                <print-button />
+                <Link
+                    :href="route('classes.edit', data.classes.id)"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                >
+                    <PencilAltIcon class="w-5" />
+                    <span class="hidden md:block">Edit</span>
+                </Link>
             </div>
-            <hr class="my-1" />
-            <p
-                class="text-xs text-gray-400 md:text-base"
-                v-html="data.classes.description"
-            ></p>
-
-            <simple-table
-                class="py-3"
-                :columns="subjectColumns"
-                :collections="data.classes.subjects"
-            >
-                <template #default="{ item: subject }">
-                    <table-td class="text-center">
-                        {{ subject.code }}
-                    </table-td>
-                    <table-td class="text-left">
-                        {{ subject.name }}
-                    </table-td>
-                </template>
-            </simple-table>
-
-            <simple-table
-                class="py-3"
-                :columns="feeColumns"
-                :collections="data.classes.fees"
-            >
-                <template #default="{ item: fee }">
-                    <table-td class="text-left">
-                        {{ fee.name }}
-                    </table-td>
-                    <table-td class="text-center">
-                        {{ fee.periodName }}
-                    </table-td>
-                    <table-td class="text-right">
-                        {{ fee.amount }} TK
-                    </table-td>
-                </template>
-            </simple-table>
+        </div>
+        <div
+            class="max-w-2xl rounded border bg-white print:border-0"
+        >
+            <ClassTemplete :data="data"/>
         </div>
     </app-layout>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/App.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import ShowTableRow from "@/Components/ShowTableRow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import SimpleTable from "@/Components/SimpleTable.vue";
 import TableTd from "@/Components/TableTd.vue";
+import LetterHead from "@/Templete/LetterHead.vue";
+import PrintButton from "@/Components/PrintButton.vue";
+import { PencilAltIcon } from "@heroicons/vue/solid";
+import ClassTemplete from "@/Templete/Class.vue";
 
 export default {
     components: {
         AppLayout,
         Head,
+        Link,
         ShowTableRow,
         ActionButtonEdit,
         SimpleTable,
         TableTd,
+        LetterHead,
+        PrintButton,
+        PencilAltIcon,
+        ClassTemplete,
     },
     props: {
         data: {
@@ -86,15 +62,14 @@ export default {
     data() {
         return {
             subjectColumns: [
-                { title: "Code", align: "center" },
-                { title: "Subject", align: "left" },
-                {},
-                {},
+                { title: "বিষয় কোড", align: "center" },
+                { title: "বিষয়ের নাম", align: "left" },
+                { title: "বইয়ের তালিকা", align: "left" },
             ],
             feeColumns: [
-                { title: "Fee", align: "left" },
-                { title: "Period", align: "center" },
-                { title: "Amount", align: "right" },
+                { title: "ফি বিবরণী", align: "left" },
+                { title: "সময়কাল", align: "center" },
+                { title: "টাকার পরিমাণ", align: "right" },
             ],
         };
     },

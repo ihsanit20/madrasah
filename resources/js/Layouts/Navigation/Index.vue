@@ -22,16 +22,49 @@
             </span>
         </nav-link>
 
-        <nav-link
-            :href="route('students.index')"
-            :active="route().current('students.*')"
-            class="flex items-center gap-2 md:gap-4"
-        >
+        <dropdown-nav-link :active="route().current('students.*')">
             <StudentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                শিক্ষার্থী তালিকা
+                শিক্ষার্থী
             </span>
-        </nav-link>
+            <template #items>
+                <nav-link
+                    :href="route('students.index')"
+                    :active="route().current('students.index')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        শিক্ষার্থী তালিকা
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('students.create')"
+                    :active="route().current('students.create')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        নতুন ভর্তি
+                    </span>
+                </nav-link>
+                <nav-link href="#" class="flex items-center gap-2 md:gap-4">
+                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        পুরাতন ভর্তি
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
 
         <!-- <nav-link
             :href="route('admissions.index')"
@@ -95,9 +128,18 @@
             </template>
         </dropdown-nav-link>
 
-        <dropdown-nav-link
-            :active="route().current('(settings||admins||notices).*')"
+        <nav-link
+            :href="route('notices.index')"
+            :active="route().current('notices.*')"
+            class="flex items-center gap-2 md:gap-4"
         >
+            <NoticeSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                নোটিশ বোর্ড
+            </span>
+        </nav-link>
+
+        <dropdown-nav-link :active="route().current('(settings||admins).*')">
             <SettingsSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 সেটিংস
@@ -108,7 +150,7 @@
                     :active="route().current('settings.site-setup')"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <SettingsSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <LibraryIcon class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
@@ -117,7 +159,7 @@
                     </span>
                 </nav-link>
 
-                <nav-link
+                <!-- <nav-link
                     :href="route('settings.home-page')"
                     :active="route().current('settings.home-page')"
                     class="flex items-center gap-2 md:gap-4"
@@ -129,21 +171,7 @@
                     >
                         হোমপেজ সেটিং
                     </span>
-                </nav-link>
-
-                <nav-link
-                    :href="route('notices.index')"
-                    :active="route().current('notices.*')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <NoticeSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        নোটিশ বোর্ড
-                    </span>
-                </nav-link>
+                </nav-link> -->
 
                 <nav-link
                     :href="route('admins.index')"
@@ -166,7 +194,12 @@
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 import NavLink from "@/Components/NavLink.vue";
-import { MenuIcon, HomeIcon, IdentificationIcon } from "@heroicons/vue/outline";
+import {
+    MenuIcon,
+    HomeIcon,
+    IdentificationIcon,
+    LibraryIcon,
+} from "@heroicons/vue/outline";
 import DropdownNavLink from "@/Components/DropdownNavLink.vue";
 import {
     ClassSvg,
@@ -186,6 +219,7 @@ export default {
         MenuIcon,
         HomeIcon,
         IdentificationIcon,
+        LibraryIcon,
         ClassSvg,
         StudentSvg,
         AdmissionSvg,

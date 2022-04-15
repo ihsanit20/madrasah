@@ -1,7 +1,7 @@
 <template>
-    <Head title="Classes" />
+    <Head title="ক্লাস/বিভাগ সম্পাদনা করুন" />
 
-    <app-layout pageTitle="Edit Class">
+    <app-layout pageTitle="সম্পাদনা করুন">
         <form-component :data="data" module-action="update" />
     </app-layout>
 </template>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ClassesResource;
 use App\Http\Resources\NoticeResource;
 use App\Models\Classes;
 use App\Models\HijriMonth;
@@ -105,9 +106,20 @@ class HomeController extends Controller
     {
         NoticeResource::withoutWrapping();
     
-        return Inertia::render('Page/Print', [
+        return Inertia::render('Page/Notice', [
             'data' => [
                 'notice' => new NoticeResource($notice),
+            ]
+        ]);
+    }
+
+    public function class(Classes $class)
+    {
+        ClassesResource::withoutWrapping();
+    
+        return Inertia::render('Page/Class', [
+            'data' => [
+                'classes' => new ClassesResource($class->load('subjects','fees')),
             ]
         ]);
     }

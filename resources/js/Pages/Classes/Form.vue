@@ -5,7 +5,7 @@
         <form @submit.prevent="submit" class="">
             <div class="grid gap-4">
                 <div class="flex gap-2">
-                    <form-group class="flex-grow" label="Name">
+                    <form-group class="flex-grow" label="ক্লাস/বিভাগের নাম">
                         <Input
                             type="text"
                             class="block w-full"
@@ -13,17 +13,9 @@
                             required
                         />
                     </form-group>
-                    <form-group class="w-24" label="Class Code">
-                        <Input
-                            type="number"
-                            class="block w-full text-center"
-                            v-model="form.code"
-                            required
-                        />
-                    </form-group>
                 </div>
 
-                <form-group class="w-full" label="Description">
+                <form-group class="w-full" label="ক্লাস/বিভাগ সম্পর্কে তথ্য">
                     <Textarea
                         class="block h-40 w-full text-sm md:h-32 md:text-lg"
                         v-model="form.description"
@@ -31,24 +23,12 @@
                 </form-group>
 
                 <form-slot-group
-                    label="Subjects"
+                    label="বিষয় যুক্ত করুন"
                     :collections="form.subjects"
                     :addSlotMethod="addSubjectSlot"
                 >
                     <template #default="{ item: subject }">
-                        <form-group class="w-20" label="Code" :absolute="true">
-                            <Input
-                                type="number"
-                                class="block w-full text-center"
-                                v-model="subject.code"
-                                required
-                            />
-                        </form-group>
-                        <form-group
-                            class="flex-grow"
-                            label="Name"
-                            :absolute="true"
-                        >
+                        <form-group label="বিষয়ের নাম" class="w-1/3">
                             <Input
                                 type="text"
                                 class="block w-full"
@@ -56,10 +36,18 @@
                                 required
                             />
                         </form-group>
+                        <form-group label="কিতাবের নাম (একাধিক হলে কমা ব্যবহার করুন)" class="w-2/3">
+                            <Input
+                                type="text"
+                                class="block w-full"
+                                v-model="subject.book"
+                                required
+                            />
+                        </form-group>
                     </template>
                 </form-slot-group>
                 <form-slot-group
-                    label="Fees"
+                    label="ফি যুক্ত করুন"
                     :collections="form.fees"
                     :addSlotMethod="addFeeSlot"
                 >
@@ -67,8 +55,7 @@
                         <div class="flex flex-grow flex-col gap-2 md:flex-row">
                             <form-group
                                 class="w-full flex-grow md:w-auto"
-                                label="Fee Name"
-                                :absolute="true"
+                                label="ফি বিবরণী"
                             >
                                 <Input
                                     type="text"
@@ -82,6 +69,7 @@
                             >
                                 <form-group
                                     class="flex-grow md:w-32 md:flex-grow-0"
+                                    label="সময়কাল"
                                 >
                                     <Select
                                         v-model="fee.period"
@@ -99,11 +87,7 @@
                                         </option>
                                     </Select>
                                 </form-group>
-                                <form-group
-                                    class="w-20"
-                                    label="Amount"
-                                    :absolute="true"
-                                >
+                                <form-group class="w-24" label="টাকার পরিমাণ">
                                     <Input
                                         type="number"
                                         class="block w-full text-center"
@@ -175,7 +159,6 @@ export default {
         return {
             form: this.$inertia.form({
                 name: this.data.classes.name,
-                code: this.data.classes.code,
                 description: this.data.classes.description,
                 subjects: [],
                 fees: [],
@@ -185,8 +168,8 @@ export default {
     methods: {
         addSubjectSlot() {
             this.form.subjects.push({
-                code: "",
                 name: "",
+                book: "",
             });
         },
         addFeeSlot() {

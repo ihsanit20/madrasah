@@ -17,7 +17,7 @@ class CreateSubjectsTable extends Migration
             $table->id();
             $table->unsignedTinyInteger('class_id');
             $table->string('name');
-            $table->string('code');
+            $table->string('book')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

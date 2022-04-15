@@ -158,7 +158,8 @@
                 আমাদের বিভাগসমূহ
             </h2>
             <div class="grid gap-4 md:grid-cols-3">
-                <div
+                <Link
+                    :href="route('page.class', classes.id)"
                     v-for="classes in data.classes"
                     :key="classes.id"
                     class="overflow-hidden rounded-lg border bg-white pb-4"
@@ -173,7 +174,7 @@
                     >
                         {{ classes.description }}
                     </p>
-                </div>
+                </Link>
                 <div
                     v-if="Object.keys(data.classes).length < 3"
                     class="overflow-hidden rounded-lg border bg-white pb-4"

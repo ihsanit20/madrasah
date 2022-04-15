@@ -1,7 +1,7 @@
 <template>
-    <Head title="Classes" />
+    <Head title="ক্লাস/বিভাগ সমুহ" />
 
-    <app-layout pageTitle="Classes" :addNewHref="route('classes.create')">
+    <app-layout pageTitle="ক্লাস/বিভাগ সমুহ" :addNewHref="route('classes.create')">
         <data-table
             :collections="data.collections"
             :filters="data.filters"
@@ -62,11 +62,11 @@ export default {
     data() {
         return {
             columns: [
-                { title: "Code", align: "center" },
-                { title: "Name", align: "left" },
-                { title: "Students", align: "center" },
-                { title: "Subjects", align: "center" },
-                { title: "Fees", align: "center" },
+                { title: "ক্লাস কোড", align: "center" },
+                { title: "ক্লাস/বিভাগের নাম", align: "left" },
+                { title: "শিক্ষাথী সংখ্যা", align: "center" },
+                { title: "বিষয়", align: "center" },
+                { title: "ফি সমুহ", align: "center" },
             ],
         };
     },

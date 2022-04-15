@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="overflow-x-auto">
             <div class="inline-block min-w-full align-middle">
                 <div class="overflow-hidden">
                     <table

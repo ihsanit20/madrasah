@@ -1,7 +1,7 @@
 <template>
-    <Head title="Student" />
+    <Head title="ভর্তি ফর্ম" />
 
-    <app-layout pageTitle="Admission form">
+    <app-layout pageTitle="ভর্তি ফর্ম">
         <form-component :data="data" module-action="store" />
     </app-layout>
 </template>

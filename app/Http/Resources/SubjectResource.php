@@ -17,6 +17,7 @@ class SubjectResource extends JsonResource
         return [
             'id'        => $this->id,
             'name'      => (string) ($this->name ?? ''),
+            'book'      => (string) ($this->book ?? ''),
             'code'      => (string) ($this->code ?? ''),
             'classId'   => (int) ($this->class_id ?? 0),
             'className' => (string) ($this->class->name ?? ''),

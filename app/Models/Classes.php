@@ -13,6 +13,15 @@ class Classes extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+    
+    protected $appends = [
+        'code'
+    ];
+
+    public function getCodeAttribute()
+    {
+        return $this->id;
+    }
 
     public function getTotalSubjectAttribute()
     {

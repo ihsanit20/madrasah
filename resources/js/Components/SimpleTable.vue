@@ -1,23 +1,23 @@
 <template>
     <div class="flex flex-col">
-        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="overflow-x-auto border print:border-black">
             <div class="inline-block min-w-full align-middle">
                 <div class="overflow-hidden">
                     <table
-                        class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700"
+                        class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700 print:divide-black"
                     >
                         <thead class="bg-gray-300 dark:bg-gray-700">
                             <tr>
                                 <th
                                     v-if="serialColumn"
-                                    class="py-3 px-6 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 md:text-sm"
+                                    class="py-3 px-6 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
                                 >
                                     SL
                                 </th>
                                 <th
                                     v-for="(column, index) in columns"
                                     :key="index"
-                                    class="py-3 px-6 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 md:text-sm"
+                                    class="py-3 px-6 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
                                     :class="{
                                         'text-left': column.align == 'left',
                                         'text-center': column.align == 'center',
@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody
-                            class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800"
+                            class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800 print:divide-black"
                         >
                             <tr
                                 v-for="(item, index) in collections"
@@ -38,7 +38,7 @@
                             >
                                 <td
                                     v-if="serialColumn"
-                                    class="whitespace-nowrap py-4 px-6 text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                                    class="whitespace-nowrap py-4 px-6 text-xs font-medium text-gray-900 dark:text-white print:text-black md:text-sm"
                                 >
                                     {{ index + 1 }}
                                 </td>
@@ -47,11 +47,11 @@
                             </tr>
                             <tr
                                 v-if="!Object.keys(collections).length"
-                                class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                                class="hover:bg-gray-100 dark:hover:bg-gray-700 print:text-black"
                             >
                                 <td
                                     colspan="100"
-                                    class="py-3 px-2 text-center text-red-500"
+                                    class="py-3 px-2 text-center text-red-500 print:text-black"
                                 >
                                     No data found !!
                                 </td>

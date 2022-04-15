@@ -104,7 +104,7 @@ class StudentController extends Controller
             'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
             'districts' => DistrictResource::collection(District::orderBy('name')->get()),
             'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
-            'classes'   => ClassesResource::collection(Classes::orderBy('code')->get()),
+            'classes'   => ClassesResource::collection(Classes::get()),
         ];
     }
 

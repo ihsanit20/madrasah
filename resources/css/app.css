@@ -26,5 +26,5 @@ input[type="number"] {
 /* color of the scroll thumb */
 *::-webkit-scrollbar-thumb {
     width: 6px !important;
-    background: #F27C00;
+    background: #f27c00;
 }

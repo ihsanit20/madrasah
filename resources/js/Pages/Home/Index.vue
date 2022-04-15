@@ -45,7 +45,7 @@
                 </div>
 
                 <div
-                    class="h-80 overflow-y-auto rounded-lg border border-gray-400 bg-white p-4 text-center"
+                    class="h-72 overflow-y-auto rounded-lg border border-gray-400 bg-white p-4 text-center"
                 >
                     <h3 class="text-2xl font-bold text-blue-900">
                         {{ data.principalMessage.name }}
@@ -146,6 +146,7 @@
                 </div>
                 <div class="">
                     <arabic-calender
+                        :calendar="data.calendar"
                         class="w-full rounded-lg border border-gray-400"
                     />
                 </div>

@@ -34,4 +34,15 @@ class HomeController extends Controller
             'canRegister' => Route::has('register'),
         ]);
     }
+
+    public function notice(Notice $notice)
+    {
+        NoticeResource::withoutWrapping();
+    
+        return Inertia::render('Page/Print', [
+            'data' => [
+                'notice' => new NoticeResource($notice),
+            ]
+        ]);
+    }
 }

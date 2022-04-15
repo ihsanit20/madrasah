@@ -76,7 +76,10 @@
                             :key="notice.id"
                             class="py-3"
                         >
-                            <Link href="#" class="block">
+                            <Link
+                                :href="route('page.notice', notice.id)"
+                                class="block"
+                            >
                                 <p class="text-xl font-bold text-orange-500">
                                     {{ notice.formatedDate }}
                                 </p>

@@ -1,10 +1,12 @@
 <template>
-    <header class="sticky top-0 z-40 overflow-hidden bg-white shadow-sm">
+    <header
+        class="sticky top-0 z-40 overflow-hidden bg-white shadow-sm print:hidden"
+    >
         <div
             class="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 py-2 px-2 md:py-3"
         >
             <Link
-                :href="route($page.props.auth.user ? 'dashboard' : 'home')"
+                :href="route('home')"
                 class="flex items-center gap-2 md:gap-4"
             >
                 <application-logo class="h-12 md:h-20" />
@@ -37,7 +39,7 @@
         <slot />
     </main>
 
-    <footer>
+    <footer v-if="hasFooter" class="print:hidden">
         <app-footer />
     </footer>
 </template>
@@ -54,6 +56,13 @@ export default {
         AppFooter,
         AppHeader,
         ApplicationLogo,
+    },
+
+    props: {
+        hasFooter: {
+            type: Boolean,
+            default: true,
+        },
     },
 };
 </script>

@@ -2,13 +2,11 @@
     <Head title="Dashboard" />
 
     <app-layout>
-        <div class="overflow-hidden bg-rose-600 py-2 text-white">
-            <div class="mx-auto w-full max-w-6xl overflow-hidden">
-                <div
-                    class="mx-auto w-full max-w-5xl animate-marquee-20 space-x-8 overflow-hidden whitespace-nowrap md:animate-marquee-40"
-                >
-                    <span>{{ data.headline.value }}</span>
-                </div>
+        <div class="overflow-hidden bg-rose-600 text-white">
+            <div class="mx-auto flex w-full flex-wrap overflow-hidden py-3">
+                <marquee scrollamount="5" class="space-x-8">
+                    {{ data.headline.value }}
+                </marquee>
             </div>
         </div>
         <section class="mx-auto grid max-w-6xl gap-4 md:grid-cols-4">

@@ -16,15 +16,32 @@ input[type="number"] {
 
 /* width of the entire scrollbar */
 *::-webkit-scrollbar {
-    width: 6px;
+    width: 2px;
 }
 
 /* color of the tracking area */
 *::-webkit-scrollbar-track {
-    background: rgb(255, 255, 255);
+    background: transparent;
 }
 /* color of the scroll thumb */
 *::-webkit-scrollbar-thumb {
+    width: 2px !important;
+    background: #f27c00;
+    border-radius: 5px;
+}
+
+/* width of the entire scrollbar */
+body::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* color of the tracking area */
+body::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+/* color of the scroll thumb */
+body::-webkit-scrollbar-thumb {
     width: 6px !important;
     background: #f27c00;
+    border-radius: 10px;
 }

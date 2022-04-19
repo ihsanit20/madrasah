@@ -122,13 +122,18 @@
                             <div
                                 v-for="(day, index) in calendar.days"
                                 :key="index"
-                                class="flex w-full cursor-pointer justify-center px-2 py-2"
-                                :class="{
-                                    'rounded-full bg-orange-600 text-white':
-                                        day.hijri.day === calendar.currentDay,
-                                }"
+                                class="flex w-full cursor-pointer items-center justify-center py-2"
                             >
-                                {{ day.hijri.day }}
+                                <div
+                                    class="flex h-6 w-6 items-center justify-center rounded-full"
+                                    :class="{
+                                        'bg-orange-600 text-white':
+                                            day.hijri.day ===
+                                            calendar.currentDay,
+                                    }"
+                                >
+                                    {{ day.hijri.day }}
+                                </div>
                             </div>
                         </div>
                     </div>

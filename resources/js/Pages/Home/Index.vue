@@ -9,10 +9,10 @@
                 </marquee>
             </div>
         </div>
-        <section class="mx-auto grid max-w-6xl gap-4 md:grid-cols-4">
-            <div class="grid gap-4 md:col-span-3">
+        <section class="mx-auto grid max-w-6xl gap-4 lg:grid-cols-4">
+            <div class="grid gap-4 lg:col-span-3">
                 <div
-                    class="relative h-80 w-full overflow-hidden rounded-lg bg-red-600 md:h-96"
+                    class="relative h-80 w-full overflow-hidden rounded-lg bg-red-600 lg:h-96"
                 >
                     <img
                         src="/images/mainbanner.jpg"
@@ -57,7 +57,7 @@
             </div>
             <div class="grid gap-4">
                 <div
-                    class="h-80 overflow-y-auto rounded-lg border border-gray-400 bg-white text-center md:h-96"
+                    class="h-80 overflow-y-auto rounded-lg border border-gray-400 bg-white text-center lg:h-96"
                 >
                     <h3
                         class="sticky top-0 z-10 bg-white pt-4 text-2xl font-bold text-blue-900"
@@ -245,10 +245,10 @@
 
         <section class="bg-blue-900 pt-4 pb-4 text-white md:pt-8 md:pb-8">
             <div
-                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-8 py-4 text-justify text-lg md:flex-row"
+                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-8 py-4 text-justify text-lg lg:flex-row"
             >
                 <div
-                    class="order-2 flex-1 shrink grow space-y-2 text-center md:order-1 md:text-left"
+                    class="order-2 flex-1 shrink grow space-y-2 text-center lg:order-1 lg:text-left"
                 >
                     <h3 class="text-xl font-bold md:text-3xl">
                         {{ $page.props.settings.siteName }}
@@ -261,11 +261,11 @@
                 </div>
 
                 <application-logo
-                    class="order-1 w-28 shrink-0 grow-0 rounded-full bg-white p-0.5 md:order-2"
+                    class="order-1 w-28 shrink-0 grow-0 rounded-full bg-white p-0.5 lg:order-2"
                 />
 
                 <div
-                    class="order-3 flex flex-1 shrink grow grid-cols-2 flex-col items-center justify-end gap-4 md:flex-row"
+                    class="order-3 flex flex-1 shrink grow grid-cols-2 flex-col items-center justify-end gap-4 lg:flex-row"
                 >
                     <div class="shrink-0 grow-0">
                         <div class="flex items-center justify-center gap-2">

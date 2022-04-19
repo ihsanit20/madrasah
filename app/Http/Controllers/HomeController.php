@@ -21,6 +21,8 @@ class HomeController extends Controller
 
         $notices = Notice::query()
             ->whereDate('date', '<=', date('Y-m-d'))
+            ->latest('date')
+            ->take(10)
             ->get();
 
         $today = date("d-m-Y");
@@ -37,7 +39,7 @@ class HomeController extends Controller
 
         $current_month = $response->data->hijri->month;
 
-        $current_month->bn = HijriMonth::find($current_month->number)->bengali ?? '';
+        $current_month->bn = HijriMonth::find($current_month->number)->bengali ?? $current_month->en;
 
         $current_year = $response->data->hijri->year;
 

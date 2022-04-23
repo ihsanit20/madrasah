@@ -23,7 +23,8 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $collections = Student::query();
+        $collections = Student::query()
+            ->student();
 
         return Inertia::render('Student/Index', [
             'data' => [

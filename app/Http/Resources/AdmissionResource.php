@@ -19,6 +19,7 @@ class AdmissionResource extends JsonResource
             'roll'          => (int) ($this->roll ?? 0),
             'studentId'     => (int) ($this->student_id ?? ''),
             'studentName'   => (string) ($this->student->name ?? ''),
+            'student'       => new StudentResource($this->whenLoaded('student')),
             'classId'       => (int) ($this->class_id ?? ''),
             'className'     => (string) ($this->class->name ?? ''),
             'year'          => (int) ($this->year ?? 0),

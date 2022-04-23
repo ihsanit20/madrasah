@@ -55,6 +55,26 @@ class Student extends Model
         return self::getGenderArrayData()[$this->gender] ?? '';
     }
 
+    public function scopeActive($query)
+    {
+        $query->where('status', 1);
+    }
+
+    public function scopeInactive($query)
+    {
+        $query->where('status', 0);
+    }
+
+    public function scopeStudent($query)
+    {
+        $query->whereIn('status', [0,1]);
+    }
+
+    public function scopeAdmission($query)
+    {
+        $query->whereIn('status', [2,3]);
+    }
+
     public function father_info()
     {
         return $this->belongsTo(Guardian::class, 'father_info_id');

@@ -18,7 +18,12 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('registration')->nullable();
 
+            $table->unsignedTinyInteger('status')->default(1)->comment('0=Inactive, 1=Active, 2=Admission is ongoing');
+
+            $table->unsignedTinyInteger('resident');
+
             $table->unsignedTinyInteger('gender')->nullable()->comment('1=Male, 2=Female');
+            $table->unsignedTinyInteger('blood_group')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('birth_certificate')->nullable();
 

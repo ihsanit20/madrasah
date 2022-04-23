@@ -22,7 +22,7 @@
             </span>
         </nav-link>
 
-        <dropdown-nav-link :active="route().current('students.*')">
+        <dropdown-nav-link :active="route().current('(students|admissions).*')">
             <StudentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 শিক্ষার্থী
@@ -33,12 +33,25 @@
                     :active="route().current('students.index')"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         শিক্ষার্থী তালিকা
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('admissions.index')"
+                    :active="route().current('admissions.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        আবেদন তালিকা
                     </span>
                 </nav-link>
                 <nav-link
@@ -65,17 +78,6 @@
                 </nav-link>
             </template>
         </dropdown-nav-link>
-
-        <!-- <nav-link
-            :href="route('admissions.index')"
-            :active="route().current('admissions.*')"
-            class="flex items-center gap-2 md:gap-4"
-        >
-            <AdmissionSvg class="h-6 w-6 md:h-8 md:w-8" />
-            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                Admissions
-            </span>
-        </nav-link> -->
 
         <nav-link href="#" class="flex items-center gap-2 md:gap-4">
             <MoneyReceiptSvg class="h-6 w-6 md:h-8 md:w-8" />

@@ -1,7 +1,7 @@
 <template>
-    <Head title="আবেদন তালিকা" />
+    <Head title="Admission" />
 
-    <app-layout pageTitle="আবেদন তালিকা">
+    <app-layout pageTitle="Admissions" :addNewHref="route('admissions.create')">
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
@@ -9,21 +9,31 @@
         >
             <template #default="{ item: admission }">
                 <table-td class="text-left">
-                    <Link
-                        :href="route('admissions.show', admission.id)"
-                        class="text-sky-600 hover:underline"
-                    >
-                        {{ admission.id }}
-                    </Link>
+                    {{ admission.id }}
                 </table-td>
                 <table-td class="text-left">
                     {{ admission.studentName }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ admission.student.fatherInfo.name }}
-                </table-td>
-                <table-td class="text-left">
                     {{ admission.className }}
+                </table-td>
+                <table-td class="text-center">
+                    {{ admission.roll }}
+                </table-td>
+                <table-td class="text-center">
+                    {{ admission.year }}
+                </table-td>
+                <table-td class="text-center">
+                    <div
+                        class="flex items-center justify-center gap-1 md:gap-2"
+                    >
+                        <action-button-show
+                            :href="route('admissions.show', admission.id)"
+                        />
+                        <action-button-edit
+                            :href="route('admissions.edit', admission.id)"
+                        />
+                    </div>
                 </table-td>
             </template>
         </simple-table>
@@ -59,10 +69,12 @@ export default {
     data() {
         return {
             columns: [
-                { title: "ফরম নাম্বার", align: "left", sticky: true },
-                { title: "শিক্ষার্থীর নাম", align: "left" },
-                { title: "পিতার নাম", align: "left" },
-                { title: "ভর্তিচ্ছু বিভাগ/শ্রেণী", align: "left" },
+                { title: "ID", align: "left", sticky: true },
+                { title: "Student Name", align: "left" },
+                { title: "Class", align: "left" },
+                { title: "Roll", align: "center" },
+                { title: "Year", align: "center" },
+                { title: "Action", align: "center" },
             ],
         };
     },

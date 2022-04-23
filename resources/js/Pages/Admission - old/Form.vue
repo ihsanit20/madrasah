@@ -31,19 +31,15 @@
                 </form-group>
                 <div class="flex gap-2">
                     <form-group class="flex-1" label="লিঙ্গ">
-                        <Select
-                            class="block w-full"
-                            v-model="form.gender"
-                            required
-                        >
-                            <option value="">-- নির্বাচন করুন --</option>
+                        <Select class="block w-full" v-model="form.gender">
+                            <option value="">-- Select --</option>
                             <option :value="1">Male</option>
                             <option :value="2">Female</option>
                         </Select>
                     </form-group>
                     <form-group class="flex-1" label="রক্তের গ্রুপ">
                         <Select class="block w-full" v-model="form.blood_group">
-                            <option value="">-- নির্বাচন করুন --</option>
+                            <option value="">-- Select --</option>
                             <option
                                 v-for="(bloodGroup, index) in data.bloodGroups"
                                 :key="index"

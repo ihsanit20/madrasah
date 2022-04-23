@@ -1,7 +1,7 @@
 <template>
-    <Head title="Admission" />
+    <Head title="ভর্তি ফর্ম" />
 
-    <app-layout pageTitle="Create Admission">
+    <app-layout pageTitle="ভর্তি ফর্ম">
         <form-component :data="data" module-action="store" />
     </app-layout>
 </template>

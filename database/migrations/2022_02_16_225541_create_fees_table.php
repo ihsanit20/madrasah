@@ -17,7 +17,7 @@ class CreateFeesTable extends Migration
             $table->id();
             $table->unsignedTinyInteger('class_id');
             $table->string("name");
-            $table->unsignedTinyInteger('period')->comment('1=Montly, 2=Anualy');
+            $table->unsignedTinyInteger('period')->comment('1=Anualy, 2=Montly');
             $table->float("amount");
             $table->timestamps();
             $table->softDeletes();

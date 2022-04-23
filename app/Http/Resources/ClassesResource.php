@@ -15,10 +15,12 @@ class ClassesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => $this->id,
+            'id'            => (int) $this->id,
             'name'          => (string) ($this->name ?? ''),
             'code'          => (string) ($this->code ?? ''),
             'description'   => (string) ($this->description ?? ''),
+            'staffId'       => (int) ($this->staff_id ?? 0),
+            'teacherName'   => (string) ($this->teacher->name ?? ''),
             'totalSubject'  => (int) ($this->total_subject ?? 0),
             'totalFee'      => (int) ($this->total_fee ?? 0),
             'totalStudent'  => (int) ($this->total_student ?? 0),

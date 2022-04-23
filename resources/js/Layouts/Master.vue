@@ -20,7 +20,7 @@
 
             <div class="flex gap-4">
                 <Link
-                    href="#"
+                    :href="route('page.admission-form')"
                     class="w-28 rounded-lg bg-orange-500 py-1.5 text-center text-sm font-semibold text-white md:w-40 md:text-lg"
                 >
                     ভর্তির আবেদন

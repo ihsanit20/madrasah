@@ -36,7 +36,10 @@
                                 required
                             />
                         </form-group>
-                        <form-group label="কিতাবের নাম (একাধিক হলে কমা ব্যবহার করুন)" class="w-2/3">
+                        <form-group
+                            label="কিতাবের নাম (একাধিক হলে কমা ব্যবহার করুন)"
+                            class="w-2/3"
+                        >
                             <Input
                                 type="text"
                                 class="block w-full"
@@ -68,8 +71,8 @@
                                 class="flex w-full items-center gap-2 md:w-auto"
                             >
                                 <form-group
-                                    class="flex-grow md:w-32 md:flex-grow-0"
-                                    label="সময়কাল"
+                                    class="flex-grow md:w-40 md:flex-grow-0"
+                                    label="ফি-এর ধরন"
                                 >
                                     <Select
                                         v-model="fee.period"
@@ -87,7 +90,7 @@
                                         </option>
                                     </Select>
                                 </form-group>
-                                <form-group class="w-24" label="টাকার পরিমাণ">
+                                <form-group class="w-28" label="টাকার পরিমাণ">
                                     <Input
                                         type="number"
                                         class="block w-full text-center"
@@ -99,6 +102,19 @@
                         </div>
                     </template>
                 </form-slot-group>
+
+                <form-group class="col-span-full" label="শ্রেণী শিক্ষক">
+                    <Select v-model="form.staff_id" class="block w-full">
+                        <option value="">--Select--</option>
+                        <option
+                            v-for="(staff, index) in data.staffList"
+                            :key="index"
+                            :value="staff.id"
+                        >
+                            {{ staff.name }}
+                        </option>
+                    </Select>
+                </form-group>
             </div>
 
             <hr class="my-4 w-full" />
@@ -159,6 +175,7 @@ export default {
         return {
             form: this.$inertia.form({
                 name: this.data.classes.name,
+                staff_id: this.data.classes.staffId,
                 description: this.data.classes.description,
                 subjects: [],
                 fees: [],

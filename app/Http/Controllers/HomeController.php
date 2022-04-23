@@ -125,4 +125,13 @@ class HomeController extends Controller
             ]
         ]);
     }
+
+    public function admissionForm()
+    {
+        return Inertia::render('Page/AdmissionForm', [
+            'data' => [
+                //
+            ]
+        ]);
+    }
 }

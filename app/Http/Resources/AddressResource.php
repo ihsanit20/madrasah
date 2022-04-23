@@ -17,6 +17,7 @@ class AddressResource extends JsonResource
         return [
             'id'            => (int) $this->id,
             'value'         => (string) ($this->value ?? ''),
+            'postoffice'    => (string) ($this->postoffice ?? ''),
             'areaId'        => (int) ($this->area_id ?? 0),
             'areaName'      => (string) ($this->area->name ?? ''),
             'districtName'  => (string) ($this->area->district->name ?? ''),

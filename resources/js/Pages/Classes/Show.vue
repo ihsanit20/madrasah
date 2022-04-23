@@ -19,10 +19,13 @@
                 </Link>
             </div>
         </div>
-        <div
-            class="max-w-2xl rounded border bg-white print:border-0"
-        >
-            <ClassTemplete :data="data"/>
+        <div class="max-w-2xl rounded border bg-white print:border-0">
+            <ClassTemplete :data="data" />
+
+            <div class="flex gap-2 px-10 pb-8">
+                <span class="font-bold">শ্রেণী শিক্ষক:</span>
+                <span>{{ data.classes.teacherName }}</span>
+            </div>
         </div>
     </app-layout>
 </template>
@@ -58,20 +61,6 @@ export default {
             type: Object,
             default: {},
         },
-    },
-    data() {
-        return {
-            subjectColumns: [
-                { title: "বিষয় কোড", align: "center" },
-                { title: "বিষয়ের নাম", align: "left" },
-                { title: "বইয়ের তালিকা", align: "left" },
-            ],
-            feeColumns: [
-                { title: "ফি বিবরণী", align: "left" },
-                { title: "সময়কাল", align: "center" },
-                { title: "টাকার পরিমাণ", align: "right" },
-            ],
-        };
     },
 };
 </script>

@@ -105,6 +105,7 @@ class StudentController extends Controller
             'districts' => DistrictResource::collection(District::orderBy('name')->get()),
             'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
             'classes'   => ClassesResource::collection(Classes::get()),
+            'bloodGroups' => Student::getBloodGroups()
         ];
     }
 
@@ -139,6 +140,7 @@ class StudentController extends Controller
             ],
             'date_of_birth' => '',
             'gender' => '',
+            'blood_group' => '',
             'birth_certificate' => '',
         ]);
     }

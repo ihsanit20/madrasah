@@ -29,34 +29,27 @@
                         required
                     />
                 </form-group>
-                <form-group class="w-full" label="লিঙ্গ">
-                    <div
-                        class="flex items-center gap-2 rounded-md border py-2 pl-2"
-                    >
-                        <label class="flex items-center gap-1">
-                            <Input
-                                v-model="form.gender"
-                                type="radio"
-                                name="gender"
-                                :value="1"
-                                :checked="form.gender == 1"
-                                required
-                            />
-                            <span>Male</span>
-                        </label>
-                        <label class="flex items-center gap-1">
-                            <Input
-                                v-model="form.gender"
-                                type="radio"
-                                name="gender"
-                                :value="2"
-                                :checked="form.gender == 2"
-                                required
-                            />
-                            <span>Female</span>
-                        </label>
-                    </div>
-                </form-group>
+                <div class="flex gap-2">
+                    <form-group class="flex-1" label="লিঙ্গ">
+                        <Select class="block w-full" v-model="form.gender">
+                            <option value="">-- Select --</option>
+                            <option :value="1">Male</option>
+                            <option :value="2">Female</option>
+                        </Select>
+                    </form-group>
+                    <form-group class="flex-1" label="রক্তের গ্রুপ">
+                        <Select class="block w-full" v-model="form.blood_group">
+                            <option value="">-- Select --</option>
+                            <option
+                                v-for="(bloodGroup, index) in data.bloodGroups"
+                                :key="index"
+                                :value="index"
+                            >
+                                {{ bloodGroup }}
+                            </option>
+                        </Select>
+                    </form-group>
+                </div>
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 py-2 md:grid-cols-3"
                 >
@@ -68,7 +61,7 @@
                             required
                         />
                     </form-group>
-                    <form-group class="w-full" label="মোবাইল নম্বর">
+                    <form-group class="w-full" label="ফোন">
                         <Input
                             type="number"
                             class="block w-full"
@@ -94,7 +87,7 @@
                             required
                         />
                     </form-group>
-                    <form-group class="w-full" label="মোবাইল নম্বর">
+                    <form-group class="w-full" label="ফোন">
                         <Input
                             type="number"
                             class="block w-full"
@@ -111,7 +104,7 @@
                 </form-group>
             </div>
 
-            <form-heading class="mt-6 mb-2">অভিভাবক</form-heading>
+            <form-heading class="mt-6 mb-2">অভিভাবকের তথ্য</form-heading>
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 py-2"
@@ -150,7 +143,7 @@
                                 :checked="form.guardian_type == 3"
                                 required
                             />
-                            <span>অন্যান্য</span>
+                            <span>বৈধ অভিভাবক</span>
                         </label>
                     </div>
                     <div
@@ -165,7 +158,7 @@
                                 required
                             />
                         </form-group>
-                        <form-group class="w-full" label="মোমাইল নাম্বার">
+                        <form-group class="w-full" label="ফোন">
                             <Input
                                 type="number"
                                 class="block w-full"
@@ -191,13 +184,13 @@
                 class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 pt-2 pb-2"
             >
                 <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
-                    <form-group>
+                    <form-group label="বিভাগ">
                         <Select
                             class="block w-full"
                             v-model="form.present_address.division"
                             @change="presentAddressDivisionSelectHandler"
                         >
-                            <option value="">-- Select Division --</option>
+                            <option value="">-- নির্বাচন করুন --</option>
                             <option
                                 v-for="division in present_address.divisions"
                                 :key="division.id"
@@ -207,13 +200,13 @@
                             </option>
                         </Select>
                     </form-group>
-                    <form-group>
+                    <form-group label="জেলা">
                         <Select
                             class="block w-full"
                             v-model="form.present_address.district"
                             @change="presentAddressDistrictSelectHandler"
                         >
-                            <option value="">-- Select District --</option>
+                            <option value="">-- নির্বাচন করুন --</option>
                             <option
                                 v-for="district in present_address.districts"
                                 :key="district.id"
@@ -223,12 +216,12 @@
                             </option>
                         </Select>
                     </form-group>
-                    <form-group>
+                    <form-group label="উপজেলা/থানা">
                         <Select
                             class="block w-full"
                             v-model="form.present_address.area"
                         >
-                            <option value="">-- Select Area --</option>
+                            <option value="">-- নির্বাচন করুন --</option>
                             <option
                                 v-for="area in present_address.areas"
                                 :key="area.id"
@@ -238,9 +231,16 @@
                             </option>
                         </Select>
                     </form-group>
+                    <form-group label="পোস্ট অফিস" class="col-span-1">
+                        <Input
+                            type="text"
+                            class="block w-full"
+                            v-model="form.present_address.postoffice"
+                        />
+                    </form-group>
                     <form-group
-                        label="বাসা নং, রোড, গ্রাম"
-                        class="col-span-full"
+                        label="বাড়ি নং, রোড নং, গ্রাম/মহল্লা"
+                        class="col-span-2"
                     >
                         <Input
                             type="text"
@@ -271,13 +271,13 @@
                     v-if="!form.is_same_address"
                     class="grid gap-x-2 gap-y-4 md:grid-cols-3"
                 >
-                    <form-group>
+                    <form-group label="বিভাগ">
                         <Select
                             class="block w-full"
                             v-model="form.permanent_address.division"
                             @change="permanentAddressDivisionSelectHandler"
                         >
-                            <option value="">-- Select Division --</option>
+                            <option value="">-- নির্বাচন করুন --</option>
                             <option
                                 v-for="division in permanent_address.divisions"
                                 :key="division.id"
@@ -287,13 +287,13 @@
                             </option>
                         </Select>
                     </form-group>
-                    <form-group>
+                    <form-group label="জেলা">
                         <Select
                             class="block w-full"
                             v-model="form.permanent_address.district"
                             @change="permanentAddressDistrictSelectHandler"
                         >
-                            <option value="">-- Select District --</option>
+                            <option value="">-- নির্বাচন করুন --</option>
                             <option
                                 v-for="district in permanent_address.districts"
                                 :key="district.id"
@@ -303,12 +303,12 @@
                             </option>
                         </Select>
                     </form-group>
-                    <form-group>
+                    <form-group label="উপজেলা/থানা">
                         <Select
                             class="block w-full"
                             v-model="form.permanent_address.area"
                         >
-                            <option value="">-- Select Area --</option>
+                            <option value="">-- নির্বাচন করুন --</option>
                             <option
                                 v-for="area in permanent_address.areas"
                                 :key="area.id"
@@ -318,9 +318,16 @@
                             </option>
                         </Select>
                     </form-group>
+                    <form-group label="পোস্ট অফিস" class="col-span-1">
+                        <Input
+                            type="text"
+                            class="block w-full"
+                            v-model="form.permanent_address.postoffice"
+                        />
+                    </form-group>
                     <form-group
-                        label="বাসা নং, রোড নং, গ্রাম"
-                        class="col-span-full"
+                        label="বাড়ি নং, রোড নং, গ্রাম/মহল্লা"
+                        class="col-span-2"
                     >
                         <Input
                             type="text"
@@ -331,7 +338,9 @@
                 </div>
             </form-group>
 
-            <form-heading class="mt-6 mb-2">যে ক্লাস/বিভাগে ভর্তি হতে ইচ্ছুক</form-heading>
+            <form-heading class="mt-6 mb-2">
+                যে ক্লাস/বিভাগে ভর্তি হতে ইচ্ছুক
+            </form-heading>
             <div class="grid gap-2 md:grid-cols-2">
                 <form-group label="শ্রেণী/বিভাগ">
                     <Select
@@ -447,21 +456,21 @@ export default {
             present_address: {
                 divisions: "",
                 districts: "",
+                postoffice: "",
                 areas: "",
             },
             permanent_address: {
                 divisions: "",
                 districts: "",
+                postoffice: "",
                 areas: "",
             },
             form: this.$inertia.form({
                 name: this.data.student.name,
                 date_of_birth: this.data.student.dateOfBirth,
                 birth_certificate: this.data.student.birthCertificate,
-                gender:
-                    this.moduleAction == "update"
-                        ? this.data.student.gender
-                        : 0,
+                gender: this.data.student.gender,
+                blood_group: this.data.student.bloodGroup,
                 father_info: {
                     name: "",
                     phone: "",

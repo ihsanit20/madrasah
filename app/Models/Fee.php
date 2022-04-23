@@ -13,8 +13,8 @@ class Fee extends Model
     protected $guarded = [];
 
     protected static $periods = [
-        1 => 'Monthly',
-        2 => 'Annual',
+        1 => 'ভর্তিকালীন প্রদেয়',
+        2 => 'মাসিক প্রদেয়',
     ];
 
     public static function getPeriod()

@@ -52,4 +52,9 @@ class Classes extends Model
     {
         return $this->belongsToMany(Student::class, 'admissions', 'class_id', 'student_id');
     }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Staff::class, 'staff_id');
+    }
 }

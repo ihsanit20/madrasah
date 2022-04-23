@@ -16,7 +16,8 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('area_id')->constrained();
-            $table->text('value')->nullable();
+            $table->string('value')->nullable();
+            $table->string('postoffice')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

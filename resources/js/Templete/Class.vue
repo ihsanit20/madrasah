@@ -14,6 +14,8 @@
             v-html="data.classes.description"
         ></div>
 
+        <form-heading class="mt-4">বিষয় ও পুস্তক তালিকা</form-heading>
+
         <simple-table
             class="py-3"
             :columns="subjectColumns"
@@ -32,24 +34,41 @@
             </template>
         </simple-table>
 
-        <simple-table
-            class="py-3"
-            :columns="feeColumns"
-            :collections="data.classes.fees"
-        >
-            <template #default="{ item: fee }">
-                <table-td class="text-left">
-                    {{ fee.name }}
-                </table-td>
-                <table-td class="text-center">
-                    {{ fee.periodName }}
-                </table-td>
-                <table-td class="text-right"> {{ fee.amount }} TK </table-td>
-            </template>
-        </simple-table>
+        <form-heading class="mt-4">প্রদেয় ফি সমূহ</form-heading>
+
+        <div class="flex gap-4">
+            <simple-table
+                class="flex-1 py-3"
+                :columns="feeColumns1"
+                :collections="data.classes.fees"
+            >
+                <template #default="{ item: fee }">
+                    <table-td v-if="fee.period == 1" class="text-left">
+                        {{ fee.name }}
+                    </table-td>
+                    <table-td v-if="fee.period == 1" class="text-right">
+                        {{ fee.amount }} TK
+                    </table-td>
+                </template>
+            </simple-table>
+
+            <simple-table
+                class="flex-1 py-3"
+                :columns="feeColumns2"
+                :collections="data.classes.fees"
+            >
+                <template #default="{ item: fee }">
+                    <table-td v-if="fee.period == 2" class="text-left">
+                        {{ fee.name }}
+                    </table-td>
+                    <table-td v-if="fee.period == 2" class="text-right">
+                        {{ fee.amount }} TK
+                    </table-td>
+                </template>
+            </simple-table>
+        </div>
     </div>
 </template>
-
 
 <script>
 import AppLayout from "@/Layouts/App.vue";
@@ -61,6 +80,7 @@ import TableTd from "@/Components/TableTd.vue";
 import LetterHead from "@/Templete/LetterHead.vue";
 import PrintButton from "@/Components/PrintButton.vue";
 import { PencilAltIcon } from "@heroicons/vue/solid";
+import FormHeading from "@/Components/FormHeading.vue";
 
 export default {
     components: {
@@ -74,6 +94,7 @@ export default {
         LetterHead,
         PrintButton,
         PencilAltIcon,
+        FormHeading,
     },
     props: {
         data: {
@@ -88,10 +109,13 @@ export default {
                 { title: "বিষয়ের নাম", align: "left" },
                 { title: "বইয়ের তালিকা", align: "left" },
             ],
-            feeColumns: [
-                { title: "ফি বিবরণী", align: "left" },
-                { title: "সময়কাল", align: "center" },
-                { title: "টাকার পরিমাণ", align: "right" },
+            feeColumns1: [
+                { title: "ভর্তিকালীন প্রদেয়", align: "left" },
+                { title: "পরিমাণ", align: "right" },
+            ],
+            feeColumns2: [
+                { title: "মাসিক প্রদেয়", align: "left" },
+                { title: "পরিমাণ", align: "right" },
             ],
         };
     },

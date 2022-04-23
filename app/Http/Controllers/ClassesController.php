@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassesResource;
+use App\Http\Resources\StaffResource;
 use App\Models\Classes;
 use App\Models\Fee;
+use App\Models\Staff;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -85,9 +87,12 @@ class ClassesController extends Controller
 
     protected function data($class)
     {
+        StaffResource::withoutWrapping();
+
         return [
-            'classes' => $this->formatedData($class),
-            'periods' => Fee::getPeriod(),
+            'classes'   => $this->formatedData($class),
+            'periods'   => Fee::getPeriod(),
+            'staffList' => StaffResource::collection(Staff::get()),
         ];
     }
 
@@ -116,6 +121,7 @@ class ClassesController extends Controller
                 'string',
                 Rule::unique(Classes::class, 'name')->ignore($id),
             ],
+            'staff_id' => '',
             'description' => '',
         ]);
     }

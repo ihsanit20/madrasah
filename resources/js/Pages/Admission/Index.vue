@@ -1,7 +1,10 @@
 <template>
     <Head title="আবেদন তালিকা" />
 
-    <app-layout pageTitle="আবেদন তালিকা">
+    <app-layout
+        pageTitle="আবেদন তালিকা"
+        :addNewHref="route('admissions.create')"
+    >
         <simple-table
             :collections="data.collections"
             :filters="data.filters"

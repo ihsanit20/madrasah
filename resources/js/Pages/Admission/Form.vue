@@ -352,7 +352,7 @@
                         class="block w-full"
                         v-model="form.class_id"
                     >
-                        <option value="">--Select Class--</option>
+                        <option value="">-- নির্বাচন করুন --</option>
                         <option
                             v-for="classes in data.classes"
                             :key="classes.id"
@@ -368,9 +368,14 @@
                         class="block w-full"
                         v-model="form.resident"
                     >
-                        <option value="">--Select Type--</option>
-                        <option :value="0">আবাসিক</option>
-                        <option :value="1">অনাবাসিক</option>
+                        <option value="">-- নির্বাচন করুন --</option>
+                        <option
+                            v-for="(resident, index) in data.residentArray"
+                            :key="index"
+                            :value="index"
+                        >
+                            {{ resident }}
+                        </option>
                     </Select>
                 </form-group>
             </div>
@@ -436,6 +441,8 @@ export default {
             this.form.mother_info = this.data.student.motherInfo;
             this.form.guardian_info = this.data.student.guardianInfo;
 
+            this.form.present_address.postoffice =
+                this.data.student.presentAddress.postoffice;
             this.form.present_address.address =
                 this.data.student.presentAddress.value;
             this.form.present_address.area =
@@ -445,6 +452,8 @@ export default {
             this.form.present_address.division =
                 this.data.student.presentAddress.area.district.divisionId;
 
+            this.form.permanent_address.postoffice =
+                this.data.student.permanentAddress.postoffice;
             this.form.permanent_address.address =
                 this.data.student.permanentAddress.value;
             this.form.permanent_address.area =
@@ -506,15 +515,17 @@ export default {
                     district: "",
                     area: "",
                     address: "",
+                    postoffice: "",
                 },
                 permanent_address: {
                     division: "",
                     district: "",
                     area: "",
                     address: "",
+                    postoffice: "",
                 },
-                class_id: "",
-                resident: "",
+                class_id: this.data.admission.classId,
+                resident: this.data.student.resident,
             }),
         };
     },
@@ -525,7 +536,7 @@ export default {
             }
             if (this.moduleAction == "update") {
                 return this.form.put(
-                    this.route("admissions.update", this.data.student.id)
+                    this.route("admissions.update", this.data.admission.id)
                 );
             }
         },

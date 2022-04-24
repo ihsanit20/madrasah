@@ -24,4 +24,9 @@ trait BloodGroup
     {
         return self::$blood_groups[$value];
     }
+
+    public function getBloodGroupTextAttribute()
+    {
+        return self::$blood_groups[$this->blood_group ?? 0] ?? '';
+    }
 }

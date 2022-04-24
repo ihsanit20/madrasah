@@ -19,9 +19,10 @@ class StudentResource extends JsonResource
             'name'                  => (string) ($this->name ?? ''),
             'registration'          => (string) ($this->registration ?? ''),
             'dateOfBirth'           => (string) ($this->date_of_birth ? $this->date_of_birth->format('Y-m-d') : ''),
-            'dateOfBirthWithFormat' => (string) ($this->date_of_birth ? $this->date_of_birth->format('d M Y') : ''),
+            'dateOfBirthWithFormat' => (string) ($this->date_of_birth ? $this->date_of_birth->format('d-m-Y') : ''),
             'gender'                => (string) ($this->gender ?? ''),
             'bloodGroup'            => (string) ($this->blood_group ?? ''),
+            'bloodGroupText'        => (string) ($this->blood_group_text ?? ''),
             'genderText'            => (string) ($this->genderText ?? ''),
             'birthCertificate'      => (string) ($this->birth_certificate ?? ''),
             'fatherInfoId'          => (int) ($this->father_info_id ?? 0),
@@ -36,6 +37,7 @@ class StudentResource extends JsonResource
             'permanentAddressId'    => (int) ($this->permanent_address_id ?? 0),
             'permanentAddress'      => new AddressResource($this->whenLoaded('permanent_address')),
             'isSameAddress'         => (boolean) ($this->is_same_address ?? 0),
+            'resident'              => (int) ($this->resident ?? 0),
         ];
     }
 }

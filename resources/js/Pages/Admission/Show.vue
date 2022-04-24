@@ -11,7 +11,7 @@
                 </h2>
                 <print-button />
                 <Link
-                    :href="route('students.edit', data.student.id)"
+                    :href="route('admissions.edit', data.admission.id)"
                     class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
                 >
                     <PencilAltIcon class="w-5" />
@@ -20,8 +20,10 @@
             </div>
         </div>
         <div class="max-w-3xl rounded border bg-white p-3 shadow md:p-4">
+            <admission-form-templete :data="data" />
+
             <letter-head :photoFrame="true" />
-            <form-heading class="mb-2">Basic Information</form-heading>
+            <form-heading class="mb-2">ভর্তির আবেদন ফরম</form-heading>
             <div class="grid md:grid-cols-2">
                 <inline-data
                     title="Student's Name :"
@@ -123,22 +125,27 @@
 
 <script>
 import AppLayout from "@/Layouts/App.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import FormHeading from "@/Components/FormHeading.vue";
 import InlineData from "@/Components/InlineData.vue";
 import LetterHead from "@/Templete/LetterHead.vue";
 import PrintButton from "@/Components/PrintButton.vue";
+import { PencilAltIcon } from "@heroicons/vue/outline";
+import AdmissionFormTemplete from "@/Templete/AdmissionForm.vue";
 
 export default {
     components: {
         AppLayout,
         Head,
+        Link,
         ActionButtonEdit,
         FormHeading,
         InlineData,
         LetterHead,
         PrintButton,
+        PencilAltIcon,
+        AdmissionFormTemplete,
     },
     props: {
         data: {

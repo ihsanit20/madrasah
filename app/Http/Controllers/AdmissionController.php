@@ -39,7 +39,7 @@ class AdmissionController extends Controller
     public function create()
     {
         return Inertia::render('Admission/Create', [
-            'data' => $this->data(new Student())
+            'data' => $this->data(new Admission())
         ]);
     }
 
@@ -48,14 +48,14 @@ class AdmissionController extends Controller
         // return $request;
 
         $student = Student::create(
-            $this->validatedData($request)
+            $this->validatedStudentData($request)
             + $this->storeGuardian($request)
             + $this->storeAddress($request)
         );
 
         $admission = $student->admissions()->create(
             $this->validatedAdmissionData($request)
-            + $this->getArrayOfNewClassRoll($student->id, $request->class_id)
+            // + $this->getArrayOfNewClassRoll($student->id, $request->class_id)
             + $this->getArrayOfSession($request->session)
         );
 
@@ -67,9 +67,14 @@ class AdmissionController extends Controller
 
     public function show(Admission $admission)
     {
+        $student = $admission->student->first();
+
+        AdmissionResource::withoutWrapping();
+
         return Inertia::render('Admission/Show', [
             'data' => [
-                'admission' => $this->formatedData($admission)
+                'admission' => $this->formatedData($admission),
+                'student'   => $this->formatedStudentData($student),
             ]
         ]);
     }
@@ -83,7 +88,17 @@ class AdmissionController extends Controller
 
     public function update(Request $request, Admission $admission)
     {
-        $admission->update($this->validatedData($request, $admission->id));
+        // return $request;
+
+        $student = $admission->student()->first();
+
+        $student->update(
+            $this->validatedStudentData($request, $student->id)
+            + $this->storeGuardian($request, $student)
+            + $this->storeAddress($request, $student)
+        );
+
+        $admission->update($this->validatedAdmissionData($request, $admission->id));
 
         return redirect()
             ->route('admissions.show', $admission->id)
@@ -92,26 +107,37 @@ class AdmissionController extends Controller
 
     public function destroy(Admission $admission)
     {
-        $admission->delete();
+        // $admission->delete();
 
         return redirect()
             ->route('admissions.index')
             ->with('status', 'The record has been delete successfully.');
     }
 
-    protected function data($student)
+    protected function data($admission)
     {
+        $student = $admission->student()->first() ?? new Student();
+    
         return [
-            'student'   => $this->formatedData($student),
-            'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
-            'districts' => DistrictResource::collection(District::orderBy('name')->get()),
-            'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
-            'classes'   => ClassesResource::collection(Classes::get()),
-            'bloodGroups' => Student::getBloodGroups()
+            'admission'     => $this->formatedData($admission),
+            'student'       => $this->formatedStudentData($student),
+            'divisions'     => DivisionResource::collection(Division::orderBy('name')->get()),
+            'districts'     => DistrictResource::collection(District::orderBy('name')->get()),
+            'areas'         => AreaResource::collection(Area::orderBy('name')->get()),
+            'classes'       => ClassesResource::collection(Classes::get()),
+            'bloodGroups'   => Student::getBloodGroups(),
+            'residentArray' => Student::getResidentArrayData(),
         ];
     }
 
-    protected function formatedData($student)
+    protected function formatedData($admission)
+    {
+        AdmissionResource::withoutWrapping();
+
+        return new AdmissionResource($admission);
+    }
+
+    protected function formatedStudentData($student)
     {
         StudentResource::withoutWrapping();
 
@@ -133,7 +159,7 @@ class AdmissionController extends Controller
         ];
     }
 
-    protected function validatedData($request, $id = '')
+    protected function validatedStudentData($request, $id = '')
     {
         return $request->validate([
             'name' => [
@@ -247,6 +273,7 @@ class AdmissionController extends Controller
             [
                 'area_id'       => $address['area'] ?? null,
                 'value'         => $address['address'] ?? null,
+                'postoffice'    => $address['postoffice'] ?? null,
                 'deleted_at'    => null,
             ]
         );

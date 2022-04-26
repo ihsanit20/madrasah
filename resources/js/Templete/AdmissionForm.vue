@@ -244,18 +244,30 @@
             <hr />
             <div class="grid gap-4">
                 <div>
-                    <inline-data title="সর্বশেষ যে বিদ্যালয়ে পড়েছে তার নাম:" />
+                    <inline-data
+                        title="সর্বশেষ যে বিদ্যালয়ে পড়েছে তার নাম:"
+                        :value="data.admission.previousSchool"
+                    />
                 </div>
             </div>
-            <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
-                <div>
-                    <inline-data title="শ্রেণী:" />
+            <div class="grid gap-4 print:grid-cols-5 md:grid-cols-5">
+                <div class="col-span-2">
+                    <inline-data
+                        title="শ্রেণী:"
+                        :value="data.admission.previousClass"
+                    />
                 </div>
                 <div>
-                    <inline-data title="রোল:" />
+                    <inline-data
+                        title="রোল:"
+                        :value="data.admission.previousRoll"
+                    />
                 </div>
                 <div class="col-span-2">
-                    <inline-data title="সর্বশেষ পরীক্ষার অর্জিত ফলাফল:" />
+                    <inline-data
+                        title="সর্বশেষ পরীক্ষার অর্জিত ফলাফল:"
+                        :value="data.admission.previousResult"
+                    />
                 </div>
             </div>
             <hr />

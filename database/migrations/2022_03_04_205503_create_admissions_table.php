@@ -17,9 +17,13 @@ class CreateAdmissionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedTinyInteger('class_id');
-            $table->string('session');
+            $table->string('session')->nullable();
             $table->unsignedTinyInteger('status')->default(1)->comment('1=Admission Form, 2=Fee Form, 3=Admission Complete');
             $table->unsignedSmallInteger('roll')->nullable();
+            $table->string('previous_school')->nullable();
+            $table->string('previous_class')->nullable();
+            $table->string('previous_roll')->nullable();
+            $table->string('previous_result')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

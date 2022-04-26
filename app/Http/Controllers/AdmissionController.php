@@ -187,6 +187,10 @@ class AdmissionController extends Controller
                 'required',
                 'numeric',
             ],
+            'previous_school' => [],
+            'previous_class' => [],
+            'previous_roll' => [],
+            'previous_result' => [],
         ]);
     }
 

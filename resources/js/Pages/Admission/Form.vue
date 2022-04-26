@@ -343,6 +343,50 @@
             </form-group>
 
             <form-heading class="mt-6 mb-2">
+                সর্বশেষ যে বিদ্যালয়ের তথ্য
+            </form-heading>
+            <div class="grid gap-x-2 gap-y-4 md:grid-cols-5">
+                <form-group
+                    class="col-span-full w-full"
+                    label="সর্বশেষ যে বিদ্যালয়ে পড়েছে তার নাম"
+                >
+                    <Input
+                        type="text"
+                        class="block w-full"
+                        v-model="form.previous_school"
+                        required
+                    />
+                </form-group>
+                <form-group class="col-span-2 w-full" label="সর্বশেষ শ্রেণী">
+                    <Input
+                        type="text"
+                        class="block w-full"
+                        v-model="form.previous_class"
+                        required
+                    />
+                </form-group>
+                <form-group class="w-full" label="সর্বশেষ রোল">
+                    <Input
+                        type="text"
+                        class="block w-full"
+                        v-model="form.previous_roll"
+                        required
+                    />
+                </form-group>
+                <form-group
+                    class="col-span-2 w-full"
+                    label="সর্বশেষ পরীক্ষার অর্জিত ফলাফল"
+                >
+                    <Input
+                        type="text"
+                        class="block w-full"
+                        v-model="form.previous_result"
+                        required
+                    />
+                </form-group>
+            </div>
+
+            <form-heading class="mt-6 mb-2">
                 যে ক্লাস/বিভাগে ভর্তি হতে ইচ্ছুক
             </form-heading>
             <div class="grid gap-2 md:grid-cols-2">
@@ -526,6 +570,10 @@ export default {
                 },
                 class_id: this.data.admission.classId,
                 resident: this.data.student.resident,
+                previous_school: this.data.admission.previousSchool,
+                previous_class: this.data.admission.previousClass,
+                previous_roll: this.data.admission.previousRoll,
+                previous_result: this.data.admission.previousResult,
             }),
         };
     },

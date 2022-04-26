@@ -21,6 +21,7 @@ class AdmissionResource extends JsonResource
             'studentName'   => (string) ($this->student->name ?? ''),
             'student'       => new StudentResource($this->whenLoaded('student')),
             'classId'       => (int) ($this->class_id ?? ''),
+            'class'         => new ClassesResource($this->class),
             'className'     => (string) ($this->class->name ?? ''),
             'year'          => (int) ($this->year ?? 0),
         ];

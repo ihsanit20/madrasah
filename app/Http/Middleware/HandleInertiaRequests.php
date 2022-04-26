@@ -45,6 +45,8 @@ class HandleInertiaRequests extends Middleware
             'settings' => [
                 'siteName' => $this->getSettingValueByProperty('site-name'),
                 'siteAddress' => $this->getSettingValueByProperty('site-address'),
+                'studentAgreement' => $this->getSettingValueByProperty('student-agreement'),
+                'guardianAgreement' => $this->getSettingValueByProperty('guardian-agreement'),
             ]
         ]);
     }

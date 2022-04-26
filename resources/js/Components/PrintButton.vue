@@ -15,7 +15,7 @@
                 fill="currentColor"
             />
         </svg>
-        <span class="font-bold">Print</span>
+        <span class="font-bold">প্রিন্ট করুন</span>
     </button>
 </template>
 

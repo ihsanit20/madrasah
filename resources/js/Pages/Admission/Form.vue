@@ -488,13 +488,13 @@ export default {
                     name: "",
                     phone: "",
                     occupation: "",
-                    relation: "Father",
+                    relation: "পিতা",
                 },
                 mother_info: {
                     name: "",
                     phone: "",
                     occupation: "",
-                    relation: "Mother",
+                    relation: "মাতা",
                 },
                 guardian_type:
                     this.moduleAction == "update"

@@ -29,7 +29,7 @@
                     class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
                 >
                     <span>+</span>
-                    <span class="hidden md:block">Add New</span>
+                    <span class="hidden md:block">নতুন যোগ করুন</span>
                 </Link>
             </div>
 

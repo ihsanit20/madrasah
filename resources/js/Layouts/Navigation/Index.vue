@@ -51,29 +51,7 @@
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
-                        আবেদন তালিকা
-                    </span>
-                </nav-link>
-                <nav-link
-                    :href="route('students.create')"
-                    :active="route().current('students.create')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        নতুন ভর্তি
-                    </span>
-                </nav-link>
-                <nav-link href="#" class="flex items-center gap-2 md:gap-4">
-                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        পুরাতন ভর্তি
+                        ভর্তির আবেদন
                     </span>
                 </nav-link>
             </template>

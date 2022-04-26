@@ -1,10 +1,10 @@
 <template>
-    <div class="bg-white p-10">
+    <div class="bg-white px-6 py-4 print:py-0 print:px-4">
         <letter-head :photoFrame="true" />
         <h2 class="mt-4 mb-2 text-center text-2xl font-bold print:text-black">
             ভর্তির আবেদন ফরম
         </h2>
-        <div class="grid gap-4">
+        <div class="grid gap-3">
             <div class="flex items-center justify-between gap-4">
                 <div>
                     <inline-data
@@ -79,8 +79,8 @@
                 </div>
             </div>
             <hr />
-            <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
-                <div>
+            <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
+                <div class="print:col-span-2 md:col-span-2">
                     <inline-data
                         title="পিতার নাম:"
                         :value="data.student.fatherInfo.name"
@@ -99,8 +99,8 @@
                     />
                 </div>
             </div>
-            <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
-                <div>
+            <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
+                <div class="print:col-span-2 md:col-span-2">
                     <inline-data
                         title="মাতার নাম:"
                         :value="data.student.motherInfo.name"
@@ -120,6 +120,234 @@
                 </div>
             </div>
             <hr />
+            <div class="flex items-center gap-4">
+                <inline-data title="অভিভাবকের তথ্য" />
+                <label class="flex items-center justify-center gap-2">
+                    <Input
+                        type="radio"
+                        name="guardian"
+                        :checked="data.student.guardianType == '1'"
+                        class="h-3.5 w-3.5 rounded-none"
+                    />
+                    <span>পিতা</span>
+                </label>
+                <label class="flex items-center justify-center gap-2">
+                    <Input
+                        type="radio"
+                        name="guardian"
+                        :checked="data.student.guardianType == '2'"
+                        class="h-3.5 w-3.5 rounded-none"
+                    />
+                    <span>মাতা</span>
+                </label>
+                <label class="flex items-center justify-center gap-2">
+                    <Input
+                        type="radio"
+                        name="guardian"
+                        :checked="data.student.guardianType == '3'"
+                        class="h-3.5 w-3.5 rounded-none"
+                    />
+                    <span>বৈধ অভিভাবক</span>
+                </label>
+            </div>
+            <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
+                <div class="print:col-span-2 md:col-span-2">
+                    <inline-data
+                        title="অভিভাবকের নাম:"
+                        :value="data.student.guardianInfo.name"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="ফোন:"
+                        :value="data.student.guardianInfo.phone"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="সম্পর্ক:"
+                        :value="data.student.guardianInfo.relation"
+                    />
+                </div>
+            </div>
+            <hr />
+            <div class="font-semibold text-gray-700">বর্তমান ঠিকানা:</div>
+            <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
+                <div class="print:col-span-2 md:col-span-2">
+                    <inline-data
+                        title="বাড়ি নং, রোড নং, গ্রাম/মহল্লা:"
+                        :value="data.student.presentAddress.value"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="পোস্ট অফিস:"
+                        :value="data.student.presentAddress.postoffice"
+                    />
+                </div>
+            </div>
+            <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
+                <div>
+                    <inline-data
+                        title="উপজেলা:"
+                        :value="data.student.presentAddress.areaName"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="জেলা:"
+                        :value="data.student.presentAddress.districtName"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="বিভাগ:"
+                        :value="data.student.presentAddress.divisionName"
+                    />
+                </div>
+            </div>
+            <div class="font-semibold text-gray-700">স্থায়ী ঠিকানা:</div>
+            <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
+                <div class="print:col-span-2 md:col-span-2">
+                    <inline-data
+                        title="বাড়ি নং, রোড নং, গ্রাম/মহল্লা:"
+                        :value="data.student.permanentAddress.value"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="পোস্ট অফিস:"
+                        :value="data.student.permanentAddress.postoffice"
+                    />
+                </div>
+            </div>
+            <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
+                <div>
+                    <inline-data
+                        title="উপজেলা:"
+                        :value="data.student.permanentAddress.areaName"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="জেলা:"
+                        :value="data.student.permanentAddress.districtName"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="বিভাগ:"
+                        :value="data.student.permanentAddress.divisionName"
+                    />
+                </div>
+            </div>
+            <hr />
+            <div class="grid gap-4">
+                <div>
+                    <inline-data title="সর্বশেষ যে বিদ্যালয়ে পড়েছে তার নাম:" />
+                </div>
+            </div>
+            <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
+                <div>
+                    <inline-data title="শ্রেণী:" />
+                </div>
+                <div>
+                    <inline-data title="রোল:" />
+                </div>
+                <div class="col-span-2">
+                    <inline-data title="সর্বশেষ পরীক্ষার অর্জিত ফলাফল:" />
+                </div>
+            </div>
+            <hr />
+            <div class="flex items-center justify-between gap-4">
+                <div>
+                    <inline-data
+                        title="ভর্তিচ্ছু বিভাগ/শ্রেণী:"
+                        :value="data.admission.className"
+                    />
+                </div>
+                <div class="flex items-center justify-end gap-4">
+                    <label class="flex items-center justify-center gap-2">
+                        <Input
+                            type="radio"
+                            name="resident"
+                            :checked="data.student.resident == '1'"
+                            class="h-3.5 w-3.5 rounded-none"
+                        />
+                        <span>আবাসিক</span>
+                    </label>
+                    <label class="flex items-center justify-center gap-2">
+                        <Input
+                            type="radio"
+                            name="resident"
+                            :checked="data.student.resident == '2'"
+                            class="h-3.5 w-3.5 rounded-none"
+                        />
+                        <span>অনাবাসিক</span>
+                    </label>
+                    <label class="flex items-center justify-center gap-2">
+                        <Input
+                            type="radio"
+                            name="resident"
+                            :checked="data.student.resident == '3'"
+                            class="h-3.5 w-3.5 rounded-none"
+                        />
+                        <span>ডে-কেয়ার</span>
+                    </label>
+                </div>
+            </div>
+            <hr />
+            <h3
+                class="mt-4 mb-2 text-center text-2xl font-bold print:text-black"
+            >
+                দাপ্তরিক কার্যক্রম
+            </h3>
+            <div class="grid gap-4 print:grid-cols-5 md:grid-cols-5">
+                <div class="col-span-3">
+                    <inline-data
+                        title="ভর্তি পরীক্ষার তারিখ (নতুন শিক্ষার্থীর জন্য):"
+                    />
+                </div>
+                <div class="col-span-2">
+                    <inline-data title="ভর্তি পরীক্ষার ফলাফল:" />
+                </div>
+            </div>
+            <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
+                <div class="col-span-3">
+                    <inline-data
+                        title="বার্ষিক পরীক্ষার ফলাফল (পুরাতন শিক্ষার্থীর জন্য):"
+                    />
+                </div>
+            </div>
+            <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
+                <div class="col-span-3">
+                    <inline-data title="পরীক্ষকের মন্তব্য:" />
+                </div>
+            </div>
+            <div class="flex items-center justify-between gap-4">
+                <div>
+                    <inline-data
+                        title="পরীক্ষক:"
+                        :value="data.admission.class.teacherName"
+                    />
+                </div>
+                <div>
+                    <inline-data title="পরীক্ষকের স্বাক্ষর" />
+                </div>
+            </div>
+            <hr />
+            <div class="text-justify">
+                {{ $page.props.settings.studentAgreement }}
+            </div>
+            <br />
+            <div class="flex items-center justify-between gap-4">
+                <div>
+                    <inline-data title="আবেদনের তারিখ:" />
+                </div>
+                <div>
+                    <inline-data title="আবেদনকারীর স্বাক্ষর" />
+                </div>
+            </div>
         </div>
     </div>
 </template>

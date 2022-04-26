@@ -1,8 +1,8 @@
 <template>
-    <Head title="আবেদন তালিকা" />
+    <Head title="ভর্তির আবেদন তালিকা" />
 
     <app-layout
-        pageTitle="আবেদন তালিকা"
+        pageTitle="ভর্তির আবেদন তালিকা"
         :addNewHref="route('admissions.create')"
     >
         <simple-table

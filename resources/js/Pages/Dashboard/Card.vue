@@ -1,13 +1,13 @@
 <template>
     <Link
         :href="href"
-        class="flex items-center gap-3 overflow-hidden rounded bg-white p-3 shadow-sm md:p-6"
+        class="flex flex-col items-center overflow-hidden rounded bg-white p-3 shadow-sm md:p-6 lg:gap-2"
     >
-        <div class="text-5xl text-gray-600">
+        <div class="text-4xl text-orange-600 md:text-6xl">
             {{ counter }}
         </div>
-        <div class="text-lg text-gray-500">
-            <slot></slot>
+        <div class="text-lg font-medium text-blue-900">
+            <slot />
         </div>
     </Link>
 </template>

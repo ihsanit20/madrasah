@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="mt-6 border border-gray-400 print:border-black"></div>
-        <div v-if="photoFrame" class="absolute left-0 top-0 bg-white p-2">
+        <div v-if="photoFrame" class="absolute left-0 top-0 bg-white pr-0.5">
             <div
                 class="flex h-24 w-20 items-center justify-center border print:border-black"
             >

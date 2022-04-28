@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Admission;
 use App\Models\Classes;
+use App\Models\Notice;
+use App\Models\Staff;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,8 +17,11 @@ class DashboardController extends Controller
     {
         $counter = [
             "classes"           => Classes::count(),
-            "students"          => Student::count(),
+            "students"          => Student::student()->count(),
+            "staff"             => Staff::count(),
             "admissions"        => Admission::count(),
+            "notices"           => Notice::count(),
+            "admins"            => User::count(),
             // "money-receipts"    => MoneyReceipt::count(),
         ];
 

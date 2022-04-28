@@ -16,7 +16,8 @@ input[type="number"] {
 
 /* width of the entire scrollbar */
 *::-webkit-scrollbar {
-    width: 2px;
+    width: 3px;
+    height: 3px;
 }
 
 /* color of the tracking area */
@@ -25,7 +26,8 @@ input[type="number"] {
 }
 /* color of the scroll thumb */
 *::-webkit-scrollbar-thumb {
-    width: 2px !important;
+    width: 3px !important;
+    height: 3px !important;
     background: #f27c00;
     border-radius: 5px;
 }
@@ -33,6 +35,7 @@ input[type="number"] {
 /* width of the entire scrollbar */
 body::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
 }
 
 /* color of the tracking area */
@@ -42,6 +45,7 @@ body::-webkit-scrollbar-track {
 /* color of the scroll thumb */
 body::-webkit-scrollbar-thumb {
     width: 6px !important;
+    height: 6px !important;
     background: #f27c00;
     border-radius: 10px;
 }

@@ -19,8 +19,18 @@
                 </Link>
             </div>
         </div>
-        <div class="max-w-3xl rounded border print:border-0 bg-white">
+        <div class="max-w-3xl rounded border bg-white print:border-0">
             <admission-form-templete :data="data" />
+        </div>
+        <div class="flex items-center justify-center pt-2 print:hidden">
+            <Link
+                :href="
+                    route('admissions.show', data.admission.id) + '?next=true'
+                "
+                class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+            >
+                পরবর্তী ধাপে যান &#8594;
+            </Link>
         </div>
     </app-layout>
 </template>

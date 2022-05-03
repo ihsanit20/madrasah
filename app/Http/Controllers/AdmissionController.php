@@ -8,6 +8,7 @@ use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassesResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
+use App\Http\Resources\FeeResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Address;
 use App\Models\Admission;
@@ -15,9 +16,12 @@ use App\Models\Area;
 use App\Models\Classes;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\Fee;
 use App\Models\Guardian;
+use App\Models\PayableFee;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -26,6 +30,7 @@ class AdmissionController extends Controller
     public function index()
     {
         $collections = Admission::query()
+            ->where('status', '!=', 3)
             ->with('student.father_info');
 
         return Inertia::render('Admission/Index', [
@@ -55,7 +60,6 @@ class AdmissionController extends Controller
 
         $admission = $student->admissions()->create(
             $this->validatedAdmissionData($request)
-            // + $this->getArrayOfNewClassRoll($student->id, $request->class_id)
             + $this->getArrayOfSession($request->session)
         );
 
@@ -81,24 +85,79 @@ class AdmissionController extends Controller
 
     public function edit(Admission $admission)
     {
+        $admission->load('verified_by_admin:id,name');
+
+        $step = $admission->status ?? 1;
+
+        if(request()->next) {
+            $step++;
+        }
+
         return Inertia::render('Admission/Edit', [
-            'data' => $this->data($admission)
+            'data'  => $this->data($admission),
+            'step'  => $step,
         ]);
     }
 
     public function update(Request $request, Admission $admission)
     {
-        // return $request;
+        if($request->step == 1) {
+            $student = $admission->student()->first();
 
-        $student = $admission->student()->first();
+            $student->update(
+                $this->validatedStudentData($request, $student->id)
+                + $this->storeGuardian($request, $student)
+                + $this->storeAddress($request, $student)
+            );
 
-        $student->update(
-            $this->validatedStudentData($request, $student->id)
-            + $this->storeGuardian($request, $student)
-            + $this->storeAddress($request, $student)
-        );
+            $admission->update($this->validatedAdmissionData($request, $admission->id));
+        }
 
-        $admission->update($this->validatedAdmissionData($request, $admission->id));
+        if($request->step == 2) {
+            $admission->update([
+                "verified_by"           => Auth::id(),
+                "admission_test_mark"   => $request->admission_test_mark,
+                "verifications"         => json_encode($request->verifications),
+                "status"                => 2,
+            ]);
+        }
+
+        if($request->step == 3) {
+            PayableFee::where('admission_id', $admission->id)->delete();
+
+            foreach($request->fees as $fee) {
+                PayableFee::onlyTrashed()->updateOrCreate(
+                    [
+                        'admission_id'  => $admission->id,
+                    ],
+                    [
+                        'fee_id'        => $fee["id"],
+                        'concession'    => $fee["concession"],
+                        'deleted_at'    => null,
+                    ]
+                );
+            }
+
+            $new_roll = $this->getLastClassRoll($admission->student_id, $admission->class_id) + 1;
+
+            $admission->update([
+                "roll"      => $new_roll,
+                "status"    => 3,
+            ]);
+            
+            if($admission->student->status == 2) {
+                $current_year = explode("-", $this->getCurrentSession())[0];
+    
+                $two_digit_class_code = str_pad($admission->class_id, 2,"0", STR_PAD_LEFT);
+    
+                $three_digit_roll = str_pad($new_roll, 3,"0", STR_PAD_LEFT);
+
+                $admission->student()->update([
+                    "registration"  => $current_year . $two_digit_class_code . $three_digit_roll,
+                    "status"        => 1,
+                ]);
+            }
+        }
 
         return redirect()
             ->route('admissions.show', $admission->id)
@@ -127,6 +186,8 @@ class AdmissionController extends Controller
             'classes'       => ClassesResource::collection(Classes::get()),
             'bloodGroups'   => Student::getBloodGroups(),
             'residentArray' => Student::getResidentArrayData(),
+            'yearlyFees'    => $this->getClassFee($admission->class_id, 1),
+            'monthlyFees'   => $this->getClassFee($admission->class_id, 2),
         ];
     }
 
@@ -319,6 +380,21 @@ class AdmissionController extends Controller
         return [
             "session" => $session ?? $this->getCurrentSession()
         ];
+    }
+
+    protected function getClassFee($class_id, $period = null, $with_dev_charge = false)
+    {
+        FeeResource::withoutWrapping();
+
+        $query = Fee::query()
+            ->where('class_id', $class_id)
+            ->where(function ($query) use ($period) {
+                $query->when($period, function ($query) use ($period) {
+                    $query->where('period', $period);
+                });
+            });
+
+        return FeeResource::collection($query->get());
     }
 
 }

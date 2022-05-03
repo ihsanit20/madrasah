@@ -12,6 +12,16 @@ class Admission extends Model
 
     protected $guarded = [];
 
+    public function getVerificationsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function verified_by_admin()
+    {
+        return $this->belongsTo(User::class, 'verified_by');
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class);

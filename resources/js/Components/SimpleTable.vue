@@ -24,8 +24,9 @@
                                         'text-right': column.align == 'right',
                                     }"
                                 >
-                                    {{ column.title }}
+                                    <div v-html="column.title"></div>
                                 </th>
+                                <slot name="header" />
                             </tr>
                         </thead>
                         <tbody

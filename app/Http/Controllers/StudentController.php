@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AdmissionResource;
 use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassesResource;
 use App\Http\Resources\DistrictResource;
@@ -49,12 +50,6 @@ class StudentController extends Controller
             + $this->storeAddress($request)
         );
 
-        $student->admissions()->create(
-            $this->validatedAdmissionData($request)
-            + $this->getArrayOfNewClassRoll($student->id, $request->class_id)
-            + $this->getArrayOfSession($request->session)
-        );
-
         return redirect()
             ->route('students.show', $student->id)
             ->with('status', 'The record has been added successfully.');
@@ -64,7 +59,8 @@ class StudentController extends Controller
     {
         return Inertia::render('Student/Show', [
             'data' => [
-                'student' => $this->formatedData($student),
+                'student'   => $this->formatedData($student),
+                'admission' => $this->formatedAdmissionData($student->current_admission),
             ]
         ]);
     }
@@ -123,6 +119,13 @@ class StudentController extends Controller
                 'permanent_address.area.district',
             ]
         ));
+    }
+
+    protected function formatedAdmissionData($admission)
+    {
+        AdmissionResource::withoutWrapping();
+
+        return new AdmissionResource($admission);
     }
 
     protected function getFilterProperty()

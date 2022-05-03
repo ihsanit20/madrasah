@@ -12,22 +12,21 @@
                     {{ student.id }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ student.name }}
+                    <Link
+                        :href="route('students.show', student.id)"
+                        class="text-sky-600 hover:underline"
+                    >
+                        {{ student.name }}
+                    </Link>
                 </table-td>
                 <table-td class="text-left">
                     {{ student.registration }}
                 </table-td>
-                <table-td class="text-center">
-                    <div
-                        class="flex items-center justify-center gap-1 md:gap-2"
-                    >
-                        <action-button-show
-                            :href="route('students.show', student.id)"
-                        />
-                        <action-button-edit
-                            :href="route('students.edit', student.id)"
-                        />
-                    </div>
+                <table-td class="text-left">
+                    {{ student.currentClassName }}
+                </table-td>
+                <table-td class="text-left">
+                    {{ student.currentClassRoll }}
                 </table-td>
             </template>
         </simple-table>
@@ -66,7 +65,8 @@ export default {
                 { title: "ID", align: "left", sticky: true },
                 { title: "Name", align: "left" },
                 { title: "Registration", align: "left" },
-                { title: "Action", align: "center" },
+                { title: "Class", align: "left" },
+                { title: "Roll", align: "left" },
             ],
         };
     },

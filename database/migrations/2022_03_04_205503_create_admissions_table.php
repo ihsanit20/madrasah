@@ -24,6 +24,9 @@ class CreateAdmissionsTable extends Migration
             $table->string('previous_class')->nullable();
             $table->string('previous_roll')->nullable();
             $table->string('previous_result')->nullable();
+            $table->unsignedFloat('admission_test_mark')->nullable();
+            $table->json('verifications')->nullable();
+            $table->unsignedInteger('verified_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

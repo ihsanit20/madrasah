@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class AdmissionResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class AdmissionResource extends JsonResource
             'id'                => (int) $this->id,
             'roll'              => (int) ($this->roll ?? 0),
             'studentId'         => (int) ($this->student_id ?? ''),
+            'status'            => (int) ($this->status ?? 0),
             'studentName'       => (string) ($this->student->name ?? ''),
             'student'           => new StudentResource($this->whenLoaded('student')),
             'classId'           => (int) ($this->class_id ?? ''),
@@ -28,6 +30,9 @@ class AdmissionResource extends JsonResource
             'previousClass'     => (string) ($this->previous_class ?? ''),
             'previousRoll'      => (string) ($this->previous_roll ?? ''),
             'previousResult'    => (string) ($this->previous_result ?? ''),
+            'verifications'     => (object) ($this->verifications ?? []),
+            'admissionTestMark' => (string) ($this->admission_test_mark ?? ''),
+            'verifiedBy'        => (string) ($this->verified_by_admin->name ?? ''),
         ];
     }
 }

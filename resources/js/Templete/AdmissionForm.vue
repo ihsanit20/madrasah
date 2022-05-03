@@ -321,7 +321,10 @@
                     />
                 </div>
                 <div class="col-span-2">
-                    <inline-data title="ভর্তি পরীক্ষার ফলাফল:" />
+                    <inline-data
+                        title="ভর্তি পরীক্ষার ফলাফল:"
+                        :value="data.admission.admissionTestMark"
+                    />
                 </div>
             </div>
             <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">

@@ -1,9 +1,11 @@
 <template>
-    <Head title="Student" />
+    <Head title="আবেদন ফরম প্রিভিউ" />
 
     <app-layout>
-        <div class="max-w-3xl rounded p-3 md:p-4">
-            <div class="flex items-end justify-between gap-4 print:hidden">
+        <div class="max-w-3xl">
+            <div
+                class="flex flex-wrap items-end justify-between gap-4 print:hidden"
+            >
                 <h2
                     class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
                 >
@@ -19,13 +21,15 @@
                 </Link>
             </div>
         </div>
-        <div class="max-w-3xl rounded border bg-white print:border-0">
-            <admission-form-templete :data="data" />
+        <div
+            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+        >
+            <admission-form-templete :data="data" class="min-w-max" />
         </div>
         <div class="flex items-center justify-center pt-2 print:hidden">
             <Link
                 :href="
-                    route('admissions.show', data.admission.id) + '?next=true'
+                    route('admissions.edit', data.admission.id) + '?next=true'
                 "
                 class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
             >

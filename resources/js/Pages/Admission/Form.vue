@@ -343,45 +343,43 @@
             </form-group>
 
             <form-heading class="mt-6 mb-2">
-                সর্বশেষ যে বিদ্যালয়ের তথ্য
+                সর্বশেষ বিদ্যালয়ের তথ্য
             </form-heading>
-            <div class="grid gap-x-2 gap-y-4 md:grid-cols-5">
+            <div
+                class="grid gap-x-2 gap-y-4 rounded-md border border-dashed border-gray-300 p-2 md:grid-cols-5"
+            >
                 <form-group
-                    class="col-span-full w-full"
+                    class="col-span-full"
                     label="সর্বশেষ যে বিদ্যালয়ে পড়েছে তার নাম"
                 >
                     <Input
                         type="text"
                         class="block w-full"
                         v-model="form.previous_school"
-                        required
                     />
                 </form-group>
-                <form-group class="col-span-2 w-full" label="সর্বশেষ শ্রেণী">
+                <form-group class="md:col-span-2" label="সর্বশেষ শ্রেণী">
                     <Input
                         type="text"
                         class="block w-full"
                         v-model="form.previous_class"
-                        required
                     />
                 </form-group>
-                <form-group class="w-full" label="সর্বশেষ রোল">
+                <form-group class="" label="সর্বশেষ রোল">
                     <Input
                         type="text"
                         class="block w-full"
                         v-model="form.previous_roll"
-                        required
                     />
                 </form-group>
                 <form-group
-                    class="col-span-2 w-full"
+                    class="md:col-span-2"
                     label="সর্বশেষ পরীক্ষার অর্জিত ফলাফল"
                 >
                     <Input
                         type="text"
                         class="block w-full"
                         v-model="form.previous_result"
-                        required
                     />
                 </form-group>
             </div>
@@ -389,7 +387,9 @@
             <form-heading class="mt-6 mb-2">
                 যে ক্লাস/বিভাগে ভর্তি হতে ইচ্ছুক
             </form-heading>
-            <div class="grid gap-2 md:grid-cols-2">
+            <div
+                class="grid gap-2 rounded-md border border-dashed border-gray-300 p-2 md:grid-cols-2"
+            >
                 <form-group label="শ্রেণী/বিভাগ">
                     <Select
                         required

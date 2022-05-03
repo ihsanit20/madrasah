@@ -71,7 +71,7 @@ class AdmissionController extends Controller
 
     public function show(Admission $admission)
     {
-        $student = $admission->student->first();
+        $student = $admission->student()->first();
 
         AdmissionResource::withoutWrapping();
 

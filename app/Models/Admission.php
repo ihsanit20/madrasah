@@ -31,4 +31,9 @@ class Admission extends Model
     {
         return $this->belongsTo(Classes::class, 'class_id');
     }
+
+    public function payable_fees()
+    {
+        return $this->hasMany(PayableFee::class);
+    }
 }

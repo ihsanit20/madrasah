@@ -12,13 +12,22 @@ class Payment extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'period_name',
+    ];
+
+    public function getPeriodNameAttribute()
+    {
+        return Fee::getPeriod()[$this->period] ?? '';
+    }
+
     public function admission()
     {
         return $this->belongsTo(Admission::class);
     }
 
-    public function fees()
+    public function payment_details()
     {
-        return $this->belongsToMany(Fee::class, 'payment_details');
+        return $this->hasMany(PaymentDetail::class);
     }
 }

@@ -138,7 +138,7 @@ class AdmissionController extends Controller
                 );
             }
 
-            $new_roll = $this->getLastClassRoll($admission->student_id, $admission->class_id) + 1;
+            $new_roll = $this->getNewClassRoll($admission->class_id);
 
             $admission->update([
                 "roll"      => $new_roll,
@@ -346,33 +346,23 @@ class AdmissionController extends Controller
         return $response->id ?? null;
     }
 
-    protected function getArrayOfNewClassRoll($student_id, $class_id, $session = null)
+    protected function getNewClassRoll($class_id, $session = null)
     {
-        return [
-            "roll" => $this->getLastClassRoll($student_id, $class_id, $session) + 1
-        ];
+        return  $this->getLastClassRoll($class_id, $session) + 1;
     }
 
-    protected function getLastClassRoll($student_id, $class_id, $session = null)
+    protected function getLastClassRoll($class_id, $session = null)
     {
         $session = $session_id ?? $this->getCurrentSession();
 
-        $last_class_roll = 0;
-
         $last_class_roll = Admission::query()
             ->where([
-                'student_id'    => $student_id,
                 'class_id'      => $class_id,
                 'session'       => $session
             ])
-            ->value('roll');
+            ->max('roll');
 
-        return $last_class_roll;
-    }
-
-    protected function getCurrentSession()
-    {
-        return "43-44";
+        return $last_class_roll ?? 0;
     }
 
     protected function getArrayOfSession($session = null)

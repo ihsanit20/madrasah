@@ -12,6 +12,10 @@ class Fee extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'period_name',
+    ];
+
     protected static $periods = [
         1 => 'ভর্তিকালীন প্রদেয়',
         2 => 'মাসিক প্রদেয়',

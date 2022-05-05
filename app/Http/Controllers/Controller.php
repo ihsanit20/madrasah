@@ -27,4 +27,9 @@ class Controller extends BaseController
 
         return new SettingResource($setting);
     }
+
+    protected function getCurrentSession()
+    {
+        return "43-44";
+    }
 }

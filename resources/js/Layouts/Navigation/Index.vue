@@ -30,7 +30,7 @@
             <template #items>
                 <nav-link
                     :href="route('students.index')"
-                    :active="route().current('students.index')"
+                    :active="route().current('students.*')"
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
@@ -57,7 +57,11 @@
             </template>
         </dropdown-nav-link>
 
-        <nav-link href="#" class="flex items-center gap-2 md:gap-4">
+        <nav-link
+            :href="route('payments.index')"
+            :active="route().current('payments.*')"
+            class="flex items-center gap-2 md:gap-4"
+        >
             <MoneyReceiptSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 টাকা জমার রশিদ

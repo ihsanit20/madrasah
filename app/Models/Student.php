@@ -16,7 +16,6 @@ class Student extends Model
     protected $appends = [
         'gender_text',
         'guardian_type',
-        'current_admission',
     ];
     
     protected $casts = [
@@ -72,23 +71,6 @@ class Student extends Model
         return (boolean) ($this->present_address_id == $this->permanent_address_id);
     }
 
-    public function getCurrentAdmissionAttribute()
-    {
-        $session = "43-44";
-
-        return $this->admissions()->where('session', $session)->first();
-    }
-
-    public function getCurrentClassNameAttribute()
-    {
-        return (string) ( $this->current_admission ? ($this->current_admission->class->name ?? '') : '');
-    }
-
-    public function getCurrentClassRollAttribute()
-    {
-        return (string) ( $this->current_admission ? ($this->current_admission->roll ?? '') : '');
-    }
-
     public function scopeActive($query)
     {
         $query->where('status', 1);
@@ -137,5 +119,12 @@ class Student extends Model
     public function admissions()
     {
         return $this->hasMany(Admission::class);
+    }
+
+    public function current_admission()
+    {
+        $session = "43-44";
+
+        return $this->hasOne(Admission::class)->where('admissions.session', $session);
     }
 }

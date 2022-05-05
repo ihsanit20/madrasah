@@ -15,11 +15,12 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('admission_id');
-            $table->unsignedFloat('subtotal')->default(0);
-            $table->unsignedFloat('discount')->default(0);
-            $table->unsignedFloat('due')->default(0);
-            $table->unsignedFloat('paid')->default(0);
+            $table->unsignedBigInteger('admission_id')->index();
+            $table->string('date');
+            $table->unsignedTinyInteger('period');
+            $table->unsignedFloat('total');
+            $table->float('due')->default(0);
+            $table->unsignedFloat('paid');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -26,7 +26,6 @@
                         type="number"
                         class="block w-full"
                         v-model="form.birth_certificate"
-                        required
                     />
                 </form-group>
                 <div class="flex gap-2">
@@ -70,6 +69,7 @@
                             type="number"
                             class="block w-full"
                             v-model="form.father_info.phone"
+                            :required="form.guardian_type == 1"
                         />
                     </form-group>
                     <form-group class="w-full" label="পেশা">
@@ -96,6 +96,7 @@
                             type="number"
                             class="block w-full"
                             v-model="form.mother_info.phone"
+                            :required="form.guardian_type == 2"
                         />
                     </form-group>
                     <form-group class="w-full" label="পেশা">
@@ -108,7 +109,9 @@
                 </form-group>
             </div>
 
-            <form-heading class="mt-6 mb-2">অভিভাবকের তথ্য</form-heading>
+            <form-heading class="mt-6 mb-2">
+                অভিভাবকের তথ্য <span class="text-rose-700">*</span>
+            </form-heading>
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
                 <form-group
                     class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 py-2"
@@ -167,6 +170,7 @@
                                 type="number"
                                 class="block w-full"
                                 v-model="form.guardian_info.phone"
+                                required
                             />
                         </form-group>
                         <form-group
@@ -193,6 +197,7 @@
                             class="block w-full"
                             v-model="form.present_address.division"
                             @change="presentAddressDivisionSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -209,6 +214,7 @@
                             class="block w-full"
                             v-model="form.present_address.district"
                             @change="presentAddressDistrictSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -224,6 +230,7 @@
                         <Select
                             class="block w-full"
                             v-model="form.present_address.area"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -240,6 +247,7 @@
                             type="text"
                             class="block w-full"
                             v-model="form.present_address.postoffice"
+                            required
                         />
                     </form-group>
                     <form-group
@@ -250,6 +258,7 @@
                             type="text"
                             class="block w-full"
                             v-model="form.present_address.address"
+                            required
                         />
                     </form-group>
                 </div>
@@ -280,6 +289,7 @@
                             class="block w-full"
                             v-model="form.permanent_address.division"
                             @change="permanentAddressDivisionSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -296,6 +306,7 @@
                             class="block w-full"
                             v-model="form.permanent_address.district"
                             @change="permanentAddressDistrictSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -311,6 +322,7 @@
                         <Select
                             class="block w-full"
                             v-model="form.permanent_address.area"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -327,6 +339,7 @@
                             type="text"
                             class="block w-full"
                             v-model="form.permanent_address.postoffice"
+                            required
                         />
                     </form-group>
                     <form-group
@@ -337,6 +350,7 @@
                             type="text"
                             class="block w-full"
                             v-model="form.permanent_address.address"
+                            required
                         />
                     </form-group>
                 </div>

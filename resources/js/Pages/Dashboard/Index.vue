@@ -21,7 +21,12 @@
             >
                 ভর্তির ফরম
             </card>
-            <card href="#" :counter="0"> টাকা জমার রশিদ </card>
+            <card
+                :href="route('payments.index')"
+                :counter="data.counter.payments"
+            >
+                টাকা জমার রশিদ
+            </card>
             <card :href="route('staff.index')" :counter="data.counter.staff">
                 শিক্ষক/স্টাফ
             </card>
@@ -34,7 +39,12 @@
             >
                 নোটিশ বোর্ড
             </card>
-            <card href="#" :counter="0"> ব্যয়/খরচ </card>
+            <card
+                :href="route('expenses.index')"
+                :counter="data.counter.expenses"
+            >
+                ব্যয়/খরচ
+            </card>
         </div>
     </app-layout>
 </template>
@@ -55,6 +65,6 @@ export default {
             type: Object,
             default: {},
         },
-    },
+    }
 };
 </script>

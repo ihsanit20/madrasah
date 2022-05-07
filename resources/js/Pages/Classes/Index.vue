@@ -1,7 +1,10 @@
 <template>
     <Head title="ক্লাস/বিভাগ সমুহ" />
 
-    <app-layout pageTitle="ক্লাস/বিভাগ সমুহ" :addNewHref="route('classes.create')">
+    <app-layout
+        pageTitle="ক্লাস/বিভাগ সমুহ"
+        :addNewHref="route('classes.create')"
+    >
         <data-table
             :collections="data.collections"
             :filters="data.filters"
@@ -9,7 +12,7 @@
         >
             <template #default="{ item: classes }">
                 <table-td class="text-center">
-                    {{ classes.code }}
+                    {{ $e2bnumber(classes.code) }}
                 </table-td>
                 <table-td class="text-left">
                     <Link
@@ -20,13 +23,13 @@
                     </Link>
                 </table-td>
                 <table-td class="text-center">
-                    {{ classes.totalStudent }}
+                    {{ $e2bnumber(classes.totalStudent) }}
                 </table-td>
                 <table-td class="text-center">
-                    {{ classes.totalSubject }}
+                    {{ $e2bnumber(classes.totalSubject) }}
                 </table-td>
                 <table-td class="text-center">
-                    {{ classes.totalFee }}
+                    {{ $e2bnumber(classes.totalFee) }}
                 </table-td>
             </template>
         </data-table>

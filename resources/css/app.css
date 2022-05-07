@@ -49,3 +49,8 @@ body::-webkit-scrollbar-thumb {
     background: #f27c00;
     border-radius: 10px;
 }
+
+[required] + label:after {
+    content: " *";
+    color: #be123c;
+}

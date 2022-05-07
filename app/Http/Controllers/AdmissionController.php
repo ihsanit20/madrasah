@@ -87,10 +87,10 @@ class AdmissionController extends Controller
     {
         $admission->load('verified_by_admin:id,name');
 
-        $step = $admission->status ?? 1;
+        $step = 1;
 
         if(request()->next) {
-            $step++;
+            $step = $admission->status + 1;
         }
 
         return Inertia::render('Admission/Edit', [
@@ -120,6 +120,10 @@ class AdmissionController extends Controller
                 "verifications"         => json_encode($request->verifications),
                 "status"                => 2,
             ]);
+
+            return redirect()
+                ->route('admissions.edit', [$admission->id, 'next=true'])
+                ->with('status', 'The record has been update successfully.');
         }
 
         if($request->step == 3) {

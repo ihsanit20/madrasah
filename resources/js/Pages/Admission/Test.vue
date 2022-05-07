@@ -36,13 +36,12 @@
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-2">
                 <form-group
                     class="w-full"
-                    label="বার্ষিক পরীক্ষা / ভর্তি পরীক্ষায় প্রাপ্ত নাম্বার"
+                    label="ভর্তি পরীক্ষা / বার্ষিক পরীক্ষায় প্রাপ্ত ফলাফল"
                 >
                     <Input
-                        type="number"
+                        type="text"
                         class="block w-full"
                         v-model="form.admission_test_mark"
-                        required
                     />
                 </form-group>
                 <form-group class="flex-1" label="পরিক্ষক:">

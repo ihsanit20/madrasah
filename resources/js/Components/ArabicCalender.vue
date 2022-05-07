@@ -25,10 +25,10 @@
                     </button>
 
                     <div
-                        class="flex items-center justify-center gap-2 text-lg font-bold text-gray-800 focus:outline-none dark:text-gray-100"
+                        class="flex items-center justify-center gap-2 text-lg font-bold text-blue-900 focus:outline-none dark:text-gray-100"
                     >
                         <span>{{ calendar.currentMonth.bn }}</span>
-                        <span>{{ calendar.currentYear }}</span>
+                        <span>{{ $e2bnumber(calendar.currentYear) }}</span>
                     </div>
 
                     <div class="flex items-center">
@@ -132,7 +132,7 @@
                                             calendar.currentDay,
                                     }"
                                 >
-                                    {{ day.hijri.day }}
+                                    {{ $e2bnumber(day.hijri.day) }}
                                 </div>
                             </div>
                         </div>

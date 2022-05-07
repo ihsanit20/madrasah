@@ -4,7 +4,7 @@
         class="flex flex-col items-center overflow-hidden rounded bg-white p-3 shadow-sm md:p-6 lg:gap-2"
     >
         <div class="text-4xl text-orange-600 md:text-6xl">
-            {{ counter }}
+            {{ $e2bnumber(counter) }}
         </div>
         <div class="text-lg font-medium text-blue-900">
             <slot />

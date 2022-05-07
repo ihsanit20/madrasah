@@ -6,7 +6,7 @@
                 {{ data.classes.name }}
             </h2>
             <p class="font-semibold text-gray-500 print:text-black">
-                ক্লাস কোড: {{ data.classes.code }}
+                ক্লাস কোড: {{ $e2bnumber(data.classes.code) }}
             </p>
         </div>
         <div
@@ -23,7 +23,7 @@
         >
             <template #default="{ item: subject }">
                 <table-td class="text-center">
-                    {{ subject.code }}
+                    {{ $e2bnumber(subject.code) }}
                 </table-td>
                 <table-td class="text-left">
                     {{ subject.name }}
@@ -47,7 +47,7 @@
                         {{ fee.name }}
                     </table-td>
                     <table-td v-if="fee.period == 1" class="text-right">
-                        {{ fee.amount }} TK
+                        {{ $e2bnumber(fee.amount) }} &nbsp;টাকা
                     </table-td>
                 </template>
             </simple-table>
@@ -62,7 +62,7 @@
                         {{ fee.name }}
                     </table-td>
                     <table-td v-if="fee.period == 2" class="text-right">
-                        {{ fee.amount }} TK
+                        {{ $e2bnumber(fee.amount) }} &nbsp;টাকা
                     </table-td>
                 </template>
             </simple-table>

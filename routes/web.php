@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\HomeController;
@@ -17,6 +18,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/notice/{notice}', [HomeController::class, 'notice'])->name('page.notice');
 Route::get('/class/{class}', [HomeController::class, 'class'])->name('page.class');
 Route::get('/admission-form', [HomeController::class, 'admissionForm'])->name('page.admission-form');
+Route::get('/admission-form-blank', [HomeController::class, 'admissionFormBlank'])->name('page.admission-form-blank');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -31,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'students'      => StudentController::class,
         'admissions'    => AdmissionController::class,
         'payments'      => PaymentController::class,
+        'expenses'      => PaymentController::class,
         'admins'        => AdminController::class,
         'staff'         => StaffController::class,
         'designations'  => DesignationController::class,

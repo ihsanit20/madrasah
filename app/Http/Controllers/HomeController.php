@@ -134,4 +134,13 @@ class HomeController extends Controller
             ]
         ]);
     }
+
+    public function admissionFormBlank()
+    {
+        return Inertia::render('Page/AdmissionFormBlank', [
+            'data' => [
+                //
+            ]
+        ]);
+    }
 }

@@ -23,8 +23,8 @@ class Student extends Model
     ];
 
     public static $gender_array = [
-        1 => 'Male',
-        2 => 'Female',
+        1 => 'ছেলে',
+        2 => 'মেয়ে',
     ];
 
     public static $resident_array = [

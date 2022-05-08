@@ -14,15 +14,11 @@
                 </div>
                 <div class="flex items-center justify-center gap-4">
                     <label class="flex items-center justify-center gap-2">
-                        <Input
-                            type="radio"
-                            :checked="true"
-                            class="h-3.5 w-3.5 rounded-none"
-                        />
+                        <check-uncheck-icon class="w-4" :isChecked="true" />
                         <span>নতুন</span>
                     </label>
                     <label class="flex items-center justify-center gap-2">
-                        <Input type="radio" class="h-3.5 w-3.5 rounded-none" />
+                        <check-uncheck-icon class="w-4" />
                         <span>পুরাতন</span>
                     </label>
                 </div>
@@ -58,20 +54,16 @@
                     <div class="flex items-center justify-center gap-4">
                         <div class="text-gray-700">লিঙ্গ:</div>
                         <label class="flex items-center justify-center gap-2">
-                            <Input
-                                type="radio"
-                                name="gender"
-                                :checked="data.student.gender == '1'"
-                                class="h-3.5 w-3.5 rounded-none"
+                            <check-uncheck-icon
+                                class="w-4"
+                                :isChecked="data.student.gender == '1'"
                             />
                             <span>ছেলে</span>
                         </label>
                         <label class="flex items-center justify-center gap-2">
-                            <Input
-                                type="radio"
-                                name="gender"
-                                :checked="data.student.gender == '2'"
-                                class="h-3.5 w-3.5 rounded-none"
+                            <check-uncheck-icon
+                                class="w-4"
+                                :isChecked="data.student.gender == '2'"
                             />
                             <span>মেয়ে</span>
                         </label>
@@ -123,29 +115,23 @@
             <div class="flex items-center gap-4">
                 <inline-data title="অভিভাবকের তথ্য" />
                 <label class="flex items-center justify-center gap-2">
-                    <Input
-                        type="radio"
-                        name="guardian"
-                        :checked="data.student.guardianType == '1'"
-                        class="h-3.5 w-3.5 rounded-none"
+                    <check-uncheck-icon
+                        class="w-4"
+                        :isChecked="data.student.guardianType == '1'"
                     />
                     <span>পিতা</span>
                 </label>
                 <label class="flex items-center justify-center gap-2">
-                    <Input
-                        type="radio"
-                        name="guardian"
-                        :checked="data.student.guardianType == '2'"
-                        class="h-3.5 w-3.5 rounded-none"
+                    <check-uncheck-icon
+                        class="w-4"
+                        :isChecked="data.student.guardianType == '2'"
                     />
                     <span>মাতা</span>
                 </label>
                 <label class="flex items-center justify-center gap-2">
-                    <Input
-                        type="radio"
-                        name="guardian"
-                        :checked="data.student.guardianType == '3'"
-                        class="h-3.5 w-3.5 rounded-none"
+                    <check-uncheck-icon
+                        class="w-4"
+                        :isChecked="data.student.guardianType == '3'"
                     />
                     <span>বৈধ অভিভাবক</span>
                 </label>
@@ -371,11 +357,13 @@
 import LetterHead from "@/Templete/LetterHead.vue";
 import Input from "@/Components/Input.vue";
 import InlineData from "@/Components/InlineData.vue";
+import CheckUncheckIcon from "@/Components/CheckUncheckIcon.vue";
 export default {
     components: {
         LetterHead,
         Input,
         InlineData,
+        CheckUncheckIcon,
     },
     props: {
         data: {

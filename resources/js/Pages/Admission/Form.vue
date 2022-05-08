@@ -36,8 +36,8 @@
                             required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
-                            <option :value="1">Male</option>
-                            <option :value="2">Female</option>
+                            <option :value="1">ছেলে</option>
+                            <option :value="2">মেয়ে</option>
                         </Select>
                     </form-group>
                     <form-group class="flex-1" label="রক্তের গ্রুপ">
@@ -478,7 +478,7 @@ export default {
         moduleAction: String,
         buttonValue: {
             type: String,
-            default: "Save",
+            default: "সংরক্ষণ করুন",
         },
         data: {
             type: Object,

@@ -1,30 +1,17 @@
 <template>
-    <Head title="Admission" />
+    <Head title="ব্যয়ের খাত" />
 
-    <app-layout pageTitle="View Admission">
-        <div class="max-w-md rounded border bg-white p-3 shadow md:p-4">
+    <app-layout pageTitle="ব্যয়ের খাত">
+        <div class="max-w-xl rounded border bg-white p-3 shadow md:p-4">
             <div class="flex items-end justify-end">
                 <div class="flex items-center gap-2">
                     <action-button-edit
-                        :href="route('admissions.edit', data.admission.id)"
+                        :href="route('categories.edit', data.category.id)"
                     />
                 </div>
             </div>
-            <form-heading class="mb-2">Admission Info</form-heading>
             <div class="grid">
-                <inline-data
-                    title="Class :"
-                    :value="data.admission.className"
-                />
-                <inline-data
-                    title="Student :"
-                    :value="data.admission.studentName"
-                />
-                <inline-data title="Roll :" :value="data.admission.roll" />
-
-                <inline-data title="Year :" :value="data.admission.year" />
-
-                <inline-data v-if="data.admission.resident" value="Resident" />
+                <inline-data title="ব্যয়ের খাত :" :value="data.category.name" />
             </div>
         </div>
     </app-layout>

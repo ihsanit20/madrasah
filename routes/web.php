@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClassesController;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
@@ -33,7 +34,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'students'      => StudentController::class,
         'admissions'    => AdmissionController::class,
         'payments'      => PaymentController::class,
-        'expenses'      => PaymentController::class,
+        'expenses'      => ExpenseController::class,
+        'categories'    => CategoryController::class,
         'admins'        => AdminController::class,
         'staff'         => StaffController::class,
         'designations'  => DesignationController::class,

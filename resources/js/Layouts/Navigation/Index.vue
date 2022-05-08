@@ -68,12 +68,44 @@
             </span>
         </nav-link>
 
-        <nav-link href="#" class="flex items-center gap-2 md:gap-4">
+        <dropdown-nav-link
+            :active="route().current('(expenses||categories).*')"
+        >
             <PaymentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 ব্যয়/খরচ
             </span>
-        </nav-link>
+
+            <template #items>
+                <nav-link
+                    :href="route('expenses.index')"
+                    :active="route().current('expenses.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        ব্যয়ের তালিকা
+                    </span>
+                </nav-link>
+
+                <nav-link
+                    :href="route('categories.index')"
+                    :active="route().current('categories.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        ব্যয়ের খাত
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
 
         <dropdown-nav-link :active="route().current('(staff||designations).*')">
             <TeacherSvg class="h-6 w-6 md:h-8 md:w-8" />

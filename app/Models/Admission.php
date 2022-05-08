@@ -17,6 +17,16 @@ class Admission extends Model
         return json_decode($value, true);
     }
 
+    public function scopeStudent($query)
+    {
+        $query->whereIn('status', [3]);
+    }
+
+    public function scopeAdmission($query)
+    {
+        $query->whereIn('status', [1, 1, 2]);
+    }
+
     public function verified_by_admin()
     {
         return $this->belongsTo(User::class, 'verified_by');

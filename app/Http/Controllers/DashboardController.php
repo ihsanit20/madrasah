@@ -21,7 +21,7 @@ class DashboardController extends Controller
             "classes"       => Classes::count(),
             "students"      => Student::student()->count(),
             "staff"         => Staff::count(),
-            "admissions"    => Admission::count(),
+            "admissions"    => Admission::admission()->count(),
             "notices"       => Notice::count(),
             "admins"        => User::count(),
             "payments"      => Payment::count(),

@@ -1,8 +1,8 @@
 <template>
-    <Head title="Admission" />
+    <Head title="Category" />
 
-    <app-layout pageTitle="Create Admission">
-        <form-component :data="data" module-action="store" />
+    <app-layout pageTitle="ব্যয়ের খাত">
+        <form-component :data="data" module-action="update" />
     </app-layout>
 </template>
 
@@ -17,6 +17,7 @@ export default {
         AppLayout,
         FormComponent,
     },
+
     props: {
         data: {
             type: Object,

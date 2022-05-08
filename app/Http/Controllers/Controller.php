@@ -53,6 +53,6 @@ class Controller extends BaseController
 
         $current_year = $response->data->hijri->year;
 
-        return "{$current_day} $current_month->bn {$current_year}";
+        return "{$current_day} - $current_month->bn - {$current_year}";
     }
 }

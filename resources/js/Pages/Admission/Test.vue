@@ -3,7 +3,11 @@
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="space-y-4">
-            <form-heading>ভর্তির যোগ্যতা যাচাই</form-heading>
+            <h2
+                class="mt-4 mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+            >
+                ভর্তির যোগ্যতা যাচাই
+            </h2>
             <div class="grid gap-4 md:grid-cols-2">
                 <div>
                     <inline-data
@@ -25,8 +29,8 @@
                 </div>
                 <div>
                     <inline-data
-                        title="পিতার নাম:"
-                        :value="data.student.fatherInfo.name"
+                        title="অভিভাবকের নাম:"
+                        :value="data.student.guardianInfo.name"
                     />
                 </div>
             </div>
@@ -44,7 +48,7 @@
                         v-model="form.admission_test_mark"
                     />
                 </form-group>
-                <form-group class="flex-1" label="পরিক্ষক:">
+                <form-group class="flex-1" label="পরীক্ষক:">
                     <Select
                         class="block w-full"
                         v-model="form.examiner"
@@ -83,7 +87,6 @@
                                     "
                                     v-model="form.verifications.eligible"
                                     required
-                                    @change="eligibleHandler"
                                 />
                                 <span class="w-5">হ্যাঁ</span>
                             </label>
@@ -99,7 +102,6 @@
                                     "
                                     v-model="form.verifications.eligible"
                                     required
-                                    @change="eligibleHandler"
                                 />
                                 <span class="w-5">না</span>
                             </label>
@@ -209,18 +211,18 @@
 
             <hr />
 
-            <div class="flex items-center justify-end">
-                <Button
-                    :class="{
-                        'opacity-25': form.processing,
-                        'bg-rose-600 hover:bg-rose-500':
-                            this.form.verifications.eligible == 0,
-                        'bg-green-600 hover:bg-green-500':
-                            this.form.verifications.eligible == 1,
-                    }"
-                    :disabled="form.processing"
+            <div class="flex items-center justify-between">
+                <Link
+                    :href="route('admissions.show', data.admission.id)"
+                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
                 >
-                    {{ buttonText }}
+                    &#8592; পূর্ববর্তী ধাপ
+                </Link>
+                <Button
+                    class="bg-green-600 hover:bg-green-500"
+                    :disabled="form.processing"
+                    v-html="buttonValue"
+                >
                 </Button>
             </div>
         </form>
@@ -228,6 +230,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import ValidationErrors from "@/Components/ValidationErrors.vue";
 import Label from "@/Components/Label.vue";
 import Button from "@/Components/Button.vue";
@@ -240,6 +243,7 @@ import InlineData from "@/Components/InlineData.vue";
 
 export default {
     components: {
+        Link,
         ValidationErrors,
         Label,
         Button,
@@ -254,15 +258,12 @@ export default {
         moduleAction: String,
         buttonValue: {
             type: String,
-            default: "সকল তথ্য দিন",
+            default: "পরবর্তী ধাপ &#8594;",
         },
         data: {
             type: Object,
             default: {},
         },
-    },
-    created() {
-        this.eligibleHandler();
     },
     data() {
         return {
@@ -290,13 +291,6 @@ export default {
                     this.route("admissions.update", this.data.admission.id)
                 );
             }
-        },
-        eligibleHandler() {
-            if (this.form.verifications.eligible == "1") {
-                return (this.buttonText = "সংরক্ষণ করুণ এবং পরবর্তী ধাপে যান");
-            }
-
-            return (this.buttonText = "যোগ্য না হওয়ায় ফরম টি বাতিল করুন");
         },
         diclarationByAdmin(event) {
             if (event.target.checked) {

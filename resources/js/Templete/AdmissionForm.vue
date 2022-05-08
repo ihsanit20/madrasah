@@ -15,11 +15,23 @@
                 <div class="flex items-center justify-center gap-4">
                     <label class="flex items-center justify-center gap-2">
                         <check-uncheck-icon class="w-4" :isChecked="true" />
-                        <span>নতুন</span>
+                        <span
+                            :class="{
+                                'font-semibold': true,
+                            }"
+                        >
+                            নতুন
+                        </span>
                     </label>
                     <label class="flex items-center justify-center gap-2">
                         <check-uncheck-icon class="w-4" />
-                        <span>পুরাতন</span>
+                        <span
+                            :class="{
+                                'font-semibold': false,
+                            }"
+                        >
+                            পুরাতন
+                        </span>
                     </label>
                 </div>
             </div>
@@ -58,14 +70,26 @@
                                 class="w-4"
                                 :isChecked="data.student.gender == '1'"
                             />
-                            <span>ছেলে</span>
+                            <span
+                                :class="{
+                                    'font-semibold': data.student.gender == '1',
+                                }"
+                            >
+                                ছেলে
+                            </span>
                         </label>
                         <label class="flex items-center justify-center gap-2">
                             <check-uncheck-icon
                                 class="w-4"
                                 :isChecked="data.student.gender == '2'"
                             />
-                            <span>মেয়ে</span>
+                            <span
+                                :class="{
+                                    'font-semibold': data.student.gender == '2',
+                                }"
+                            >
+                                মেয়ে
+                            </span>
                         </label>
                     </div>
                 </div>
@@ -119,21 +143,39 @@
                         class="w-4"
                         :isChecked="data.student.guardianType == '1'"
                     />
-                    <span>পিতা</span>
+                    <span
+                        :class="{
+                            'font-semibold': data.student.guardianType == '1',
+                        }"
+                    >
+                        পিতা
+                    </span>
                 </label>
                 <label class="flex items-center justify-center gap-2">
                     <check-uncheck-icon
                         class="w-4"
                         :isChecked="data.student.guardianType == '2'"
                     />
-                    <span>মাতা</span>
+                    <span
+                        :class="{
+                            'font-semibold': data.student.guardianType == '2',
+                        }"
+                    >
+                        মাতা
+                    </span>
                 </label>
                 <label class="flex items-center justify-center gap-2">
                     <check-uncheck-icon
                         class="w-4"
                         :isChecked="data.student.guardianType == '3'"
                     />
-                    <span>বৈধ অভিভাবক</span>
+                    <span
+                        :class="{
+                            'font-semibold': data.student.guardianType == '3',
+                        }"
+                    >
+                        বৈধ অভিভাবক
+                    </span>
                 </label>
             </div>
             <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
@@ -257,40 +299,66 @@
                 </div>
             </div>
             <hr />
-            <div class="flex items-center justify-between gap-4">
+            <div class="grid gap-4">
                 <div>
                     <inline-data
                         title="ভর্তিচ্ছু বিভাগ/শ্রেণী:"
                         :value="data.admission.className"
                     />
                 </div>
-                <div class="flex items-center justify-end gap-4">
+                <div class="flex flex-wrap items-center gap-5">
+                    <div class="text-gray-700">শিক্ষার্থীর ধরন:</div>
                     <label class="flex items-center justify-center gap-2">
-                        <Input
-                            type="radio"
-                            name="resident"
-                            :checked="data.student.resident == '1'"
-                            class="h-3.5 w-3.5 rounded-none"
+                        <check-uncheck-icon
+                            class="w-4"
+                            :isChecked="data.student.resident == '1'"
                         />
-                        <span>আবাসিক</span>
+                        <span
+                            :class="{
+                                'font-semibold': data.student.resident == '1',
+                            }"
+                        >
+                            আবাসিক
+                        </span>
                     </label>
                     <label class="flex items-center justify-center gap-2">
-                        <Input
-                            type="radio"
-                            name="resident"
-                            :checked="data.student.resident == '2'"
-                            class="h-3.5 w-3.5 rounded-none"
+                        <check-uncheck-icon
+                            class="w-4"
+                            :isChecked="data.student.resident == '2'"
                         />
-                        <span>অনাবাসিক</span>
+                        <span
+                            :class="{
+                                'font-semibold': data.student.resident == '2',
+                            }"
+                        >
+                            অনাবাসিক
+                        </span>
                     </label>
                     <label class="flex items-center justify-center gap-2">
-                        <Input
-                            type="radio"
-                            name="resident"
-                            :checked="data.student.resident == '3'"
-                            class="h-3.5 w-3.5 rounded-none"
+                        <check-uncheck-icon
+                            class="w-4"
+                            :isChecked="data.student.resident == '3'"
                         />
-                        <span>ডে-কেয়ার</span>
+                        <span
+                            :class="{
+                                'font-semibold': data.student.resident == '3',
+                            }"
+                        >
+                            ডে-কেয়ার
+                        </span>
+                    </label>
+                    <label class="flex items-center justify-center gap-2">
+                        <check-uncheck-icon
+                            class="w-4"
+                            :isChecked="data.student.resident == '4'"
+                        />
+                        <span
+                            :class="{
+                                'font-semibold': data.student.resident == '4',
+                            }"
+                        >
+                            সেমি-আবাসিক
+                        </span>
                     </label>
                 </div>
             </div>
@@ -343,7 +411,10 @@
             <br />
             <div class="flex items-center justify-between gap-4">
                 <div>
-                    <inline-data title="আবেদনের তারিখ:" />
+                    <inline-data
+                        title="আবেদনের তারিখ:"
+                        :value="$e2bnumber(data.admission.dateOfApplication)"
+                    />
                 </div>
                 <div>
                     <inline-data title="আবেদনকারীর স্বাক্ষর" />

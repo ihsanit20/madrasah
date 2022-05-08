@@ -3,7 +3,11 @@
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="space-y-4">
-            <form-heading>প্রদেয় ফি নির্ধারণ</form-heading>
+            <h2
+                class="mt-4 mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+            >
+                প্রদেয় ফি নির্ধারন
+            </h2>
             <div class="grid gap-4 md:grid-cols-2">
                 <div>
                     <inline-data
@@ -136,7 +140,15 @@
 
             <hr />
 
-            <div class="flex items-center justify-end">
+            <div class="flex items-center justify-between">
+                <Link
+                    :href="
+                        route('admissions.edit', data.admission.id) + '?step=2'
+                    "
+                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                >
+                    &#8592; পূর্ববর্তী ধাপ
+                </Link>
                 <Button
                     :class="{
                         'opacity-25': form.processing,
@@ -151,6 +163,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import ValidationErrors from "@/Components/ValidationErrors.vue";
 import Label from "@/Components/Label.vue";
 import Button from "@/Components/Button.vue";
@@ -165,6 +178,7 @@ import TableTd from "@/Components/TableTd.vue";
 
 export default {
     components: {
+        Link,
         ValidationErrors,
         Label,
         Button,
@@ -205,13 +219,13 @@ export default {
             editable: false,
             columns1: [
                 { title: "ভর্তিকালীন ফি বিবরণী", align: "left" },
-                { title: "পূর্ব নির্ধারিত ফি", align: "right" },
+                { title: "নির্ধারিত ফি", align: "right" },
                 { title: "ছাড়", align: "right" },
                 { title: "শিক্ষার্থীর প্রদেয়", align: "right" },
             ],
             columns2: [
                 { title: "মাসিক ফি বিবরণী", align: "left" },
-                { title: "পূর্ব নির্ধারিত ফি", align: "right" },
+                { title: "নির্ধারিত ফি", align: "right" },
                 { title: "ছাড়", align: "right" },
                 { title: "শিক্ষার্থীর প্রদেয়", align: "right" },
             ],

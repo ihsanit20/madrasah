@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\JsonResource;
 use PhpParser\Node\Expr\Cast\Object_;
 
@@ -34,6 +35,7 @@ class AdmissionResource extends JsonResource
             'verifications'     => (object) ($this->verifications ?? []),
             'admissionTestMark' => (string) ($this->admission_test_mark ?? ''),
             'verifiedBy'        => (string) ($this->verified_by_admin->name ?? ''),
+            'dateOfApplication' => (string) ($this->created_at ? Controller::getHijriDate($this->created_at->format('d-m-Y')) : ''),
         ];
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <Head :title="pageTitle" />
 
-    <app-layout :pageTitle="pageTitle">
+    <app-layout>
         <form-component v-if="step === 1" :data="data" module-action="update" />
         <test-component v-if="step === 2" :data="data" module-action="update" />
         <fee-component v-if="step === 3" :data="data" module-action="update" />

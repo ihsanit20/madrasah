@@ -31,6 +31,7 @@ class Student extends Model
         1 => 'আবাসিক',
         2 => 'অনাবাসিক',
         3 => 'ডে-কেয়ার',
+        4 => 'সেমি-আবাসিক',
     ];
 
     public static function getGenderArrayData()

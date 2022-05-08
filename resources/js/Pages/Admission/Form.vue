@@ -537,6 +537,7 @@ export default {
                 areas: "",
             },
             form: this.$inertia.form({
+                step: 1,
                 name: this.data.student.name,
                 date_of_birth: this.data.student.dateOfBirth,
                 birth_certificate: this.data.student.birthCertificate,

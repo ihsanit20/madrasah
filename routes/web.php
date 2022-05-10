@@ -7,6 +7,7 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\FeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
     
     Route::resources([
+        'fees'          => FeeController::class,
         'classes'       => ClassesController::class,
         'students'      => StudentController::class,
         'admissions'    => AdmissionController::class,

@@ -11,16 +11,40 @@
             </span>
         </nav-link>
 
-        <nav-link
-            :href="route('classes.index')"
-            :active="route().current('classes.*')"
-            class="flex items-center gap-2 md:gap-4"
-        >
+        <dropdown-nav-link :active="route().current('(classes||fees).*')">
             <ClassSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                ক্লাস/বিভাগ সমুহ
+                ক্লাস/বিভাগ
             </span>
-        </nav-link>
+            <template #items>
+                <nav-link
+                    :href="route('fees.index')"
+                    :active="route().current('fees.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <ClipboardListIcon class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        প্রদেয় ফি
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('classes.index')"
+                    :active="route().current('classes.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <ClassSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        ক্লাস/বিভাগ
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
 
         <dropdown-nav-link :active="route().current('(students|admissions).*')">
             <StudentSvg class="h-6 w-6 md:h-8 md:w-8" />
@@ -96,7 +120,7 @@
                     :active="route().current('categories.*')"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <ClipboardListIcon class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
@@ -166,7 +190,7 @@
                     :active="route().current('settings.site-setup')"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <LibraryIcon class="h-4 w-4 md:h-6 md:w-6" />
+                    <CogIcon class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
@@ -215,6 +239,8 @@ import {
     HomeIcon,
     IdentificationIcon,
     LibraryIcon,
+    ClipboardListIcon,
+    CogIcon,
 } from "@heroicons/vue/outline";
 import DropdownNavLink from "@/Components/DropdownNavLink.vue";
 import {
@@ -246,6 +272,8 @@ export default {
         NoticeSvg,
         SettingsSvg,
         DropdownNavLink,
+        ClipboardListIcon,
+        CogIcon,
     },
     props: {
         navigation: {

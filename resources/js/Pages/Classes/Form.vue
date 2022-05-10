@@ -78,7 +78,9 @@
                                         v-model="fee.period"
                                         class="block w-full"
                                     >
-                                        <option value="">--Select--</option>
+                                        <option value="">
+                                            -- নির্বাচন করুন --
+                                        </option>
                                         <option
                                             v-for="(
                                                 period, index
@@ -105,7 +107,7 @@
 
                 <form-group class="col-span-full" label="শ্রেণী শিক্ষক">
                     <Select v-model="form.staff_id" class="block w-full">
-                        <option value="">--Select--</option>
+                        <option value="">-- নির্বাচন করুন --</option>
                         <option
                             v-for="(staff, index) in data.staffList"
                             :key="index"

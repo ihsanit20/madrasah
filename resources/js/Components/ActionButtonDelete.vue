@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit">
+    <form v-if="href" @submit.prevent="submit">
         <button
             type="submit"
             title="Delete"

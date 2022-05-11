@@ -59,7 +59,7 @@
                     <template #header>
                         <table-th
                             v-if="editable"
-                            class="text-center print:hidden"
+                            class="text-right print:hidden"
                         >
                             ছাড়
                         </table-th>
@@ -74,43 +74,63 @@
                                     v-if="fee.concession"
                                     class="text-gray-400 print:hidden"
                                 >
-                                    {{ fee.fee_amount }}
+                                    {{ $e2bnumber(fee.fee_amount) }}
                                 </del>
                                 <span>
-                                    {{ fee.fee_amount - fee.concession }}
+                                    {{
+                                        $e2bnumber(
+                                            fee.fee_amount - fee.concession
+                                        )
+                                    }}
                                 </span>
                             </div>
                         </table-td>
-                        <td class="print:hidden md:w-40" v-if="editable">
-                            <div class="flex items-center justify-center">
+                        <td class="pr-3 print:hidden" v-if="editable">
+                            <div class="flex items-center justify-end">
                                 <Input
                                     :disabled="!editable"
                                     type="number"
                                     v-model="fee.concession"
-                                    class="block w-16 px-1.5 text-right"
+                                    class="block w-14 px-1 text-right"
                                     @input="concessionHandler(fee)"
                                 />
                             </div>
                         </td>
                     </template>
                     <template #totalRow>
-                        <table-th class="text-right"> মোট: </table-th>
+                        <table-th class="text-left">
+                            <div v-if="getConcessionTotal('yearlyFees')">
+                                ছাড়:
+                                {{
+                                    $e2bnumber(getConcessionTotal("yearlyFees"))
+                                }}
+                            </div>
+                        </table-th>
                         <table-th class="text-right">
                             <div class="flex justify-end gap-2">
+                                <span>মোট: </span>
                                 <del
                                     v-if="getConcessionTotal('yearlyFees')"
                                     class="text-gray-400 print:hidden"
                                 >
-                                    {{ getFeeTotal("yearlyFees") }}
+                                    {{ $e2bnumber(getFeeTotal("yearlyFees")) }}
                                 </del>
                                 <span>
                                     {{
-                                        getFeeTotal("yearlyFees") -
-                                        getConcessionTotal("yearlyFees")
+                                        $e2bnumber(
+                                            getFeeTotal("yearlyFees") -
+                                                getConcessionTotal("yearlyFees")
+                                        )
                                     }}
                                 </span>
                             </div>
                         </table-th>
+                        <th
+                            v-if="editable"
+                            class="pr-4 text-right text-rose-500 print:hidden"
+                        >
+                            {{ getConcessionTotal("yearlyFees") }}
+                        </th>
                     </template>
                 </simple-table>
 
@@ -122,7 +142,7 @@
                     <template #header>
                         <table-th
                             v-if="editable"
-                            class="text-center print:hidden"
+                            class="text-right print:hidden"
                         >
                             ছাড়
                         </table-th>
@@ -137,43 +157,67 @@
                                     v-if="fee.concession"
                                     class="text-gray-400 print:hidden"
                                 >
-                                    {{ fee.fee_amount }}
+                                    {{ $e2bnumber(fee.fee_amount) }}
                                 </del>
                                 <span>
-                                    {{ fee.fee_amount - fee.concession }}
+                                    {{
+                                        $e2bnumber(
+                                            fee.fee_amount - fee.concession
+                                        )
+                                    }}
                                 </span>
                             </div>
                         </table-td>
-                        <td class="print:hidden md:w-40" v-if="editable">
-                            <div class="flex items-center justify-center">
+                        <td class="pr-3 print:hidden" v-if="editable">
+                            <div class="flex items-center justify-end">
                                 <Input
                                     :disabled="!editable"
                                     type="number"
                                     v-model="fee.concession"
-                                    class="block w-16 px-1.5 text-right"
+                                    class="block w-14 px-1 text-right"
                                     @input="concessionHandler(fee)"
                                 />
                             </div>
                         </td>
                     </template>
                     <template #totalRow>
-                        <table-th class="text-right"> মোট: </table-th>
+                        <table-th class="text-left">
+                            <div v-if="getConcessionTotal('monthlyFees')">
+                                ছাড়:
+                                {{
+                                    $e2bnumber(
+                                        getConcessionTotal("monthlyFees")
+                                    )
+                                }}
+                            </div>
+                        </table-th>
                         <table-th class="text-right">
                             <div class="flex justify-end gap-2">
+                                <span>মোট: </span>
                                 <del
                                     v-if="getConcessionTotal('monthlyFees')"
                                     class="text-gray-400 print:hidden"
                                 >
-                                    {{ getFeeTotal("monthlyFees") }}
+                                    {{ $e2bnumber(getFeeTotal("monthlyFees")) }}
                                 </del>
                                 <span>
                                     {{
-                                        getFeeTotal("monthlyFees") -
-                                        getConcessionTotal("monthlyFees")
+                                        $e2bnumber(
+                                            getFeeTotal("monthlyFees") -
+                                                getConcessionTotal(
+                                                    "monthlyFees"
+                                                )
+                                        )
                                     }}
                                 </span>
                             </div>
                         </table-th>
+                        <th
+                            v-if="editable"
+                            class="pr-4 text-right text-rose-500 print:hidden"
+                        >
+                            {{ getConcessionTotal("monthlyFees") }}
+                        </th>
                     </template>
                 </simple-table>
             </div>

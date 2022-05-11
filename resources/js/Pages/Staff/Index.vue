@@ -30,6 +30,12 @@
                         {{ staff.phone }}
                     </div>
                 </table-td>
+                <table-td class="w-10 text-right">
+                    <action-button-delete
+                        v-if="staff.allowDeletion"
+                        :href="route('staff.destroy', staff.id)"
+                    />
+                </table-td>
             </template>
         </simple-table>
     </app-layout>
@@ -43,6 +49,7 @@ import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";
 import TableTd from "@/Components/TableTd.vue";
+import ActionButtonDelete from "@/Components/ActionButtonDelete.vue";
 
 export default {
     components: {
@@ -54,6 +61,7 @@ export default {
         ActionButtonEdit,
         AddNewButton,
         TableTd,
+        ActionButtonDelete,
     },
     props: {
         data: {
@@ -67,6 +75,7 @@ export default {
                 { title: "নাম", align: "left" },
                 { title: "পদবি", align: "left" },
                 { title: "Phone", align: "left" },
+                { title: "", align: "right" },
             ],
         };
     },

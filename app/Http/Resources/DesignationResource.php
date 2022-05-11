@@ -17,6 +17,8 @@ class DesignationResource extends JsonResource
         return [
             'id'            => (int) $this->id,
             'name'          => (string) ($this->name ?? ''),
+            'totalTeacher'  => (int) (count($this->teachers ?? []) ?? 0),
+            'allowDeletion' => (boolean) (!(count($this->teachers ?? []) ?? 0)),
         ];
     }
 }

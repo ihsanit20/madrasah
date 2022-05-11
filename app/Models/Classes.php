@@ -30,7 +30,7 @@ class Classes extends Model
 
     public function getTotalFeeAttribute()
     {
-        return $this->subjects()->count();
+        return $this->fees()->count();
     }
 
     public function getTotalStudentAttribute()
@@ -43,11 +43,6 @@ class Classes extends Model
         return $this->hasMany(Subject::class, 'class_id');
     }
 
-    public function fees()
-    {
-        return $this->hasMany(Fee::class, 'class_id');
-    }
-
     public function students()
     {
         return $this->belongsToMany(Student::class, 'admissions', 'class_id', 'student_id');
@@ -56,5 +51,15 @@ class Classes extends Model
     public function teacher()
     {
         return $this->belongsTo(Staff::class, 'staff_id');
+    }
+
+    public function fees()
+    {
+        return $this->belongsToMany(Fee::class, 'class_fees', 'fee_id', 'class_id');
+    }
+
+    public function class_fees()
+    {
+        return $this->hasMany(ClassFee::class, 'class_id');
     }
 }

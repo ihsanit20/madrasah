@@ -8,6 +8,7 @@ use App\Models\Classes;
 use App\Models\HijriMonth;
 use App\Models\Notice;
 use App\Models\Setting;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -121,7 +122,13 @@ class HomeController extends Controller
     
         return Inertia::render('Page/Class', [
             'data' => [
-                'classes' => new ClassesResource($class->load('subjects','fees')),
+                'classes'   => new ClassesResource(
+                    $class->load(
+                        'subjects',
+                        'class_fees.fee',
+                    )
+                ),
+                'packages'  => Student::getResidentArrayData(),
             ]
         ]);
     }

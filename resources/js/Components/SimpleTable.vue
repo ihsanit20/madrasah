@@ -44,7 +44,19 @@
                                     {{ index + 1 }}
                                 </td>
 
-                                <slot :item="item" />
+                                <slot
+                                    :item="item"
+                                    v-if="
+                                        !(
+                                            filterRowName &&
+                                            item[filterRowName] !=
+                                                filterRowValue
+                                        )
+                                    "
+                                />
+                            </tr>
+                            <tr v-if="totalRow" class="print:text-black">
+                                <slot name="totalRow" />
                             </tr>
                             <tr
                                 v-if="!Object.keys(collections).length"
@@ -78,6 +90,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        totalRow: {
+            type: Boolean,
+            default: false,
+        },
         collections: {
             type: Object,
             default: {},
@@ -86,6 +102,11 @@ export default {
             type: Array,
             default: [],
         },
+        filterRowName: {
+            type: String,
+            default: "",
+        },
+        filterRowValue: "",
     },
 };
 </script>

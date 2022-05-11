@@ -25,6 +25,7 @@
                 </table-td>
                 <table-td class="w-10 text-right">
                     <action-button-delete
+                        v-if="fee.allowDeletion"
                         :href="route('fees.destroy', fee.id)"
                     />
                 </table-td>

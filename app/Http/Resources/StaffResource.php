@@ -21,6 +21,7 @@ class StaffResource extends JsonResource
             'designationId'     => (int) ($this->designation_id ?? 0),
             'designationTitle'  => (string) ($this->designation->name ?? ''),
             'designation'       => new DesignationResource($this->whenLoaded('designation')),
+            'allowDeletion'     => (boolean) (true),
         ];
     }
 }

@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClassesResource;
+use App\Http\Resources\FeeResource;
 use App\Http\Resources\StaffResource;
 use App\Models\Classes;
+use App\Models\ClassFee;
 use App\Models\Fee;
 use App\Models\Staff;
+use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -17,7 +20,8 @@ class ClassesController extends Controller
 {
     public function index()
     {
-        $collections = Classes::query();
+        $collections = Classes::query()
+            ->with('class_fees');
 
         return Inertia::render('Classes/Index', [
             'data' => [
@@ -52,6 +56,7 @@ class ClassesController extends Controller
         return Inertia::render('Classes/Show', [
             'data' => [
                 'classes' => $this->formatedData($class),
+                'packages'  => Student::getResidentArrayData(),
             ]
         ]);
     }
@@ -88,11 +93,13 @@ class ClassesController extends Controller
     protected function data($class)
     {
         StaffResource::withoutWrapping();
+        FeeResource::withoutWrapping();
 
         return [
             'classes'   => $this->formatedData($class),
-            'periods'   => Fee::getPeriod(),
+            'fees'      => FeeResource::collection(Fee::get()),
             'staffList' => StaffResource::collection(Staff::get()),
+            'packages'  => Student::getResidentArrayData(),
         ];
     }
 
@@ -102,7 +109,7 @@ class ClassesController extends Controller
 
         return new ClassesResource($class->load(
             'subjects',
-            'fees',
+            'class_fees.fee',
         ));
     }
 
@@ -150,25 +157,29 @@ class ClassesController extends Controller
     
     private function storeFee($class_id, $fees)
     {
-        Fee::where('class_id', $class_id)->delete();
+        ClassFee::where('class_id', $class_id)->delete();
 
         if(!is_array($fees)) {
             return;
         }
 
         foreach($fees as $fee) {
-            Fee::onlyTrashed()->updateOrCreate(
-                [
-                    'class_id'      => $class_id,
-                ],
-                [
-                    'name'          => $fee['name'],
-                    'period'        => $fee['period'],
-                    'amount'        => $fee['amount'],
-                    'deleted_at'    => NULL,
-                ]
-            );
+            if($fee['checked']) {
+                ClassFee::onlyTrashed()->updateOrCreate(
+                    [
+                        'class_id'      => $class_id,
+                    ],
+                    [
+                        'fee_id'        => $fee['id'],
+                        'amount'        => $fee['amount'],
+                        'package'       => json_encode($fee['package']),
+                        'deleted_at'    => NULL,
+                    ]
+                );
+            }
         }
+
+        return ClassFee::where('class_id', $class_id)->get();
     }
 
 }

@@ -36,36 +36,36 @@
 
         <form-heading class="mt-4">প্রদেয় ফি সমূহ</form-heading>
 
-        <div class="flex gap-4">
+        <div
+            v-if="Object.keys(data.classes.classFees).length"
+            class="grid grid-cols-2 gap-4"
+        >
             <simple-table
+                v-for="(packageName, packageId) in data.packages"
+                :key="packageId"
                 class="flex-1 py-3"
-                :columns="feeColumns1"
-                :collections="data.classes.fees"
+                :collections="rows"
             >
-                <template #default="{ item: fee }">
-                    <table-td v-if="fee.period == 1" class="text-left">
-                        {{ fee.name }}
+                <template #header>
+                    <table-th>{{ packageName }}</table-th>
+                    <table-th class="text-right">নির্ধারিত ফি</table-th>
+                </template>
+                <template #default="{ item: row }">
+                    <table-td class="text-left">
+                        {{ row.name }}
                     </table-td>
-                    <table-td v-if="fee.period == 1" class="text-right">
-                        {{ $e2bnumber(fee.amount) }} &nbsp;টাকা
+                    <table-td class="text-right">
+                        {{ $e2bnumber(getFeeTotal(row.value, packageId)) }}
+                        &nbsp;টাকা
                     </table-td>
                 </template>
             </simple-table>
-
-            <simple-table
-                class="flex-1 py-3"
-                :columns="feeColumns2"
-                :collections="data.classes.fees"
-            >
-                <template #default="{ item: fee }">
-                    <table-td v-if="fee.period == 2" class="text-left">
-                        {{ fee.name }}
-                    </table-td>
-                    <table-td v-if="fee.period == 2" class="text-right">
-                        {{ $e2bnumber(fee.amount) }} &nbsp;টাকা
-                    </table-td>
-                </template>
-            </simple-table>
+        </div>
+        <div
+            v-else
+            class="border py-3 px-2 text-center text-red-500 print:text-black"
+        >
+            No data found !!
         </div>
     </div>
 </template>
@@ -77,6 +77,7 @@ import ShowTableRow from "@/Components/ShowTableRow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import SimpleTable from "@/Components/SimpleTable.vue";
 import TableTd from "@/Components/TableTd.vue";
+import TableTh from "@/Components/TableTh.vue";
 import LetterHead from "@/Templete/LetterHead.vue";
 import PrintButton from "@/Components/PrintButton.vue";
 import { PencilAltIcon } from "@heroicons/vue/solid";
@@ -91,6 +92,7 @@ export default {
         ActionButtonEdit,
         SimpleTable,
         TableTd,
+        TableTh,
         LetterHead,
         PrintButton,
         PencilAltIcon,
@@ -109,15 +111,33 @@ export default {
                 { title: "বিষয়ের নাম", align: "left" },
                 { title: "বইয়ের তালিকা", align: "left" },
             ],
-            feeColumns1: [
-                { title: "ভর্তিকালীন প্রদেয়", align: "left" },
-                { title: "পরিমাণ", align: "right" },
-            ],
-            feeColumns2: [
-                { title: "মাসিক প্রদেয়", align: "left" },
-                { title: "পরিমাণ", align: "right" },
+            rows: [
+                {
+                    name: "ভর্তিকালীন প্রদেয়",
+                    value: 1,
+                },
+                {
+                    name: "মাসিক প্রদেয়",
+                    value: 2,
+                },
             ],
         };
+    },
+    methods: {
+        getFeeTotal(period, packageId) {
+            let total = 0;
+
+            Object.values(this.data.classes.classFees).forEach((classFee) => {
+                if (
+                    classFee.fee.period === period &&
+                    classFee.package.includes(packageId)
+                ) {
+                    total += classFee.amount;
+                }
+            });
+
+            return total;
+        },
     },
 };
 </script>

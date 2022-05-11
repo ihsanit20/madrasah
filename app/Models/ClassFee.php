@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Designation extends Model
+class ClassFee extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
-    public function teachers()
+    public function fee()
     {
-        return $this->hasMany(Staff::class);
+        return $this->belongsTo(Fee::class);
     }
 }

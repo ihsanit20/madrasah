@@ -23,6 +23,15 @@
                         </Link>
                     </div>
                 </table-td>
+                <table-td class="text-center">
+                    {{ designation.totalTeacher }}
+                </table-td>
+                <table-td class="w-10 text-right">
+                    <action-button-delete
+                        v-if="designation.allowDeletion"
+                        :href="route('designations.destroy', designation.id)"
+                    />
+                </table-td>
             </template>
         </simple-table>
     </app-layout>
@@ -36,6 +45,7 @@ import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";
 import TableTd from "@/Components/TableTd.vue";
+import ActionButtonDelete from "@/Components/ActionButtonDelete.vue";
 
 export default {
     components: {
@@ -47,6 +57,7 @@ export default {
         ActionButtonEdit,
         AddNewButton,
         TableTd,
+        ActionButtonDelete,
     },
     props: {
         data: {
@@ -56,7 +67,11 @@ export default {
     },
     data() {
         return {
-            columns: [{ title: "পদবি তালিকা", align: "left" }],
+            columns: [
+                { title: "পদবি তালিকা", align: "left" },
+                { title: "শিক্ষক/স্টাফ সংখ্যা", align: "center" },
+                { title: "", align: "right" },
+            ],
         };
     },
 };

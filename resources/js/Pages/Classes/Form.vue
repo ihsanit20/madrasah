@@ -49,61 +49,140 @@
                         </form-group>
                     </template>
                 </form-slot-group>
-                <form-slot-group
-                    label="ফি যুক্ত করুন"
+
+                <simple-table
+                    :columns="columns1"
                     :collections="form.fees"
-                    :addSlotMethod="addFeeSlot"
+                    filter-row-name="period"
+                    :filter-row-value="1"
+                    :total-row="true"
                 >
+                    <template #header>
+                        <th
+                            v-for="(packageName, packageId) in data.packages"
+                            :key="packageId"
+                            class="py-3 px-2 text-center text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            {{ packageName }}
+                        </th>
+                    </template>
                     <template #default="{ item: fee }">
-                        <div class="flex flex-grow flex-col gap-2 md:flex-row">
-                            <form-group
-                                class="w-full flex-grow md:w-auto"
-                                label="ফি বিবরণী"
+                        <table-td class="whitespace-pre-wrap text-left">
+                            <label
+                                class="flex w-full items-center justify-start gap-2"
                             >
                                 <Input
-                                    type="text"
-                                    class="block w-full"
-                                    v-model="fee.name"
+                                    type="checkbox"
+                                    @click="fee.checked = !fee.checked"
+                                    :checked="fee.checked"
+                                />
+                                <span>{{ fee.name }}</span>
+                            </label>
+                        </table-td>
+                        <td class="px-3 text-center">
+                            <div class="mx-auto w-20">
+                                <Input
+                                    v-if="fee.checked"
+                                    type="number"
+                                    v-model="fee.amount"
+                                    class="w-20 text-right"
                                     required
                                 />
-                            </form-group>
-                            <div
-                                class="flex w-full items-center gap-2 md:w-auto"
-                            >
-                                <form-group
-                                    class="flex-grow md:w-40 md:flex-grow-0"
-                                    label="ফি-এর ধরন"
-                                >
-                                    <Select
-                                        v-model="fee.period"
-                                        class="block w-full"
-                                    >
-                                        <option value="">
-                                            -- নির্বাচন করুন --
-                                        </option>
-                                        <option
-                                            v-for="(
-                                                period, index
-                                            ) in data.periods"
-                                            :key="index"
-                                            :value="index"
-                                        >
-                                            {{ period }}
-                                        </option>
-                                    </Select>
-                                </form-group>
-                                <form-group class="w-28" label="টাকার পরিমাণ">
-                                    <Input
-                                        type="number"
-                                        class="block w-full text-center"
-                                        v-model="fee.amount"
-                                        required
-                                    />
-                                </form-group>
                             </div>
-                        </div>
+                        </td>
+                        <table-td
+                            v-for="(packageName, packageId) in data.packages"
+                            :key="packageId"
+                            class="text-center"
+                        >
+                            <Input
+                                v-if="fee.checked"
+                                type="checkbox"
+                                @change="packageHandler($event, fee, packageId)"
+                                :checked="fee.package.includes(packageId)"
+                            />
+                        </table-td>
                     </template>
-                </form-slot-group>
+                    <template #totalRow>
+                        <table-td class="text-right" colspan="2">
+                            মোট ভর্তিকালীন প্রদেয়
+                        </table-td>
+                        <table-td
+                            v-for="(packageName, packageId) in data.packages"
+                            :key="packageId"
+                            class="text-center"
+                        >
+                            {{ getFeeTotal(1, packageId) }}
+                        </table-td>
+                    </template>
+                </simple-table>
+
+                <simple-table
+                    :columns="columns2"
+                    :collections="form.fees"
+                    filter-row-name="period"
+                    :filter-row-value="2"
+                    :total-row="true"
+                >
+                    <template #header>
+                        <th
+                            v-for="(packageName, packageId) in data.packages"
+                            :key="packageId"
+                            class="py-3 px-2 text-center text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            {{ packageName }}
+                        </th>
+                    </template>
+                    <template #default="{ item: fee }">
+                        <table-td class="whitespace-pre-wrap text-left">
+                            <label
+                                class="flex w-full items-center justify-start gap-2"
+                            >
+                                <Input
+                                    type="checkbox"
+                                    @click="fee.checked = !fee.checked"
+                                    :checked="fee.checked"
+                                />
+                                <span>{{ fee.name }}</span>
+                            </label>
+                        </table-td>
+                        <td class="px-3 text-center">
+                            <div class="mx-auto w-20">
+                                <Input
+                                    v-if="fee.checked"
+                                    type="number"
+                                    v-model="fee.amount"
+                                    class="w-20 text-right"
+                                    required
+                                />
+                            </div>
+                        </td>
+                        <table-td
+                            v-for="(packageName, packageId) in data.packages"
+                            :key="packageId"
+                            class="text-center"
+                        >
+                            <Input
+                                v-if="fee.checked"
+                                type="checkbox"
+                                @change="packageHandler($event, fee, packageId)"
+                                :checked="fee.package.includes(packageId)"
+                            />
+                        </table-td>
+                    </template>
+                    <template #totalRow>
+                        <table-td colspan="2" class="text-right">
+                            মোট মাসিক প্রদেয়
+                        </table-td>
+                        <table-td
+                            v-for="(packageName, packageId) in data.packages"
+                            :key="packageId"
+                            class="text-center"
+                        >
+                            {{ getFeeTotal(2, packageId) }}
+                        </table-td>
+                    </template>
+                </simple-table>
 
                 <form-group class="col-span-full" label="শ্রেণী শিক্ষক">
                     <Select v-model="form.staff_id" class="block w-full">
@@ -144,6 +223,8 @@ import Textarea from "@/Components/Textarea.vue";
 import AddButton from "@/Components/AddButton.vue";
 import FormSlotGroup from "@/Components/FormSlotGroup.vue";
 import FormGroup from "@/Components/FormGroup.vue";
+import SimpleTable from "@/Components/SimpleTable.vue";
+import TableTd from "@/Components/TableTd.vue";
 
 export default {
     components: {
@@ -157,6 +238,8 @@ export default {
         AddButton,
         FormSlotGroup,
         FormGroup,
+        SimpleTable,
+        TableTd,
     },
     props: {
         moduleAction: String,
@@ -171,7 +254,23 @@ export default {
     },
     created() {
         this.form.subjects = this.data.classes.subjects || [];
-        this.form.fees = this.data.classes.fees || [];
+
+        Object.values(this.data.fees).forEach((fee) => {
+            let classFee = Object.values(this.data.classes.classFees).filter(
+                (classFee) => {
+                    return classFee.feeId == fee.id;
+                }
+            )[0];
+
+            this.form.fees.push({
+                id: fee.id,
+                name: fee.name,
+                period: fee.period,
+                amount: classFee ? classFee.amount : "",
+                package: classFee ? classFee.package : [],
+                checked: classFee ? 1 : 0,
+            });
+        });
     },
     data() {
         return {
@@ -182,6 +281,14 @@ export default {
                 subjects: [],
                 fees: [],
             }),
+            columns1: [
+                { title: "ভর্তিকালীন প্রদেয়", align: "left" },
+                { title: "পরিমাণ", align: "center" },
+            ],
+            columns2: [
+                { title: "মাসিক প্রদেয়", align: "left" },
+                { title: "পরিমাণ", align: "center" },
+            ],
         };
     },
     methods: {
@@ -191,12 +298,16 @@ export default {
                 book: "",
             });
         },
-        addFeeSlot() {
-            this.form.fees.push({
-                name: "",
-                period: "",
-                amount: "",
-            });
+        packageHandler(event, fee, packageId) {
+            if (event.target.checked) {
+                return fee.package.push(packageId);
+            }
+
+            const index = fee.package.indexOf(packageId);
+
+            if (index > -1) {
+                fee.package.splice(index, 1);
+            }
         },
         submit() {
             if (this.moduleAction == "store") {
@@ -207,6 +318,21 @@ export default {
                     this.route("classes.update", this.data.classes.id)
                 );
             }
+        },
+        getFeeTotal(period, packageId) {
+            let total = 0;
+
+            Object.values(this.form.fees).forEach((fee) => {
+                if (
+                    fee.checked &&
+                    fee.period === period &&
+                    fee.package.includes(packageId)
+                ) {
+                    total += fee.amount;
+                }
+            });
+
+            return total;
         },
     },
 };

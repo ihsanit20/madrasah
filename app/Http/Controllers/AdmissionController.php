@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AdmissionResource;
 use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassesResource;
+use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
 use App\Http\Resources\FeeResource;
@@ -14,6 +15,7 @@ use App\Models\Address;
 use App\Models\Admission;
 use App\Models\Area;
 use App\Models\Classes;
+use App\Models\ClassFee;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Fee;
@@ -144,19 +146,21 @@ class AdmissionController extends Controller
                 "roll"      => $new_roll,
                 "status"    => 3,
             ]);
-            
-            if($admission->student->status == 2) {
-                $current_year = explode("-", $this->getCurrentSession())[0];
-    
-                $two_digit_class_code = str_pad($admission->class_id, 2,"0", STR_PAD_LEFT);
-    
-                $three_digit_roll = str_pad($new_roll, 3,"0", STR_PAD_LEFT);
 
-                $admission->student()->update([
-                    "registration"  => $current_year . $two_digit_class_code . $three_digit_roll,
-                    "status"        => 1,
-                ]);
-            }
+            return back();
+            
+            // if($admission->student->status == 2) {
+            //     $current_year = explode("-", $this->getCurrentSession())[0];
+    
+            //     $two_digit_class_code = str_pad($admission->class_id, 2,"0", STR_PAD_LEFT);
+    
+            //     $three_digit_roll = str_pad($new_roll, 3,"0", STR_PAD_LEFT);
+
+            //     $admission->student()->update([
+            //         "registration"  => $current_year . $two_digit_class_code . $three_digit_roll,
+            //         "status"        => 1,
+            //     ]);
+            // }
         }
 
         return redirect()
@@ -186,8 +190,8 @@ class AdmissionController extends Controller
             'classes'       => ClassesResource::collection(Classes::get()),
             'bloodGroups'   => Student::getBloodGroups(),
             'residentArray' => Student::getResidentArrayData(),
-            'yearlyFees'    => $this->getClassFee($admission->class_id, 1),
-            'monthlyFees'   => $this->getClassFee($admission->class_id, 2),
+            'yearlyFees'    => $this->getClassFee($admission->class_id, 1, $student->resident),
+            'monthlyFees'   => $this->getClassFee($admission->class_id, 2, $student->resident),
         ];
     }
 
@@ -372,19 +376,29 @@ class AdmissionController extends Controller
         ];
     }
 
-    protected function getClassFee($class_id, $period = null, $with_dev_charge = false)
+    protected function getClassFee($class_id, $period = null, $resident = null)
     {
-        FeeResource::withoutWrapping();
+        ClassFeeResource::withoutWrapping();
 
-        $query = Fee::query()
+        $query = ClassFee::query()
             ->where('class_id', $class_id)
             ->where(function ($query) use ($period) {
                 $query->when($period, function ($query) use ($period) {
-                    $query->where('period', $period);
+                    $query->whereHas('fee', function ($query) use ($period) {
+                        $query->where('period', $period);
+                    });
                 });
             });
+        
+        $class_fees = $query->get();
 
-        return FeeResource::collection($query->get());
+        if($resident) {
+            $class_fees = $class_fees->filter(function ($class_fee) use ($resident) {
+                return in_array($resident, json_decode($class_fee->package));
+            });
+        }
+
+        return ClassFeeResource::collection($class_fees);
     }
 
 }

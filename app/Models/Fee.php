@@ -30,4 +30,14 @@ class Fee extends Model
     {
         return self::getPeriod()[$this->period] ?? '';
     }
+
+    public function classes()
+    {
+        return $this->belongsToMany(Classes::class, 'class_fees', 'class_id', 'fee_id');
+    }
+
+    public function class_fees()
+    {
+        return $this->hasMany(ClassFee::class, 'fee_id');
+    }
 }

@@ -38,6 +38,7 @@ class StudentResource extends JsonResource
             'permanentAddress'      => new AddressResource($this->whenLoaded('permanent_address')),
             'isSameAddress'         => (boolean) ($this->is_same_address ?? 0),
             'resident'              => (int) ($this->resident ?? 0),
+            'residentText'          => (string) ($this->resident_text ?? ''),
             'admissions'            => AdmissionResource::collection($this->whenLoaded('admissions')),
             'currentAdmission'      => new AdmissionResource($this->whenLoaded('current_admission')),
             'currentAdmissionId'    => (int) ($this->current_admission->id ?? 0),

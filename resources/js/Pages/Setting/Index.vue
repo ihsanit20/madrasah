@@ -18,7 +18,7 @@
                 </table-td>
                 <table-td class="text-left">
                     <div
-                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
+                        class="overflow-hidden whitespace-pre-wrap break-all line-clamp-6"
                     >
                         {{ setting.value }}
                     </div>

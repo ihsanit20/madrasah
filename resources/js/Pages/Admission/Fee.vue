@@ -1,5 +1,7 @@
 <template>
-    <div class="w-full max-w-3xl rounded border bg-white p-4 shadow">
+    <div
+        class="w-full max-w-3xl rounded border bg-white p-4 print:rounded-none print:border-0"
+    >
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="space-y-4">
@@ -8,20 +10,8 @@
             >
                 প্রদেয় ফি নির্ধারন
             </h2>
-            <div class="grid gap-4 md:grid-cols-2">
-                <div>
-                    <inline-data
-                        title="ফরম নাম্বার:"
-                        :value="data.admission.id"
-                    />
-                </div>
-                <div>
-                    <inline-data
-                        title="ভর্তিচ্ছু বিভাগ/শ্রেণী:"
-                        :value="data.admission.className"
-                    />
-                </div>
-                <div>
+            <div class="grid gap-4 print:grid-cols-2 md:grid-cols-3">
+                <div class="col-span-2">
                     <inline-data
                         title="শিক্ষার্থীর নাম:"
                         :value="data.student.name"
@@ -29,15 +19,27 @@
                 </div>
                 <div>
                     <inline-data
-                        title="পিতার নাম:"
-                        :value="data.student.fatherInfo.name"
+                        title="ফরম নাম্বার:"
+                        :value="data.admission.id"
+                    />
+                </div>
+                <div class="col-span-2">
+                    <inline-data
+                        title="ভর্তিচ্ছু বিভাগ/শ্রেণী:"
+                        :value="data.admission.className"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="শিক্ষার্থীর ধরন:"
+                        :value="data.student.residentText"
                     />
                 </div>
             </div>
 
-            <hr />
+            <hr class="print:hidden" />
 
-            <div class="flex items-center justify-start">
+            <div class="flex items-center justify-start print:hidden">
                 <label class="flex items-center gap-2">
                     <Input
                         type="checkbox"
@@ -48,99 +50,119 @@
                 </label>
             </div>
 
-            <div class="overflow-auto">
+            <div class="grid gap-4 print:grid-cols-2 md:grid-cols-2">
                 <simple-table
-                    class="min-w-max"
                     :columns="columns1"
                     :collections="fees.yearlyFees"
                 >
+                    <template #header>
+                        <table-th
+                            v-if="editable"
+                            class="text-center print:hidden"
+                        >
+                            ছাড়
+                        </table-th>
+                    </template>
                     <template #default="{ item: fee }">
                         <table-td class="text-left">
-                            <label
-                                class="flex w-full items-center justify-start gap-2"
-                            >
-                                <Input
-                                    type="checkbox"
-                                    @click="fee.checked = !fee.checked"
-                                    :checked="fee.checked"
-                                />
-                                <span>{{ fee.fee_name }}</span>
-                            </label>
+                            {{ fee.fee_name }}
                         </table-td>
                         <table-td class="text-right">
-                            {{ fee.fee_amount }}
+                            <div class="flex justify-end gap-2">
+                                <del
+                                    v-if="fee.concession"
+                                    class="text-gray-400 print:hidden"
+                                >
+                                    {{ fee.fee_amount }}
+                                </del>
+                                <span>
+                                    {{ fee.fee_amount - fee.concession }}
+                                </span>
+                            </div>
                         </table-td>
-                        <td class="md:w-40">
-                            <div
-                                v-if="fee.checked"
-                                class="flex items-center justify-end"
-                            >
+                        <td class="print:hidden md:w-40" v-if="editable">
+                            <div class="flex items-center justify-center">
                                 <Input
                                     :disabled="!editable"
                                     type="number"
                                     v-model="fee.concession"
-                                    class="block w-20 text-right"
+                                    class="block w-16 px-1.5 text-right"
                                     @input="concessionHandler(fee)"
                                 />
                             </div>
                         </td>
-                        <table-td class="text-right">
-                            <div v-if="fee.checked">
-                                {{ fee.fee_amount - fee.concession }}
-                            </div>
-                        </table-td>
                     </template>
                 </simple-table>
-            </div>
 
-            <div class="overflow-auto">
                 <simple-table
-                    class="min-w-max"
                     :columns="columns2"
                     :collections="fees.monthlyFees"
                 >
+                    <template #header>
+                        <table-th
+                            v-if="editable"
+                            class="text-center print:hidden"
+                        >
+                            ছাড়
+                        </table-th>
+                    </template>
                     <template #default="{ item: fee }">
                         <table-td class="text-left">
-                            <label
-                                class="flex w-full items-center justify-start gap-2"
-                            >
-                                <Input
-                                    type="checkbox"
-                                    @click="fee.checked = !fee.checked"
-                                    :checked="fee.checked"
-                                />
-                                <span>{{ fee.fee_name }}</span>
-                            </label>
+                            {{ fee.fee_name }}
                         </table-td>
                         <table-td class="text-right">
-                            {{ fee.fee_amount }}
+                            <div class="flex justify-end gap-2">
+                                <del
+                                    v-if="fee.concession"
+                                    class="text-gray-400 print:hidden"
+                                >
+                                    {{ fee.fee_amount }}
+                                </del>
+                                <span>
+                                    {{ fee.fee_amount - fee.concession }}
+                                </span>
+                            </div>
                         </table-td>
-                        <td class="md:w-40">
-                            <div
-                                v-if="fee.checked"
-                                class="flex items-center justify-end"
-                            >
+                        <td class="print:hidden md:w-40" v-if="editable">
+                            <div class="flex items-center justify-center">
                                 <Input
                                     :disabled="!editable"
                                     type="number"
                                     v-model="fee.concession"
-                                    class="block w-20 text-right"
+                                    class="block w-16 px-1.5 text-right"
                                     @input="concessionHandler(fee)"
                                 />
                             </div>
                         </td>
-                        <table-td class="text-right">
-                            <div v-if="fee.checked">
-                                {{ fee.fee_amount - fee.concession }}
-                            </div>
-                        </table-td>
                     </template>
                 </simple-table>
             </div>
 
-            <hr />
+            <div class="hidden space-y-4 print:block">
+                <h3
+                    class="mt-8 hidden text-center text-2xl font-bold text-sky-600 print:block print:text-black"
+                >
+                    অভিভাবকের অঙ্গিকার
+                </h3>
+                <div class="whitespace-pre-wrap text-justify">
+                    {{ $page.props.settings.guardianAgreement }}
+                </div>
+                <div class="flex justify-between">
+                    <div class="pt-8">
+                        <inline-data
+                            title="অভিভাবকের নাম:"
+                            :value="data.student.guardianInfo.name"
+                        />
+                    </div>
+                    <div class="pt-8">
+                        <inline-data title="অভিভাবকের স্বাক্ষর" />
+                    </div>
+                </div>
+            </div>
 
-            <div class="flex items-center justify-between">
+            <hr class="print:hidden" />
+
+            <div class="flex items-center justify-between print:hidden">
                 <Link
                     :href="
                         route('admissions.edit', data.admission.id) + '?step=2'
@@ -149,6 +171,7 @@
                 >
                     &#8592; পূর্ববর্তী ধাপ
                 </Link>
+                <print-button />
                 <Button
                     :class="{
                         'opacity-25': form.processing,
@@ -175,6 +198,8 @@ import FormSlotGroup from "@/Components/FormSlotGroup.vue";
 import InlineData from "@/Components/InlineData.vue";
 import SimpleTable from "@/Components/SimpleTable.vue";
 import TableTd from "@/Components/TableTd.vue";
+import TableTh from "@/Components/TableTh.vue";
+import PrintButton from "@/Components/PrintButton.vue";
 
 export default {
     components: {
@@ -190,6 +215,8 @@ export default {
         InlineData,
         SimpleTable,
         TableTd,
+        TableTh,
+        PrintButton,
     },
     props: {
         moduleAction: String,
@@ -218,16 +245,12 @@ export default {
             },
             editable: false,
             columns1: [
-                { title: "ভর্তিকালীন ফি বিবরণী", align: "left" },
-                { title: "নির্ধারিত ফি", align: "right" },
-                { title: "ছাড়", align: "right" },
-                { title: "শিক্ষার্থীর প্রদেয়", align: "right" },
+                { title: "ভর্তিকালীন প্রদেয়", align: "left" },
+                { title: "নির্ধারিত টাকা", align: "right" },
             ],
             columns2: [
-                { title: "মাসিক ফি বিবরণী", align: "left" },
-                { title: "নির্ধারিত ফি", align: "right" },
-                { title: "ছাড়", align: "right" },
-                { title: "শিক্ষার্থীর প্রদেয়", align: "right" },
+                { title: "মাসিক প্রদেয়", align: "left" },
+                { title: "নির্ধারিত টাকা", align: "right" },
             ],
         };
     },
@@ -261,7 +284,6 @@ export default {
                     fee_name: fee.name,
                     fee_amount: fee.amount,
                     concession: 0,
-                    checked: 0,
                 });
             });
         },
@@ -275,12 +297,10 @@ export default {
 
         dataPushIntoFormFees(option) {
             this.fees[option].forEach((fee) => {
-                if (fee.checked) {
-                    this.form.fees.push({
-                        id: fee.fee_id,
-                        concession: fee.concession,
-                    });
-                }
+                this.form.fees.push({
+                    id: fee.fee_id,
+                    concession: fee.concession,
+                });
             });
         },
     },

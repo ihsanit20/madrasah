@@ -405,7 +405,7 @@
                 </div>
             </div>
             <hr />
-            <div class="text-justify">
+            <div class="whitespace-pre-wrap text-justify">
                 {{ $page.props.settings.studentAgreement }}
             </div>
             <br />

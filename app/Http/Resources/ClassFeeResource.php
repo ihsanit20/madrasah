@@ -21,6 +21,8 @@ class ClassFeeResource extends JsonResource
             'fee'       => new FeeResource($this->whenLoaded('fee') ?? 0),
             'package'   => (Array) (json_decode($this->package) ?? []),
             'amount'    => (double) ($this->amount ?? 0),
+            'name'      => (string) ($this->fee->name ?? ''),
+            'period'    => (int) ($this->fee->period ?? 0),
         ];
     }
 }

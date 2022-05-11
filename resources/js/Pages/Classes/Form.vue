@@ -328,7 +328,7 @@ export default {
                     fee.period === period &&
                     fee.package.includes(packageId)
                 ) {
-                    total += fee.amount;
+                    total += parseInt(fee.amount);
                 }
             });
 

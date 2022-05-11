@@ -22,7 +22,6 @@ class AdmissionResource extends JsonResource
             'studentId'         => (int) ($this->student_id ?? ''),
             'status'            => (int) ($this->status ?? 0),
             'studentName'       => (string) ($this->student->name ?? ''),
-            'payableFees'       => PayableFeeResource::collection($this->whenLoaded('payable_fees')),
             'student'           => new StudentResource($this->whenLoaded('student')),
             'classId'           => (int) ($this->class_id ?? ''),
             'class'             => new ClassesResource($this->class),
@@ -34,6 +33,7 @@ class AdmissionResource extends JsonResource
             'previousResult'    => (string) ($this->previous_result ?? ''),
             'verifications'     => (object) ($this->verifications ?? []),
             'admissionTestMark' => (string) ($this->admission_test_mark ?? ''),
+            'concessions'       => (array) (json_decode($this->concessions ?? '', 1)),
             'verifiedBy'        => (string) ($this->verified_by_admin->name ?? ''),
             'dateOfApplication' => (string) ($this->created_at ? Controller::getHijriDate($this->created_at->format('d-m-Y')) : ''),
         ];

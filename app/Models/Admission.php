@@ -19,12 +19,12 @@ class Admission extends Model
 
     public function scopeStudent($query)
     {
-        $query->whereIn('status', [3]);
+        $query->whereIn('status', [4]);
     }
 
     public function scopeAdmission($query)
     {
-        $query->whereIn('status', [1, 1, 2]);
+        $query->whereIn('status', [1, 2, 3]);
     }
 
     public function verified_by_admin()
@@ -40,10 +40,5 @@ class Admission extends Model
     public function class()
     {
         return $this->belongsTo(Classes::class, 'class_id');
-    }
-
-    public function payable_fees()
-    {
-        return $this->hasMany(PayableFee::class);
     }
 }

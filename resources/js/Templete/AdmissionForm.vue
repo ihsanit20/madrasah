@@ -278,7 +278,7 @@
                     />
                 </div>
             </div>
-            <div class="grid gap-4 print:grid-cols-5 md:grid-cols-5">
+            <div class="flex justify-between gap-4">
                 <div class="col-span-2">
                     <inline-data
                         title="শ্রেণী:"
@@ -291,7 +291,7 @@
                         :value="data.admission.previousRoll"
                     />
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-3">
                     <inline-data
                         title="সর্বশেষ পরীক্ষার অর্জিত ফলাফল:"
                         :value="data.admission.previousResult"

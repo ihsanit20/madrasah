@@ -8,20 +8,8 @@
             >
                 ভর্তির যোগ্যতা যাচাই
             </h2>
-            <div class="grid gap-4 md:grid-cols-2">
-                <div>
-                    <inline-data
-                        title="ফরম নাম্বার:"
-                        :value="data.admission.id"
-                    />
-                </div>
-                <div>
-                    <inline-data
-                        title="ভর্তিচ্ছু বিভাগ/শ্রেণী:"
-                        :value="data.admission.className"
-                    />
-                </div>
-                <div>
+            <div class="grid gap-4 print:grid-cols-2 md:grid-cols-3">
+                <div class="col-span-2">
                     <inline-data
                         title="শিক্ষার্থীর নাম:"
                         :value="data.student.name"
@@ -29,8 +17,20 @@
                 </div>
                 <div>
                     <inline-data
-                        title="অভিভাবকের নাম:"
-                        :value="data.student.guardianInfo.name"
+                        title="ফরম নাম্বার:"
+                        :value="data.admission.id"
+                    />
+                </div>
+                <div class="col-span-2">
+                    <inline-data
+                        title="ভর্তিচ্ছু বিভাগ/শ্রেণী:"
+                        :value="data.admission.className"
+                    />
+                </div>
+                <div>
+                    <inline-data
+                        title="শিক্ষার্থীর ধরন:"
+                        :value="data.student.residentText"
                     />
                 </div>
             </div>

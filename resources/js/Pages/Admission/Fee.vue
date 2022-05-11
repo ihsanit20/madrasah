@@ -54,6 +54,7 @@
                 <simple-table
                     :columns="columns1"
                     :collections="fees.yearlyFees"
+                    :totalRow="true"
                 >
                     <template #header>
                         <table-th
@@ -91,12 +92,32 @@
                                 />
                             </div>
                         </td>
+                    </template>
+                    <template #totalRow>
+                        <table-th class="text-right"> মোট: </table-th>
+                        <table-th class="text-right">
+                            <div class="flex justify-end gap-2">
+                                <del
+                                    v-if="getConcessionTotal('yearlyFees')"
+                                    class="text-gray-400 print:hidden"
+                                >
+                                    {{ getFeeTotal("yearlyFees") }}
+                                </del>
+                                <span>
+                                    {{
+                                        getFeeTotal("yearlyFees") -
+                                        getConcessionTotal("yearlyFees")
+                                    }}
+                                </span>
+                            </div>
+                        </table-th>
                     </template>
                 </simple-table>
 
                 <simple-table
                     :columns="columns2"
                     :collections="fees.monthlyFees"
+                    :totalRow="true"
                 >
                     <template #header>
                         <table-th
@@ -134,6 +155,25 @@
                                 />
                             </div>
                         </td>
+                    </template>
+                    <template #totalRow>
+                        <table-th class="text-right"> মোট: </table-th>
+                        <table-th class="text-right">
+                            <div class="flex justify-end gap-2">
+                                <del
+                                    v-if="getConcessionTotal('monthlyFees')"
+                                    class="text-gray-400 print:hidden"
+                                >
+                                    {{ getFeeTotal("monthlyFees") }}
+                                </del>
+                                <span>
+                                    {{
+                                        getFeeTotal("monthlyFees") -
+                                        getConcessionTotal("monthlyFees")
+                                    }}
+                                </span>
+                            </div>
+                        </table-th>
                     </template>
                 </simple-table>
             </div>
@@ -177,9 +217,8 @@
                         'opacity-25': form.processing,
                     }"
                     :disabled="form.processing"
-                >
-                    {{ buttonValue }}
-                </Button>
+                    v-html="buttonValue"
+                ></Button>
             </div>
         </form>
     </div>
@@ -222,7 +261,7 @@ export default {
         moduleAction: String,
         buttonValue: {
             type: String,
-            default: "সংরক্ষণ করুন",
+            default: "পরবর্তী ধাপ &#8594;",
         },
         data: {
             type: Object,
@@ -279,11 +318,15 @@ export default {
 
         dataPushIntoFeeArray(option) {
             Object.values(this.data[option]).forEach((fee) => {
+                let concession = this.data.admission.concessions.filter(
+                    (item) => item.id === fee.id
+                )[0];
+
                 this.fees[option].push({
                     fee_id: fee.id,
                     fee_name: fee.name,
                     fee_amount: fee.amount,
-                    concession: 0,
+                    concession: concession ? concession.amount : 0,
                 });
             });
         },
@@ -297,11 +340,33 @@ export default {
 
         dataPushIntoFormFees(option) {
             this.fees[option].forEach((fee) => {
-                this.form.fees.push({
-                    id: fee.fee_id,
-                    concession: fee.concession,
-                });
+                if (fee.concession) {
+                    this.form.fees.push({
+                        id: fee.fee_id,
+                        amount: fee.concession,
+                    });
+                }
             });
+        },
+
+        getFeeTotal(option) {
+            let total = 0;
+
+            Object.values(this.fees[option]).forEach((fee) => {
+                total += parseInt(fee.fee_amount);
+            });
+
+            return total;
+        },
+
+        getConcessionTotal(option) {
+            let total = 0;
+
+            Object.values(this.fees[option]).forEach((fee) => {
+                total += parseInt(fee.concession);
+            });
+
+            return total;
         },
     },
 };

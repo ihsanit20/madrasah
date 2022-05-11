@@ -13,11 +13,13 @@
                 </table-td>
                 <table-td class="text-left">
                     <Link
+                        v-if="false"
                         :href="route('students.show', student.id)"
                         class="text-sky-600 hover:underline"
                     >
                         {{ student.name }}
                     </Link>
+                    {{ student.name }}
                 </table-td>
                 <table-td class="text-left">
                     {{ student.registration }}

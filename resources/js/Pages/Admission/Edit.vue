@@ -5,6 +5,11 @@
         <form-component v-if="step === 1" :data="data" module-action="update" />
         <test-component v-if="step === 2" :data="data" module-action="update" />
         <fee-component v-if="step === 3" :data="data" module-action="update" />
+        <complete-component
+            v-if="step === 4"
+            :data="data"
+            module-action="update"
+        />
     </app-layout>
 </template>
 
@@ -14,6 +19,7 @@ import AppLayout from "@/Layouts/App.vue";
 import FormComponent from "./Form.vue";
 import TestComponent from "./Test.vue";
 import FeeComponent from "./Fee.vue";
+import CompleteComponent from "./Complete.vue";
 
 export default {
     components: {
@@ -22,6 +28,7 @@ export default {
         FormComponent,
         TestComponent,
         FeeComponent,
+        CompleteComponent,
     },
 
     created() {

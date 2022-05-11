@@ -32,7 +32,7 @@ class AdmissionController extends Controller
     public function index()
     {
         $collections = Admission::query()
-            ->where('status', '!=', 3)
+            ->admission()
             ->with('student.father_info');
 
         return Inertia::render('Admission/Index', [
@@ -109,6 +109,10 @@ class AdmissionController extends Controller
             );
 
             $admission->update($this->validatedAdmissionData($request, $admission->id));
+
+            return redirect()
+                ->route('admissions.show', $admission->id)
+                ->with('status', 'The record has been update successfully.');
         }
 
         if($request->step == 2) {
@@ -125,47 +129,44 @@ class AdmissionController extends Controller
         }
 
         if($request->step == 3) {
-            PayableFee::where('admission_id', $admission->id)->delete();
+            $admission->update([
+                "completed_by"  => Auth::id(),
+                "concessions"   => json_encode($request->fees),
+                "status"        => 3,
+            ]);
 
-            foreach($request->fees as $fee) {
-                PayableFee::onlyTrashed()->updateOrCreate(
-                    [
-                        'admission_id'  => $admission->id,
-                    ],
-                    [
-                        'fee_id'        => $fee["id"],
-                        'concession'    => $fee["concession"],
-                        'deleted_at'    => null,
-                    ]
-                );
-            }
+            return redirect()
+                ->route('admissions.edit', [$admission->id, 'step=4'])
+                ->with('status', 'The record has been update successfully.');
+            
+        }
+
+        if($request->step == 4) {
 
             $new_roll = $this->getNewClassRoll($admission->class_id);
 
             $admission->update([
                 "roll"      => $new_roll,
-                "status"    => 3,
+                "status"    => 4,
             ]);
 
-            return back();
-            
-            // if($admission->student->status == 2) {
-            //     $current_year = explode("-", $this->getCurrentSession())[0];
+            if($admission->student->status == 2) {
+                $current_year = explode("-", $this->getCurrentSession())[0];
     
-            //     $two_digit_class_code = str_pad($admission->class_id, 2,"0", STR_PAD_LEFT);
+                $two_digit_class_code = str_pad($admission->class_id, 2,"0", STR_PAD_LEFT);
     
-            //     $three_digit_roll = str_pad($new_roll, 3,"0", STR_PAD_LEFT);
+                $three_digit_roll = str_pad($new_roll, 3,"0", STR_PAD_LEFT);
 
-            //     $admission->student()->update([
-            //         "registration"  => $current_year . $two_digit_class_code . $three_digit_roll,
-            //         "status"        => 1,
-            //     ]);
-            // }
+                $admission->student()->update([
+                    "registration"  => $current_year . $two_digit_class_code . $three_digit_roll,
+                    "status"        => 1,
+                ]);
+            }
+
+            return redirect()
+                ->route('students.index')
+                ->with('status', 'The record has been update successfully.');
         }
-
-        return redirect()
-            ->route('admissions.show', $admission->id)
-            ->with('status', 'The record has been update successfully.');
     }
 
     public function destroy(Admission $admission)

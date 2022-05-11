@@ -24,13 +24,11 @@
         <div
             class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
         >
-            <admission-form-templete :data="data" class="min-w-max" />
+            <admission-form-templete :data="data" class="max-w-3xl" />
         </div>
         <div class="flex max-w-3xl items-center justify-end pt-2 print:hidden">
             <Link
-                :href="
-                    route('admissions.edit', data.admission.id) + '?step=2'
-                "
+                :href="route('admissions.edit', data.admission.id) + '?step=2'"
                 class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-3 py-2 text-white"
             >
                 পরবর্তী ধাপ &#8594;

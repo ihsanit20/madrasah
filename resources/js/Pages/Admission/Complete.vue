@@ -8,7 +8,7 @@
             >
                 ভর্তি সম্পন্ন করন
             </h2>
-            <div class="grid gap-4 print:grid-cols-2 md:grid-cols-3">
+            <div class="grid gap-x-2 print:grid-cols-3 md:grid-cols-3">
                 <div class="col-span-2">
                     <inline-data
                         title="শিক্ষার্থীর নাম:"

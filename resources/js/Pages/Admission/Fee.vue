@@ -1,4 +1,7 @@
 <template>
+    <div class="flex justify-end px-4 print:hidden">
+        <print-button />
+    </div>
     <div
         class="w-full max-w-3xl rounded border bg-white p-4 print:rounded-none print:border-0"
     >
@@ -10,7 +13,7 @@
             >
                 প্রদেয় ফি নির্ধারন
             </h2>
-            <div class="grid gap-4 print:grid-cols-2 md:grid-cols-3">
+            <div class="grid gap-x-2 print:grid-cols-3 md:grid-cols-3">
                 <div class="col-span-2">
                     <inline-data
                         title="শিক্ষার্থীর নাম:"
@@ -57,18 +60,32 @@
                     :totalRow="true"
                 >
                     <template #header>
-                        <table-th
+                        <th
+                            class="py-2 px-2 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            ভর্তিকালীন প্রদেয়
+                        </th>
+                        <th
+                            class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            নির্ধারিত টাকা
+                        </th>
+                        <th
+                            class="py-2 pr-3 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:hidden print:text-black md:text-sm"
                             v-if="editable"
-                            class="text-right print:hidden"
                         >
                             ছাড়
-                        </table-th>
+                        </th>
                     </template>
                     <template #default="{ item: fee }">
-                        <table-td class="text-left">
+                        <td
+                            class="whitespace-nowrap py-2 px-2 text-left text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                        >
                             {{ fee.fee_name }}
-                        </table-td>
-                        <table-td class="text-right">
+                        </td>
+                        <td
+                            class="whitespace-nowrap py-2 px-2 text-right text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                        >
                             <div class="flex justify-end gap-2">
                                 <del
                                     v-if="fee.concession"
@@ -84,29 +101,24 @@
                                     }}
                                 </span>
                             </div>
-                        </table-td>
-                        <td class="pr-3 print:hidden" v-if="editable">
+                        </td>
+                        <td class="pr-1.5 print:hidden" v-if="editable">
                             <div class="flex items-center justify-end">
                                 <Input
                                     :disabled="!editable"
                                     type="number"
                                     v-model="fee.concession"
-                                    class="block w-14 px-1 text-right"
+                                    class="block w-14 px-1 py-0.5 text-right"
                                     @input="concessionHandler(fee)"
                                 />
                             </div>
                         </td>
                     </template>
                     <template #totalRow>
-                        <table-th class="text-left">
-                            <div v-if="getConcessionTotal('yearlyFees')">
-                                ছাড়:
-                                {{
-                                    $e2bnumber(getConcessionTotal("yearlyFees"))
-                                }}
-                            </div>
-                        </table-th>
-                        <table-th class="text-right">
+                        <th
+                            colspan="2"
+                            class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
                             <div class="flex justify-end gap-2">
                                 <span>মোট: </span>
                                 <del
@@ -124,10 +136,10 @@
                                     }}
                                 </span>
                             </div>
-                        </table-th>
+                        </th>
                         <th
                             v-if="editable"
-                            class="pr-4 text-right text-rose-500 print:hidden"
+                            class="pr-2 text-right text-rose-500 print:hidden"
                         >
                             {{ getConcessionTotal("yearlyFees") }}
                         </th>
@@ -140,18 +152,32 @@
                     :totalRow="true"
                 >
                     <template #header>
-                        <table-th
+                        <th
+                            class="py-2 px-2 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            মাসিক প্রদেয়
+                        </th>
+                        <th
+                            class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            নির্ধারিত টাকা
+                        </th>
+                        <th
+                            class="py-2 pr-3 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:hidden print:text-black md:text-sm"
                             v-if="editable"
-                            class="text-right print:hidden"
                         >
                             ছাড়
-                        </table-th>
+                        </th>
                     </template>
                     <template #default="{ item: fee }">
-                        <table-td class="text-left">
+                        <td
+                            class="whitespace-nowrap py-2 px-2 text-left text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                        >
                             {{ fee.fee_name }}
-                        </table-td>
-                        <table-td class="text-right">
+                        </td>
+                        <td
+                            class="whitespace-nowrap py-2 px-2 text-right text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                        >
                             <div class="flex justify-end gap-2">
                                 <del
                                     v-if="fee.concession"
@@ -167,31 +193,24 @@
                                     }}
                                 </span>
                             </div>
-                        </table-td>
-                        <td class="pr-3 print:hidden" v-if="editable">
+                        </td>
+                        <td class="pr-1.5 print:hidden" v-if="editable">
                             <div class="flex items-center justify-end">
                                 <Input
                                     :disabled="!editable"
                                     type="number"
                                     v-model="fee.concession"
-                                    class="block w-14 px-1 text-right"
+                                    class="block w-14 px-1 py-0.5 text-right"
                                     @input="concessionHandler(fee)"
                                 />
                             </div>
                         </td>
                     </template>
                     <template #totalRow>
-                        <table-th class="text-left">
-                            <div v-if="getConcessionTotal('monthlyFees')">
-                                ছাড়:
-                                {{
-                                    $e2bnumber(
-                                        getConcessionTotal("monthlyFees")
-                                    )
-                                }}
-                            </div>
-                        </table-th>
-                        <table-th class="text-right">
+                        <th
+                            colspan="2"
+                            class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
                             <div class="flex justify-end gap-2">
                                 <span>মোট: </span>
                                 <del
@@ -211,10 +230,10 @@
                                     }}
                                 </span>
                             </div>
-                        </table-th>
+                        </th>
                         <th
                             v-if="editable"
-                            class="pr-4 text-right text-rose-500 print:hidden"
+                            class="pr-2 text-right text-rose-500 print:hidden"
                         >
                             {{ getConcessionTotal("monthlyFees") }}
                         </th>
@@ -222,9 +241,9 @@
                 </simple-table>
             </div>
 
-            <div class="hidden space-y-4 print:block">
+            <div class="hidden print:block">
                 <h3
-                    class="mt-8 hidden text-center text-2xl font-bold text-sky-600 print:block print:text-black"
+                    class="mt-10 hidden text-center text-2xl font-bold text-sky-600 print:block print:text-black"
                 >
                     অভিভাবকের অঙ্গিকার
                 </h3>
@@ -232,13 +251,13 @@
                     {{ $page.props.settings.guardianAgreement }}
                 </div>
                 <div class="flex justify-between">
-                    <div class="pt-8">
+                    <div class="pt-10">
                         <inline-data
                             title="অভিভাবকের নাম:"
                             :value="data.student.guardianInfo.name"
                         />
                     </div>
-                    <div class="pt-8">
+                    <div class="pt-10">
                         <inline-data title="অভিভাবকের স্বাক্ষর" />
                     </div>
                 </div>
@@ -255,7 +274,6 @@
                 >
                     &#8592; পূর্ববর্তী ধাপ
                 </Link>
-                <print-button />
                 <Button
                     :class="{
                         'opacity-25': form.processing,
@@ -327,14 +345,6 @@ export default {
                 monthlyFees: [],
             },
             editable: false,
-            columns1: [
-                { title: "ভর্তিকালীন প্রদেয়", align: "left" },
-                { title: "নির্ধারিত টাকা", align: "right" },
-            ],
-            columns2: [
-                { title: "মাসিক প্রদেয়", align: "left" },
-                { title: "নির্ধারিত টাকা", align: "right" },
-            ],
         };
     },
     methods: {

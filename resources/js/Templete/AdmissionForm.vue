@@ -4,7 +4,7 @@
         <h2 class="mt-4 mb-2 text-center text-2xl font-bold print:text-black">
             ভর্তির আবেদন ফরম
         </h2>
-        <div class="grid gap-3">
+        <div class="grid gap-2">
             <div class="flex items-center justify-between gap-4">
                 <div>
                     <inline-data
@@ -364,7 +364,7 @@
             </div>
             <hr />
             <h3
-                class="mt-4 mb-2 text-center text-2xl font-bold print:text-black"
+                class="mt-3 mb-2 text-center text-2xl font-bold print:mt-4 print:text-black"
             >
                 দাপ্তরিক কার্যক্রম
             </h3>
@@ -374,7 +374,7 @@
                         title="ভর্তি পরীক্ষার তারিখ (নতুন শিক্ষার্থীর জন্য):"
                     />
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-2 flex justify-end pr-2">
                     <inline-data
                         title="ভর্তি পরীক্ষার ফলাফল:"
                         :value="data.admission.admissionTestMark"
@@ -404,7 +404,12 @@
                     <inline-data title="পরীক্ষকের স্বাক্ষর" />
                 </div>
             </div>
-            <hr />
+            <hr class="print:hidden" />
+            <h3
+                class="mt-3 text-center text-2xl font-bold print:mt-20 print:text-black"
+            >
+                অভিভাবকের অঙ্গিকার
+            </h3>
             <div class="whitespace-pre-wrap text-justify">
                 {{ $page.props.settings.studentAgreement }}
             </div>

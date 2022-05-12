@@ -408,7 +408,7 @@
             <h3
                 class="mt-3 text-center text-2xl font-bold print:mt-20 print:text-black"
             >
-                অভিভাবকের অঙ্গিকার
+                শিক্ষার্থীর অঙ্গিকার
             </h3>
             <div class="whitespace-pre-wrap text-justify">
                 {{ $page.props.settings.studentAgreement }}

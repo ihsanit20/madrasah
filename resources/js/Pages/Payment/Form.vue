@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full max-w-2xl rounded border bg-white p-4 shadow">
+    <div class="w-full max-w-lg rounded border bg-white p-4 shadow">
         <validation-errors />
 
         <h2
@@ -8,7 +8,7 @@
             টাকা জমার রশিদ
         </h2>
 
-        <div class="grid gap-2 md:grid-cols-3">
+        <div class="grid gap-x-1 md:grid-cols-3">
             <div class="col-span-2">
                 <inline-data title="তারিখ:" :value="$e2bnumber(data.date)" />
             </div>
@@ -36,9 +36,99 @@
                     :value="$e2bnumber(data.admission.student.registration)"
                 />
             </div>
+            <div class="col-span-2">
+                <inline-data title="বাবদ:" :value="data.periodText" />
+            </div>
+            <div v-if="data.month">
+                <inline-data title="মাস:" :value="data.month" />
+            </div>
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="my-2">
+            <table
+                class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700 print:divide-black"
+            >
+                <thead class="bg-gray-300 dark:bg-gray-700">
+                    <tr>
+                        <th
+                            class="py-2 px-2 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            ক্রম
+                        </th>
+                        <th
+                            class="py-2 px-2 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            ফি বিবরণী
+                        </th>
+                        <th
+                            class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            নির্ধারিত টাকা
+                        </th>
+                    </tr>
+                </thead>
+                <tr
+                    v-for="(fee, index) in form.fees"
+                    :key="index"
+                    class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                    <td
+                        class="whitespace-nowrap py-2 px-2 text-left text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                    >
+                        {{ $e2bnumber(index + 1) }}
+                    </td>
+                    <td
+                        class="whitespace-nowrap py-2 px-2 text-left text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                    >
+                        {{ fee.name }}
+                    </td>
+                    <td
+                        class="whitespace-nowrap py-2 px-2 text-right text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                    >
+                        {{ fee.amount }}
+                    </td>
+                </tr>
+                <tr>
+                    <th
+                        colspan="3"
+                        class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                    >
+                        <div class="flex justify-end gap-2">
+                            <span>মোট প্রদেয়:</span>
+                            <span>{{ getFeeTotal() }}</span>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th
+                        colspan="3"
+                        class="py-1 text-right text-xs font-bold uppercase tracking-wider text-green-600 dark:text-gray-400 print:text-black md:text-sm"
+                    >
+                        <div class="flex items-center justify-end gap-1">
+                            <span>জমা:</span>
+                            <Input
+                                type="number"
+                                v-model="form.paid"
+                                class="block w-16 px-1 py-0.5 text-right"
+                            />
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th
+                        colspan="3"
+                        class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-gray-400 print:text-black md:text-sm"
+                    >
+                        <div class="flex justify-end gap-2">
+                            <span>বাকী:</span>
+                            <span>
+                                {{ getFeeTotal() - form.paid }}
+                            </span>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+
             <div class="mt-4 flex items-center justify-between">
                 <Link
                     :href="route('payments.create')"
@@ -95,7 +185,9 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
+                paid: "",
                 admission_id: "",
+                fees: this.data.fees,
             }),
         };
     },
@@ -134,6 +226,15 @@ export default {
                     this.form.total += fee.payableAmount;
                 }
             });
+        },
+        getFeeTotal() {
+            let total = 0;
+
+            Object.values(this.form.fees).forEach((fee) => {
+                total += parseInt(fee.amount);
+            });
+
+            return total;
         },
     },
 };

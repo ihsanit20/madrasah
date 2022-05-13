@@ -373,11 +373,11 @@ export default {
         dataPushIntoFeeArray(option) {
             Object.values(this.data[option]).forEach((fee) => {
                 let concession = this.data.admission.concessions.filter(
-                    (item) => item.id === fee.id
+                    (item) => item.id === fee.feeId
                 )[0];
 
                 this.fees[option].push({
-                    fee_id: fee.id,
+                    fee_id: fee.feeId,
                     fee_name: fee.name,
                     fee_amount: fee.amount,
                     concession: concession ? concession.amount : 0,

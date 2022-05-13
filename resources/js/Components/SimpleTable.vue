@@ -46,6 +46,7 @@
 
                                 <slot
                                     :item="item"
+                                    :index="index"
                                     v-if="
                                         !(
                                             filterRowName &&

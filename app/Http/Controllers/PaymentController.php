@@ -49,21 +49,31 @@ class PaymentController extends Controller
     public function create()
     {
         AdmissionResource::withoutWrapping();
+        ClassesResource::withoutWrapping();
 
-        if(request()->admission && request()->period) {
+        $periods = Fee::getPeriod();
+
+        $period = request()->period ?? null;
+
+        $periodText = in_array($period, array_keys($periods)) ? $periods[$period] : "";
+
+        $admission = Admission::query()
+            ->with('student')
+            ->current()
+            ->student()
+            ->find(request()->admission);
+        
+        if($admission && $periodText) {
             return Inertia::render('Payment/Create', [
                 'data' => [
-                    'admission'     => new AdmissionResource(Admission::find(request()->admission)),
-                    'admissionId'   => request()->admission,
-                    'period'        => request()->period,
-                    'periodText'    => Fee::getPeriodText(request()->period),
+                    'admission'     => new AdmissionResource($admission),
+                    'period'        => $period,
+                    'periodText'    => $periodText,
                     'date'          => $this->getHijriDate(),
+                    'fees'          => $this->getAvailableFee($admission, $period),
                 ],
             ]);
         }
-
-        AdmissionResource::withoutWrapping();
-        ClassesResource::withoutWrapping();
 
         $admissions = Admission::query()
             ->current()
@@ -77,8 +87,46 @@ class PaymentController extends Controller
             'data' => [
                 'admissions'    => AdmissionResource::collection($admissions),
                 'classes'       => ClassesResource::collection($classes),
+                'periods'       => $periods,
             ],
         ]);
+    }
+
+    protected function getAvailableFee($admission, $period)
+    {
+        ClassFeeResource::withoutWrapping();
+
+        $resident = $admission->student->resident ?? 0;
+        $resident = in_array($resident, [1, 2, 3, 4]) ? $resident : 0;
+
+        $class_fees = ClassFee::query()
+            ->where('class_id', $admission->class_id)
+            ->whereHas('fee', function($query) use ($period) {
+                $query->where('period', $period);
+            })
+            ->get();
+
+        if($resident) {
+            $class_fees = $class_fees->filter(function ($class_fee) use ($resident) {
+                return in_array($resident, json_decode($class_fee->package));
+            });
+        }
+
+        $concessions = collect(json_decode($admission->concessions, true));
+
+        foreach($class_fees as $class_fee) {
+            $concession = $concessions->where('id', $class_fee->fee_id)->first();
+
+            $concession_amount = $concession ? $concession['amount'] : 0;
+
+            $final_amount = $class_fee->amount - $concession_amount;
+
+            $class_fee->amount = $final_amount > 0 ? $final_amount : 0;
+        }
+
+        $class_fees = $class_fees->where('amount', '>', 0);
+
+        return ClassFeeResource::collection($class_fees);
     }
 
     public function store(Request $request)

@@ -12,8 +12,13 @@
                             required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
-                            <option :value="1">ভর্তিকালীন প্রদেয়</option>
-                            <option :value="2">মাসিক প্রদেয়</option>
+                            <option
+                                v-for="(periodText, period) in data.periods"
+                                :key="period"
+                                :value="period"
+                            >
+                                {{ periodText }}
+                            </option>
                         </Select>
                     </form-group>
                     <form-group class="" label="রেজি. নং">

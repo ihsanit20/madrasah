@@ -32,8 +32,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('yearly-payments', [PaymentController::class, 'yearly'])->name('payments.yearly');
     Route::get('monthly-payments', [PaymentController::class, 'monthly'])->name('payments.monthly');
-
-    Route::get('payments/new', [PaymentController::class, 'new'])->name('payments.new');
     
     Route::resources([
         'fees'          => FeeController::class,
@@ -46,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'staff'         => StaffController::class,
         'designations'  => DesignationController::class,
         'notices'       => NoticeController::class,
+        'payments'      => PaymentController::class,
     ]);
 
 });

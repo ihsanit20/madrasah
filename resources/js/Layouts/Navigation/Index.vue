@@ -114,8 +114,8 @@
                     </span>
                 </nav-link>
                 <nav-link
-                    :href="route('payments.new')"
-                    :active="route().current('payments.new')"
+                    :href="route('payments.create')"
+                    :active="route().current('payments.create')"
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />

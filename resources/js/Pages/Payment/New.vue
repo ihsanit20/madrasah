@@ -6,7 +6,11 @@
             <form @submit.prevent="submit" class="mt-6">
                 <div class="grid gap-4 md:grid-cols-2">
                     <form-group class="" label="জমার রশিদ ধরণ">
-                        <Select class="block w-full" v-model="period" required>
+                        <Select
+                            class="block w-full"
+                            v-model="form.period"
+                            required
+                        >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option :value="1">ভর্তিকালীন প্রদেয়</option>
                             <option :value="2">মাসিক প্রদেয়</option>
@@ -85,16 +89,20 @@ export default {
     },
     data() {
         return {
-            period: "",
+            form: this.$inertia.form({
+                admission: "",
+                period: "",
+            }),
             classId: "",
             roll: "",
             registration: "",
-            admissionId: "",
         };
     },
     methods: {
         submit() {
-            return this.admission;
+            if (this.form.admission && this.form.period) {
+                return this.form.get(this.route("payments.create"));
+            }
         },
         registrationHandler() {
             let selectedAdmission = Object.values(this.data.admissions).filter(
@@ -106,34 +114,33 @@ export default {
             if (selectedAdmission) {
                 this.roll = selectedAdmission.roll;
                 this.classId = selectedAdmission.classId;
-                this.admissionId = selectedAdmission.id;
+                this.form.admission = selectedAdmission.id;
             } else {
                 this.roll = "";
                 this.classId = "";
-                this.admissionId = "";
+                this.form.admission = "";
             }
         },
         classOrRollHandler() {
-            if (this.classId && this.roll) {
-                let selectedAdmission = Object.values(
-                    this.data.admissions
-                ).filter((admission) => {
-                    return (
-                        admission.classId == this.classId &&
-                        admission.roll == this.roll
-                    );
-                })[0];
+            let selectedAdmission = null;
 
-                if (selectedAdmission) {
-                    this.registration = selectedAdmission.student.registration;
-                    this.admissionId = selectedAdmission.id;
-                } else {
-                    this.registration = "";
-                    this.admissionId = "";
-                }
+            if (this.classId && this.roll) {
+                selectedAdmission = Object.values(this.data.admissions).filter(
+                    (admission) => {
+                        return (
+                            admission.classId == this.classId &&
+                            admission.roll == this.roll
+                        );
+                    }
+                )[0];
+            }
+
+            if (selectedAdmission) {
+                this.registration = selectedAdmission.student.registration;
+                this.form.admission = selectedAdmission.id;
             } else {
                 this.registration = "";
-                this.admissionId = "";
+                this.form.admission = "";
             }
         },
     },

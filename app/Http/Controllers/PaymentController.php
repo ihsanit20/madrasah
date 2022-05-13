@@ -11,6 +11,7 @@ use App\Http\Resources\StudentResource;
 use App\Models\Admission;
 use App\Models\Classes;
 use App\Models\ClassFee;
+use App\Models\Fee;
 use App\Models\HijriMonth;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
@@ -45,8 +46,22 @@ class PaymentController extends Controller
         return $this->index(2);
     }
 
-    public function new()
+    public function create()
     {
+        AdmissionResource::withoutWrapping();
+
+        if(request()->admission && request()->period) {
+            return Inertia::render('Payment/Create', [
+                'data' => [
+                    'admission'     => new AdmissionResource(Admission::find(request()->admission)),
+                    'admissionId'   => request()->admission,
+                    'period'        => request()->period,
+                    'periodText'    => Fee::getPeriodText(request()->period),
+                    'date'          => $this->getHijriDate(),
+                ],
+            ]);
+        }
+
         AdmissionResource::withoutWrapping();
         ClassesResource::withoutWrapping();
 
@@ -66,17 +81,9 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return $this->data(new Payment());
-        return Inertia::render('Payment/Create', [
-            'data' => $this->data(new Payment())
-        ]);
-    }
-
     public function store(Request $request)
     {
-        // return $request;
+        return $request;
 
         $payment = Payment::create(
             $this->validatedData($request) + [

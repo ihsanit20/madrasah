@@ -22,7 +22,7 @@
                 ভর্তির ফরম
             </card>
             <card
-                :href="route('payments.new')"
+                :href="route('payments.create')"
                 :counter="data.counter.payments"
             >
                 টাকা জমার রশিদ

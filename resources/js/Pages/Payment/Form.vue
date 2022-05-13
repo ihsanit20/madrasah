@@ -1,156 +1,51 @@
 <template>
     <div class="w-full max-w-2xl rounded border bg-white p-4 shadow">
-        <validation-errors class="mb-4" />
+        <validation-errors />
 
-        <letter-head />
+        <h2
+            class="mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+        >
+            টাকা জমার রশিদ
+        </h2>
 
-        <form @submit.prevent="submit" class="mt-6">
-            <div class="grid gap-4 md:grid-cols-2">
-                <form-group class="" label="জমার রশিদ ধরণ">
-                    <Select
-                        @change="setFeeForAdmission"
-                        class="block w-full"
-                        v-model="form.period"
-                        required
-                    >
-                        <option value="">-- নির্বাচন করুন --</option>
-                        <option :value="1">ভর্তিকালীন প্রদেয়</option>
-                        <option :value="2">মাসিক প্রদেয়</option>
-                    </Select>
-                </form-group>
-                <form-group class="" label="তারিখ">
-                    <Select
-                        disabled="true"
-                        class="block w-full"
-                        v-model="form.date"
-                    >
-                        <option :value="data.date.value">
-                            {{ data.date.label }}
-                        </option>
-                    </Select>
-                </form-group>
-                <form-group
-                    v-if="form.period"
-                    class="col-start-1"
-                    label="শিক্ষার্থীর নাম"
-                >
-                    <Select
-                        required
-                        class="block w-full"
-                        v-model="form.admission_id"
-                        @change="setFeeForAdmission"
-                    >
-                        <option value="">-- নির্বাচন করুন --</option>
-                        <option
-                            v-for="(student, index) in data.students"
-                            :key="index"
-                            :value="student.currentAdmissionId"
-                        >
-                            {{ student.name }}
-                        </option>
-                    </Select>
-                </form-group>
-                <form-group v-if="form.period" class="" label="Reg No.">
-                    <Select
-                        required
-                        class="block w-full"
-                        v-model="form.admission_id"
-                        @change="setFeeForAdmission"
-                    >
-                        <option value="">-- নির্বাচন করুন --</option>
-                        <option
-                            v-for="(student, index) in data.students"
-                            :key="index"
-                            :value="student.currentAdmissionId"
-                        >
-                            {{ student.registration }}
-                        </option>
-                    </Select>
-                </form-group>
-                <form-group v-if="form.period" class="" label="ক্লাস/বিভাগ">
-                    <Select
-                        required
-                        class="block w-full"
-                        v-model="form.admission_id"
-                        @change="setFeeForAdmission"
-                    >
-                        <option value="">-- নির্বাচন করুন --</option>
-                        <option
-                            v-for="(student, index) in data.students"
-                            :key="index"
-                            :value="student.currentAdmissionId"
-                        >
-                            {{ student.currentClassName }}
-                        </option>
-                    </Select>
-                </form-group>
-                <form-group v-if="form.period" class="" label="রোল">
-                    <Select
-                        required
-                        class="block w-full"
-                        v-model="form.admission_id"
-                        @change="setFeeForAdmission"
-                    >
-                        <option value="">-- নির্বাচন করুন --</option>
-                        <option
-                            v-for="(student, index) in data.students"
-                            :key="index"
-                            :value="student.currentAdmissionId"
-                        >
-                            {{ student.currentClassRoll }}
-                        </option>
-                    </Select>
-                </form-group>
-
-                <div
-                    v-if="form.period && form.admission_id"
-                    class="col-span-full border"
-                >
-                    <div
-                        v-for="(fee, index) in form.fees"
-                        :key="index"
-                        class="flex items-center justify-between border-b"
-                    >
-                        <div class="shrink grow p-3">
-                            {{ fee.title }}
-                        </div>
-                        <div
-                            class="w-24 shrink-0 grow-0 border-l p-3 text-right"
-                        >
-                            {{ fee.amount }}
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between border-b">
-                        <div class="shrink grow p-3 text-right">মোট</div>
-                        <div
-                            class="w-24 shrink-0 grow-0 border-l p-3 text-right"
-                        >
-                            {{ form.total }}
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between border-b">
-                        <div class="shrink grow p-3 text-right">জমা</div>
-                        <div class="w-24 shrink-0 grow-0 border-l">
-                            <input
-                                type="number"
-                                v-model="form.paid"
-                                class="block w-full border-0 p-3 text-right"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="shrink grow p-3 text-right">বাকি</div>
-                        <div
-                            class="w-24 shrink-0 grow-0 border-l p-3 text-right"
-                        >
-                            {{ form.total - form.paid }}
-                        </div>
-                    </div>
-                </div>
+        <div class="grid gap-2 md:grid-cols-3">
+            <div class="col-span-2">
+                <inline-data title="তারিখ:" :value="$e2bnumber(data.date)" />
             </div>
+            <div class="col-span-2">
+                <inline-data
+                    title="শ্রেণী:"
+                    :value="data.admission.className"
+                />
+            </div>
+            <div>
+                <inline-data
+                    title="রোল:"
+                    :value="$e2bnumber(data.admission.roll)"
+                />
+            </div>
+            <div class="col-span-2">
+                <inline-data
+                    title="শিক্ষার্থীর নাম:"
+                    :value="data.admission.student.name"
+                />
+            </div>
+            <div>
+                <inline-data
+                    title="রেজি. নং:"
+                    :value="$e2bnumber(data.admission.student.registration)"
+                />
+            </div>
+        </div>
 
-            <div class="mt-4 flex items-center justify-end">
+        <form @submit.prevent="submit">
+            <div class="mt-4 flex items-center justify-between">
+                <Link
+                    :href="route('payments.create')"
+                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                >
+                    &#8592; পূর্ববর্তী ধাপ
+                </Link>
                 <Button
                     class=""
                     :class="{ 'opacity-25': form.processing }"
@@ -171,6 +66,8 @@ import Select from "@/Components/Select.vue";
 import FormGroup from "@/Components/FormGroup.vue";
 import Textarea from "@/Components/Textarea.vue";
 import LetterHead from "@/Templete/LetterHead.vue";
+import { Link } from "@inertiajs/inertia-vue3";
+import InlineData from "@/Components/InlineData.vue";
 
 export default {
     components: {
@@ -181,6 +78,8 @@ export default {
         FormGroup,
         Textarea,
         LetterHead,
+        Link,
+        InlineData,
     },
     props: {
         moduleAction: String,
@@ -193,18 +92,10 @@ export default {
             default: {},
         },
     },
-    created() {
-        this.form.date = this.data.date.value;
-    },
     data() {
         return {
             form: this.$inertia.form({
-                date: "",
                 admission_id: "",
-                period: "",
-                fees: [],
-                total: 0,
-                paid: "",
             }),
         };
     },

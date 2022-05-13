@@ -26,6 +26,11 @@ class Fee extends Model
         return self::$periods;
     }
 
+    public static function getPeriodText($period)
+    {
+        return self::$periods[$period];
+    }
+
     public function getPeriodNameAttribute()
     {
         return self::getPeriod()[$this->period] ?? '';

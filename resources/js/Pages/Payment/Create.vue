@@ -1,7 +1,7 @@
 <template>
     <Head title="টাকা জমার রশিদ" />
 
-    <app-layout pageTitle="টাকা জমার রশিদ">
+    <app-layout>
         <form-component :data="data" module-action="store" />
     </app-layout>
 </template>

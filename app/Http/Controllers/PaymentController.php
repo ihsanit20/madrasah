@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AdmissionResource;
+use App\Http\Resources\ClassesResource;
+use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\PaymentResource;
 use App\Http\Resources\StudentResource;
+use App\Models\Admission;
+use App\Models\Classes;
+use App\Models\ClassFee;
 use App\Models\HijriMonth;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
@@ -15,10 +21,11 @@ use Inertia\Inertia;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index($period = null)
     {
         $collections = Payment::query()
-            ->with('admission');
+            ->with('admission')
+            ->period($period);
 
         return Inertia::render('Payment/Index', [
             'data' => [
@@ -28,9 +35,40 @@ class PaymentController extends Controller
         ]);
     }
 
+    public function yearly()
+    {
+        return $this->index(1);
+    }
+
+    public function monthly()
+    {
+        return $this->index(2);
+    }
+
+    public function new()
+    {
+        AdmissionResource::withoutWrapping();
+        ClassesResource::withoutWrapping();
+
+        $admissions = Admission::query()
+            ->current()
+            ->student()
+            ->get();
+
+        $classes = Classes::query()
+            ->get();
+
+        return Inertia::render('Payment/New', [
+            'data' => [
+                'admissions'    => AdmissionResource::collection($admissions),
+                'classes'       => ClassesResource::collection($classes),
+            ],
+        ]);
+    }
+
     public function create()
     {
-        // return $this->data(new Payment());
+        return $this->data(new Payment());
         return Inertia::render('Payment/Create', [
             'data' => $this->data(new Payment())
         ]);
@@ -94,38 +132,22 @@ class PaymentController extends Controller
 
     protected function data($payment)
     {
-        StudentResource::withoutWrapping();
+        AdmissionResource::withoutWrapping();
 
         $current_session = $this->getCurrentSession();
 
-        $students = Student::query()
-            ->with('current_admission.payable_fees')
-            ->whereHas('admissions', function($query) use ($current_session) {
-                $query->where('session', $current_session);
-            })
+        $admissions = Admission::query()
+            ->with('class.class_fees')
             ->student()
+            ->where('session', $current_session)
             ->get();
 
-        $today = date("d-m-Y");
-
-        $response = Http::get("https://api.aladhan.com/v1/gToH?date={$today}");
-
-        $response = $response->object();
-
-        $current_day = $response->data->hijri->day;
-
-        $current_month = $response->data->hijri->month;
-
-        $current_month->bn = HijriMonth::find($current_month->number)->bengali ?? $current_month->en;
-
-        $current_year = $response->data->hijri->year;
-
         return [
-            'payment'   => $this->formatedData($payment),
-            'students'  => StudentResource::collection($students),
+            'payment'       => $this->formatedData($payment),
+            'admissions'    => AdmissionResource::collection($admissions),
             'date'      => [
-                "value" => "{$current_year}-{$current_month->number}-{$current_day}",
-                "label" => "{$current_day} {$current_month->bn} {$current_year}",
+                "value" => "",
+                "label" => "",
             ]
         ];
     }

@@ -16,6 +16,13 @@ class Payment extends Model
         'period_name',
     ];
 
+    public function scopePeriod($query, $period = null)
+    {
+        return $period
+            ? $query->where('period', $period)
+            : $query;
+    }
+
     public function getPeriodNameAttribute()
     {
         return Fee::getPeriod()[$this->period] ?? '';

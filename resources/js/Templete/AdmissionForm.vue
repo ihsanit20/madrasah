@@ -406,7 +406,7 @@
             </div>
             <hr class="print:hidden" />
             <h3
-                class="mt-3 text-center text-2xl font-bold print:mt-20 print:text-black"
+                class="mt-3 text-center text-2xl font-bold print:mt-28 print:text-black"
             >
                 শিক্ষার্থীর অঙ্গিকার
             </h3>

@@ -29,13 +29,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('settings/home-page', [SettingController::class, 'homePage'])->name('settings.home-page');
     Route::get('settings/{setting}/edit', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
+
+    Route::get('yearly-payments', [PaymentController::class, 'yearly'])->name('payments.yearly');
+    Route::get('monthly-payments', [PaymentController::class, 'monthly'])->name('payments.monthly');
+
+    Route::get('payments/new', [PaymentController::class, 'new'])->name('payments.new');
     
     Route::resources([
         'fees'          => FeeController::class,
         'classes'       => ClassesController::class,
         'students'      => StudentController::class,
         'admissions'    => AdmissionController::class,
-        'payments'      => PaymentController::class,
         'expenses'      => ExpenseController::class,
         'categories'    => CategoryController::class,
         'admins'        => AdminController::class,

@@ -17,14 +17,21 @@ class Admission extends Model
         return json_decode($value, true);
     }
 
+    public function scopeCurrent($query)
+    {
+        $current_session = "43-44";
+
+        return $query->where('session', $current_session);
+    }
+
     public function scopeStudent($query)
     {
-        $query->whereIn('status', [4]);
+        return $query->whereIn('status', [4]);
     }
 
     public function scopeAdmission($query)
     {
-        $query->whereIn('status', [1, 2, 3]);
+        return $query->whereIn('status', [1, 2, 3]);
     }
 
     public function verified_by_admin()

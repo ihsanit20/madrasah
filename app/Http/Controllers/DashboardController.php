@@ -24,8 +24,8 @@ class DashboardController extends Controller
             "admissions"    => Admission::admission()->count(),
             "notices"       => Notice::count(),
             "admins"        => User::count(),
-            "payments"      => Payment::count(),
             "expenses"      => Expense::count(),
+            "payments"      => Payment::count(),
         ];
 
         return Inertia::render('Dashboard/Index', [

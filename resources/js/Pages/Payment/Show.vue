@@ -2,16 +2,11 @@
     <Head title="Payment" />
 
     <app-layout>
-        <div class="flex max-w-3xl items-center justify-end print:hidden">
-            <div
-                class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
-            >
-                টাকা জমার রশিদ
-            </div>
+        <div class="flex max-w-lg items-center justify-end print:hidden">
             <print-button />
         </div>
 
-        <payment-templete :data="data" class="max-w-3xl" />
+        <payment-templete :data="data" class="max-w-lg" />
     </app-layout>
 </template>
 

@@ -8,6 +8,7 @@
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="space-y-4">
+            <letter-head :photoFrame="true" />
             <h2
                 class="mt-4 mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
             >
@@ -301,6 +302,7 @@ import SimpleTable from "@/Components/SimpleTable.vue";
 import TableTd from "@/Components/TableTd.vue";
 import TableTh from "@/Components/TableTh.vue";
 import PrintButton from "@/Components/PrintButton.vue";
+import LetterHead from "@/Templete/LetterHead.vue";
 
 export default {
     components: {
@@ -318,6 +320,7 @@ export default {
         TableTd,
         TableTh,
         PrintButton,
+        LetterHead,
     },
     props: {
         moduleAction: String,

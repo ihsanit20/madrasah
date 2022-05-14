@@ -17,16 +17,16 @@ use App\Models\Payment;
 use App\Models\PaymentDetail;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class PaymentController extends Controller
 {
-    public function index($period = null)
+    public function index()
     {
         $collections = Payment::query()
-            ->with('admission')
-            ->period($period);
+            ->with('admission');
 
         return Inertia::render('Payment/Index', [
             'data' => [
@@ -49,13 +49,22 @@ class PaymentController extends Controller
     public function create()
     {
         AdmissionResource::withoutWrapping();
+
         ClassesResource::withoutWrapping();
 
+        $purposes = Fee::getPurpose();
+        
         $periods = Fee::getPeriod();
 
-        $period = request()->period ?? null;
+        $purpose = request()->purpose ?? null;
+        
+        $purpose_array = in_array($purpose, array_keys($purposes)) ? $purposes[$purpose] : "";
 
-        $periodText = in_array($period, array_keys($periods)) ? $periods[$period] : "";
+        $purpose_text = $purpose_array["title"] ?? "";
+        
+        $period = $purpose_array["period"] ?? null;
+        
+        $period_text = in_array($period, array_keys($periods)) ? $periods[$period] : "";
 
         $admission = Admission::query()
             ->with('student')
@@ -63,12 +72,12 @@ class PaymentController extends Controller
             ->student()
             ->find(request()->admission);
         
-        if($admission && $periodText) {
+        if($admission && $purpose) {
             return Inertia::render('Payment/Create', [
                 'data' => [
                     'admission'     => new AdmissionResource($admission),
-                    'period'        => $period,
-                    'periodText'    => $periodText,
+                    'purpose'       => $purpose,
+                    'purposeText'   => $purpose_text,
                     'date'          => $this->getHijriDate(),
                     'fees'          => $this->getAvailableFee($admission, $period),
                 ],
@@ -88,6 +97,8 @@ class PaymentController extends Controller
                 'admissions'    => AdmissionResource::collection($admissions),
                 'classes'       => ClassesResource::collection($classes),
                 'periods'       => $periods,
+                'purposes'      => $purposes,
+                'registration'  => request()->registration ?? '',
             ],
         ]);
     }
@@ -131,11 +142,12 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
 
         $payment = Payment::create(
             $this->validatedData($request) + [
-                'due' => $request->total - $request->paid
+                'due'       => $request->total - $request->paid,
+                'user_id'   => Auth::id(),
             ]
         );
 
@@ -232,15 +244,16 @@ class PaymentController extends Controller
                 'required',
                 'numeric',
             ],
-            'period' => [
+            'purpose' => [
                 'required',
                 'numeric',
             ],
             'total' => [
                 'required',
             ],
-            'paid' => [],
-            'due' => [],
+            'paid' => [
+                'required',
+            ],
         ]);
     }
 
@@ -255,7 +268,8 @@ class PaymentController extends Controller
                         "payment_id" => $payment->id,
                     ],
                     [
-                        "title"         => $item["title"],
+                        "fee_id"        => $item["feeId"],
+                        "title"         => $item["name"],
                         "amount"        => $item["amount"],
                         "deleted_at"    => null,
                     ]

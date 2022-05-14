@@ -15,6 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('admission_id')->index();
             $table->string('date');
             $table->unsignedTinyInteger('period');

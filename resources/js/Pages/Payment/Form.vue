@@ -37,10 +37,7 @@
                 />
             </div>
             <div class="col-span-2">
-                <inline-data title="বাবদ:" :value="data.periodText" />
-            </div>
-            <div v-if="data.month">
-                <inline-data title="মাস:" :value="data.month" />
+                <inline-data title="বাবদ:" :value="data.purposeText" />
             </div>
         </div>
 
@@ -110,6 +107,7 @@
                                 type="number"
                                 v-model="form.paid"
                                 class="block w-16 px-1 py-0.5 text-right"
+                                required
                             />
                         </div>
                     </th>
@@ -128,6 +126,30 @@
                     </th>
                 </tr>
             </table>
+
+            <hr />
+
+            <div
+                class="col-span-full space-y-1 rounded-md border border-dashed border-gray-300 p-3"
+            >
+                <label class="flex items-center gap-2">
+                    <Input
+                        type="checkbox"
+                        name="declaration"
+                        :value="1"
+                        :checked="declaration == '1'"
+                        v-model="declaration"
+                        @change="diclarationByAdmin"
+                        required
+                    />
+                    <span>
+                        আমি এই আবেদনকারীর দেওয়া সমস্ত তথ্য যাচাই করেছি
+                    </span>
+                </label>
+                <div>
+                    <inline-data title="আদায়কারী:" :value="verifiedBy" />
+                </div>
+            </div>
 
             <div class="mt-4 flex items-center justify-between">
                 <Link
@@ -182,17 +204,28 @@ export default {
             default: {},
         },
     },
+    created() {
+        this.form.admission_id = this.data.admission.id;
+        this.form.purpose = this.data.purpose;
+        this.form.date = this.data.date;
+    },
     data() {
         return {
+            verifiedBy: this.$page.props.auth.user.name,
             form: this.$inertia.form({
-                paid: "",
                 admission_id: "",
+                purpose: "",
+                date: "",
+                total: "",
+                paid: "",
                 fees: this.data.fees,
             }),
         };
     },
     methods: {
         submit() {
+            this.form.total = this.getFeeTotal();
+
             if (this.moduleAction == "store") {
                 return this.form.post(this.route("payments.store"));
             }
@@ -201,31 +234,6 @@ export default {
                     this.route("payments.update", this.data.payment.id)
                 );
             }
-        },
-        setFeeForAdmission() {
-            this.form.total = 0;
-            this.form.fees = [];
-
-            if (!this.form.admission_id || !this.form.period) {
-                return;
-            }
-
-            let selectedStudent = Object.values(this.data.students).filter(
-                (student) => {
-                    return student.currentAdmissionId == this.form.admission_id;
-                }
-            )[0];
-
-            selectedStudent.currentAdmission.payableFees.forEach((fee) => {
-                if (fee.period == this.form.period) {
-                    this.form.fees.push({
-                        title: fee.feeName,
-                        amount: fee.payableAmount,
-                    });
-
-                    this.form.total += fee.payableAmount;
-                }
-            });
         },
         getFeeTotal() {
             let total = 0;

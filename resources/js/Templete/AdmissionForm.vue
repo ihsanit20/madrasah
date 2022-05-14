@@ -408,11 +408,16 @@
             <h3
                 class="mt-3 text-center text-2xl font-bold print:mt-28 print:text-black"
             >
-                শিক্ষার্থীর অঙ্গিকার
+                শিক্ষার্থীর অঙ্গীকার
             </h3>
+            <div>
+                আমি <b>{{ data.admission.studentName }}</b> অত্র মাদরাসায় ভর্তি
+                হতে ইচ্ছুক। আমি মনে প্রাণে অঙ্গীকার করছি যে,
+            </div>
             <div class="whitespace-pre-wrap text-justify">
                 {{ $page.props.settings.studentAgreement }}
             </div>
+            <br />
             <br />
             <div class="flex items-center justify-between gap-4">
                 <div>

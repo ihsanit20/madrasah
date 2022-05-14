@@ -13,19 +13,21 @@ class Payment extends Model
     protected $guarded = [];
 
     protected $appends = [
-        'period_name',
+        'purpose_text',
     ];
 
-    public function scopePeriod($query, $period = null)
+    public function scopePurpose($query, $purpose = null)
     {
-        return $period
-            ? $query->where('period', $period)
+        return $purpose
+            ? $query->where('purpose', $purpose)
             : $query;
     }
 
-    public function getPeriodNameAttribute()
+    public function getPurposeTextAttribute()
     {
-        return Fee::getPeriod()[$this->period] ?? '';
+        $purpose_array = Fee::getPurpose()[$this->purpose] ?? [];
+
+        return $purpose_array["title"];
     }
 
     public function admission()
@@ -36,5 +38,10 @@ class Payment extends Model
     public function payment_details()
     {
         return $this->hasMany(PaymentDetail::class);
+    }
+
+    public function collector()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

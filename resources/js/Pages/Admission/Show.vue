@@ -22,7 +22,7 @@
             </div>
         </div>
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="max-w-3xl rounded border bg-white print:border-0"
         >
             <admission-form-templete :data="data" class="max-w-3xl" />
         </div>

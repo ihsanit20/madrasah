@@ -1,10 +1,7 @@
 <template>
     <Head title="টাকা জমার রশিদ" />
 
-    <app-layout
-        pageTitle="টাকা জমার রশিদ"
-        :addNewHref="route('payments.create')"
-    >
+    <app-layout pageTitle="টাকা জমার রশিদ">
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
@@ -16,37 +13,20 @@
                         :href="route('payments.show', payment.id)"
                         class="text-sky-600 hover:underline"
                     >
-                        {{ payment.id }}
+                        {{ $e2bnumber(payment.id) }}
                     </Link>
                 </table-td>
                 <table-td class="text-left">
-                    <div
-                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
-                    >
-                        {{ payment.admission.studentName }}
-                        <b>({{ payment.admission.student.registration }})</b>
-                    </div>
+                    {{ payment.admission.studentName }}
+                </table-td>
+                <table-td class="text-left">
+                    {{ $e2bnumber(payment.admission.roll) }}
+                </table-td>
+                <table-td class="text-left">
+                    {{ payment.admission.className }}
                 </table-td>
                 <table-td class="text-right">
-                    <div
-                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
-                    >
-                        {{ payment.total }} TK
-                    </div>
-                </table-td>
-                <table-td class="text-right">
-                    <div
-                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
-                    >
-                        {{ payment.paid }} TK
-                    </div>
-                </table-td>
-                <table-td class="text-right">
-                    <div
-                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
-                    >
-                        {{ payment.due }} TK
-                    </div>
+                    {{ $e2bnumber(payment.paid) }} TK
                 </table-td>
             </template>
         </simple-table>
@@ -84,9 +64,9 @@ export default {
             columns: [
                 { title: "রশিদ নং", align: "left" },
                 { title: "শিক্ষার্থী", align: "left" },
-                { title: "মোট", align: "right" },
+                { title: "রোল", align: "left" },
+                { title: "ক্লাস", align: "left" },
                 { title: "জমা", align: "right" },
-                { title: "বকেয়া", align: "right" },
             ],
         };
     },

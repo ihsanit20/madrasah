@@ -25,7 +25,6 @@
                         type="text"
                         class="block w-full"
                         v-model="form.password"
-                        required
                     />
                 </form-group>
             </div>

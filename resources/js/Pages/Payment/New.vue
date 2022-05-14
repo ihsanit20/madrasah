@@ -1,36 +1,16 @@
 <template>
     <Head title="নতুন রশিদ" />
 
-    <app-layout pageTitle="নতুন রশিদ">
-        <div class="w-full max-w-2xl rounded border bg-white p-4 shadow">
-            <form @submit.prevent="submit" class="mt-6">
-                <div class="grid gap-4 md:grid-cols-2">
-                    <form-group class="" label="জমার রশিদ ধরণ">
-                        <Select
-                            class="block w-full"
-                            v-model="form.period"
-                            required
-                        >
-                            <option value="">-- নির্বাচন করুন --</option>
-                            <option
-                                v-for="(periodText, period) in data.periods"
-                                :key="period"
-                                :value="period"
-                            >
-                                {{ periodText }}
-                            </option>
-                        </Select>
-                    </form-group>
-                    <form-group class="" label="রেজি. নং">
-                        <Input
-                            class="block w-full"
-                            type="Number"
-                            v-model="registration"
-                            @input="registrationHandler"
-                            required
-                        />
-                    </form-group>
-                    <form-group class="col-start-1" label="ক্লাস">
+    <app-layout>
+        <div class="w-full max-w-lg rounded border bg-white p-4 shadow">
+            <h2
+                class="mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+            >
+                টাকা জমার রশিদ
+            </h2>
+            <form @submit.prevent="submit" class="">
+                <div class="grid gap-4 md:grid-cols-3">
+                    <form-group class="col-span-2" label="ক্লাস">
                         <Select
                             class="block w-full"
                             v-model="classId"
@@ -55,6 +35,42 @@
                             @input="classOrRollHandler"
                             required
                         />
+                    </form-group>
+                    <form-group class="col-span-2" label="শিক্ষার্থীর নাম">
+                        <Input
+                            class="block w-full"
+                            type="text"
+                            disabled
+                            v-model="studentName"
+                        />
+                    </form-group>
+                    <form-group class="" label="রেজি. নং">
+                        <Input
+                            class="block w-full"
+                            type="Number"
+                            v-model="registration"
+                            @input="registrationHandler"
+                            required
+                        />
+                    </form-group>
+                    <form-group
+                        class="col-span-full"
+                        label="বাবদ নির্বাচন করুন"
+                    >
+                        <Select
+                            class="block w-full"
+                            v-model="form.purpose"
+                            required
+                        >
+                            <option value="">-- নির্বাচন করুন --</option>
+                            <option
+                                v-for="(purpose, index) in data.purposes"
+                                :key="index"
+                                :value="index"
+                            >
+                                {{ purpose.title }}
+                            </option>
+                        </Select>
                     </form-group>
                 </div>
                 <div class="mt-4 flex items-center justify-end">
@@ -92,20 +108,25 @@ export default {
             default: {},
         },
     },
+    created() {
+        this.registration = this.data.registration;
+        this.registrationHandler();
+    },
     data() {
         return {
             form: this.$inertia.form({
                 admission: "",
-                period: "",
+                purpose: "",
             }),
             classId: "",
             roll: "",
+            studentName: "",
             registration: "",
         };
     },
     methods: {
         submit() {
-            if (this.form.admission && this.form.period) {
+            if (this.form.admission && this.form.purpose) {
                 return this.form.get(this.route("payments.create"));
             }
         },
@@ -120,10 +141,12 @@ export default {
                 this.roll = selectedAdmission.roll;
                 this.classId = selectedAdmission.classId;
                 this.form.admission = selectedAdmission.id;
+                this.studentName = selectedAdmission.studentName;
             } else {
                 this.roll = "";
                 this.classId = "";
                 this.form.admission = "";
+                this.studentName = "";
             }
         },
         classOrRollHandler() {
@@ -143,9 +166,11 @@ export default {
             if (selectedAdmission) {
                 this.registration = selectedAdmission.student.registration;
                 this.form.admission = selectedAdmission.id;
+                this.studentName = selectedAdmission.studentName;
             } else {
                 this.registration = "";
                 this.form.admission = "";
+                this.studentName = "";
             }
         },
     },

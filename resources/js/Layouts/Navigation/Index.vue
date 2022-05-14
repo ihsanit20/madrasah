@@ -88,32 +88,6 @@
             </span>
             <template #items>
                 <nav-link
-                    :href="route('payments.yearly')"
-                    :active="route().current('payments.yearly')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        ভর্তিকালীন রশিদ
-                    </span>
-                </nav-link>
-                <nav-link
-                    :href="route('payments.monthly')"
-                    :active="route().current('payments.monthly')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        মাসিক রশিদ
-                    </span>
-                </nav-link>
-                <nav-link
                     :href="route('payments.create')"
                     :active="route().current('payments.create')"
                     class="flex items-center gap-2 md:gap-4"
@@ -124,6 +98,19 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         নতুন রশিদ
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('payments.index')"
+                    :active="route().current('payments.index')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        রশিদ তালিকা
                     </span>
                 </nav-link>
             </template>

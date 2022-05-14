@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-end px-4 print:hidden">
+    <div class="flex w-full max-w-3xl justify-end print:hidden">
         <print-button />
     </div>
     <div

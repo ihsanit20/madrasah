@@ -240,6 +240,7 @@ class PaymentController extends Controller
                 'required',
             ],
             'paid' => [],
+            'due' => [],
         ]);
     }
 

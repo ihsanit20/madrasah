@@ -16,6 +16,8 @@ class Student extends Model
     protected $appends = [
         'gender_text',
         'guardian_type',
+        'payment_purpose',
+        'due',
     ];
     
     protected $casts = [
@@ -52,6 +54,28 @@ class Student extends Model
     public function getResidentTextAttribute()
     {
         return self::getResidentArrayData()[$this->resident] ?? '';
+    }
+
+    public function getPaymentPurposeAttribute()
+    {
+        $admission_id = $this->current_admission->id ?? '';
+
+        return Payment::query()
+            ->where('admission_id', $admission_id)
+            ->pluck('purpose')
+            ->toArray();
+    }
+
+    public function getDueAttribute()
+    {
+        $admission_id = $this->current_admission->id ?? '';
+
+        $last_payment = Payment::query()
+            ->where('admission_id', $admission_id)
+            ->latest()
+            ->first();
+
+        return $last_payment->due ?? 0;
     }
 
     public function getGuardianTypeAttribute()

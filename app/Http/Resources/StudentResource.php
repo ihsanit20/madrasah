@@ -44,6 +44,8 @@ class StudentResource extends JsonResource
             'currentAdmissionId'    => (int) ($this->current_admission->id ?? 0),
             'currentClassName'      => (string) ($this->current_admission->class->name ?? ''),
             'currentClassRoll'      => (int) ($this->current_admission->roll ?? ''),
+            'paidPurpose'           => (array) ($this->payment_purpose ?? []),
+            'due'                   => (double) ($this->due ?? 0),
         ];
     }
 }

@@ -25,6 +25,9 @@
                 <table-td class="text-left">
                     {{ payment.admission.className }}
                 </table-td>
+                <table-td class="text-left">
+                    {{ payment.purposeText }}
+                </table-td>
                 <table-td class="text-right">
                     {{ $e2bnumber(payment.paid) }} TK
                 </table-td>
@@ -66,6 +69,7 @@ export default {
                 { title: "শিক্ষার্থী", align: "left" },
                 { title: "রোল", align: "left" },
                 { title: "ক্লাস", align: "left" },
+                { title: "বাবদ", align: "left" },
                 { title: "জমা", align: "right" },
             ],
         };

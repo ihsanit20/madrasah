@@ -133,15 +133,7 @@
                 class="col-span-full space-y-1 rounded-md border border-dashed border-gray-300 p-3"
             >
                 <label class="flex items-center gap-2">
-                    <Input
-                        type="checkbox"
-                        name="declaration"
-                        :value="1"
-                        :checked="declaration == '1'"
-                        v-model="declaration"
-                        @change="diclarationByAdmin"
-                        required
-                    />
+                    <Input type="checkbox" name="declaration" required />
                     <span>
                         আমি এই আবেদনকারীর দেওয়া সমস্ত তথ্য যাচাই করেছি
                     </span>
@@ -208,6 +200,19 @@ export default {
         this.form.admission_id = this.data.admission.id;
         this.form.purpose = this.data.purpose;
         this.form.date = this.data.date;
+
+        this.form.fees = this.data.fees;
+
+        if (this.data.admission.student.due) {
+            this.form.fees.unshift({
+                id: 1,
+                classId: 1,
+                feeId: 0,
+                amount: this.data.admission.student.due,
+                name: "পূর্বের বকেয়া",
+                period: 2,
+            });
+        }
     },
     data() {
         return {
@@ -218,7 +223,7 @@ export default {
                 date: "",
                 total: "",
                 paid: "",
-                fees: this.data.fees,
+                fees: [],
             }),
         };
     },

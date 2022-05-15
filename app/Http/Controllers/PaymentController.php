@@ -7,18 +7,15 @@ use App\Http\Resources\AdmissionResource;
 use App\Http\Resources\ClassesResource;
 use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\PaymentResource;
-use App\Http\Resources\StudentResource;
 use App\Models\Admission;
 use App\Models\Classes;
 use App\Models\ClassFee;
 use App\Models\Fee;
-use App\Models\HijriMonth;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
-use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class PaymentController extends Controller
@@ -142,8 +139,6 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-        // return $request;
-
         $payment = Payment::create(
             $this->validatedData($request) + [
                 'due'       => $request->total - $request->paid,
@@ -247,6 +242,9 @@ class PaymentController extends Controller
             'purpose' => [
                 'required',
                 'numeric',
+                Rule::unique(Payment::class, 'purpose')
+                    ->where('admission_id', $request->admission_id)
+                    ->ignore($id),
             ],
             'total' => [
                 'required',

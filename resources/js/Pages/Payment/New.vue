@@ -67,9 +67,13 @@
                                 v-for="(purpose, index) in data.purposes"
                                 :key="index"
                                 :value="index"
-                            >
-                                {{ purpose.title }}
-                            </option>
+                                :disabled="paidPurpose.includes(Number(index))"
+                                v-html="
+                                    (paidPurpose.includes(Number(index))
+                                        ? '&#x2713; '
+                                        : '') + purpose.title
+                                "
+                            ></option>
                         </Select>
                     </form-group>
                 </div>
@@ -122,6 +126,7 @@ export default {
             roll: "",
             studentName: "",
             registration: "",
+            paidPurpose: [],
         };
     },
     methods: {
@@ -142,12 +147,16 @@ export default {
                 this.classId = selectedAdmission.classId;
                 this.form.admission = selectedAdmission.id;
                 this.studentName = selectedAdmission.studentName;
+                this.paidPurpose = selectedAdmission.student.paidPurpose;
             } else {
                 this.roll = "";
                 this.classId = "";
                 this.form.admission = "";
                 this.studentName = "";
+                this.paidPurpose = "";
             }
+
+            this.form.purpose = "";
         },
         classOrRollHandler() {
             let selectedAdmission = null;
@@ -167,11 +176,15 @@ export default {
                 this.registration = selectedAdmission.student.registration;
                 this.form.admission = selectedAdmission.id;
                 this.studentName = selectedAdmission.studentName;
+                this.paidPurpose = selectedAdmission.student.paidPurpose;
             } else {
                 this.registration = "";
                 this.form.admission = "";
                 this.studentName = "";
+                this.paidPurpose = "";
             }
+
+            this.form.purpose = "";
         },
     },
 };

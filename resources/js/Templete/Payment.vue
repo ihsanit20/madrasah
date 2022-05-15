@@ -136,7 +136,7 @@
                 <div
                     class="flex items-center justify-between px-3 font-semibold print:text-sm"
                 >
-                    <div class="shrink grow text-right">বকেয়া:</div>
+                    <div class="shrink grow text-right">বাকী:</div>
                     <div class="w-16 shrink-0 grow-0 text-right">
                         {{ $e2bnumber(data.payment.due) }}
                     </div>

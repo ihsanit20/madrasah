@@ -148,7 +148,9 @@ export default {
                 this.classId = selectedAdmission.classId;
                 this.form.admission = selectedAdmission.id;
                 this.studentName = selectedAdmission.studentName;
-                this.paidPurpose = selectedAdmission.student.paidPurpose;
+                this.paidPurpose = selectedAdmission.student.paidPurpose.map(
+                    (purpose) => Number(purpose)
+                );
             } else {
                 this.roll = "";
                 this.classId = "";
@@ -177,7 +179,9 @@ export default {
                 this.registration = selectedAdmission.student.registration;
                 this.form.admission = selectedAdmission.id;
                 this.studentName = selectedAdmission.studentName;
-                this.paidPurpose = selectedAdmission.student.paidPurpose;
+                this.paidPurpose = selectedAdmission.student.paidPurpose.map(
+                    (purpose) => Number(purpose)
+                );
             } else {
                 this.registration = "";
                 this.form.admission = "";

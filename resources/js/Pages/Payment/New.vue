@@ -82,6 +82,7 @@
                 </div>
             </form>
         </div>
+        {{ paidPurpose }}
     </app-layout>
 </template>
 

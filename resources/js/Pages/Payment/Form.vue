@@ -130,16 +130,17 @@
             <hr />
 
             <div
-                class="col-span-full space-y-1 rounded-md border border-dashed border-gray-300 p-3"
+                class="col-span-full space-y-2 rounded-md border border-dashed border-gray-300 p-3"
             >
                 <label class="flex items-center gap-2">
                     <Input type="checkbox" name="declaration" required />
-                    <span>
-                        আমি এই আবেদনকারীর দেওয়া সমস্ত তথ্য যাচাই করেছি
+                    <span class="-mb-1 text-sm">
+                        আমি শিক্ষার্থী/অভিভাবকের কাছ থেকে উপরোক্ত পরিমাণ টাকা
+                        বুঝে পেয়েছি।
                     </span>
                 </label>
                 <div>
-                    <inline-data title="আদায়কারী:" :value="verifiedBy" />
+                    <inline-data title="গ্রহিতার নাম:" :value="verifiedBy" />
                 </div>
             </div>
 

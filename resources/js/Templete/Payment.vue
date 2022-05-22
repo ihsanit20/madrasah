@@ -2,14 +2,16 @@
     <div class="bg-white p-4 print:py-0">
         <div class="relative">
             <div class="mx-auto flex items-center justify-center gap-4">
-                <application-logo class="w-14" />
-                <div class="flex flex-col items-center justify-end space-y-1">
+                <application-logo class="w-14 print:w-12" />
+                <div
+                    class="flex flex-col items-center justify-end space-y-1 print:space-y-0"
+                >
                     <h1
-                        class="text-2xl font-bold text-blue-900 print:text-xl print:text-black"
+                        class="text-2xl font-bold text-blue-900 print:text-lg print:text-black"
                     >
                         {{ $page.props.settings.siteName }}
                     </h1>
-                    <p class="text-[11px] print:text-[9px] print:text-black">
+                    <p class="text-[11px] print:text-[8px] print:text-black">
                         {{ $page.props.settings.siteAddress }}
                     </p>
                 </div>
@@ -85,7 +87,7 @@
                 </span>
             </div>
             <div class="flex items-center justify-center gap-4 py-1">
-                <div>
+                <div class="print:text-sm">
                     <inline-data
                         title="বাবদ:"
                         :value="data.payment.purposeText"
@@ -107,17 +109,31 @@
                 <div
                     v-for="(fee, index) in data.payment.details"
                     :key="index"
-                    class="flex items-center justify-between px-3 pt-1"
+                    class="flex items-center justify-between px-3 pt-1 print:text-black"
                     :class="{ 'bg-gray-100': index % 2 }"
                 >
-                    <div class="w-10 shrink-0 grow-0 print:text-xs">
+                    <div
+                        class="w-10 shrink-0 grow-0 print:text-xs print:text-black"
+                    >
                         {{ $e2bnumber(index + 1).padStart(2, $e2bnumber(0)) }}.
                     </div>
-                    <div class="shrink grow text-left print:text-xs">
+                    <div
+                        class="shrink grow text-left print:text-xs print:text-black"
+                    >
                         {{ fee.title }}
                     </div>
                     <div class="w-24 shrink-0 grow-0 text-right print:text-xs">
-                        {{ $e2bnumber(fee.amount) }}
+                        <div class="flex items-center justify-end gap-2">
+                            <span
+                                v-if="fee.concession"
+                                class="text-gray-400 line-through print:text-black"
+                            >
+                                {{ $e2bnumber(fee.amount + fee.concession) }}
+                            </span>
+                            <span class="print:text-black">{{
+                                $e2bnumber(fee.amount)
+                            }}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -158,7 +174,7 @@
                     class="my-1 border border-b-0 border-gray-400 print:border-black"
                 ></div>
 
-                <div class="py-1 print:text-xs">
+                <div class="py-1 print:text-[10px]">
                     আমি শিক্ষার্থী/অভিভাবকের কাছ থেকে উপরোক্ত পরিমাণ টাকা বুঝে
                     পেয়েছি ।
                 </div>

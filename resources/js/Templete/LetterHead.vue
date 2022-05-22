@@ -3,10 +3,12 @@
         <div class="mx-auto flex items-center justify-center gap-4">
             <application-logo class="w-16" />
             <div class="flex flex-col items-center justify-end space-y-1">
-                <h1 class="text-3xl font-bold text-blue-900 print:text-black">
+                <h1
+                    class="text-3xl font-bold text-blue-900 print:text-2xl print:text-black"
+                >
                     {{ $page.props.settings.siteName }}
                 </h1>
-                <p class="text-sm print:text-black">
+                <p class="text-sm print:text-[11px] print:text-black">
                     {{ $page.props.settings.siteAddress }}
                 </p>
             </div>

@@ -14,6 +14,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 balooda2: '"Baloo Da 2"',
+                "noto-sans-bengali": '"Noto Sans Bengali"',
             },
             animation: {
                 "marquee-40": 'marquee 40s linear infinite',

@@ -130,6 +130,8 @@ class PaymentController extends Controller
             $final_amount = $class_fee->amount - $concession_amount;
 
             $class_fee->amount = $final_amount > 0 ? $final_amount : 0;
+
+            $class_fee->concession = $concession_amount;
         }
 
         $class_fees = $class_fees->where('amount', '>', 0);
@@ -269,6 +271,7 @@ class PaymentController extends Controller
                         "fee_id"        => $item["feeId"],
                         "title"         => $item["name"],
                         "amount"        => $item["amount"],
+                        "concession"    => $item["concession"],
                         "deleted_at"    => null,
                     ]
                 );

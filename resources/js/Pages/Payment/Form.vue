@@ -82,7 +82,12 @@
                     <td
                         class="whitespace-nowrap py-2 px-2 text-right text-xs font-medium text-gray-900 dark:text-white md:text-sm"
                     >
-                        {{ fee.amount }}
+                        <div class="flex items-center justify-end gap-2">
+                            <del v-if="fee.concession" class="text-gray-400">
+                                {{ fee.amount + fee.concession }}
+                            </del>
+                            <span>{{ fee.amount }}</span>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -210,6 +215,7 @@ export default {
                 classId: 1,
                 feeId: 0,
                 amount: this.data.admission.student.due,
+                concession: 0,
                 name: "পূর্বের বকেয়া",
                 period: 2,
             });

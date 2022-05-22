@@ -15,10 +15,11 @@ class PaymentDetailResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id"        => (int) ($this->id),
-            "title"     => (string) ($this->title ?? ''),
-            "amount"    => (double) ($this->amount ?? 0),
-            "paymentId" => (int) ($this->payment_id ?? 0),
+            "id"            => (int) ($this->id),
+            "title"         => (string) ($this->title ?? ''),
+            "amount"        => (double) ($this->amount ?? 0),
+            "concession"    => (double) ($this->concession ?? 0),
+            "paymentId"     => (int) ($this->payment_id ?? 0),
         ];
     }
 }

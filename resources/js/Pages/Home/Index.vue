@@ -82,66 +82,6 @@
                                 </h3>
                             </Link>
                         </li>
-                        <li
-                            class="py-3"
-                            v-if="Object.keys(data.notices).length < 4"
-                        >
-                            <Link href="#" class="block">
-                                <p class="text-xl font-bold text-orange-500">
-                                    22 Apr 2020
-                                </p>
-                                <h3 class="line-clamp-2">
-                                    বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি
-                                    জনপদের নাম। এ দেশ তথ্য গোটা ভারত উপমহাদেশের
-                                    আছে একটি গৌরবোজ্জ্বল অতীত।
-                                </h3>
-                            </Link>
-                        </li>
-                        <li
-                            class="py-3"
-                            v-if="Object.keys(data.notices).length < 3"
-                        >
-                            <Link href="#" class="block">
-                                <p class="text-xl font-bold text-orange-500">
-                                    22 Apr 2020
-                                </p>
-                                <h3 class="line-clamp-2">
-                                    বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি
-                                    জনপদের নাম। এ দেশ তথ্য গোটা ভারত উপমহাদেশের
-                                    আছে একটি গৌরবোজ্জ্বল অতীত।
-                                </h3>
-                            </Link>
-                        </li>
-                        <li
-                            class="py-3"
-                            v-if="Object.keys(data.notices).length < 2"
-                        >
-                            <Link href="#" class="block">
-                                <p class="text-xl font-bold text-orange-500">
-                                    21 Apr 2020
-                                </p>
-                                <h3 class="line-clamp-2">
-                                    বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি
-                                    জনপদের নাম। এ দেশ তথ্য গোটা ভারত উপমহাদেশের
-                                    আছে একটি গৌরবোজ্জ্বল অতীত।
-                                </h3>
-                            </Link>
-                        </li>
-                        <li
-                            class="py-3"
-                            v-if="Object.keys(data.notices).length < 1"
-                        >
-                            <Link href="#" class="block">
-                                <p class="text-xl font-bold text-orange-500">
-                                    20 Apr 2020
-                                </p>
-                                <h3 class="line-clamp-1">
-                                    বাংলাদেশ, প্রায় শতকরা ৯০ ভাগ মুসলমানের একটি
-                                    জনপদের নাম। এ দেশ তথ্য গোটা ভারত উপমহাদেশের
-                                    আছে একটি গৌরবোজ্জ্বল অতীত।
-                                </h3>
-                            </Link>
-                        </li>
                     </ul>
                 </div>
                 <div class="">

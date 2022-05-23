@@ -2,6 +2,7 @@ require('./bootstrap');
 
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
+import axios from 'axios';
 import { createApp, h } from 'vue';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -21,6 +22,18 @@ createInertiaApp({
                         return position.replace(/[0-9]/g, function (w) {
                             return bengali[+w];
                         });
+                    },
+                    $date2hijri(date = '') {
+                        const result = async (date) => {
+                            return await axios.get(`/api/date-to-hijri-date/${date}`)
+                        }
+                        
+                        result(date)
+                            .then((res) => {
+                                date = res.data;
+                            })
+                        
+                        return date;
                     },
                 } 
             })

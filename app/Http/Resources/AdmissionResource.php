@@ -35,7 +35,7 @@ class AdmissionResource extends JsonResource
             'admissionTestMark' => (string) ($this->admission_test_mark ?? ''),
             'concessions'       => (array) (json_decode($this->concessions ?? '', 1)),
             'verifiedBy'        => (string) ($this->verified_by_admin->name ?? ''),
-            'dateOfApplication' => (string) ($this->created_at ? Controller::getHijriDate($this->created_at->format('d-m-Y')) : ''),
+            'dateOfApplication' => (string) ($this->created_at ? $this->created_at->format('d-m-Y') : ''),
         ];
     }
 }

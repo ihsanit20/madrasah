@@ -423,7 +423,11 @@
                 <div>
                     <inline-data
                         title="আবেদনের তারিখ:"
-                        :value="$e2bnumber(data.admission.dateOfApplication)"
+                        :value="
+                            $e2bnumber(
+                                $date2hijri(data.admission.dateOfApplication)
+                            )
+                        "
                     />
                 </div>
                 <div>

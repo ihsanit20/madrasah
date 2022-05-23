@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        
+        $settings = Setting::get();
 
         return array_merge(parent::share($request), [
             'auth' => [
@@ -43,18 +43,17 @@ class HandleInertiaRequests extends Middleware
             ],
             'request' => $request,
             'settings' => [
-                'siteName' => $this->getSettingValueByProperty('site-name'),
-                'siteAddress' => $this->getSettingValueByProperty('site-address'),
-                'studentAgreement' => $this->getSettingValueByProperty('student-agreement'),
-                'guardianAgreement' => $this->getSettingValueByProperty('guardian-agreement'),
+                'siteName' => $this->getSettingValueByProperty($settings, 'site-name'),
+                'siteAddress' => $this->getSettingValueByProperty($settings, 'site-address'),
+                'studentAgreement' => $this->getSettingValueByProperty($settings, 'student-agreement'),
+                'guardianAgreement' => $this->getSettingValueByProperty($settings, 'guardian-agreement'),
             ]
         ]);
     }
 
-    protected function getSettingValueByProperty($property)
+    protected function getSettingValueByProperty($settings, $property)
     {
-        $setting = Setting::property($property)->first();
-
+        $setting = $settings->where('key', $property)->first();
 
         return $setting
             ? ($setting->value ?? $setting->dummy) 

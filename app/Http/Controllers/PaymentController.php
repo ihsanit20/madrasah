@@ -60,11 +60,13 @@ class PaymentController extends Controller
         $purpose_text = $purpose_array["title"] ?? "";
         
         $period = $purpose_array["period"] ?? null;
-        
-        $period_text = in_array($period, array_keys($periods)) ? $periods[$period] : "";
 
         $admission = Admission::query()
-            ->with('student')
+            ->with([
+                'class',
+                'student',
+                'verified_by_admin',
+            ])
             ->current()
             ->student()
             ->find(request()->admission);
@@ -82,11 +84,17 @@ class PaymentController extends Controller
         }
 
         $admissions = Admission::query()
+            ->with([
+                'class',
+                'student',
+                'verified_by_admin',
+            ])
             ->current()
             ->student()
             ->get();
 
         $classes = Classes::query()
+            ->with('teacher')
             ->get();
 
         return Inertia::render('Payment/New', [

@@ -22,8 +22,6 @@ class ClassesResource extends JsonResource
             'staffId'       => (int) ($this->staff_id ?? 0),
             'teacherId'     => (int) ($this->staff_id ?? 0),
             'teacherName'   => (string) ($this->teacher->name ?? ''),
-            'totalSubject'  => (int) ($this->total_subject ?? 0),
-            'totalFee'      => (int) ($this->total_fee ?? 0),
             'totalStudent'  => (int) ($this->total_student ?? 0),
             'subjects'      => SubjectResource::collection($this->whenLoaded('subjects')),
             'fees'          => FeeResource::collection($this->whenLoaded('fees')),

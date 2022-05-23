@@ -14,6 +14,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -47,3 +48,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/merge/admission-date/{password}', function($password) {
+    if($password == 313) {
+        $admissions = \App\Models\Admission::query()
+            ->whereNull('application_date')
+            ->take(10)
+            ->get();
+
+        foreach($admissions as $admission) {
+            $admission->update([
+                'application_date' => Http::get(url("/api/date-to-hijri-date/{$admission->created_at->format('d-m-Y')}"))
+            ]);
+        }
+
+        return \App\Models\Admission::query()
+            ->whereNull('application_date')
+            ->count();
+    }
+
+    return 420;
+});

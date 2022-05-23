@@ -25,12 +25,6 @@
                 <table-td class="text-center">
                     {{ $e2bnumber(classes.totalStudent) }}
                 </table-td>
-                <table-td class="text-center">
-                    {{ $e2bnumber(classes.totalSubject) }}
-                </table-td>
-                <table-td class="text-center">
-                    {{ $e2bnumber(classes.totalFee) }}
-                </table-td>
             </template>
         </data-table>
     </app-layout>
@@ -68,8 +62,6 @@ export default {
                 { title: "ক্লাস কোড", align: "center" },
                 { title: "ক্লাস/বিভাগের নাম", align: "left" },
                 { title: "শিক্ষাথী সংখ্যা", align: "center" },
-                { title: "বিষয়", align: "center" },
-                { title: "ফি সমুহ", align: "center" },
             ],
         };
     },

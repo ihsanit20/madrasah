@@ -23,16 +23,6 @@ class Classes extends Model
         return $this->id;
     }
 
-    public function getTotalSubjectAttribute()
-    {
-        return $this->subjects()->count();
-    }
-
-    public function getTotalFeeAttribute()
-    {
-        return $this->fees()->count();
-    }
-
     public function getTotalStudentAttribute()
     {
         return $this->students()->count();

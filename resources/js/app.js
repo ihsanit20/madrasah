@@ -23,18 +23,6 @@ createInertiaApp({
                             return bengali[+w];
                         });
                     },
-                    $date2hijri(date = '') {
-                        const result = async (date) => {
-                            return await axios.get(`/api/date-to-hijri-date/${date}`)
-                        }
-                        
-                        result(date)
-                            .then((res) => {
-                                date = res.data;
-                            })
-                        
-                        return date;
-                    },
                 } 
             })
             .mount(el);

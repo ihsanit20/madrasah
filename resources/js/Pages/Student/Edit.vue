@@ -2,7 +2,8 @@
     <Head title="শিক্ষার্থী" />
 
     <app-layout pageTitle="শিক্ষার্থীর তথ্য ‍সম্পাদনা">
-        <form-component :data="data" module-action="update" />
+        <fee-component v-if="step === 'fee'" :data="data" module-action="update" />
+        <form-component v-else :data="data" module-action="update" />
     </app-layout>
 </template>
 
@@ -10,18 +11,24 @@
 import { Head } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/App.vue";
 import FormComponent from "./Form.vue";
+import FeeComponent from "./Fee.vue";
 
 export default {
     components: {
         Head,
         AppLayout,
         FormComponent,
+        FeeComponent,
     },
 
     props: {
         data: {
             type: Object,
             default: {},
+        },
+        step: {
+            type: String,
+            default: '',
         },
     },
 };

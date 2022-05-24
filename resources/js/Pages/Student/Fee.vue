@@ -23,13 +23,13 @@
                 </div>
                 <div>
                     <inline-data
-                        title="ফরম নাম্বার:"
-                        :value="data.admission.id"
+                        title="রেজি. নং:"
+                        :value="data.student.registration"
                     />
                 </div>
                 <div class="col-span-2">
                     <inline-data
-                        title="ভর্তিচ্ছু বিভাগ/শ্রেণী:"
+                        title="বিভাগ/শ্রেণী:"
                         :value="data.admission.className"
                     />
                 </div>
@@ -55,11 +55,7 @@
             </div>
 
             <div class="grid gap-4 print:grid-cols-2 md:grid-cols-2">
-                <simple-table
-                    :columns="columns1"
-                    :collections="fees.yearlyFees"
-                    :totalRow="true"
-                >
+                <simple-table :collections="fees.yearlyFees" :totalRow="true">
                     <template #header>
                         <th
                             class="py-2 px-2 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
@@ -147,11 +143,7 @@
                     </template>
                 </simple-table>
 
-                <simple-table
-                    :columns="columns2"
-                    :collections="fees.monthlyFees"
-                    :totalRow="true"
-                >
+                <simple-table :collections="fees.monthlyFees" :totalRow="true">
                     <template #header>
                         <th
                             class="py-2 px-2 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
@@ -266,22 +258,15 @@
 
             <hr class="print:hidden" />
 
-            <div class="flex items-center justify-between print:hidden">
-                <Link
-                    :href="
-                        route('admissions.edit', data.admission.id) + '?step=2'
-                    "
-                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
-                >
-                    &#8592; পূর্ববর্তী ধাপ
-                </Link>
+            <div class="flex items-center justify-end print:hidden">
                 <Button
                     :class="{
                         'opacity-25': form.processing,
                     }"
                     :disabled="form.processing"
-                    v-html="buttonValue"
-                ></Button>
+                >
+                    Save
+                </Button>
             </div>
         </form>
     </div>
@@ -340,7 +325,7 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                step: 3,
+                step: "fee",
                 fees: [],
             }),
             fees: {
@@ -356,7 +341,7 @@ export default {
                 this.updateFeeData();
 
                 return this.form.put(
-                    this.route("admissions.update", this.data.admission.id)
+                    this.route("students.update", this.data.student.id)
                 );
             }
         },

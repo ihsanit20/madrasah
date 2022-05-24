@@ -100,7 +100,7 @@
 
             <template #items>
                 <nav-link
-                    :href="route('expenses.create')"
+                    :href="route('expenses.index')"
                     :active="route().current('expenses.create')"
                     class="flex items-center gap-2 md:gap-4"
                 >

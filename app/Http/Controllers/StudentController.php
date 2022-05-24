@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AdmissionResource;
 use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassesResource;
+use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
 use App\Http\Resources\StudentResource;
@@ -13,11 +14,13 @@ use App\Models\Address;
 use App\Models\Admission;
 use App\Models\Area;
 use App\Models\Classes;
+use App\Models\ClassFee;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Guardian;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -71,18 +74,67 @@ class StudentController extends Controller
 
     public function edit(Student $student)
     {
+        if(request()->step == 'fee') {
+            AdmissionResource::withoutWrapping();
+
+            $admission = $student->current_admission()->first();
+
+            return Inertia::render('Student/Edit', [
+                'data'  => [
+                    'student'       => $this->formatedData($student),
+                    'admission'     => new AdmissionResource($admission),
+                    'yearlyFees'    => $this->getClassFee($admission->class_id, 1, $student->resident),
+                    'monthlyFees'   => $this->getClassFee($admission->class_id, 2, $student->resident),
+                ],
+                'step'  => 'fee',
+            ]);
+        }
+
         return Inertia::render('Student/Edit', [
             'data' => $this->data($student)
         ]);
     }
 
+    
+    protected function getClassFee($class_id, $period = null, $resident = null)
+    {
+        ClassFeeResource::withoutWrapping();
+
+        $query = ClassFee::query()
+            ->where('class_id', $class_id)
+            ->where(function ($query) use ($period) {
+                $query->when($period, function ($query) use ($period) {
+                    $query->whereHas('fee', function ($query) use ($period) {
+                        $query->where('period', $period);
+                    });
+                });
+            });
+        
+        $class_fees = $query->get();
+
+        if($resident) {
+            $class_fees = $class_fees->filter(function ($class_fee) use ($resident) {
+                return in_array($resident, json_decode($class_fee->package));
+            });
+        }
+
+        return ClassFeeResource::collection($class_fees);
+    }
+
     public function update(Request $request, Student $student)
     {
-        $student->update(
-            $this->validatedData($request, $student->id)
-            + $this->storeGuardian($request, $student)
-            + $this->storeAddress($request, $student)
-        );
+        if($request->step = 'fee') {
+            $student->current_admission()->update([
+                "completed_by"  => Auth::id(),
+                "concessions"   => json_encode($request->fees),
+            ]);
+        } else {
+            $student->update(
+                $this->validatedData($request, $student->id)
+                + $this->storeGuardian($request, $student)
+                + $this->storeAddress($request, $student)
+            );
+        }
 
         return redirect()
             ->route('students.show', $student->id)

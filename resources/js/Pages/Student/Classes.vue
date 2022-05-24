@@ -57,7 +57,7 @@
                         <ClassSvg class="w-5 text-white" />
                         <span class="text-white"> মোট: </span>
                         <span class="font-bold text-white">
-                            {{ $e2bnumber(343) }} জন
+                            {{ $e2bnumber(data.totalStudent) }} জন
                         </span>
                     </div>
                 </div>

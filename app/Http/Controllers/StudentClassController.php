@@ -19,7 +19,8 @@ class StudentClassController extends Controller
 
         return Inertia::render('Student/Classes', [
             'data' => [
-                'classes'   => ClassesResource::collection($collections->get()),
+                'classes'       => ClassesResource::collection($collections->get()),
+                'totalStudent'  => Student::active()->student()->count(),
             ]
         ]);
     }

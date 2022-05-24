@@ -19,8 +19,6 @@ class FeeResource extends JsonResource
             'name'          => (string) ($this->name ?? ''),
             'period'        => (int) ($this->period ?? 0),
             'periodName'    => (string) ($this->period_name ?? ''),
-            'totalClass'    => (int) (count($this->classes ?? []) ?? 0),
-            'allowDeletion' => (boolean) (!(count($this->classes ?? []) ?? 0)),
         ];
     }
 }

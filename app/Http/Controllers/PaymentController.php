@@ -116,6 +116,7 @@ class PaymentController extends Controller
         $resident = in_array($resident, [1, 2, 3, 4]) ? $resident : 0;
 
         $class_fees = ClassFee::query()
+            ->with('fee')
             ->where('class_id', $admission->class_id)
             ->whereHas('fee', function($query) use ($period) {
                 $query->where('period', $period);

@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-2 bg-white px-2 py-2 md:px-4">
+    <div class="space-y-2 bg-white px-2 py-2 font-balooda2 md:px-4">
         <nav-link
             :href="route('dashboard')"
             :active="route().current('dashboard')"
@@ -11,63 +11,26 @@
             </span>
         </nav-link>
 
-        <dropdown-nav-link :active="route().current('(classes||fees).*')">
+        <nav-link
+            :href="route('students.index')"
+            :active="route().current('students.*')"
+            class="flex items-center gap-2 md:gap-4"
+        >
             <ClassSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                ক্লাস/বিভাগ
+                ক্লাস/বিভাগ ও শিক্ষার্থী
             </span>
-            <template #items>
-                <nav-link
-                    :href="route('fees.index')"
-                    :active="route().current('fees.*')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <ClipboardListIcon class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        প্রদেয় ফি
-                    </span>
-                </nav-link>
-                <nav-link
-                    :href="route('classes.index')"
-                    :active="route().current('classes.*')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <ClassSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        ক্লাস/বিভাগ
-                    </span>
-                </nav-link>
-            </template>
-        </dropdown-nav-link>
+        </nav-link>
 
-        <dropdown-nav-link :active="route().current('(students|admissions).*')">
+        <dropdown-nav-link :active="route().current('(admissions).*')">
             <StudentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                শিক্ষার্থী
+                ভর্তির আবেদন
             </span>
             <template #items>
                 <nav-link
-                    :href="route('students.index')"
-                    :active="route().current('students.*')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        শিক্ষার্থী তালিকা
-                    </span>
-                </nav-link>
-                <nav-link
-                    :href="route('admissions.index')"
-                    :active="route().current('admissions.*')"
+                    :href="route('admissions.create')"
+                    :active="route().current('admissions.create')"
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
@@ -75,7 +38,20 @@
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
-                        ভর্তির আবেদন
+                        নতুন আবেদন
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('admissions.index')"
+                    :active="route().current('admissions.(index|show|edit)')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <StudentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        আবেদন তালিকা
                     </span>
                 </nav-link>
             </template>
@@ -102,7 +78,7 @@
                 </nav-link>
                 <nav-link
                     :href="route('payments.index')"
-                    :active="route().current('payments.index')"
+                    :active="route().current('payments.(index|show)')"
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />
@@ -116,9 +92,7 @@
             </template>
         </dropdown-nav-link>
 
-        <dropdown-nav-link
-            :active="route().current('(expenses||categories).*')"
-        >
+        <dropdown-nav-link :active="route().current('expenses.*')">
             <PaymentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 ব্যয়/খরচ
@@ -126,8 +100,8 @@
 
             <template #items>
                 <nav-link
-                    :href="route('expenses.index')"
-                    :active="route().current('expenses.*')"
+                    :href="route('expenses.create')"
+                    :active="route().current('expenses.create')"
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
@@ -135,13 +109,75 @@
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
-                        ব্যয়ের তালিকা
+                        নতুন ভাউচার
                     </span>
                 </nav-link>
-
                 <nav-link
-                    :href="route('categories.index')"
-                    :active="route().current('categories.*')"
+                    :href="route('expenses.index')"
+                    :active="route().current('expenses.(index|show|edit)')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        ভাউচার তালিকা
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
+
+        <nav-link
+            :href="route('staff.index')"
+            :active="route().current('staff.*')"
+            class="flex items-center gap-2 md:gap-4"
+        >
+            <AdminSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                শিক্ষক/স্টাফ
+            </span>
+        </nav-link>
+
+        <nav-link
+            :href="route('notices.index')"
+            :active="route().current('notices.*')"
+            class="flex items-center gap-2 md:gap-4"
+        >
+            <NoticeSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                নোটিশ বোর্ড
+            </span>
+        </nav-link>
+
+        <dropdown-nav-link
+            :active="
+                route().current(
+                    '(classes|fees|staff|designations|categories|admins|settings).*'
+                )
+            "
+        >
+            <SettingsSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                সেটিংস
+            </span>
+            <template #items>
+                <nav-link
+                    :href="route('classes.index')"
+                    :active="route().current('classes.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <ClassSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        ক্লাস/বিভাগ
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('fees.index')"
+                    :active="route().current('fees.*')"
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <ClipboardListIcon class="h-4 w-4 md:h-6 md:w-6" />
@@ -149,25 +185,15 @@
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
-                        ব্যয়ের খাত
+                        প্রদেয় ফি
                     </span>
                 </nav-link>
-            </template>
-        </dropdown-nav-link>
-
-        <dropdown-nav-link :active="route().current('(staff||designations).*')">
-            <TeacherSvg class="h-6 w-6 md:h-8 md:w-8" />
-            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                শিক্ষক ও স্টাফ
-            </span>
-
-            <template #items>
                 <nav-link
                     :href="route('staff.index')"
                     :active="route().current('staff.*')"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <TeacherSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
@@ -175,7 +201,6 @@
                         শিক্ষক/স্টাফ
                     </span>
                 </nav-link>
-
                 <nav-link
                     :href="route('designations.index')"
                     :active="route().current('designations.*')"
@@ -189,26 +214,32 @@
                         পদবিসমূহ
                     </span>
                 </nav-link>
-            </template>
-        </dropdown-nav-link>
-
-        <nav-link
-            :href="route('notices.index')"
-            :active="route().current('notices.*')"
-            class="flex items-center gap-2 md:gap-4"
-        >
-            <NoticeSvg class="h-6 w-6 md:h-8 md:w-8" />
-            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                নোটিশ বোর্ড
-            </span>
-        </nav-link>
-
-        <dropdown-nav-link :active="route().current('(settings||admins).*')">
-            <SettingsSvg class="h-6 w-6 md:h-8 md:w-8" />
-            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
-                সেটিংস
-            </span>
-            <template #items>
+                <nav-link
+                    :href="route('categories.index')"
+                    :active="route().current('categories.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        ব্যয়ের খাত
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('admins.index')"
+                    :active="route().current('admins.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        এ্যাডমিন সেটিং
+                    </span>
+                </nav-link>
                 <nav-link
                     :href="route('settings.site-setup')"
                     :active="route().current('settings.site-setup')"
@@ -220,34 +251,6 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         সাইট সেটিং
-                    </span>
-                </nav-link>
-
-                <!-- <nav-link
-                    :href="route('settings.home-page')"
-                    :active="route().current('settings.home-page')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <HomeIcon class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        হোমপেজ সেটিং
-                    </span>
-                </nav-link> -->
-
-                <nav-link
-                    :href="route('admins.index')"
-                    :active="route().current('admins.*')"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        Admin
                     </span>
                 </nav-link>
             </template>

@@ -25,11 +25,14 @@ class StudentController extends Controller
     public function index()
     {
         $collections = Student::query()
+            ->latest()
             ->student();
+
+        StudentResource::withoutWrapping();
 
         return Inertia::render('Student/Index', [
             'data' => [
-                'collections'   => StudentResource::collection($collections->paginate()->appends(request()->input())),
+                'students'   => StudentResource::collection($collections->get()),
                 'filters'       => $this->getFilterProperty(),
             ]
         ]);
@@ -44,6 +47,7 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        return $request;
         $student = Student::create(
             $this->validatedData($request)
             + $this->storeGuardian($request)
@@ -60,7 +64,7 @@ class StudentController extends Controller
         return Inertia::render('Student/Show', [
             'data' => [
                 'student'   => $this->formatedData($student),
-                'admission' => $this->formatedAdmissionData($student->current_admission),
+                // 'admission' => $this->formatedAdmissionData($student->current_admission),
             ]
         ]);
     }
@@ -97,12 +101,12 @@ class StudentController extends Controller
     protected function data($student)
     {
         return [
-            'student'   => $this->formatedData($student),
-            'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
-            'districts' => DistrictResource::collection(District::orderBy('name')->get()),
-            'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
-            'classes'   => ClassesResource::collection(Classes::get()),
-            'bloodGroups' => Student::getBloodGroups()
+            'student'       => $this->formatedData($student),
+            'divisions'     => DivisionResource::collection(Division::orderBy('name')->get()),
+            'districts'     => DistrictResource::collection(District::orderBy('name')->get()),
+            'areas'         => AreaResource::collection(Area::orderBy('name')->get()),
+            'classes'       => ClassesResource::collection(Classes::get()),
+            'bloodGroups'   => Student::getBloodGroups()
         ];
     }
 
@@ -146,21 +150,7 @@ class StudentController extends Controller
             'gender' => '',
             'blood_group' => '',
             'birth_certificate' => '',
-        ]);
-    }
-
-    protected function validatedAdmissionData($request, $id = '')
-    {
-        return $request->validate([
-            // 'session' => [
-            //     'required',
-            //     'string',
-            // ],
-            'class_id' => [
-                'required',
-                'numeric',
-            ],
-            'resident' => '',
+            'resident'  => ''
         ]);
     }
 

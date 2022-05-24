@@ -13,6 +13,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('settings/home-page', [SettingController::class, 'homePage'])->name('settings.home-page');
     Route::get('settings/{setting}/edit', [SettingController::class, 'edit'])->name('settings.edit');
     Route::put('settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
+
+    Route::get('student-class', [StudentClassController::class, 'index'])->name('students.class.index');
+    Route::get('student-class/{class}', [StudentClassController::class, 'show'])->name('students.class.show');
     
     Route::resources([
         'fees'          => FeeController::class,

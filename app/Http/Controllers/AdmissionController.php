@@ -164,7 +164,7 @@ class AdmissionController extends Controller
             }
 
             return redirect()
-                ->route('students.index')
+                ->route('students.class.show', $admission->class_id)
                 ->with('status', 'The record has been update successfully.');
         }
     }

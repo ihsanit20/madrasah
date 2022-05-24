@@ -26,15 +26,18 @@
                         type="number"
                         class="block w-full"
                         v-model="form.birth_certificate"
-                        required
                     />
                 </form-group>
                 <div class="flex gap-2">
                     <form-group class="flex-1" label="লিঙ্গ">
-                        <Select class="block w-full" v-model="form.gender">
-                            <option value="">-- Select --</option>
-                            <option :value="1">Male</option>
-                            <option :value="2">Female</option>
+                        <Select
+                            class="block w-full"
+                            v-model="form.gender"
+                            required
+                        >
+                            <option value="">-- নির্বাচন করুন --</option>
+                            <option :value="1">ছেলে</option>
+                            <option :value="2">মেয়ে</option>
                         </Select>
                     </form-group>
                     <form-group class="flex-1" label="রক্তের গ্রুপ">
@@ -189,6 +192,7 @@
                             class="block w-full"
                             v-model="form.present_address.division"
                             @change="presentAddressDivisionSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -205,6 +209,7 @@
                             class="block w-full"
                             v-model="form.present_address.district"
                             @change="presentAddressDistrictSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -226,6 +231,7 @@
                                 v-for="area in present_address.areas"
                                 :key="area.id"
                                 :value="area.id"
+                                required
                             >
                                 {{ area.name }}
                             </option>
@@ -236,6 +242,7 @@
                             type="text"
                             class="block w-full"
                             v-model="form.present_address.postoffice"
+                            required
                         />
                     </form-group>
                     <form-group
@@ -246,6 +253,7 @@
                             type="text"
                             class="block w-full"
                             v-model="form.present_address.address"
+                            required
                         />
                     </form-group>
                 </div>
@@ -276,6 +284,7 @@
                             class="block w-full"
                             v-model="form.permanent_address.division"
                             @change="permanentAddressDivisionSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -292,6 +301,7 @@
                             class="block w-full"
                             v-model="form.permanent_address.district"
                             @change="permanentAddressDistrictSelectHandler"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -307,6 +317,7 @@
                         <Select
                             class="block w-full"
                             v-model="form.permanent_address.area"
+                            required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
                             <option
@@ -323,6 +334,7 @@
                             type="text"
                             class="block w-full"
                             v-model="form.permanent_address.postoffice"
+                            required
                         />
                     </form-group>
                     <form-group
@@ -333,41 +345,65 @@
                             type="text"
                             class="block w-full"
                             v-model="form.permanent_address.address"
+                            required
                         />
                     </form-group>
                 </div>
             </form-group>
 
-            <form-heading class="mt-6 mb-2">
-                যে ক্লাস/বিভাগে ভর্তি হতে ইচ্ছুক
-            </form-heading>
-            <div class="grid gap-2 md:grid-cols-2">
-                <form-group label="শ্রেণী/বিভাগ">
-                    <Select
-                        required
-                        class="block w-full"
-                        v-model="form.class_id"
+            <form-heading class="mt-6 mb-2">শিক্ষার্থীর ধরন</form-heading>
+            <div class="grid gap-x-2 gap-y-4 md:grid-cols-3">
+                <form-group
+                    class="col-span-full grid gap-2 rounded-md border border-dashed border-gray-300 px-2 py-2"
+                >
+                    <div
+                        class="col-span-full flex items-center justify-center gap-3 md:justify-start"
                     >
-                        <option value="">--Select Class--</option>
-                        <option
-                            v-for="classes in data.classes"
-                            :key="classes.id"
-                            :value="classes.id"
-                        >
-                            {{ classes.name }}
-                        </option>
-                    </Select>
-                </form-group>
-                <form-group label="শিক্ষার্থীর ধরন">
-                    <Select
-                        required
-                        class="block w-full"
-                        v-model="form.resident"
-                    >
-                        <option value="">--Select Type--</option>
-                        <option :value="0">আবাসিক</option>
-                        <option :value="1">অনাবাসিক</option>
-                    </Select>
+                        <label class="flex items-center gap-1">
+                            <Input
+                                v-model="form.resident"
+                                type="radio"
+                                name="resident"
+                                :value="1"
+                                :checked="form.resident == 1"
+                                required
+                            />
+                            <span>আবাসিক</span>
+                        </label>
+                        <label class="flex items-center gap-1">
+                            <Input
+                                v-model="form.resident"
+                                type="radio"
+                                name="resident"
+                                :value="2"
+                                :checked="form.resident == 2"
+                                required
+                            />
+                            <span>অনাবাসিক</span>
+                        </label>
+                        <label class="flex items-center gap-1">
+                            <Input
+                                v-model="form.resident"
+                                type="radio"
+                                name="resident"
+                                :value="3"
+                                :checked="form.resident == 3"
+                                required
+                            />
+                            <span>ডে-কেয়ার</span>
+                        </label>
+                        <label class="flex items-center gap-1">
+                            <Input
+                                v-model="form.resident"
+                                type="radio"
+                                name="resident"
+                                :value="3"
+                                :checked="form.resident == 3"
+                                required
+                            />
+                            <span>সেমি-আবাসিক</span>
+                        </label>
+                    </div>
                 </form-group>
             </div>
 
@@ -432,6 +468,8 @@ export default {
             this.form.mother_info = this.data.student.motherInfo;
             this.form.guardian_info = this.data.student.guardianInfo;
 
+            this.form.present_address.postoffice =
+                this.data.student.presentAddress.postoffice;
             this.form.present_address.address =
                 this.data.student.presentAddress.value;
             this.form.present_address.area =
@@ -441,6 +479,8 @@ export default {
             this.form.present_address.division =
                 this.data.student.presentAddress.area.district.divisionId;
 
+            this.form.permanent_address.postoffice =
+                this.data.student.permanentAddress.postoffice;
             this.form.permanent_address.address =
                 this.data.student.permanentAddress.value;
             this.form.permanent_address.area =
@@ -509,8 +549,7 @@ export default {
                     area: "",
                     address: "",
                 },
-                class_id: "",
-                resident: "",
+                resident: this.data.student.resident,
             }),
         };
     },

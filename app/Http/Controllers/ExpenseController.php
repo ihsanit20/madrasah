@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ExpenseResource;
+use App\Http\Resources\StaffResource;
+use App\Models\Category;
 use App\Models\Expense;
+use App\Models\HijriMonth;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ExpenseController extends Controller
@@ -31,7 +38,9 @@ class ExpenseController extends Controller
 
     public function store(Request $request)
     {
-        $expense = Expense::create($this->validatedData($request));
+        $expense = Expense::create($this->validatedData($request) + [
+            'user_id' => Auth::id(),
+        ]);
 
         return redirect()
             ->route('expenses.show', $expense->id)
@@ -74,8 +83,14 @@ class ExpenseController extends Controller
 
     protected function data($expense)
     {
+        CategoryResource::withoutWrapping();
+        StaffResource::withoutWrapping();
+
         return [
-            'expense' => $this->formatedData($expense),
+            'expense'       => $this->formatedData($expense),
+            'staff'         => StaffResource::collection(Staff::orderBy('designation_id')->get()),
+            'categories'    => CategoryResource::collection(Category::orderBy('name')->get()),
+            'hijriMonths'   => HijriMonth::get(),
         ];
     }
 
@@ -96,7 +111,22 @@ class ExpenseController extends Controller
     protected function validatedData($request, $id = '')
     {
         return $request->validate([
-            //
+            'category_id' => [
+                'required',
+                Rule::unique(Expense::class, 'category_id')
+                    ->whereNull('date', $request->date)
+                    ->whereNull('deleted_at')
+                    ->ignore($id)
+            ],
+            'staff_id' => [
+                'required',
+            ],
+            'amount' => [
+                'required',
+            ],
+            'date' => [
+                'required',
+            ],
         ]);
     }
 

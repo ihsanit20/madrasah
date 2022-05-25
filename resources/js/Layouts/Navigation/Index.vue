@@ -100,7 +100,7 @@
 
             <template #items>
                 <nav-link
-                    :href="route('expenses.index')"
+                    :href="route('expenses.create')"
                     :active="route().current('expenses.create')"
                     class="flex items-center gap-2 md:gap-4"
                 >
@@ -129,8 +129,8 @@
         </dropdown-nav-link>
 
         <nav-link
-            :href="route('staff.index')"
-            :active="route().current('staff.*')"
+            :href="route('staff-list')"
+            :active="route().current('staff-list')"
             class="flex items-center gap-2 md:gap-4"
         >
             <AdminSvg class="h-6 w-6 md:h-8 md:w-8" />

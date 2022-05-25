@@ -15,9 +15,11 @@ class CreateExpensesTable extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('author_id')->index();
             $table->unsignedInteger('category_id')->index();
+            $table->unsignedBigInteger('staff_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->unsignedFloat('amount');
+            $table->string('date');
             $table->timestamps();
             $table->softDeletes();
         });

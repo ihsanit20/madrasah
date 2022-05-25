@@ -1,7 +1,7 @@
 <template>
-    <Head title="Expense" />
+    <Head title="ভাউচার তালিকা" />
 
-    <app-layout pageTitle="View Expense">
+    <app-layout pageTitle="ভাউচার তালিকা">
         <div class="max-w-xl rounded border bg-white p-3 shadow md:p-4">
             <div class="flex items-end justify-end">
                 <div class="flex items-center gap-2">
@@ -10,8 +10,14 @@
                     />
                 </div>
             </div>
-            <div class="grid">
-                <inline-data title="পদবি :" :value="data.expense.name" />
+            <div class="grid gap-2">
+                <inline-data title="খাত:" :value="data.expense.categoryName" />
+                <inline-data
+                    title="ব্যয়কারী:"
+                    :value="data.expense.staffName"
+                />
+                <inline-data title="টাকা:" :value="data.expense.amount" />
+                <inline-data title="তারিখ:" :value="data.expense.date" />
             </div>
         </div>
     </app-layout>

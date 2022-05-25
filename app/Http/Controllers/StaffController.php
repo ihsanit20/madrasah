@@ -24,6 +24,21 @@ class StaffController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        $collections = Staff::query()
+            ->orderBy('designation_id');
+
+        StaffResource::withoutWrapping();
+
+        return Inertia::render('Staff/List', [
+            'data' => [
+                'staff'     => StaffResource::collection($collections->get()),
+                'filters'   => $this->getFilterProperty(),
+            ]
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('Staff/Create', [

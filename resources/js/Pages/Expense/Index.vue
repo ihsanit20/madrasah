@@ -19,9 +19,21 @@
                             :href="route('expenses.edit', expense.id)"
                             class="text-sky-600 hover:underline"
                         >
-                            {{ expense.name }}
+                            {{ expense.id }}
                         </Link>
                     </div>
+                </table-td>
+                <table-td class="text-left">
+                    {{ expense.date }}
+                </table-td>
+                <table-td class="text-left">
+                    {{ expense.categoryName }}
+                </table-td>
+                <table-td class="text-left">
+                    {{ expense.staffName }}
+                </table-td>
+                <table-td class="text-right">
+                    {{ expense.amount }}
                 </table-td>
             </template>
         </simple-table>
@@ -56,7 +68,13 @@ export default {
     },
     data() {
         return {
-            columns: [{ title: "ব্যয়ের তালিকা", align: "left" }],
+            columns: [
+                { title: "ভাউচার নং", align: "left" },
+                { title: "তারিখ", align: "left" },
+                { title: "খাত", align: "left" },
+                { title: "ব্যয়কারী", align: "left" },
+                { title: "টাকা", align: "right" },
+            ],
         };
     },
 };

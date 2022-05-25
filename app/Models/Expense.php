@@ -16,4 +16,9 @@ class Expense extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class);
+    }
 }

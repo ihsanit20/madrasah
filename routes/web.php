@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('student-class', [StudentClassController::class, 'index'])->name('students.class.index');
     Route::get('student-class/{class}', [StudentClassController::class, 'show'])->name('students.class.show');
+
+    Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
     
     Route::resources([
         'fees'          => FeeController::class,

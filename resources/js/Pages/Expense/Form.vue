@@ -3,14 +3,44 @@
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="">
-            <div class="grid gap-4">
-                <form-group class="w-full" label="পদবি">
+            <div class="grid gap-4 md:grid-cols-2">
+                <form-group label="তারিখ">
                     <Input
-                        type="text"
+                        type="date"
                         class="block w-full"
-                        v-model="form.name"
-                        required
+                        v-model="form.date"
                     />
+                </form-group>
+                <form-group label="খাত">
+                    <Select v-model="form.category_id">
+                        <option value="">--নির্বাচন করুন--</option>
+                        <option
+                            v-for="category in data.categories"
+                            :key="category.id"
+                            :value="category.id"
+                        >
+                            {{ category.name }}
+                        </option>
+                    </Select>
+                </form-group>
+                <form-group label="টাকা">
+                    <Input
+                        type="number"
+                        class="block w-full"
+                        v-model="form.amount"
+                    />
+                </form-group>
+                <form-group label="ব্যয়কারী">
+                    <Select v-model="form.staff_id">
+                        <option value="">--নির্বাচন করুন--</option>
+                        <optgroup
+                            v-for="staff in data.staff"
+                            :key="staff.id"
+                            :label="staff.designation.name"
+                        >
+                            <option :value="staff.id">{{ staff.name }}</option>
+                        </optgroup>
+                    </Select>
                 </form-group>
             </div>
 
@@ -60,7 +90,10 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                name: this.data.expense.name || "",
+                category_id: this.data.expense.categoryId || "",
+                staff_id: this.data.expense.staffId || "",
+                amount: this.data.expense.amount || "",
+                date: this.data.expense.date,
             }),
         };
     },

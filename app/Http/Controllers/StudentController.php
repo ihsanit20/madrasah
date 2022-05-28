@@ -123,7 +123,7 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
-        if($request->step = 'fee') {
+        if($request->step == 'fee') {
             $student->current_admission()->update([
                 "completed_by"  => Auth::id(),
                 "concessions"   => json_encode($request->fees),
@@ -241,6 +241,9 @@ class StudentController extends Controller
 
     protected function storeAddress($request, $student = null)
     {
+        $old_present_address_id = '';
+        $old_permanent_address_id = '';
+
         if($student) {
             Address::query()
                 ->whereIn('id', [
@@ -248,13 +251,16 @@ class StudentController extends Controller
                     $student->permanent_address_id
                 ])
                 ->delete();
+            
+            $old_present_address_id = $student->present_address_id;
+            $old_permanent_address_id = $student->permanent_address_id;
         }
 
-        $present_address_id = $this->storeAddressGetId($request->present_address);
+        $present_address_id = $this->storeAddressGetId($request->present_address, $old_present_address_id);
 
         $permanent_address_id = $request->is_same_address
             ? $present_address_id
-            : $this->storeAddressGetId($request->permanent_address);
+            : $this->storeAddressGetId($request->permanent_address, $old_permanent_address_id);
 
         return [
             'present_address_id'    => $present_address_id,

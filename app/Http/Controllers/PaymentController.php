@@ -23,6 +23,7 @@ class PaymentController extends Controller
     public function index()
     {
         $collections = Payment::query()
+            ->latest('id')
             ->with('admission');
 
         return Inertia::render('Payment/Index', [

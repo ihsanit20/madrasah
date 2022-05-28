@@ -23,6 +23,7 @@ use App\Models\Guardian;
 use App\Models\PayableFee;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -65,6 +66,9 @@ class AdmissionController extends Controller
             + $this->getArrayOfSession($request->session)
         );
 
+        $admission->update([
+            'application_date' => Http::get(url("/api/date-to-hijri-date/{$admission->created_at->format('d-m-Y')}"))
+        ]);
 
         return redirect()
             ->route('admissions.show', $admission->id)

@@ -19,7 +19,8 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $collections = Expense::query();
+        $collections = Expense::query()
+            ->latest('id');
 
         return Inertia::render('Expense/Index', [
             'data' => [

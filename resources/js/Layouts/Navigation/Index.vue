@@ -89,6 +89,19 @@
                         রশিদ তালিকা
                     </span>
                 </nav-link>
+                <nav-link
+                    :href="route('payments.purpose.index')"
+                    :active="route().current('payments.purpose.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        বাবদ সমুহ
+                    </span>
+                </nav-link>
             </template>
         </dropdown-nav-link>
 

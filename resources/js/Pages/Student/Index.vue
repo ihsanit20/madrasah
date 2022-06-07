@@ -38,7 +38,10 @@
                                 :href="
                                     route('payments.create') +
                                     '?registration=' +
-                                    student.registration
+                                    student.registration +
+                                    (data.purposeId
+                                        ? '&purpose=' + data.purposeId
+                                        : '')
                                 "
                                 class="rounded bg-orange-100 px-3 py-1 text-sm text-orange-500"
                             >

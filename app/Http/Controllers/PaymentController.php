@@ -104,6 +104,7 @@ class PaymentController extends Controller
                 'classes'       => ClassesResource::collection($classes),
                 'periods'       => $periods,
                 'purposes'      => $purposes,
+                'purposeId'     => request()->purpose ?? '',
                 'registration'  => request()->registration ?? '',
             ],
         ]);

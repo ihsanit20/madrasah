@@ -11,6 +11,7 @@ use App\Http\Controllers\FeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentPurposeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentClassController;
@@ -34,6 +35,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('student-class', [StudentClassController::class, 'index'])->name('students.class.index');
     Route::get('student-class/{class}', [StudentClassController::class, 'show'])->name('students.class.show');
+
+    Route::get('payment-purpose', [PaymentPurposeController::class, 'index'])->name('payments.purpose.index');
+    Route::get('payment-purpose/{purpose}', [PaymentPurposeController::class, 'show'])->name('payments.purpose.show');
+    Route::get('payment-purpose/{purpose}/class/{class}', [PaymentPurposeController::class, 'classes'])->name('payments.purpose.class');
 
     Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
     

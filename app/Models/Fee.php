@@ -94,9 +94,11 @@ class Fee extends Model
         return self::$periods;
     }
 
-    public static function getPurpose()
+    public static function getPurpose($purpose = null)
     {
-        return self::$purposes;
+        $purposes = self::$purposes;
+
+        return $purpose ? $purposes[$purpose] : $purposes;
     }
 
     public static function getPeriodText($period)

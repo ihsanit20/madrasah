@@ -115,6 +115,7 @@ export default {
     created() {
         this.registration = this.data.registration;
         this.registrationHandler();
+        this.form.purpose = this.data.purposeId;
     },
     data() {
         return {

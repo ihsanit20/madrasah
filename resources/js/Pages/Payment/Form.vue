@@ -209,10 +209,36 @@ export default {
 
         this.form.fees = this.data.fees;
 
-        if (this.data.admission.student.due) {
+        if (Object.keys(this.data.paidPayments).length) {
+            this.form.fees = [];
+
+            this.form.fees.push({
+                id: 1,
+                classId: 0,
+                feeId: 0,
+                amount: this.data.parentPayment.total,
+                concession: 0,
+                name: this.data.parentPayment.purposeText,
+                period: 2,
+            });
+
+            Object.values(this.data.paidPayments).forEach((paidPayment) => {
+                let paidPaymentId = this.$e2bnumber(paidPayment.id);
+
+                this.form.fees.push({
+                    id: 1,
+                    classId: 0,
+                    feeId: 0,
+                    amount: -paidPayment.paid,
+                    concession: 0,
+                    name: `পূর্বের জমা (${paidPaymentId})`,
+                    period: 2,
+                });
+            });
+        } else if (this.data.admission.student.due) {
             this.form.fees.unshift({
                 id: 1,
-                classId: 1,
+                classId: 0,
                 feeId: 0,
                 amount: this.data.admission.student.due,
                 concession: 0,
@@ -248,6 +274,10 @@ export default {
             }
         },
         getFeeTotal() {
+            // if (Object.keys(this.data.parentPayment).length) {
+            //     return this.data.parentPayment.due;
+            // }
+
             let total = 0;
 
             Object.values(this.form.fees).forEach((fee) => {

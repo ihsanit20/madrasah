@@ -67,10 +67,15 @@
                                 v-for="(purpose, index) in data.purposes"
                                 :key="index"
                                 :value="index"
-                                :disabled="paidPurpose.includes(Number(index))"
+                                :disabled="
+                                    paidPurpose.includes(Number(index)) &&
+                                    Number(duePurposeId) !== Number(index)
+                                "
                                 v-html="
                                     (paidPurpose.includes(Number(index))
-                                        ? '&#x2713; '
+                                        ? Number(duePurposeId) === Number(index)
+                                            ? '&#9888; (বাকেয়া) '
+                                            : '&#x2713; '
                                         : '') + purpose.title
                                 "
                             ></option>
@@ -128,6 +133,7 @@ export default {
             studentName: "",
             registration: "",
             paidPurpose: [],
+            duePurposeId: "",
         };
     },
     methods: {
@@ -151,6 +157,7 @@ export default {
                 this.paidPurpose = selectedAdmission.student.paidPurpose.map(
                     (purpose) => Number(purpose)
                 );
+                this.duePurposeId = selectedAdmission.student.duePurposeId;
             } else {
                 this.roll = "";
                 this.classId = "";

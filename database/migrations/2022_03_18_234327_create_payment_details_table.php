@@ -17,7 +17,7 @@ class CreatePaymentDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('payment_id')->index();
             $table->string('title');
-            $table->unsignedFloat('amount');
+            $table->float('amount');
             $table->timestamps();
             $table->softDeletes();
         });

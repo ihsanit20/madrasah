@@ -73,6 +73,9 @@ class PaymentController extends Controller
             ->find(request()->admission);
         
         if($admission && $purpose) {
+            // return $this->getPaidPayment($admission, $purpose);
+            // return $this->parentPayment($admission, $purpose);
+
             return Inertia::render('Payment/Create', [
                 'data' => [
                     'admission'     => new AdmissionResource($admission),
@@ -80,6 +83,8 @@ class PaymentController extends Controller
                     'purposeText'   => $purpose_text,
                     'date'          => $this->getHijriDate(),
                     'fees'          => $this->getAvailableFee($admission, $period),
+                    'parentPayment' => $this->parentPayment($admission, $purpose),
+                    'paidPayments'  => $this->getPaidPayment($admission, $purpose),
                 ],
             ]);
         }
@@ -257,6 +262,7 @@ class PaymentController extends Controller
                 'numeric',
                 Rule::unique(Payment::class, 'purpose')
                     ->where('admission_id', $request->admission_id)
+                    ->where('due', 0)
                     ->ignore($id),
             ],
             'total' => [
@@ -289,6 +295,38 @@ class PaymentController extends Controller
             }
         }
 
+    }
+
+    protected function parentPayment($admission, $purpose)
+    {
+        PaymentResource::withoutWrapping();
+
+        $payment = Payment::query()
+            ->where([
+                'admission_id'  => $admission->id,
+                'purpose'       => $purpose,
+            ])
+            ->first();
+
+        return $payment && $admission->student->due_purpose_id == $purpose
+            ? new PaymentResource($payment)
+            : (object) [];
+    }
+
+    protected function getPaidPayment($admission, $purpose)
+    {
+        PaymentResource::withoutWrapping();
+
+        $payments = Payment::query()
+            ->where([
+                'admission_id'  => $admission->id,
+                'purpose'       => $purpose,
+            ])
+            ->get();
+
+        return $payments && $admission->student->due_purpose_id == $purpose
+            ? PaymentResource::collection($payments)
+            : (object) [];
     }
 
 }

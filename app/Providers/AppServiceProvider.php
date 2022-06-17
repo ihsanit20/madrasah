@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(env('APP_ENV') != 'development') {
+        if(env('APP_ENV') == 'production') {
             $this->app['request']->server->set('HTTPS','on');
         }
     }

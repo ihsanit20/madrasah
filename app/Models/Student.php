@@ -18,6 +18,7 @@ class Student extends Model
         'guardian_type',
         'payment_purpose',
         'due',
+        'due_purpose_id',
     ];
     
     protected $casts = [
@@ -64,6 +65,20 @@ class Student extends Model
             ->where('admission_id', $admission_id)
             ->pluck('purpose')
             ->toArray();
+    }
+
+    public function getDuePurposeIdAttribute()
+    {
+        $admission_id = $this->current_admission->id ?? '';
+
+        $last_payment = Payment::query()
+            ->where('admission_id', $admission_id)
+            ->latest()
+            ->first();
+
+        return $last_payment
+            ? $last_payment->purpose
+            : 0;
     }
 
     public function getDueAttribute()

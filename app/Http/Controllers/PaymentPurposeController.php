@@ -56,7 +56,7 @@ class PaymentPurposeController extends Controller
             ->get();
 
         $students = $students->filter(function($student) use ($purpose) {
-            return ! in_array($purpose, $student->payment_purpose);
+            return $student->due || ! in_array($purpose, $student->payment_purpose);
         });
 
         return Inertia::render('Student/Index', [
@@ -96,16 +96,26 @@ class PaymentPurposeController extends Controller
         $data = Array();
 
         foreach($classes as $class) {
-            $data[$class->id] = Payment::query()
-                ->with('admission:id,session,class_id')
+            $payments = Payment::query()
+                ->with([
+                    'admission:id,session,class_id,student_id',
+                    'admission.student:id',
+                ])
                 ->whereHas('admission', function ($query) use ($class) {
-                    $query->where([
-                        'session'   => $this->getCurrentSession(),
-                        'class_id'  => $class->id,
-                    ]);
+                    $query
+                        ->where([
+                            'session'   => $this->getCurrentSession(),
+                            'class_id'  => $class->id,
+                        ]);
                 })
                 ->where('purpose', $purpose)
-                ->count();
+                ->get();
+            
+            $payments = $payments->filter(function($payment) {
+                return !($payment->admission->student->due ?? 0);
+            });
+
+            $data[$class->id] = $payments->count();
         }
 
         return $data;

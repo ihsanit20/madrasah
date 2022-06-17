@@ -89,7 +89,7 @@ class PaymentPurposeController extends Controller
 
                 
             $payments = $payments->filter(function($payment) use ($index) {
-                return ! (($payment->admission->student->due_purpose_id ?? 0) == $index && ($payment->admission->student->due ?? 0));
+                return ! (($payment->admission->student->due_purpose_id ?? 0) == $index && ($payment->admission->student->due ?? 0) > 0);
             });
 
             $data[$index] = $payments->count();
@@ -121,7 +121,7 @@ class PaymentPurposeController extends Controller
                 ->get();
             
             $payments = $payments->filter(function($payment) use ($purpose) {
-                return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose && ($payment->admission->student->due ?? 0));
+                return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose && ($payment->admission->student->due ?? 0) > 0);
             });
 
             $data[$class->id] = $payments->count();

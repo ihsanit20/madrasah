@@ -74,7 +74,7 @@
                                 v-html="
                                     (paidPurpose.includes(Number(index))
                                         ? Number(duePurposeId) === Number(index)
-                                            ? '&#9888; (বাকেয়া) '
+                                            ? '&#9888; (বকেয়া) '
                                             : '&#x2713; '
                                         : '') + purpose.title
                                 "

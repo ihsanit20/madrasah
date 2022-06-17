@@ -56,7 +56,7 @@ class PaymentPurposeController extends Controller
             ->get();
 
         $students = $students->filter(function($student) use ($purpose) {
-            return $student->due || ! in_array($purpose, $student->payment_purpose);
+            return ($student->due_purpose_id == $purpose && $student->due) || ! in_array($purpose, $student->payment_purpose);
         });
 
         return Inertia::render('Student/Index', [
@@ -72,18 +72,27 @@ class PaymentPurposeController extends Controller
     {
         $purposes = Fee::getPurpose();
 
-        $session = $this->getCurrentSession();
-
         $data = Array();
 
         foreach($purposes as $index => $purpose) {
-            $data[$index] = Payment::query()
-                ->with('admission:id,session')
+
+            $payments = Payment::query()
+                ->with([
+                    'admission:id,session,student_id',
+                    'admission.student:id',
+                ])
                 ->whereHas('admission', function ($query) {
                     $query->where('session', $this->getCurrentSession());
                 })
                 ->where('purpose', $index)
-                ->count();
+                ->get();
+
+                
+            $payments = $payments->filter(function($payment) use ($index) {
+                return ! (($payment->admission->student->due_purpose_id ?? 0) == $index && ($payment->admission->student->due ?? 0));
+            });
+
+            $data[$index] = $payments->count();
         }
 
         return $data;
@@ -111,8 +120,8 @@ class PaymentPurposeController extends Controller
                 ->where('purpose', $purpose)
                 ->get();
             
-            $payments = $payments->filter(function($payment) {
-                return !($payment->admission->student->due ?? 0);
+            $payments = $payments->filter(function($payment) use ($purpose) {
+                return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose && ($payment->admission->student->due ?? 0));
             });
 
             $data[$class->id] = $payments->count();

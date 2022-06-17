@@ -157,6 +157,28 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
+        $admission = Admission::query()
+            ->with('student')
+            ->find($request->admission_id);
+
+        $student_due_purpose_id = $admission->student->due_purpose_id;
+
+        $count_paid_payments = Payment::query()
+            ->where([
+                "purpose"       => $request->purpose,
+                "admission_id"  => $request->admission_id,
+            ])
+            ->count();
+
+        if($count_paid_payments && $student_due_purpose_id != $request->purpose) {
+            return redirect()
+                ->route('payments.create', "registration={$admission->student->registration}")
+                ->with('status', 'Something Wrong!.');
+
+            return abort(404);
+        }
+
+
         $payment = Payment::create(
             $this->validatedData($request) + [
                 'due'       => $request->total - $request->paid,
@@ -308,7 +330,7 @@ class PaymentController extends Controller
             ])
             ->first();
 
-        return $payment && $admission->student->due_purpose_id == $purpose
+        return $payment
             ? new PaymentResource($payment)
             : (object) [];
     }
@@ -324,7 +346,7 @@ class PaymentController extends Controller
             ])
             ->get();
 
-        return $payments && $admission->student->due_purpose_id == $purpose
+        return $payments
             ? PaymentResource::collection($payments)
             : (object) [];
     }

@@ -231,7 +231,7 @@ export default {
                     feeId: 0,
                     amount: -paidPayment.paid,
                     concession: 0,
-                    name: `পূর্বের জমা (${paidPaymentId})`,
+                    name: `পূর্বের জমা (রশিদ নং: ${paidPaymentId})`,
                     period: 2,
                 });
             });

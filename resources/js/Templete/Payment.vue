@@ -164,7 +164,7 @@
                         জমা:
                     </div>
                     <div
-                        class="w-16 shrink-0 grow-0 bg-gray-100 pr-2 text-right"
+                        class="w-16 shrink-0 grow-0 bg-gray-100 pr-3 text-right"
                     >
                         {{ $e2bnumber(data.payment.paid) }}
                     </div>

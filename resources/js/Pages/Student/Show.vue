@@ -29,334 +29,282 @@
         <div
             class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
         >
-            <div class="bg-white px-6 py-4 print:py-0 print:px-4">
-                <div class="grid gap-2">
-                    <div class="flex items-center justify-between gap-4">
-                        <div>
-                            <inline-data
-                                title="শিক্ষার্থীর নাম:"
-                                :value="data.student.name"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="জন্ম তারিখ:"
-                                :value="data.student.dateOfBirthWithFormat"
-                            />
+            <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
+                <div class="flex items-center gap-2">
+                    <div class="shrink-0 grow-0 font-bold text-gray-600">
+                        মৌলিক তথ্য
+                    </div>
+                    <div class="shrink grow border-y border-gray-400"></div>
+                </div>
+                <div class="flex flex-col gap-2 py-2 md:flex-row">
+                    <div class="shrink-0 grow-0">
+                        <div
+                            class="flex h-48 w-40 items-center justify-center border print:border-black"
+                        >
+                            <label
+                                class="text-3xl text-gray-500 print:text-black"
+                            >
+                                ছবি
+                            </label>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-4">
-                        <div>
-                            <inline-data
-                                title="জন্ম নিবন্ধন নাম্বার:"
-                                :value="data.student.birthCertificate"
-                            />
-                        </div>
-                        <div class="flex items-center justify-center gap-4">
-                            <div>
-                                <inline-data
-                                    title="রক্তের গ্রুপ:"
-                                    :value="data.student.bloodGroupText"
-                                />
+                    <div class="shrink grow">
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                শিক্ষার্থীর নাম:
                             </div>
-                            <div class="flex items-center justify-center gap-4">
-                                <div class="text-gray-700">লিঙ্গ:</div>
-                                <label
-                                    class="flex items-center justify-center gap-2"
-                                >
-                                    <check-uncheck-icon
-                                        class="w-4"
-                                        :isChecked="data.student.gender == '1'"
-                                    />
-                                    <span
-                                        :class="{
-                                            'font-semibold':
-                                                data.student.gender == '1',
-                                        }"
-                                    >
-                                        ছেলে
-                                    </span>
-                                </label>
-                                <label
-                                    class="flex items-center justify-center gap-2"
-                                >
-                                    <check-uncheck-icon
-                                        class="w-4"
-                                        :isChecked="data.student.gender == '2'"
-                                    />
-                                    <span
-                                        :class="{
-                                            'font-semibold':
-                                                data.student.gender == '2',
-                                        }"
-                                    >
-                                        মেয়ে
-                                    </span>
-                                </label>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.name }}
                             </div>
                         </div>
-                    </div>
-                    <hr />
-                    <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
-                        <div class="print:col-span-2 md:col-span-2">
-                            <inline-data
-                                title="পিতার নাম:"
-                                :value="data.student.fatherInfo.name"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="ফোন:"
-                                :value="data.student.fatherInfo.phone"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="পেশা:"
-                                :value="data.student.fatherInfo.occupation"
-                            />
-                        </div>
-                    </div>
-                    <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
-                        <div class="print:col-span-2 md:col-span-2">
-                            <inline-data
-                                title="মাতার নাম:"
-                                :value="data.student.motherInfo.name"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="ফোন:"
-                                :value="data.student.motherInfo.phone"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="পেশা:"
-                                :value="data.student.motherInfo.occupation"
-                            />
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="flex items-center gap-4">
-                        <inline-data title="অভিভাবকের তথ্য" />
-                        <label class="flex items-center justify-center gap-2">
-                            <check-uncheck-icon
-                                class="w-4"
-                                :isChecked="data.student.guardianType == '1'"
-                            />
-                            <span
-                                :class="{
-                                    'font-semibold':
-                                        data.student.guardianType == '1',
-                                }"
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
                             >
-                                পিতা
-                            </span>
-                        </label>
-                        <label class="flex items-center justify-center gap-2">
-                            <check-uncheck-icon
-                                class="w-4"
-                                :isChecked="data.student.guardianType == '2'"
-                            />
-                            <span
-                                :class="{
-                                    'font-semibold':
-                                        data.student.guardianType == '2',
-                                }"
+                                শিক্ষার্থীর ধরণ:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
-                                মাতা
-                            </span>
-                        </label>
-                        <label class="flex items-center justify-center gap-2">
-                            <check-uncheck-icon
-                                class="w-4"
-                                :isChecked="data.student.guardianType == '3'"
-                            />
-                            <span
-                                :class="{
-                                    'font-semibold':
-                                        data.student.guardianType == '3',
-                                }"
+                                {{ data.student.residentText }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
                             >
-                                বৈধ অভিভাবক
-                            </span>
-                        </label>
+                                রেজি. নং:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.registration }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                জন্ম তারিখ:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.dateOfBirthWithFormat }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                জন্ম নিবন্ধন নং:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.birthCertificate }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                রক্তের গ্রুপ:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.bloodGroupText }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                লিঙ্গ:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.genderText }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                অভিভাবকের নাম:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.guardianInfo.name }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                অভিভাবকের ফোন:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.guardianInfo.phone }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                সম্পর্ক:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.guardianInfo.relation }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="grid gap-4 print:grid-cols-4 md:grid-cols-4">
-                        <div class="print:col-span-2 md:col-span-2">
-                            <inline-data
-                                title="অভিভাবকের নাম:"
-                                :value="data.student.guardianInfo.name"
-                            />
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+        >
+            <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
+                <div class="flex items-center gap-2">
+                    <div class="shrink-0 grow-0 font-bold text-gray-600">
+                        পিতা-মাতার তথ্য
+                    </div>
+                    <div class="shrink grow border-y border-gray-400"></div>
+                </div>
+                <div class="grid gap-2 md:grid-cols-2">
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <div
+                                class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-2 text-right text-sm font-semibold text-gray-800"
+                            >
+                                পিতার নাম:
+                            </div>
+                            <div
+                                class="shrink grow text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.fatherInfo.name }}
+                            </div>
                         </div>
-                        <div>
-                            <inline-data
-                                title="ফোন:"
-                                :value="data.student.guardianInfo.phone"
-                            />
+                        <div class="flex items-center gap-1.5">
+                            <div
+                                class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-2 text-right text-sm font-semibold text-gray-800"
+                            >
+                                পিতার ফোন:
+                            </div>
+                            <div
+                                class="shrink grow text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.fatherInfo.phone }}
+                            </div>
                         </div>
-                        <div>
-                            <inline-data
-                                title="সম্পর্ক:"
-                                :value="data.student.guardianInfo.relation"
-                            />
+                        <div class="flex items-center gap-1.5">
+                            <div
+                                class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-2 text-right text-sm font-semibold text-gray-800"
+                            >
+                                পিতার পেশা:
+                            </div>
+                            <div
+                                class="shrink grow text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.fatherInfo.occupation }}
+                            </div>
                         </div>
                     </div>
-                    <hr />
-                    <div class="font-semibold text-gray-700">
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <div
+                                class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-2 text-right text-sm font-semibold text-gray-800"
+                            >
+                                মাতার নাম:
+                            </div>
+                            <div
+                                class="shrink grow text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.motherInfo.name }}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <div
+                                class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-2 text-right text-sm font-semibold text-gray-800"
+                            >
+                                মাতার ফোন:
+                            </div>
+                            <div
+                                class="shrink grow text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.motherInfo.phone }}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <div
+                                class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-2 text-right text-sm font-semibold text-gray-800"
+                            >
+                                মাতার পেশা:
+                            </div>
+                            <div
+                                class="shrink grow text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.motherInfo.occupation }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+        >
+            <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
+                <div class="flex items-center gap-2">
+                    <div class="shrink-0 grow-0 font-bold text-gray-600">
+                        ঠিকানা
+                    </div>
+                    <div class="shrink grow border-y border-gray-400"></div>
+                </div>
+                <div class="flex items-start gap-1.5">
+                    <div
+                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                    >
                         বর্তমান ঠিকানা:
                     </div>
-                    <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
-                        <div class="print:col-span-2 md:col-span-2">
-                            <inline-data
-                                title="বাড়ি নং, রোড নং, গ্রাম/মহল্লা:"
-                                :value="data.student.presentAddress.value"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="পোস্ট অফিস:"
-                                :value="data.student.presentAddress.postoffice"
-                            />
-                        </div>
+                    <div
+                        class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
+                    >
+                        {{ data.student.presentAddress.value }},
+                        {{ data.student.presentAddress.postoffice }},
+                        {{ data.student.presentAddress.areaName }},
+                        {{ data.student.presentAddress.districtName }},
+                        {{ data.student.presentAddress.divisionName }}
                     </div>
-                    <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
-                        <div>
-                            <inline-data
-                                title="উপজেলা:"
-                                :value="data.student.presentAddress.areaName"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="জেলা:"
-                                :value="
-                                    data.student.presentAddress.districtName
-                                "
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="বিভাগ:"
-                                :value="
-                                    data.student.presentAddress.divisionName
-                                "
-                            />
-                        </div>
-                    </div>
-                    <div class="font-semibold text-gray-700">
+                </div>
+                <div class="flex items-start gap-1.5">
+                    <div
+                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                    >
                         স্থায়ী ঠিকানা:
                     </div>
-                    <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
-                        <div class="print:col-span-2 md:col-span-2">
-                            <inline-data
-                                title="বাড়ি নং, রোড নং, গ্রাম/মহল্লা:"
-                                :value="data.student.permanentAddress.value"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="পোস্ট অফিস:"
-                                :value="
-                                    data.student.permanentAddress.postoffice
-                                "
-                            />
-                        </div>
-                    </div>
-                    <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
-                        <div>
-                            <inline-data
-                                title="উপজেলা:"
-                                :value="data.student.permanentAddress.areaName"
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="জেলা:"
-                                :value="
-                                    data.student.permanentAddress.districtName
-                                "
-                            />
-                        </div>
-                        <div>
-                            <inline-data
-                                title="বিভাগ:"
-                                :value="
-                                    data.student.permanentAddress.divisionName
-                                "
-                            />
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="grid gap-4">
-                        <div class="flex flex-wrap items-center gap-5">
-                            <div class="text-gray-700">শিক্ষার্থীর ধরন:</div>
-                            <label
-                                class="flex items-center justify-center gap-2"
-                            >
-                                <check-uncheck-icon
-                                    class="w-4"
-                                    :isChecked="data.student.resident == '1'"
-                                />
-                                <span
-                                    :class="{
-                                        'font-semibold':
-                                            data.student.resident == '1',
-                                    }"
-                                >
-                                    আবাসিক
-                                </span>
-                            </label>
-                            <label
-                                class="flex items-center justify-center gap-2"
-                            >
-                                <check-uncheck-icon
-                                    class="w-4"
-                                    :isChecked="data.student.resident == '2'"
-                                />
-                                <span
-                                    :class="{
-                                        'font-semibold':
-                                            data.student.resident == '2',
-                                    }"
-                                >
-                                    অনাবাসিক
-                                </span>
-                            </label>
-                            <label
-                                class="flex items-center justify-center gap-2"
-                            >
-                                <check-uncheck-icon
-                                    class="w-4"
-                                    :isChecked="data.student.resident == '3'"
-                                />
-                                <span
-                                    :class="{
-                                        'font-semibold':
-                                            data.student.resident == '3',
-                                    }"
-                                >
-                                    ডে-কেয়ার
-                                </span>
-                            </label>
-                            <label
-                                class="flex items-center justify-center gap-2"
-                            >
-                                <check-uncheck-icon
-                                    class="w-4"
-                                    :isChecked="data.student.resident == '4'"
-                                />
-                                <span
-                                    :class="{
-                                        'font-semibold':
-                                            data.student.resident == '4',
-                                    }"
-                                >
-                                    সেমি-আবাসিক
-                                </span>
-                            </label>
-                        </div>
+                    <div
+                        class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
+                    >
+                        {{ data.student.permanentAddress.value }},
+                        {{ data.student.permanentAddress.postoffice }},
+                        {{ data.student.permanentAddress.areaName }},
+                        {{ data.student.permanentAddress.districtName }},
+                        {{ data.student.permanentAddress.divisionName }}
                     </div>
                 </div>
             </div>

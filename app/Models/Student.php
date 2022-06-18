@@ -167,4 +167,9 @@ class Student extends Model
 
         return $this->hasOne(Admission::class)->where('admissions.session', $session);
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

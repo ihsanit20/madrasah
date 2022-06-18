@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ExpenseController;
@@ -55,6 +56,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'notices'       => NoticeController::class,
         'payments'      => PaymentController::class,
     ]);
+
+    Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');
 
 });
 

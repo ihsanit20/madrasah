@@ -145,6 +145,9 @@ export default {
             }
         },
         registrationHandler() {
+            this.resetDuringRegistrationSelect();
+            this.resetCommonData();
+
             let selectedAdmission = Object.values(this.data.admissions).filter(
                 (admission) => {
                     return admission.student.registration == this.registration;
@@ -152,28 +155,16 @@ export default {
             )[0];
 
             if (selectedAdmission) {
-                this.roll = selectedAdmission.roll;
-                this.classId = selectedAdmission.classId;
-                this.form.admission = selectedAdmission.id;
-                this.studentName = selectedAdmission.studentName;
-                this.paidPurpose = selectedAdmission.student.paidPurpose.map(
-                    (purpose) => Number(purpose)
-                );
-                this.duePurposeId = selectedAdmission.student.duePurposeId;
-                this.due = selectedAdmission.student.due;
-            } else {
-                this.roll = "";
-                this.classId = "";
-                this.form.admission = "";
-                this.studentName = "";
-                this.paidPurpose = "";
-                this.duePurposeId = "";
-                this.due = 0;
+                this.setCommonData(selectedAdmission);
+                this.setDuringRegistrationSelect(selectedAdmission);
             }
 
             this.form.purpose = "";
         },
         classOrRollHandler() {
+            this.resetDuringclassOrRollSelect();
+            this.resetCommonData();
+
             let selectedAdmission = null;
 
             if (this.classId && this.roll) {
@@ -188,20 +179,41 @@ export default {
             }
 
             if (selectedAdmission) {
-                this.registration = selectedAdmission.student.registration;
-                this.form.admission = selectedAdmission.id;
-                this.studentName = selectedAdmission.studentName;
-                this.paidPurpose = selectedAdmission.student.paidPurpose.map(
-                    (purpose) => Number(purpose)
-                );
-            } else {
-                this.registration = "";
-                this.form.admission = "";
-                this.studentName = "";
-                this.paidPurpose = "";
+                this.setCommonData(selectedAdmission);
+                this.setDuringclassOrRollSelect(selectedAdmission);
             }
 
             this.form.purpose = "";
+        },
+        setCommonData(selectedAdmission) {
+            this.form.admission = selectedAdmission.id;
+            this.studentName = selectedAdmission.studentName;
+            this.paidPurpose = selectedAdmission.student.paidPurpose.map(
+                (purpose) => Number(purpose)
+            );
+            this.duePurposeId = selectedAdmission.student.duePurposeId;
+            this.due = selectedAdmission.student.due;
+        },
+        setDuringRegistrationSelect(selectedAdmission) {
+            this.roll = selectedAdmission.roll;
+            this.classId = selectedAdmission.classId;
+        },
+        setDuringclassOrRollSelect(selectedAdmission) {
+            this.registration = selectedAdmission.student.registration;
+        },
+        resetCommonData() {
+            this.form.admission = "";
+            this.studentName = "";
+            this.paidPurpose = "";
+            this.duePurposeId = "";
+            this.due = 0;
+        },
+        resetDuringRegistrationSelect() {
+            this.roll = "";
+            this.classId = "";
+        },
+        resetDuringclassOrRollSelect() {
+            this.registration = "";
         },
     },
 };

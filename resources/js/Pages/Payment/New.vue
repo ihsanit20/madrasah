@@ -73,7 +73,8 @@
                                 "
                                 v-html="
                                     (paidPurpose.includes(Number(index))
-                                        ? Number(duePurposeId) === Number(index)
+                                        ? Number(duePurposeId) ===
+                                              Number(index) && due > 0
                                             ? '&#9888; (বকেয়া) '
                                             : '&#x2713; '
                                         : '') + purpose.title
@@ -134,6 +135,7 @@ export default {
             registration: "",
             paidPurpose: [],
             duePurposeId: "",
+            due: 0,
         };
     },
     methods: {
@@ -158,12 +160,15 @@ export default {
                     (purpose) => Number(purpose)
                 );
                 this.duePurposeId = selectedAdmission.student.duePurposeId;
+                this.due = selectedAdmission.student.due;
             } else {
                 this.roll = "";
                 this.classId = "";
                 this.form.admission = "";
                 this.studentName = "";
                 this.paidPurpose = "";
+                this.duePurposeId = "";
+                this.due = 0;
             }
 
             this.form.purpose = "";

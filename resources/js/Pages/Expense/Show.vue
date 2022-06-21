@@ -13,11 +13,12 @@
             <div class="grid gap-2">
                 <inline-data title="খাত:" :value="data.expense.categoryName" />
                 <inline-data
-                    title="ব্যয়কারী:"
+                    title="শিক্ষক/স্টাফ:"
                     :value="data.expense.staffName"
                 />
                 <inline-data title="টাকা:" :value="data.expense.amount" />
                 <inline-data title="তারিখ:" :value="data.expense.date" />
+                <inline-data title="বিবরণ:" :value="data.expense.description" />
             </div>
         </div>
     </app-layout>

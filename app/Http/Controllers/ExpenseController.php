@@ -128,6 +128,9 @@ class ExpenseController extends Controller
             'date' => [
                 'required',
             ],
+            'description' => [
+                'required',
+            ],
         ]);
     }
 

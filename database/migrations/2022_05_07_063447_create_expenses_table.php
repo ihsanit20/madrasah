@@ -20,6 +20,7 @@ class CreateExpensesTable extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedFloat('amount');
             $table->string('date');
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

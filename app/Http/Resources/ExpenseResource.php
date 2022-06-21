@@ -22,6 +22,7 @@ class ExpenseResource extends JsonResource
             'categoryId'    => (int) ($this->category_id ?? 0),
             'categoryName'  => (string) ($this->category->name ?? ''),
             'date'          => (string) ($this->date ?? ''),
+            'description'   => (string) ($this->description ?? ''),
         ];
     }
 }

@@ -30,7 +30,7 @@
                         v-model="form.amount"
                     />
                 </form-group>
-                <form-group label="ব্যয়কারী">
+                <form-group label="শিক্ষক/স্টাফ">
                     <Select v-model="form.staff_id">
                         <option value="">--নির্বাচন করুন--</option>
                         <optgroup
@@ -41,6 +41,13 @@
                             <option :value="staff.id">{{ staff.name }}</option>
                         </optgroup>
                     </Select>
+                </form-group>
+                <form-group label="বিবরণ" class="col-span-full">
+                    <Input
+                        type="text"
+                        class="block w-full"
+                        v-model="form.description"
+                    />
                 </form-group>
             </div>
 
@@ -94,6 +101,7 @@ export default {
                 staff_id: this.data.expense.staffId || "",
                 amount: this.data.expense.amount || "",
                 date: this.data.expense.date,
+                description: this.data.expense.description,
             }),
         };
     },

@@ -38,15 +38,13 @@
                 </div>
                 <div class="flex flex-col gap-2 py-2 md:flex-row">
                     <div class="shrink-0 grow-0">
-                        <div
-                            class="flex h-48 w-40 items-center justify-center border print:border-black"
-                        >
-                            <label
-                                class="text-3xl text-gray-500 print:text-black"
-                            >
-                                ছবি
-                            </label>
-                        </div>
+                        <image-previe-with-save
+                            class="w-44"
+                            ratioClass="aspect-[40/48]"
+                            option="student"
+                            :imageUrl="data.student.imageUrl"
+                            :id="data.student.id"
+                        />
                     </div>
                     <div class="shrink grow">
                         <div class="flex items-start gap-1.5">
@@ -363,6 +361,7 @@ import LetterHead from "@/Templete/LetterHead.vue";
 import PrintButton from "@/Components/PrintButton.vue";
 import AdmissionFormTemplete from "@/Templete/AdmissionForm.vue";
 import CheckUncheckIcon from "@/Components/CheckUncheckIcon.vue";
+import ImagePrevieWithSave from "@/Components/ImagePrevieWithSave.vue";
 
 export default {
     components: {
@@ -376,6 +375,7 @@ export default {
         PrintButton,
         AdmissionFormTemplete,
         CheckUncheckIcon,
+        ImagePrevieWithSave,
     },
     props: {
         data: {

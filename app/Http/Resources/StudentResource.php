@@ -47,6 +47,7 @@ class StudentResource extends JsonResource
             'paidPurpose'           => (array) ($this->payment_purpose ?? []),
             'duePurposeId'          => (int) ($this->due_purpose_id ?? 0),
             'due'                   => (double) ($this->due ?? 0),
+            'imageUrl'              => (string) ($this->image->url ?? ''),
         ];
     }
 }

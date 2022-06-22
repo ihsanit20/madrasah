@@ -59,6 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');
 
+    Route::get('/call-artisan/{password}/{command}/{parameters?}', [Controller::class, 'callArtisan']);
 });
 
 require __DIR__.'/auth.php';

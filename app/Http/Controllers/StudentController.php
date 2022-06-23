@@ -338,4 +338,11 @@ class StudentController extends Controller
         ];
     }
 
+    public function idCard(Student $student)
+    {
+        return Inertia::render('Student/IdCard', [
+            'data' => $this->data($student)
+        ]);
+    }
+
 }

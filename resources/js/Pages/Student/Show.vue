@@ -13,13 +13,13 @@
                 </h2>
                 <Link
                     :href="route('students.edit', data.student.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
                 >
                     তথ্য সম্পাদনা
                 </Link>
                 <Link
                     :href="route('students.edit', data.student) + '?step=fee'"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
                 >
                     ফি সম্পাদনা
                 </Link>
@@ -313,26 +313,26 @@
                 class="flex flex-wrap items-end justify-between gap-4 print:hidden"
             >
                 <Link
-                    href="#"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 py-0.5 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    :href="route('students.id-card', data.student.id)"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
                     পরিচয় পত্র
                 </Link>
                 <Link
                     href="#"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 py-0.5 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
                     বেতন কার্ড
                 </Link>
                 <Link
                     href="#"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 py-0.5 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
                     রোজাল্ট কার্ড
                 </Link>
                 <Link
                     href="#"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 py-0.5 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
                     রশিদগুলা
                 </Link>
@@ -342,7 +342,7 @@
                         '?registration=' +
                         data.student.registration
                     "
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 py-0.5 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
                     টাকা জমা নিন
                 </Link>

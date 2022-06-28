@@ -100,7 +100,7 @@
                         >
                             <div class="shrink-0 grow-0">মেয়াদ :</div>
                             <div class="shrink-0 grow-0">
-                                ২৫ রমযান ১৪৪৪ হিজরি
+                                {{ $page.props.settings.idCardTime }}
                             </div>
                         </div>
                         <p class="mt-2 text-center text-[9px]">

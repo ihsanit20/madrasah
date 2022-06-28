@@ -106,7 +106,7 @@
                         <p class="mt-2 text-center text-[9px]">
                             তথ্য যাচাইয়ের জন্য স্ক্যান করুন
                         </p>
-                        <div class="mt-1 flex items-center justify-center">
+                        <div class="mt-2 flex items-center justify-center">
                             <div class="h-[91px] w-[91px]">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -125,12 +125,10 @@
                             পরিচয়পত্রটি যদি কোথাও পাওয়া গেলে দয়া করে নিম্নোক্ত
                             যেকোন ঠিকানায় পৌঁছে দিন
                         </p>
-                        <h3 class="mt-2.5 text-center text-[10px] font-bold">
+                        <h3 class="mt-3 text-center text-[10px] font-bold">
                             শিক্ষার্থীর ঠিকানা
                         </h3>
-                        <div
-                            class="mt-1 min-h-[36px] px-8 text-center text-[8px]"
-                        >
+                        <div class="mt-1 px-8 text-center text-[8px]">
                             {{ data.student.presentAddress.value }},
                             {{ data.student.presentAddress.postoffice }},
                             {{ data.student.presentAddress.areaName }},
@@ -146,29 +144,14 @@
                             </div>
                         </div>
                         <div
-                            class="mt-3 flex items-center justify-center gap-1 text-[8px]"
+                            class="absolute bottom-0 left-0 right-0 z-10 w-full"
                         >
                             <div
-                                class="w-[73px] border-t border-dashed border-gray-700"
-                            ></div>
-                        </div>
-                        <div
-                            class="flex flex-col items-center justify-center gap-1 pt-2 pb-1.5"
-                        >
-                            <div
-                                class="flex flex-col items-center justify-end space-y-1"
+                                class="flex flex-col items-center justify-end space-y-2 bg-blue-900 py-4 text-white"
                             >
-                                <h2
-                                    class="text-[14px] font-bold text-blue-900 print:text-black"
-                                >
+                                <h2 class="text-[14px] font-bold">
                                     {{ $page.props.settings.siteName }}
                                 </h2>
-                            </div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 w-full">
-                            <div
-                                class="flex flex-col items-center justify-end space-y-2 bg-blue-900 py-3 text-white"
-                            >
                                 <h2
                                     class="px-6 text-center text-[8px] font-bold text-white"
                                 >
@@ -183,7 +166,7 @@
                                         ফোন :
                                     </div>
                                     <div class="shrink grow text-left">
-                                        01923204939, 01833056363
+                                        {{ $page.props.settings.sitePhone }}
                                     </div>
                                 </div>
                             </div>

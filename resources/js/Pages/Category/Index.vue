@@ -20,6 +20,12 @@
                         </Link>
                     </div>
                 </table-td>
+                <table-td class="w-10 text-right">
+                    <action-button-delete
+                        v-if="category.allowDeletion"
+                        :href="route('categories.destroy', category.id)"
+                    />
+                </table-td>
             </template>
         </simple-table>
     </app-layout>
@@ -33,6 +39,7 @@ import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";
 import TableTd from "@/Components/TableTd.vue";
+import ActionButtonDelete from "@/Components/ActionButtonDelete.vue";
 
 export default {
     components: {
@@ -44,6 +51,7 @@ export default {
         ActionButtonEdit,
         AddNewButton,
         TableTd,
+        ActionButtonDelete,
     },
     props: {
         data: {
@@ -53,7 +61,7 @@ export default {
     },
     data() {
         return {
-            columns: [{ title: "ব্যয়ের খাত", align: "left" }],
+            columns: [{ title: "ব্যয়ের খাত", align: "left" }, {}],
         };
     },
 };

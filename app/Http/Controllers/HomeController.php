@@ -30,7 +30,9 @@ class HomeController extends Controller
 
         // $today = "01-01-2022"; //testing
 
-        $response = Http::get("https://api.aladhan.com/v1/gToH?date={$today}");
+        $api_base_url = env('API_BASE_URL', "https://api.aladhan.com");
+
+        $response = Http::get("{$api_base_url}/v1/gToH?date={$today}");
 
         $response = $response->object();
         
@@ -44,8 +46,7 @@ class HomeController extends Controller
 
         $current_year = $response->data->hijri->year;
 
-
-        $response = Http::get("https://api.aladhan.com/v1/hToGCalendar/{$current_month->number}/{$current_year}");
+        $response = Http::get("{$api_base_url}/v1/hToGCalendar/{$current_month->number}/{$current_year}");
 
         $response = $response->object();
 

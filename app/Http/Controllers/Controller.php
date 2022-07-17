@@ -43,7 +43,9 @@ class Controller extends BaseController
     {
         $date = $date ?? date("d-m-Y");
 
-        $response = Http::get("https://api.aladhan.com/v1/gToH?date={$date}");
+        $api_base_url = env('API_BASE_URL', "https://api.aladhan.com");
+
+        $response = Http::get("{$api_base_url}/v1/gToH?date={$date}");
 
         $response = $response->object();
         

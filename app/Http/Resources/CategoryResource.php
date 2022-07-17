@@ -14,6 +14,10 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'            => (int) ($this->id),
+            'name'          => (string) ($this->name ?? ''),
+            'allowDeletion' => (boolean) !($this->expenses()->count() ?? 0),
+        ];
     }
 }

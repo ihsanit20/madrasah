@@ -345,4 +345,9 @@ class StudentController extends Controller
         ]);
     }
 
+    public function moneyReceipt(Student $student)
+    {
+        return $student->current_admission()->first()->payments()->get();
+    }
+
 }

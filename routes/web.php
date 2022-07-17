@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
 
     Route::get('/students/{student}/id-card', [StudentController::class, 'idCard'])->name('students.id-card');
+    Route::get('/students/{student}/money-receipt', [StudentController::class, 'moneyReceipt'])->name('students.money-receipt');
 
     Route::get('student-class', [StudentClassController::class, 'index'])->name('students.class.index');
     Route::get('student-class/{class}', [StudentClassController::class, 'show'])->name('students.class.show');

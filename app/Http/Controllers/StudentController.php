@@ -9,6 +9,7 @@ use App\Http\Resources\ClassesResource;
 use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
+use App\Http\Resources\PaymentResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Address;
 use App\Models\Admission;
@@ -18,6 +19,7 @@ use App\Models\ClassFee;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Guardian;
+use App\Models\Payment;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -347,7 +349,38 @@ class StudentController extends Controller
 
     public function moneyReceipt(Student $student)
     {
-        return $student->current_admission()->first()->payments()->get();
+        $collections = $student->current_admission()
+            ->first()
+            ->payments()
+            ->latest('id')
+            ->with('admission')
+            ->paginate()
+            ->appends(request()->input());
+
+        StudentResource::withoutWrapping();
+
+        return Inertia::render('Student/MoneyReceipt', [
+            'data' => [
+                'collections'   => PaymentResource::collection($collections),
+                'student'       => StudentResource::make($student)
+            ]
+        ]);
+    }
+
+    public function moneyReceiptShow(Student $student, Payment $payment)
+    {
+        $payment->load([
+            'admission',
+            'payment_details',
+        ]);
+
+        PaymentResource::withoutWrapping();
+        
+        return Inertia::render('Payment/Show', [
+            'data' => [
+                'payment' => PaymentResource::make($payment)
+            ]
+        ]);
     }
 
 }

@@ -331,7 +331,9 @@
                     রোজাল্ট কার্ড
                 </Link>
                 <Link
-                    href="#"
+                    :href="
+                        route('students.money-receipt.index', data.student.id)
+                    "
                     class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
                     রশিদগুলা

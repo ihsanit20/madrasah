@@ -103,10 +103,10 @@ class Controller extends BaseController
             ]
         );
 
-        $old_url = $model_instance->image->url;
+        $old_url = $model_instance->image->url ?? '';
 
         if($type == 2) {
-            $old_url = $model_instance->signature->url;
+            $old_url = $model_instance->signature->url ?? '';
         }
 
         if($model_instance->image && $old_url) {

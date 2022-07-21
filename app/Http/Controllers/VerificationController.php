@@ -36,7 +36,7 @@ class VerificationController extends Controller
             : '';
 
         return Inertia::render('Verification/StudentIdCard', [
-            'data' => $this->studentData($student),
+            'data'      => $this->studentData($student),
             'signature' => $signature,
         ]);
     }

@@ -27,7 +27,7 @@ Route::get('/class/{class}', [HomeController::class, 'class'])->name('page.class
 Route::get('/admission-form', [HomeController::class, 'admissionForm'])->name('page.admission-form');
 Route::get('/admission-form-blank', [HomeController::class, 'admissionFormBlank'])->name('page.admission-form-blank');
 
-Route::get('verifications/student-id-card/{student}/{admission}', [VerificationController::class, 'studentIdCard'])->name('verifications.student-id-card');
+Route::get('verify/{student}/{admission}', [VerificationController::class, 'studentIdCard'])->name('verifications.student-id-card');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -353,7 +353,7 @@ class StudentController extends Controller
             : '';
 
         return Inertia::render('Student/IdCard', [
-            'data' => $this->data($student),
+            'data'      => $this->data($student),
             'signature' => $signature,
         ]);
     }

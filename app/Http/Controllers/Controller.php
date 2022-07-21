@@ -14,7 +14,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {

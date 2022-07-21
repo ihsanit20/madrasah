@@ -2,8 +2,9 @@
     <Head title="Student" />
 
     <app-layout>
-        <div class="mx-auto w-full max-w-xl rounded px-6 py-6">
-            <StudentIdCard :data="data" :signature="signature" />
+        <StudentIdCard :data="data" :signature="signature" />
+        <div class="w-full max-w-xl rounded px-6 py-6 print:hidden">
+            <print-button class="mx-auto" />
         </div>
     </app-layout>
 </template>
@@ -14,6 +15,7 @@ import AppLayout from "@/Layouts/App.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AvatarView from "@/Components/AvatarView.vue";
 import StudentIdCard from "../../Templete/StudentIdCard.vue";
+import PrintButton from "@/Components/PrintButton.vue";
 export default {
     components: {
         Head,
@@ -22,6 +24,7 @@ export default {
         ApplicationLogo,
         AvatarView,
         StudentIdCard,
+        PrintButton,
     },
     props: {
         data: {

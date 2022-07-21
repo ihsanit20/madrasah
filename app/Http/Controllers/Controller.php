@@ -103,8 +103,14 @@ class Controller extends BaseController
             ]
         );
 
-        if($model_instance->image && $model_instance->image->url) {
-            Storage::delete(str_replace("storage", "public", $model_instance->image->url));
+        $old_url = $model_instance->image->url;
+
+        if($type == 2) {
+            $old_url = $model_instance->signature->url;
+        }
+
+        if($model_instance->image && $old_url) {
+            Storage::delete(str_replace("storage", "public", $old_url));
         }
     }
 

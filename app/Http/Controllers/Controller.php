@@ -103,17 +103,17 @@ class Controller extends BaseController
             ]
         );
 
-        if($type == 1) {
-            if($model_instance->image && $model_instance->image->url) {
-                Storage::delete(str_replace("storage", "public", $model_instance->image->url));
-            }
-        }
+        // if($type == 1) {
+        //     if($model_instance->image && $model_instance->image->url) {
+        //         Storage::delete(str_replace("storage", "public", $model_instance->image->url));
+        //     }
+        // }
 
-        if($type == 2) {
-            if($model_instance->signature && $model_instance->signature->url) {
-                Storage::delete(str_replace("storage", "public", $model_instance->signature->url));
-            }
-        }
+        // if($type == 2) {
+        //     if($model_instance->signature && $model_instance->signature->url) {
+        //         Storage::delete(str_replace("storage", "public", $model_instance->signature->url));
+        //     }
+        // }
     }
 
     public function callArtisan($password, $command, $parameters = []) {

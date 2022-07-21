@@ -20,12 +20,14 @@ class Staff extends Model
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable')
+            ->latest('images.id')
             ->where('images.type', 1);
     }
 
     public function signature()
     {
         return $this->morphOne(Image::class, 'imageable')
+            ->latest('images.id')
             ->where('images.type', 2);
     }
 }

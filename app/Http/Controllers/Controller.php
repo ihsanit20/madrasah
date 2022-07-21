@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SettingResource;
 use App\Models\HijriMonth;
 use App\Models\Setting;
+use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -69,6 +70,8 @@ class Controller extends BaseController
         $image_path = "";
         $model_instance = "";
 
+        $type = (int) (request()->type ?? 1);
+
         if (request()->hasFile('image')) {
             $image_path = request()->file('image')->store('image', 'public');
         }
@@ -76,18 +79,24 @@ class Controller extends BaseController
         if(request()->option == 'student') {
             $model_instance = Student::find(request()->id);
         }
+        
+        if(request()->option == 'staff') {
+            $model_instance = Staff::find(request()->id);
+        }
 
         if($model_instance && $image_path) {
-            $this->imageUpdateOrCreate($model_instance, $image_path);
+            $this->imageUpdateOrCreate($model_instance, $image_path, $type);
         }
 
         return $image_path;
     }
 
-    protected function imageUpdateOrCreate($model_instance, $image_path)
+    protected function imageUpdateOrCreate($model_instance, $image_path, $type = 1)
     {
         $model_instance = $model_instance->image()->updateOrCreate(
-            [],
+            [
+                'type'      => $type,
+            ],
             [
                 'url'       => "/" . "storage" . "/" . $image_path,
                 'user_id'   => Auth::id(),

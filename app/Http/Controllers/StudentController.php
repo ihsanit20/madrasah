@@ -20,6 +20,7 @@ use App\Models\District;
 use App\Models\Division;
 use App\Models\Guardian;
 use App\Models\Payment;
+use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -342,8 +343,18 @@ class StudentController extends Controller
 
     public function idCard(Student $student)
     {
+        $principal = Staff::query()
+            ->with('signature')
+            ->where('designation_id', 1)
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
+
         return Inertia::render('Student/IdCard', [
-            'data' => $this->data($student)
+            'data' => $this->data($student),
+            'signature' => $signature,
         ]);
     }
 

@@ -26,13 +26,11 @@
         <div v-else class="flex items-center justify-center gap-4">
             <label
                 v-if="!edit"
-                for="__input__image__file__"
                 class="cursor-pointer border border-sky-600 px-4 py-2 text-sky-600 hover:bg-sky-600 hover:text-white"
             >
-                ছবি {{ imagePreview ? "পরিবর্তন" : "আপলোড" }}
+                {{ imagePreview ? "পরিবর্তন" : "আপলোড" }}
                 <input
                     type="file"
-                    id="__input__image__file__"
                     class="hidden"
                     accept="image/*"
                     @input="preview"
@@ -77,7 +75,11 @@ export default {
         },
         id: {
             type: Number,
-            default: null,
+            default: 0,
+        },
+        type: {
+            type: Number,
+            default: 1,
         },
     },
     created() {
@@ -117,6 +119,7 @@ export default {
             formData.append("image", this.file);
             formData.append("option", this.option);
             formData.append("id", this.id);
+            formData.append("type", this.type);
 
             axios
                 .post("/image-upload-get-link", formData)

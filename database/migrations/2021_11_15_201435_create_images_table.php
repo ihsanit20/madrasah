@@ -16,6 +16,7 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedTinyInteger('type')->default(1)->comment('1=Profile Photo, 2=Signature');
             $table->string('url');
             $table->morphs('imageable');
             $table->timestamps();

@@ -17,6 +17,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::get('/notice/{notice}', [HomeController::class, 'notice'])->name('page.no
 Route::get('/class/{class}', [HomeController::class, 'class'])->name('page.class');
 Route::get('/admission-form', [HomeController::class, 'admissionForm'])->name('page.admission-form');
 Route::get('/admission-form-blank', [HomeController::class, 'admissionFormBlank'])->name('page.admission-form-blank');
+
+Route::get('verifications/student-id-card/{student}/{admission}', [VerificationController::class, 'studentIdCard'])->name('verifications.student-id-card');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

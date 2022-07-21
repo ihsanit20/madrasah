@@ -10,7 +10,7 @@
 
 <script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/Master.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AvatarView from "@/Components/AvatarView.vue";
 import StudentIdCard from "../../Templete/StudentIdCard.vue";

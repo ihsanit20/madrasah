@@ -16,4 +16,16 @@ class Staff extends Model
     {
         return $this->belongsTo(Designation::class);
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable')
+            ->where('images.type', 1);
+    }
+
+    public function signature()
+    {
+        return $this->morphOne(Image::class, 'imageable')
+            ->where('images.type', 2);
+    }
 }

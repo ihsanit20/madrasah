@@ -74,7 +74,7 @@ export default {
             columns: [
                 { title: "নাম", align: "left" },
                 { title: "পদবি", align: "left" },
-                { title: "Phone", align: "left" },
+                { title: "ফোন", align: "left" },
                 { title: "", align: "right" },
             ],
         };

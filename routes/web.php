@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('student-class', [StudentClassController::class, 'index'])->name('students.class.index');
     Route::get('student-class/{class}', [StudentClassController::class, 'show'])->name('students.class.show');
+    Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
 
     Route::get('payment-purpose', [PaymentPurposeController::class, 'index'])->name('payments.purpose.index');
     Route::get('payment-purpose/{purpose}', [PaymentPurposeController::class, 'show'])->name('payments.purpose.show');

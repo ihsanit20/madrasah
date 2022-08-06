@@ -27,7 +27,7 @@
                         class="mx-auto -mb-12 aspect-[40/48] w-[91px] -translate-y-1/2 overflow-hidden border-2 border-orange-500"
                     >
                         <img
-                            :src="data.student.imageUrl"
+                            :src="data.student.imageUrl || '/images/hijab-icon.jpg'"
                             class="h-full w-full object-cover"
                         />
                     </div>
@@ -85,9 +85,7 @@
         </div>
         <div class="w-[236px] space-y-2">
             <h3 class="text-center font-bold print:hidden">পিছনের অংশ</h3>
-            <div
-                class="relative h-[375px] border bg-white py-4"
-            >
+            <div class="relative h-[375px] border bg-white py-4">
                 <div
                     class="flex items-center justify-center gap-1 text-[10px] font-bold"
                 >

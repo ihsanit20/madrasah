@@ -14,6 +14,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic;
 
 class Controller extends BaseController
 {
@@ -68,11 +71,29 @@ class Controller extends BaseController
 
         $image_path = "";
         $model_instance = "";
+        $width = request()->width ?? 300;
+        $height = request()->height ?? 300;
 
         $type = (int) (request()->type ?? 1);
 
         if (request()->hasFile('image')) {
-            $image_path = request()->file('image')->store('image', 'public');
+            $image = request()->file('image');
+
+            $extention = $image->getClientOriginalExtension();
+
+            $fileName = Str::random(10) . time() . '.' . $extention;
+
+            $path = 'image/';
+
+            $finalImage = ImageManagerStatic::make($image);
+
+            $finalImage = $finalImage->fit($width, $height);
+
+            $finalImage = $finalImage->encode($extention);
+
+            Storage::put('public/' . $path . $fileName, $finalImage->__toString());
+
+            $image_path = 'storage/' . $path . $fileName;
         }
         
         if(request()->option == 'student') {
@@ -97,7 +118,7 @@ class Controller extends BaseController
                 'type'      => $type,
             ],
             [
-                'url'       => "/" . "storage" . "/" . $image_path,
+                'url'       => "/" . $image_path,
                 'user_id'   => Auth::id(),
             ]
         );

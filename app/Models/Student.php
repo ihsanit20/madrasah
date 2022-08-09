@@ -16,9 +16,9 @@ class Student extends Model
     protected $appends = [
         'gender_text',
         'guardian_type',
-        'payment_purpose',
-        'due',
-        'due_purpose_id',
+        // 'payment_purpose',
+        // 'due',
+        // 'due_purpose_id',
     ];
     
     protected $casts = [

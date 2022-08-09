@@ -23,10 +23,10 @@ class Classes extends Model
         return $this->id;
     }
 
-    public function getTotalStudentAttribute()
-    {
-        return $this->students()->count();
-    }
+    // public function getTotalStudentAttribute()
+    // {
+    //     return $this->students()->count();
+    // }
 
     public function subjects()
     {

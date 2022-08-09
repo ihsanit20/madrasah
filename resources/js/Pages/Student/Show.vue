@@ -44,6 +44,8 @@
                             option="student"
                             :imageUrl="data.student.imageUrl"
                             :id="data.student.id"
+                            :width="100"
+                            :height="120"
                         />
                     </div>
                     <div class="shrink grow">

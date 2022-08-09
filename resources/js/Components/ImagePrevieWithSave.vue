@@ -81,6 +81,14 @@ export default {
             type: Number,
             default: 1,
         },
+        width: {
+            type: Number,
+            default: 300,
+        },
+        height: {
+            type: Number,
+            default: 300,
+        },
     },
     created() {
         this.image = this.imageUrl;
@@ -120,6 +128,8 @@ export default {
             formData.append("option", this.option);
             formData.append("id", this.id);
             formData.append("type", this.type);
+            formData.append("width", this.width);
+            formData.append("height", this.height);
 
             axios
                 .post("/image-upload-get-link", formData)

@@ -20,6 +20,8 @@
                         option="staff"
                         :imageUrl="data.staff.imageUrl"
                         :id="data.staff.id"
+                        :width="100"
+                        :height="120"
                     />
                 </div>
             </div>
@@ -41,6 +43,8 @@
                         :imageUrl="data.staff.signatureUrl"
                         :id="data.staff.id"
                         :type="2"
+                        :width="160"
+                        :height="90"
                     />
                 </div>
             </div>

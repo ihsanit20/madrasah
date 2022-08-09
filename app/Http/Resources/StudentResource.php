@@ -14,6 +14,8 @@ class StudentResource extends JsonResource
      */
     public function toArray($request)
     {
+        $latest_payments = $this->current_admission()->first()->payments()->latest()->get();
+
         return [
             'id'                    => (int) $this->id,
             'name'                  => (string) ($this->name ?? ''),
@@ -44,10 +46,15 @@ class StudentResource extends JsonResource
             'currentAdmissionId'    => (int) ($this->current_admission->id ?? 0),
             'currentClassName'      => (string) ($this->current_admission->class->name ?? ''),
             'currentClassRoll'      => (int) ($this->current_admission->roll ?? ''),
-            'paidPurpose'           => (array) ($this->payment_purpose ?? []),
-            'duePurposeId'          => (int) ($this->due_purpose_id ?? 0),
-            'due'                   => (double) ($this->due ?? 0),
+            // 'paidPurpose'           => (array) ($this->payment_purpose ?? []),
+            // 'duePurposeId'          => (int) ($this->due_purpose_id ?? 0),
+            // 'due'                   => (double) ($this->due ?? 0),
             'imageUrl'              => (string) ($this->image->url ?? ''),
+            'paidPurpose'           => (array) ($latest_payments->pluck('purpose')->toArray() ?? []),
+            'duePurposeId'          => (int) ($latest_payments->first()->purpose ?? 0),
+            'due'                   => (double) ($latest_payments->first()->due ?? 0),
+            // 'imageUrl'              => $this->when($this->whenLoaded('image', 1, 0), fn () => (string) $this->image->url ?? ''),
         ];
+
     }
 }

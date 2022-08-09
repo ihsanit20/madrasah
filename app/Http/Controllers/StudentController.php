@@ -10,6 +10,7 @@ use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
 use App\Http\Resources\PaymentResource;
+use App\Http\Resources\SimpleStudentResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Address;
 use App\Models\Admission;
@@ -31,14 +32,18 @@ class StudentController extends Controller
     public function index()
     {
         $collections = Student::query()
+            ->with([
+                'current_admission:id,class_id,roll',
+                'current_admission.class:id,name',
+            ])
             ->latest()
             ->student();
 
-        StudentResource::withoutWrapping();
+        SimpleStudentResource::withoutWrapping();
 
         return Inertia::render('Student/Index', [
             'data' => [
-                'students'   => StudentResource::collection($collections->get()),
+                'students'      => SimpleStudentResource::collection($collections->get(['id', 'name', 'registration'])),
                 'filters'       => $this->getFilterProperty(),
             ]
         ]);
@@ -174,8 +179,8 @@ class StudentController extends Controller
                 'father_info',
                 'mother_info',
                 'guardian_info',
-                'present_address.area.district',
-                'permanent_address.area.district',
+                'present_address.area.district.division',
+                'permanent_address.area.district.division',
             ]
         ));
     }
@@ -353,7 +358,9 @@ class StudentController extends Controller
             : '';
 
         return Inertia::render('Student/IdCard', [
-            'data'      => $this->data($student),
+            'data' => [
+                'student' => $this->formatedData($student),
+            ],
             'signature' => $signature,
         ]);
     }

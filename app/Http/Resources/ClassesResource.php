@@ -22,7 +22,7 @@ class ClassesResource extends JsonResource
             'staffId'       => (int) ($this->staff_id ?? 0),
             'teacherId'     => (int) ($this->staff_id ?? 0),
             'teacherName'   => (string) ($this->teacher->name ?? ''),
-            'totalStudent'  => (int) ($this->total_student ?? 0),
+            'totalStudent'  => $this->when($this->whenLoaded('students', 1, 0), $this->students->count()),
             'subjects'      => SubjectResource::collection($this->whenLoaded('subjects')),
             'fees'          => FeeResource::collection($this->whenLoaded('fees')),
             'classFees'     => ClassFeeResource::collection($this->whenLoaded('class_fees')),

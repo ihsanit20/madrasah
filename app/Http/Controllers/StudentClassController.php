@@ -50,14 +50,16 @@ class StudentClassController extends Controller
 
     public function idCard(Classes $class)
     {
+        // return
         $students = Student::query()
             ->with([
+                'image',
                 'father_info',
                 'mother_info',
                 'guardian_info',
                 'present_address.area.district',
                 // 'permanent_address.area.district',
-                'current_admission',
+                // 'current_admission',
             ])
             ->whereHas('current_admission', function($query) use ($class) {
                 $query->where('class_id', $class->id);

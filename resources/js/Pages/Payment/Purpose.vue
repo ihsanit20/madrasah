@@ -28,6 +28,24 @@
                 </div>
             </Link>
         </div>
+        <hr />
+        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+            <Link
+                :href="route('purposes.create')"
+                class="flex items-center gap-2 rounded-md border border-dashed border-sky-600 p-2 md:gap-4 md:p-4"
+            >
+                <div
+                    class="flex h-10 w-10 shrink-0 grow-0 items-center justify-center rounded-full bg-gray-200 text-xl font-bold text-gray-500 md:h-12 md:w-12 md:text-2xl"
+                >
+                    <span class="text-2xl text-sky-600">+</span>
+                </div>
+                <div class="shrink grow">
+                    <div class="text-md font-bold text-sky-600 md:text-xl">
+                        Add New
+                    </div>
+                </div>
+            </Link>
+        </div>
     </app-layout>
 </template>
 

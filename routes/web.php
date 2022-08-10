@@ -13,6 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentPurposeController;
+use App\Http\Controllers\PurposeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentClassController;
@@ -63,6 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'designations'  => DesignationController::class,
         'notices'       => NoticeController::class,
         'payments'      => PaymentController::class,
+        'purposes'      => PurposeController::class,
     ]);
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');

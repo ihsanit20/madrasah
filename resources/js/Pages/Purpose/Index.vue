@@ -1,42 +1,20 @@
 <template>
-    <Head title="ব্যয়ের তালিকা" />
+    <Head title="বাবদ তালিকা" />
 
-    <app-layout
-        pageTitle="ব্যয়ের তালিকা"
-        :addNewHref="route('expenses.create')"
-    >
-        <simple-table
-            :collections="data.collections"
-            :filters="data.filters"
-            :columns="columns"
-        >
-            <template #default="{ item: expense }">
-                <table-td class="text-left">
-                    <div
-                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
-                    >
-                        <Link
-                            :href="route('expenses.edit', expense.id)"
-                            class="text-sky-600 hover:underline"
-                        >
-                            {{ expense.id }}
-                        </Link>
-                    </div>
-                </table-td>
-                <table-td class="text-left">
-                    {{ expense.date }}
-                </table-td>
-                <table-td class="text-left">
-                    {{ expense.categoryName }}
-                </table-td>
-                <table-td class="text-left">
-                    {{ expense.staffName }}
-                </table-td>
-                <table-td class="text-right">
-                    {{ expense.amount }}
-                </table-td>
-            </template>
-        </simple-table>
+    <app-layout pageTitle="বাবদ তালিকা" :addNewHref="route('purposes.create')">
+        <div class="grid md:grid-cols-3">
+            <Link
+                v-for="purpose in data.collections.data"
+                :key="purpose.id"
+                class="rounded bg-white p-4 shadow"
+                :href="route('purposes.edit', purpose.id)"
+            >
+                <div class="text-sky-600 hover:underline">
+                    {{ purpose.title }}
+                </div>
+                <div>ফি যুক্ত আছে {{ purpose.purpose_fees_count }} টি</div>
+            </Link>
+        </div>
     </app-layout>
 </template>
 

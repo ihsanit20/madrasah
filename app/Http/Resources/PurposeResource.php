@@ -18,6 +18,7 @@ class PurposeResource extends JsonResource
             "id"            => (int) ($this->id),
             "title"         => (string) ($this->title ?? ''),
             "purpose_fees"  => PurposeFeeResource::collection($this->whenLoaded('purpose_fees')),
+            "purpose_fees_count" => (int) ($this->purpose_fees_count ?? 0),
         ];
     }
 }

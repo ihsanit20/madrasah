@@ -14,7 +14,8 @@ class PurposeController extends Controller
 {
     public function index()
     {
-        $collections = Purpose::query();
+        $collections = Purpose::query()
+            ->withCount('purpose_fees');
 
         return Inertia::render('Purpose/Index', [
             'data' => [
@@ -55,6 +56,8 @@ class PurposeController extends Controller
 
     public function edit(Purpose $purpose)
     {
+        $purpose->load('purpose_fees.class');
+
         return Inertia::render('Purpose/Edit', [
             'data' => $this->data($purpose)
         ]);
@@ -63,6 +66,8 @@ class PurposeController extends Controller
     public function update(Request $request, Purpose $purpose)
     {
         $purpose->update($this->validatedData($request, $purpose->id));
+
+        $this->storePurposeFee($request->purpose_fees, $purpose->id);
 
         return redirect()
             ->route('purposes.show', $purpose->id)
@@ -82,7 +87,7 @@ class PurposeController extends Controller
     {
         return [
             'purpose' => $this->formatedData($purpose),
-            'classes' => Classes::get(),  
+            'classes' => Classes::get(['id', 'name']),  
         ];
     }
 

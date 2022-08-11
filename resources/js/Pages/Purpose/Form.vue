@@ -29,7 +29,7 @@
                         </label>
                         <Input
                             type="number"
-                            class="w-20"
+                            class="w-20 text-right"
                             v-show="all_amount_same === true"
                             :required="all_amount_same === true"
                             @input="setAllAmount"
@@ -64,7 +64,7 @@
                         </label>
                         <Input
                             type="text"
-                            class="block w-20"
+                            class="block w-20 text-right"
                             v-model="purpose_fee.amount"
                         />
                     </div>
@@ -127,13 +127,40 @@ export default {
         };
     },
     created() {
-        Object.values(this.data.classes).forEach((classes) => {
-            this.form.purpose_fees.push({
-                class_id: classes.id,
-                class_name: classes.name,
-                amount: "",
+        if (this.moduleAction == "store") {
+            Object.values(this.data.classes).forEach((classes) => {
+                this.form.purpose_fees.push({
+                    class_id: classes.id,
+                    class_name: classes.name,
+                    amount: "",
+                });
             });
-        });
+        }
+
+        if (this.moduleAction == "update") {
+            this.all_amount_same = Object.keys(this.data.purpose.purpose_fees)
+                .length
+                ? Object.values(this.data.purpose.purpose_fees).every(
+                      (val, i, arr) => val.amount === arr[0].amount
+                  )
+                : "";
+
+            this.amount = this.all_amount_same
+                ? this.data.purpose.purpose_fees[0].amount
+                : "";
+
+            Object.values(this.data.classes).forEach((classes) => {
+                let filteredPurposeFee = Object.values(
+                    this.data.purpose.purpose_fees
+                ).find((purpose_fee) => purpose_fee.class_id === classes.id);
+
+                this.form.purpose_fees.push({
+                    class_id: classes.id,
+                    class_name: classes.name,
+                    amount: filteredPurposeFee ? filteredPurposeFee.amount : "",
+                });
+            });
+        }
     },
     methods: {
         submit() {

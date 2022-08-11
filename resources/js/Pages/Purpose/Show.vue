@@ -1,7 +1,7 @@
 <template>
-    <Head title="ভাউচার তালিকা" />
+    <Head title="বাবদ" />
 
-    <app-layout pageTitle="ভাউচার তালিকা">
+    <app-layout>
         <div class="max-w-xl rounded border bg-white p-3 shadow md:p-4">
             <div class="flex items-end justify-end">
                 <div class="flex items-center gap-2">
@@ -27,7 +27,7 @@
 
 <script>
 import AppLayout from "@/Layouts/App.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import FormHeading from "@/Components/FormHeading.vue";
 import InlineData from "@/Components/InlineData.vue";
@@ -36,6 +36,7 @@ export default {
     components: {
         AppLayout,
         Head,
+        Link,
         ActionButtonEdit,
         FormHeading,
         InlineData,

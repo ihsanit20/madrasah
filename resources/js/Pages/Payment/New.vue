@@ -67,13 +67,13 @@
                                 v-for="(purpose, index) in data.purposes"
                                 :key="index"
                                 :value="index"
-                                :hidden="
-                                    Array.isArray(purpose.classIds)
+                                :class="{
+                                    hidden: Array.isArray(purpose.classIds)
                                         ? !purpose.classIds.includes(
-                                              Number(this.classId)
+                                              parseInt(this.classId)
                                           )
-                                        : false
-                                "
+                                        : false,
+                                }"
                                 :disabled="
                                     paidPurpose.includes(Number(index)) &&
                                     Number(duePurposeId) !== Number(index)

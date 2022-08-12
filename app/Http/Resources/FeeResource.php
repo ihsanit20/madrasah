@@ -19,7 +19,7 @@ class FeeResource extends JsonResource
             'name'          => (string) ($this->name ?? ''),
             'period'        => (int) ($this->period ?? 0),
             'periodName'    => (string) ($this->period_name ?? ''),
-            'months'        => (array) ($this->months ?? 0),
+            // 'months'        => (array) ($this->months ?? 0),
         ];
     }
 }

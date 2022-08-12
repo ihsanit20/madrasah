@@ -29,7 +29,7 @@
                 <Link
                     v-if="data.totalPayment[classes.id] < classes.totalStudent"
                     :href="
-                        route('payments.purpose.class', [
+                        route('others.purpose.class', [
                             data.purposeId,
                             classes.id,
                         ])

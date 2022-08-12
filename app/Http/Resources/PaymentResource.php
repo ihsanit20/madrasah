@@ -18,7 +18,7 @@ class PaymentResource extends JsonResource
             'id'            => (int) $this->id,
             'total'         => (double) ($this->total ?? 0.0),
             'purpose'       => (int) ($this->purpose ?? 0),
-            'purposeText'   => (string) ($this->purpose_text ?? ''),
+            'purposeText'   => (string) ($this->purpose->title ?? ($this->purpose_text ?? "")),
             'date'          => (string) ($this->date ?? ''),
             'due'           => (double) ($this->due ?? 0.0),
             'paid'          => (double) ($this->paid ?? 0.0),

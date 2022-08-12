@@ -21,6 +21,7 @@ use App\Models\District;
 use App\Models\Division;
 use App\Models\Guardian;
 use App\Models\Payment;
+use App\Models\PurposeFee;
 use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -87,12 +88,16 @@ class StudentController extends Controller
 
             $admission = $student->current_admission()->first();
 
+            // return $this->getClassFee($admission->class_id, 3, $student->resident);
+            // return $this->getClassFee($admission->class_id, 1, $student->resident);
+
             return Inertia::render('Student/Edit', [
                 'data'  => [
                     'student'       => $this->formatedData($student),
                     'admission'     => new AdmissionResource($admission),
                     'yearlyFees'    => $this->getClassFee($admission->class_id, 1, $student->resident),
                     'monthlyFees'   => $this->getClassFee($admission->class_id, 2, $student->resident),
+                    'otherFees'     => $this->getClassFee($admission->class_id, 3, $student->resident),
                 ],
                 'step'  => 'fee',
             ]);
@@ -106,6 +111,29 @@ class StudentController extends Controller
     
     protected function getClassFee($class_id, $period = null, $resident = null)
     {
+        if($period == 3) {
+            $purpose_fees = PurposeFee::query()
+                ->with('purpose:id,title')
+                ->where('class_id', $class_id)
+                ->get();
+
+            $data = Array();
+
+            foreach($purpose_fees as $purpose_fee) {
+                $data[] = [
+                    'id'            => (int) 0,
+                    'classId'       => (int) ($class_id ?? 0),
+                    'feeId'         => (int) ($purpose_fee->purpose->id ?? 0),
+                    'package'       => [1, 2, 3, 4],
+                    'amount'        => (double) ($purpose_fee->amount ?? 0),
+                    'name'          => (string) ($purpose_fee->purpose->title ?? ''),
+                    'period'        => (int) 3,
+                ];
+            }
+
+            return $data;
+        }
+
         ClassFeeResource::withoutWrapping();
 
         $query = ClassFee::query()

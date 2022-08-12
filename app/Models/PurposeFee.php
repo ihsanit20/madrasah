@@ -16,4 +16,9 @@ class PurposeFee extends Model
     {
         return $this->belongsTo(Classes::class, 'class_id');
     }
+
+    public function purpose()
+    {
+        return $this->belongsTo(Purpose::class);
+    }
 }

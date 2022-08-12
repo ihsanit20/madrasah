@@ -232,6 +232,94 @@
                         </th>
                     </template>
                 </simple-table>
+
+                <simple-table :collections="fees.otherFees" :totalRow="true">
+                    <template #header>
+                        <th
+                            class="py-2 px-2 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            প্রদেয়
+                        </th>
+                        <th
+                            class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            নির্ধারিত টাকা
+                        </th>
+                        <th
+                            class="py-2 pr-3 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:hidden print:text-black md:text-sm"
+                            v-if="editable"
+                        >
+                            ছাড়
+                        </th>
+                    </template>
+                    <template #default="{ item: fee }">
+                        <td
+                            class="whitespace-nowrap py-2 px-2 text-left text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                        >
+                            {{ fee.fee_name }}
+                        </td>
+                        <td
+                            class="whitespace-nowrap py-2 px-2 text-right text-xs font-medium text-gray-900 dark:text-white md:text-sm"
+                        >
+                            <div class="flex justify-end gap-2">
+                                <del
+                                    v-if="fee.concession"
+                                    class="text-gray-400 print:hidden"
+                                >
+                                    {{ $e2bnumber(fee.fee_amount) }}
+                                </del>
+                                <span>
+                                    {{
+                                        $e2bnumber(
+                                            fee.fee_amount - fee.concession
+                                        )
+                                    }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="pr-1.5 print:hidden" v-if="editable">
+                            <div class="flex items-center justify-end">
+                                <Input
+                                    :disabled="!editable"
+                                    type="number"
+                                    v-model="fee.concession"
+                                    class="block w-14 px-1 py-0.5 text-right"
+                                    @input="concessionHandler(fee)"
+                                />
+                            </div>
+                        </td>
+                    </template>
+                    <template #totalRow>
+                        <th
+                            colspan="2"
+                            class="py-2 px-2 text-right text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                        >
+                            <div class="flex justify-end gap-2">
+                                <span>মোট: </span>
+                                <del
+                                    v-if="getConcessionTotal('otherFees')"
+                                    class="text-gray-400 print:hidden"
+                                >
+                                    {{ $e2bnumber(getFeeTotal("otherFees")) }}
+                                </del>
+                                <span>
+                                    {{
+                                        $e2bnumber(
+                                            getFeeTotal("otherFees") -
+                                                getConcessionTotal("otherFees")
+                                        )
+                                    }}
+                                </span>
+                            </div>
+                        </th>
+                        <th
+                            v-if="editable"
+                            class="pr-2 text-right text-rose-500 print:hidden"
+                        >
+                            {{ getConcessionTotal("otherFees") }}
+                        </th>
+                    </template>
+                </simple-table>
             </div>
 
             <div class="hidden print:block">
@@ -321,6 +409,7 @@ export default {
     created() {
         this.dataPushIntoFeeArray("yearlyFees");
         this.dataPushIntoFeeArray("monthlyFees");
+        this.dataPushIntoFeeArray("otherFees");
     },
     data() {
         return {
@@ -331,6 +420,7 @@ export default {
             fees: {
                 yearlyFees: [],
                 monthlyFees: [],
+                otherFees: [],
             },
             editable: false,
         };
@@ -378,6 +468,7 @@ export default {
 
             this.dataPushIntoFormFees("yearlyFees");
             this.dataPushIntoFormFees("monthlyFees");
+            this.dataPushIntoFormFees("otherFees");
         },
 
         dataPushIntoFormFees(option) {

@@ -2,7 +2,7 @@
     <Head title="বাবদ তালিকা" />
 
     <app-layout pageTitle="বাবদ তালিকা" :addNewHref="route('purposes.create')">
-        <div class="grid md:grid-cols-3">
+        <div class="grid gap-2 md:grid-cols-3">
             <Link
                 v-for="purpose in data.collections.data"
                 :key="purpose.id"

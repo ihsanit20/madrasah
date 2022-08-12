@@ -120,7 +120,7 @@ class FeeController extends Controller
                 'required',
                 'numeric',
             ],
-            'months' => [],
+            // 'months' => [],
         ]);
     }
 

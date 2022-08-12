@@ -77,19 +77,14 @@
                     <td
                         class="whitespace-nowrap py-2 px-2 text-left text-xs font-medium text-gray-900 dark:text-white md:text-sm"
                     >
-                        <div class="flex items-center justify-between">
-                            <span>{{ fee.name }}</span>
-                        </div>
+                        {{ fee.name }}
                     </td>
                     <td
                         class="whitespace-nowrap py-2 px-2 text-right text-xs font-medium text-gray-900 dark:text-white md:text-sm"
                     >
                         <div class="flex items-center justify-end gap-2">
                             <del v-if="fee.concession" class="text-gray-400">
-                                {{
-                                    parseInt(fee.amount) +
-                                    parseInt(fee.concession)
-                                }}
+                                {{ fee.amount + fee.concession }}
                             </del>
                             <span>{{ fee.amount }}</span>
                         </div>
@@ -251,6 +246,20 @@ export default {
                 period: 2,
             });
         }
+
+        // if (Object.keys(this.data.otherFees).length) {
+        //     Object.values(this.data.otherFees).forEach((fee) => {
+        //         this.form.fees.push({
+        //             id: 1,
+        //             classId: fee.classId,
+        //             feeId: fee.feeId,
+        //             amount: fee.amount,
+        //             concession: fee.concession,
+        //             name: fee.name,
+        //             period: fee.period,
+        //         });
+        //     });
+        // }
     },
     data() {
         return {

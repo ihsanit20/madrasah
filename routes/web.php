@@ -11,6 +11,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\OtherPurposeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentPurposeController;
 use App\Http\Controllers\PurposeController;
@@ -49,6 +50,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('payment-purpose', [PaymentPurposeController::class, 'index'])->name('payments.purpose.index');
     Route::get('payment-purpose/{purpose}', [PaymentPurposeController::class, 'show'])->name('payments.purpose.show');
     Route::get('payment-purpose/{purpose}/class/{class}', [PaymentPurposeController::class, 'classes'])->name('payments.purpose.class');
+
+    Route::get('other-purpose', [OtherPurposeController::class, 'index'])->name('others.purpose.index');
+    Route::get('other-purpose/{purpose}', [OtherPurposeController::class, 'show'])->name('others.purpose.show');
+    Route::get('other-purpose/{purpose}/class/{class}', [OtherPurposeController::class, 'classes'])->name('others.purpose.class');
+    
+    Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
 
     Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
     

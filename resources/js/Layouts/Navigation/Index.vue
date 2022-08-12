@@ -57,7 +57,7 @@
             </template>
         </dropdown-nav-link>
 
-        <dropdown-nav-link :active="route().current('(payments).*')">
+        <dropdown-nav-link :active="route().current('(payments|others).*')">
             <MoneyReceiptSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 টাকা জমার রশিদ
@@ -100,6 +100,19 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         বাবদ সমুহ
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('others.purpose.index')"
+                    :active="route().current('others.purpose.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        অন্যান্য বাবদ
                     </span>
                 </nav-link>
             </template>
@@ -166,7 +179,7 @@
         <dropdown-nav-link
             :active="
                 route().current(
-                    '(classes|fees|staff|designations|categories|admins|settings).*'
+                    '(classes|fees|staff|designations|categories|admins|settings|purposes).*'
                 )
             "
         >
@@ -199,6 +212,19 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         প্রদেয় ফি
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('purposes.index')"
+                    :active="route().current('purposes.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <MoneyReceiptSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        অন্যান্য বাবদ
                     </span>
                 </nav-link>
                 <nav-link

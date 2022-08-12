@@ -25,9 +25,13 @@ class Payment extends Model
 
     public function getPurposeTextAttribute()
     {
+        $purpose = Purpose::find($this->purpose);
+
         $purpose_array = Fee::getPurpose()[$this->purpose] ?? [];
 
-        return $purpose_array["title"];
+        return $purpose
+            ? ($purpose->title ?? '')
+            : ($purpose_array["title"] ?? "");
     }
 
     public function admission()

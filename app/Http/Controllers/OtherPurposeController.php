@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ClassesResource;
-use App\Http\Resources\PurposeResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Classes;
 use App\Models\Fee;
@@ -13,25 +12,28 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class PaymentPurposeController extends Controller
+class OtherPurposeController extends Controller
 {
     public function index()
     {
-        // return PurposeResource::collection(Purpose::get());
-        PurposeResource::withoutWrapping();
-        return Inertia::render('Payment/Purpose', [
+        return Inertia::render('Other/Purpose', [
             'data' => [
-                'purposes'      => Fee::getPurpose(),
-                'totalStudent'  => Student::active()->student()->count(),
+                'purposes'      => Purpose::get(),
+                // 'totalStudent'  => Student::active()->student()->count(),
+                'totalStudent'  => $this->purposeWiseTotalStudent(),
                 'totalPayment'  => $this->purposeWiseTotalPayment(),
-                // 'otherPurposes' => PurposeResource::collection(Purpose::get()),
             ]
         ]);
     }
 
-    public function show($purpose)
+    public function show(Purpose $purpose)
     {
+        $purpose->load([
+            'purpose_fees',
+        ]);
+
         $collections = Classes::query()
+            ->whereIn('id', $purpose->purpose_fees->pluck('class_id'))
             ->with([
                 'students',
                 'teacher',
@@ -39,12 +41,12 @@ class PaymentPurposeController extends Controller
 
         ClassesResource::withoutWrapping();
 
-        return Inertia::render('Payment/Classes', [
+        return Inertia::render('Other/Classes', [
             'data' => [
                 'classes'       => ClassesResource::collection($collections->get()),
                 'totalPayment'  => $this->purposeClassWiseTotalPayment($purpose),
-                'purpose'       => Fee::getPurpose($purpose),
-                'purposeId'     => (int) $purpose,
+                'purpose'       => $purpose,
+                'purposeId'     => (int) $purpose->id,
             ]
         ]);
     }
@@ -75,13 +77,38 @@ class PaymentPurposeController extends Controller
         ]);
     }
 
-    protected function purposeWiseTotalPayment()
+    protected function purposeWiseTotalStudent()
     {
-        $purposes = Fee::getPurpose();
+        $purposes = Purpose::query()
+            ->with([
+                'purpose_fees',
+            ])
+            ->get();
 
         $data = Array();
 
-        foreach($purposes as $index => $purpose) {
+        foreach($purposes as $purpose) {
+
+            $data[$purpose->id] = Student::query()
+                ->active()
+                ->student()
+                ->whereHas('current_admission', function($query) use ($purpose) {
+                    $query->whereIn('class_id', $purpose->purpose_fees->pluck('class_id'));
+                })
+                ->count();
+        }
+
+        return $data;
+    }
+
+    protected function purposeWiseTotalPayment()
+    {
+        $purposes = Purpose::get();
+
+        $data = Array();
+
+        foreach($purposes as $purpose) {
+            $index = $purpose->id;
 
             $payments = Payment::query()
                 ->with([
@@ -99,31 +126,8 @@ class PaymentPurposeController extends Controller
                 return ! (($payment->admission->student->due_purpose_id ?? 0) == $index && ($payment->admission->student->due ?? 0) > 0);
             });
 
-            $data[$index] = $payments->groupBy(['admission_id', 'purpose'])->count();
+            $data[$index] = $payments->groupBy(['admission_id', 'purpose'])->count() ?? 0;
         }
-
-        // $purposes = Purpose::get();
-
-        // foreach($purposes as $purpose) {
-        //     $index = $purpose->id;
-
-        //     $payments = Payment::query()
-        //         ->with([
-        //             'admission:id,session,student_id',
-        //             'admission.student:id',
-        //         ])
-        //         ->whereHas('admission', function ($query) {
-        //             $query->where('session', $this->getCurrentSession());
-        //         })
-        //         ->where('purpose', $index)
-        //         ->get();
-            
-        //     $payments = $payments->filter(function($payment) use ($index) {
-        //         return ! (($payment->admission->student->due_purpose_id ?? 0) == $index && ($payment->admission->student->due ?? 0) > 0);
-        //     });
-
-        //     $data[$index] = $payments->groupBy(['admission_id', 'purpose'])->count();
-        // }
 
         return $data;
     }
@@ -147,11 +151,11 @@ class PaymentPurposeController extends Controller
                             'class_id'  => $class->id,
                         ]);
                 })
-                ->where('purpose', $purpose)
+                ->where('purpose', $purpose->id)
                 ->get();
             
             $payments = $payments->filter(function($payment) use ($purpose) {
-                return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose && ($payment->admission->student->due ?? 0) > 0);
+                return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose->id && ($payment->admission->student->due ?? 0) > 0);
             });
 
             $data[$class->id] = $payments->groupBy(['admission_id', 'purpose'])->count();

@@ -38,7 +38,7 @@
                         {{ student.name }}
                     </Link>
                     <div
-                        class="flex flex-col justify-center gap-2 md:flex-row md:items-center md:justify-between"
+                        class="flex flex-wrap justify-center gap-2 md:items-center md:justify-between"
                     >
                         <div class="flex items-center gap-2">
                             <span class="text-gray-600">রেজি. নং: </span>

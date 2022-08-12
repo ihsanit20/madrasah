@@ -13,6 +13,8 @@ use App\Models\ClassFee;
 use App\Models\Fee;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\Purpose;
+use App\Models\PurposeFee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -24,7 +26,9 @@ class PaymentController extends Controller
     {
         $collections = Payment::query()
             ->latest('id')
-            ->with('admission');
+            ->with([
+                'admission',
+            ]);
 
         return Inertia::render('Payment/Index', [
             'data' => [
@@ -51,6 +55,21 @@ class PaymentController extends Controller
         ClassesResource::withoutWrapping();
 
         $purposes = Fee::getPurpose();
+
+        $other_purposes = Purpose::query()
+            ->with('purpose_fees')
+            ->get();
+
+        foreach($other_purposes as $purpose) {
+            $purposes[$purpose->id] = [
+                "period"    => 3,
+                "title"     => $purpose->title ?? '',
+                "monthId"   => "",
+                "classIds"  => $purpose->purpose_fees->pluck('class_id')->toArray(),
+            ];
+        }
+
+        // return $purposes;
         
         $periods = Fee::getPeriod();
 
@@ -73,18 +92,15 @@ class PaymentController extends Controller
             ->find(request()->admission);
         
         if($admission && $purpose) {
-            $month_id = $purpose_array['monthId'] ?? null;
-
             return Inertia::render('Payment/Create', [
                 'data' => [
                     'admission'     => new AdmissionResource($admission),
                     'purpose'       => $purpose,
                     'purposeText'   => $purpose_text,
                     'date'          => $this->getHijriDate(),
-                    'fees'          => $this->getAvailableFee($admission, $period),
+                    'fees'          => $this->getAvailableFee($admission, $period, $purpose),
                     'parentPayment' => $this->parentPayment($admission, $purpose),
                     'paidPayments'  => $this->getPaidPayment($admission, $purpose),
-                    'otherFees'     => $this->getAvailableFee($admission, 3, $month_id),
                 ],
             ]);
         }
@@ -115,9 +131,40 @@ class PaymentController extends Controller
         ]);
     }
 
-    protected function getAvailableFee($admission, $period, $month_id = null)
+    protected function getAvailableFee($admission, $period, $purpose_id = null)
     {
         ClassFeeResource::withoutWrapping();
+
+        if($period == 3) {
+            $purpose_fee = PurposeFee::query()
+                ->with('purpose:id,title')
+                ->where([
+                    'class_id'      => $admission->class_id,
+                    'purpose_id'    => $purpose_id,
+                ])
+                ->first();
+
+            $concessions = collect(json_decode($admission->concessions, true));
+
+            $concession = $concessions->where('id', $purpose_fee->purpose->id)->first();
+
+            $concession_amount = $concession ? $concession['amount'] : 0;
+
+            $final_amount = $purpose_fee->amount - $concession_amount;
+
+            return [
+                [
+                    'id'            => (int) 0,
+                    'classId'       => (int) ($admission->class_id ?? 0),
+                    'feeId'         => (int) ($purpose_fee->purpose->id ?? 0),
+                    'package'       => [1, 2, 3, 4],
+                    'amount'        => (double) ($final_amount > 0 ? $final_amount : 0),
+                    'concession'    => (double) ($concession_amount ?? 0),
+                    'name'          => (string) ($purpose_fee->purpose->title ?? ''),
+                    'period'        => (int) 3,
+                ]
+            ];
+        }
 
         $resident = $admission->student->resident ?? 0;
         $resident = in_array($resident, [1, 2, 3, 4]) ? $resident : 0;
@@ -131,11 +178,8 @@ class PaymentController extends Controller
             ->get();
 
         if($resident) {
-            $class_fees = $class_fees->filter(function ($class_fee) use ($resident, $month_id) {
-                $condission1 = in_array($resident, json_decode($class_fee->package));
-                $condission2 = $month_id ? in_array($month_id, $class_fee->fee->months) : true;
-
-                return $condission1 && $condission2;
+            $class_fees = $class_fees->filter(function ($class_fee) use ($resident) {
+                return in_array($resident, json_decode($class_fee->package));
             });
         }
 

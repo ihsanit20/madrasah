@@ -17,13 +17,13 @@ class Fee extends Model
     ];
 
     protected $casts = [
-        'months' => 'array',
+        // 'months' => 'array',
     ];
 
     protected static $periods = [
         1 => 'ভর্তিকালীন প্রদেয়',
         2 => 'মাসিক প্রদেয়',
-        3 => 'খন্ডকালীন প্রদেয়',
+        // 3 => 'খন্ডকালীন প্রদেয়',
     ];
 
     protected static $purposes =  [
@@ -103,7 +103,7 @@ class Fee extends Model
     {
         $purposes = self::$purposes;
 
-        return $purpose ? $purposes[$purpose] : $purposes;
+        return $purpose ? ($purposes[$purpose] ?? []) : $purposes;
     }
 
     public static function getPeriodText($period)

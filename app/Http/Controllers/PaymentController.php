@@ -73,8 +73,7 @@ class PaymentController extends Controller
             ->find(request()->admission);
         
         if($admission && $purpose) {
-            // return $this->getPaidPayment($admission, $purpose);
-            // return $this->parentPayment($admission, $purpose);
+            $month_id = $purpose_array['monthId'] ?? null;
 
             return Inertia::render('Payment/Create', [
                 'data' => [
@@ -85,6 +84,7 @@ class PaymentController extends Controller
                     'fees'          => $this->getAvailableFee($admission, $period),
                     'parentPayment' => $this->parentPayment($admission, $purpose),
                     'paidPayments'  => $this->getPaidPayment($admission, $purpose),
+                    'otherFees'     => $this->getAvailableFee($admission, 3, $month_id),
                 ],
             ]);
         }
@@ -115,7 +115,7 @@ class PaymentController extends Controller
         ]);
     }
 
-    protected function getAvailableFee($admission, $period)
+    protected function getAvailableFee($admission, $period, $month_id = null)
     {
         ClassFeeResource::withoutWrapping();
 
@@ -131,8 +131,11 @@ class PaymentController extends Controller
             ->get();
 
         if($resident) {
-            $class_fees = $class_fees->filter(function ($class_fee) use ($resident) {
-                return in_array($resident, json_decode($class_fee->package));
+            $class_fees = $class_fees->filter(function ($class_fee) use ($resident, $month_id) {
+                $condission1 = in_array($resident, json_decode($class_fee->package));
+                $condission2 = $month_id ? in_array($month_id, $class_fee->fee->months) : true;
+
+                return $condission1 && $condission2;
             });
         }
 

@@ -246,6 +246,20 @@ export default {
                 period: 2,
             });
         }
+
+        if (Object.keys(this.data.otherFees).length) {
+            Object.values(this.data.otherFees).forEach((fee) => {
+                this.form.fees.push({
+                    id: 1,
+                    classId: fee.classId,
+                    feeId: fee.feeId,
+                    amount: fee.amount,
+                    concession: fee.concession,
+                    name: fee.name,
+                    period: fee.period,
+                });
+            });
+        }
     },
     data() {
         return {

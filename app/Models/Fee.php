@@ -16,9 +16,14 @@ class Fee extends Model
         'period_name',
     ];
 
+    protected $casts = [
+        'months' => 'array',
+    ];
+
     protected static $periods = [
         1 => 'ভর্তিকালীন প্রদেয়',
         2 => 'মাসিক প্রদেয়',
+        3 => 'খন্ডকালীন প্রদেয়',
     ];
 
     protected static $purposes =  [

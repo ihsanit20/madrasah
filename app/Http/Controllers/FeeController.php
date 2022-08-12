@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FeeResource;
 use App\Models\Fee;
+use App\Models\HijriMonth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -86,6 +87,7 @@ class FeeController extends Controller
         return [
             'fee' => $this->formatedData($fee),
             'periods' => Fee::getPeriod(),
+            'months' => HijriMonth::get(),
         ];
     }
 
@@ -117,7 +119,8 @@ class FeeController extends Controller
             'period' => [
                 'required',
                 'numeric',
-            ]
+            ],
+            'months' => [],
         ]);
     }
 

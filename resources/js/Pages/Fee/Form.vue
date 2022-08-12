@@ -24,6 +24,30 @@
                         </option>
                     </Select>
                 </form-group>
+                <form-group
+                    v-if="form.period == 3"
+                    class="w-full"
+                    label="নির্ধারিত মাস"
+                >
+                    <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                        <label
+                            v-for="(month, index) in data.months"
+                            :key="index"
+                            class="rounded border p-2"
+                        >
+                            <input
+                                type="checkbox"
+                                :value="month.id"
+                                :checked="
+                                    form.months.includes(parseInt(month.id))
+                                "
+                                class="mr-2"
+                                @change="toggleMonth"
+                            />
+                            {{ month.bengali }}
+                        </label>
+                    </div>
+                </form-group>
             </div>
 
             <hr class="my-4 w-full" />
@@ -48,6 +72,7 @@ import Input from "@/Components/Input.vue";
 import Select from "@/Components/Select.vue";
 import FormGroup from "@/Components/FormGroup.vue";
 import Textarea from "@/Components/Textarea.vue";
+import Label from "@/Components/Label.vue";
 
 export default {
     components: {
@@ -57,6 +82,7 @@ export default {
         Select,
         FormGroup,
         Textarea,
+        Label,
     },
     props: {
         moduleAction: String,
@@ -74,6 +100,7 @@ export default {
             form: this.$inertia.form({
                 name: this.data.fee.name || "",
                 period: this.data.fee.period || "",
+                months: this.data.fee.months || [],
             }),
         };
     },
@@ -86,6 +113,15 @@ export default {
                 return this.form.put(
                     this.route("fees.update", this.data.fee.id)
                 );
+            }
+        },
+        toggleMonth(event) {
+            const month = parseInt(event.target.value);
+            const index = this.form.months.indexOf(month);
+            if (index > -1) {
+                this.form.months.splice(index, 1);
+            } else {
+                this.form.months.push(month);
             }
         },
     },

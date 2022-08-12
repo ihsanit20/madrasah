@@ -69,8 +69,13 @@
                                 :value="index"
                                 :class="{
                                     hidden: Array.isArray(purpose.classIds)
-                                        ? !purpose.classIds.includes(
-                                              parseInt(this.classId)
+                                        ? !(
+                                              purpose.classIds.includes(
+                                                  Number(this.classId)
+                                              ) ||
+                                              purpose.classIds.includes(
+                                                  String(this.classId)
+                                              )
                                           )
                                         : false,
                                 }"
@@ -129,9 +134,6 @@ export default {
         this.registration = this.data.registration;
         this.registrationHandler();
         this.form.purpose = this.data.purposeId;
-
-        console.log(this.data.purposes);
-        console.log(this.classId);
     },
     data() {
         return {
@@ -203,9 +205,6 @@ export default {
             );
             this.duePurposeId = selectedAdmission.student.duePurposeId;
             this.due = selectedAdmission.student.due;
-
-            console.log(this.data.purposes);
-            console.log(this.classId);
         },
         setDuringRegistrationSelect(selectedAdmission) {
             this.roll = selectedAdmission.roll;

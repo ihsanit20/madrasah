@@ -7,6 +7,7 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\HomeController;
@@ -72,6 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'notices'       => NoticeController::class,
         'payments'      => PaymentController::class,
         'purposes'      => PurposeController::class,
+        'exams'         => ExamController::class,
     ]);
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');

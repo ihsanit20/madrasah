@@ -15,7 +15,7 @@ class FeeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => (int) ($this->id),
+            'id'            => (int) ($this->id ?? 0),
             'name'          => (string) ($this->name ?? ''),
             'period'        => (int) ($this->period ?? 0),
             'periodName'    => (string) ($this->period_name ?? ''),

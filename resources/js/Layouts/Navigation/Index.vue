@@ -22,6 +22,54 @@
             </span>
         </nav-link>
 
+        <dropdown-nav-link :active="route().current('(exams).*')">
+            <ExamSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                পরীক্ষা সংক্রান্ত
+            </span>
+            <template #items>
+                <nav-link
+                    :href="route('exams.index')"
+                    :active="route().current('exams.index')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        প্রশ্নপত্র
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('admissions.index')"
+                    :active="route().current('admissions.(index|show|edit)')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        প্রবেশপত্র
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('admissions.index')"
+                    :active="route().current('admissions.(index|show|edit)')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        আসন নং
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
+
         <dropdown-nav-link :active="route().current('(admissions).*')">
             <AdmissionSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -319,15 +367,12 @@ import {
     AdminSvg,
     NoticeSvg,
     SettingsSvg,
+    ExamSvg,
 } from "./SvgIcon";
 export default {
     components: {
         Link,
         NavLink,
-        MenuIcon,
-        HomeIcon,
-        IdentificationIcon,
-        LibraryIcon,
         ClassSvg,
         StudentSvg,
         AdmissionSvg,
@@ -337,7 +382,12 @@ export default {
         AdminSvg,
         NoticeSvg,
         SettingsSvg,
+        ExamSvg,
         DropdownNavLink,
+        MenuIcon,
+        HomeIcon,
+        IdentificationIcon,
+        LibraryIcon,
         ClipboardListIcon,
         CogIcon,
     },

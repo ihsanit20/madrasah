@@ -7,6 +7,7 @@ import PaymentSvg from "./Payment.vue";
 import SettingsSvg from "./Settings.vue";
 import StudentSvg from "./Student.vue";
 import TeacherSvg from "./Teacher.vue";
+import ExamSvg from "./Exam.vue";
 
 export {
     AdminSvg,
@@ -18,4 +19,5 @@ export {
     SettingsSvg,
     StudentSvg,
     TeacherSvg,
+    ExamSvg,
 }

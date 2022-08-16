@@ -21,7 +21,10 @@ class ClassesController extends Controller
     public function index()
     {
         $collections = Classes::query()
-            ->with('class_fees');
+            ->with([
+                'students',
+                'class_fees'
+            ]);
 
         return Inertia::render('Classes/Index', [
             'data' => [

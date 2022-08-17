@@ -15,7 +15,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('exam_id')->index();
+            $table->unsignedBigInteger('exam_paper_id')->index();
             $table->text('heading')->nullable();
             $table->text('body')->nullable();
             $table->unsignedFloat('mark')->nullable();

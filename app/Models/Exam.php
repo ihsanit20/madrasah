@@ -12,24 +12,13 @@ class Exam extends Model
 
     protected $guarded = [];
 
-    const LANGUAGE_TYPE = [
-        1 => 'Bangla',
-        2 => 'Arabic',
-        3 => 'English',
-    ];
-
-    public static function getLanguageType()
+    public function classes()
     {
-        return self::LANGUAGE_TYPE;
+        return $this->belongsToMany(Classes::class, 'exam_classes', 'exam_id', 'class_id')->whereNull('exam_classes.deleted_at');
     }
 
-    public function questions()
+    public function exam_classes()
     {
-        return $this->hasMany(Question::class);
-    }
-
-    public function class()
-    {
-        return $this->belongsTo(Classes::class);
+        return $this->hasMany(ExamClass::class);
     }
 }

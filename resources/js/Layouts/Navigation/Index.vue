@@ -30,7 +30,20 @@
             <template #items>
                 <nav-link
                     :href="route('exams.index')"
-                    :active="route().current('exams.index')"
+                    :active="route().current('exams.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        পরীক্ষা তালিকা
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('exams.index')"
+                    :active="route().current('exams.*')"
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />

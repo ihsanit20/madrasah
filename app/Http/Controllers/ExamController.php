@@ -7,6 +7,7 @@ use App\Http\Resources\ClassesResource;
 use App\Http\Resources\ExamResource;
 use App\Models\Classes;
 use App\Models\Exam;
+use App\Models\ExamClass;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,11 +16,7 @@ class ExamController extends Controller
 {
     public function index()
     {
-        $collections = Exam::query()
-            ->with([
-                'class:id,name',
-                'class.subjects:id,name,class_id',
-            ]);
+        $collections = Exam::query();
 
         return Inertia::render('Exam/Index', [
             'data' => [
@@ -39,6 +36,8 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         $exam = Exam::create($this->validatedData($request));
+
+        $this->storeExamClass($exam, $request->get('classes'));
 
         return redirect()
             ->route('exams.show', $exam->id)
@@ -65,6 +64,8 @@ class ExamController extends Controller
     {
         $exam->update($this->validatedData($request, $exam->id));
 
+        $this->storeExamClass($exam, $request->get('classes'));
+
         return redirect()
             ->route('exams.show', $exam->id)
             ->with('status', 'The record has been update successfully.');
@@ -84,13 +85,14 @@ class ExamController extends Controller
         ClassesResource::withoutWrapping();
 
         $classes = Classes::query()
-            ->with('subjects:id,class_id,name')
+            // ->with('subjects:id,class_id,name')
             ->get(['id', 'name']);
+
+        $exam->load('classes:id,name');
 
         return [
             'exam'      => $this->formatedData($exam),
             'classes'   => ClassesResource::collection($classes),
-            'languages' => Exam::getLanguageType(),
         ];
     }
 
@@ -111,8 +113,27 @@ class ExamController extends Controller
     protected function validatedData($request, $id = '')
     {
         return $request->validate([
-            //
+            'name'        => 'required|string',
+            'session'     => 'required|string',
         ]);
+    }
+
+    protected function storeExamClass($exam, $classes)
+    {
+        ExamClass::where('exam_id', $exam->id)->delete();
+
+        if (!empty($classes)) {
+            foreach ($classes as $class) {
+                ExamClass::onlyTrashed()->updateOrCreate(
+                    [], 
+                    [
+                        'exam_id'       => $exam->id,
+                        'class_id'      => $class,
+                        'deleted_at'    => null,
+                    ]
+                );
+            }
+        }
     }
 
 }

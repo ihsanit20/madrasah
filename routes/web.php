@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\AdmitCardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\Controller;
@@ -47,6 +48,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('student-class', [StudentClassController::class, 'index'])->name('students.class.index');
     Route::get('student-class/{class}', [StudentClassController::class, 'show'])->name('students.class.show');
     Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
+
+    Route::get('admit-card', [AdmitCardController::class, 'index'])->name('admit-card.index');
+    Route::get('admit-card/{class}', [AdmitCardController::class, 'show'])->name('admit-card.show');
 
     Route::get('payment-purpose', [PaymentPurposeController::class, 'index'])->name('payments.purpose.index');
     Route::get('payment-purpose/{purpose}', [PaymentPurposeController::class, 'show'])->name('payments.purpose.show');

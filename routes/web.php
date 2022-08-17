@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\QuestionPaperController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\HomeController;
@@ -50,7 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
 
     Route::get('admit-card', [AdmitCardController::class, 'index'])->name('admit-card.index');
-    Route::get('admit-card/{class}', [AdmitCardController::class, 'show'])->name('admit-card.show');
+    Route::get('admit-card/{exam}', [AdmitCardController::class, 'show'])->name('admit-card.show');
+    Route::get('admit-card/{exam}/class/{class}', [AdmitCardController::class, 'list'])->name('admit-card.list');
 
     Route::get('payment-purpose', [PaymentPurposeController::class, 'index'])->name('payments.purpose.index');
     Route::get('payment-purpose/{purpose}', [PaymentPurposeController::class, 'show'])->name('payments.purpose.show');
@@ -65,19 +67,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
     
     Route::resources([
-        'fees'          => FeeController::class,
-        'classes'       => ClassesController::class,
-        'students'      => StudentController::class,
-        'admissions'    => AdmissionController::class,
-        'expenses'      => ExpenseController::class,
-        'categories'    => CategoryController::class,
-        'admins'        => AdminController::class,
-        'staff'         => StaffController::class,
-        'designations'  => DesignationController::class,
-        'notices'       => NoticeController::class,
-        'payments'      => PaymentController::class,
-        'purposes'      => PurposeController::class,
-        'exams'         => ExamController::class,
+        'fees'              => FeeController::class,
+        'classes'           => ClassesController::class,
+        'students'          => StudentController::class,
+        'admissions'        => AdmissionController::class,
+        'expenses'          => ExpenseController::class,
+        'categories'        => CategoryController::class,
+        'admins'            => AdminController::class,
+        'staff'             => StaffController::class,
+        'designations'      => DesignationController::class,
+        'notices'           => NoticeController::class,
+        'payments'          => PaymentController::class,
+        'purposes'          => PurposeController::class,
+        'exams'             => ExamController::class,
+        'question-papers'   => QuestionPaperController::class,
     ]);
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');

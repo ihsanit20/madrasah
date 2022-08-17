@@ -27,7 +27,10 @@
                         class="mx-auto -mb-12 aspect-[40/48] w-[91px] -translate-y-1/2 overflow-hidden border-2 border-orange-500"
                     >
                         <img
-                            :src="data.student.imageUrl || '/images/hijab-icon.jpg'"
+                            :src="
+                                data.student.imageUrl ||
+                                '/images/hijab-icon.jpg'
+                            "
                             class="h-full w-full object-cover"
                         />
                     </div>
@@ -121,8 +124,8 @@
                     </Link>
                 </div>
                 <p class="mt-2 px-8 text-center text-[8px]">
-                    পরিচয়পত্রটি কোথাও পাওয়া গেলে দয়া করে নিম্নোক্ত যেকোন
-                    ঠিকানায় পৌঁছে দিন
+                    পরিচয়পত্রটি কোথাও পাওয়া গেলে দয়া করে নিম্নোক্ত যেকোন ঠিকানায়
+                    পৌঁছে দিন
                 </p>
                 <h3 class="mt-3 text-center text-[10px] font-bold">
                     শিক্ষার্থীর ঠিকানা
@@ -131,8 +134,7 @@
                     {{ data.student.presentAddress.value }},
                     {{ data.student.presentAddress.postoffice }},
                     {{ data.student.presentAddress.areaName }},
-                    {{ data.student.presentAddress.districtName }},
-                    {{ data.student.presentAddress.divisionName }}
+                    {{ data.student.presentAddress.districtName }}
                 </div>
                 <div
                     class="mt-1 flex items-center justify-center gap-1 text-[8px]"
@@ -172,10 +174,10 @@
 </template>
 
 <script>
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import AppLayout from "@/Layouts/Master.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AvatarView from "@/Components/AvatarView.vue";
+import AppLayout from "@/Layouts/Master.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import QrcodeVue from "qrcode.vue";
 export default {
     components: {

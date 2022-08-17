@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-2 bg-white px-2 py-2 font-balooda2 md:px-4">
+    <div class="space-y-2 bg-white px-2 py-2 md:px-4">
         <nav-link
             :href="route('dashboard')"
             :active="route().current('dashboard')"
@@ -22,29 +22,17 @@
             </span>
         </nav-link>
 
-        <dropdown-nav-link :active="route().current('(exams).*')">
+        <dropdown-nav-link :active="route().current('(question-papers|admit-card).*')">
             <ExamSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 পরীক্ষা সংক্রান্ত
             </span>
             <template #items>
                 <nav-link
-                    :href="route('exams.index')"
-                    :active="route().current('exams.*')"
+                    :href="route('question-papers.index')"
+                    :active="route().current('question-papers.*')"
                     class="flex items-center gap-2 md:gap-4"
-                >
-                    <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
-                    <span
-                        class="-mb-1"
-                        :class="{ 'hidden md:block': !navigation }"
-                    >
-                        পরীক্ষা তালিকা
-                    </span>
-                </nav-link>
-                <nav-link
-                    :href="route('exams.index')"
-                    :active="route().current('exams.*')"
-                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -55,9 +43,10 @@
                     </span>
                 </nav-link>
                 <nav-link
-                    :href="route('admissions.index')"
-                    :active="route().current('admissions.(index|show|edit)')"
+                    :href="route('admit-card.index')"
+                    :active="route().current('admit-card.*')"
                     class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -71,6 +60,7 @@
                     :href="route('admissions.index')"
                     :active="route().current('admissions.(index|show|edit)')"
                     class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -240,7 +230,7 @@
         <dropdown-nav-link
             :active="
                 route().current(
-                    '(classes|fees|staff|designations|categories|admins|settings|purposes).*'
+                    '(classes|fees|staff|designations|categories|admins|settings|purposes|exams).*'
                 )
             "
         >
@@ -249,6 +239,20 @@
                 সেটিংস
             </span>
             <template #items>
+                <nav-link
+                    :href="route('exams.index')"
+                    :active="route().current('exams.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        পরীক্ষা তালিকা
+                    </span>
+                </nav-link>
                 <nav-link
                     :href="route('classes.index')"
                     :active="route().current('classes.*')"
@@ -359,28 +363,28 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
+import DropdownNavLink from "@/Components/DropdownNavLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import {
-    MenuIcon,
+    ClipboardListIcon,
+    CogIcon,
     HomeIcon,
     IdentificationIcon,
     LibraryIcon,
-    ClipboardListIcon,
-    CogIcon,
+    MenuIcon,
 } from "@heroicons/vue/outline";
-import DropdownNavLink from "@/Components/DropdownNavLink.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 import {
-    ClassSvg,
-    StudentSvg,
-    AdmissionSvg,
-    MoneyReceiptSvg,
-    PaymentSvg,
-    TeacherSvg,
     AdminSvg,
-    NoticeSvg,
-    SettingsSvg,
+    AdmissionSvg,
+    ClassSvg,
     ExamSvg,
+    MoneyReceiptSvg,
+    NoticeSvg,
+    PaymentSvg,
+    SettingsSvg,
+    StudentSvg,
+    TeacherSvg,
 } from "./SvgIcon";
 export default {
     components: {

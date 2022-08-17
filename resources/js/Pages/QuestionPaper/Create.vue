@@ -1,7 +1,7 @@
 <template>
-    <Head title="Exam" />
+    <Head title="প্রশ্নপত্র" />
 
-    <app-layout pageTitle="Create Exam">
+    <app-layout pageTitle="নতুন প্রশ্নপত্র">
         <form-component :data="data" module-action="store" />
     </app-layout>
 </template>

@@ -4,23 +4,32 @@
             <application-logo class="w-16" />
             <div class="flex flex-col items-center justify-end space-y-1">
                 <h1
-                    class="text-3xl font-bold text-blue-900 print:text-2xl print:text-black"
+                    class="text-3xl font-bold text-blue-900 print:text-3xl print:text-black"
                 >
                     {{ $page.props.settings.siteName }}
                 </h1>
-                <p class="text-sm print:text-[11px] print:text-black">
+                <p class="text-sm print:text-[12px] print:text-black">
                     {{ $page.props.settings.siteAddress }}
                 </p>
             </div>
         </div>
-        <div class="mt-6 border border-gray-400 print:border-black"></div>
-        <div v-if="photoFrame" class="absolute left-0 top-0 bg-white pr-0.5">
+        <div
+            class="mx-auto mt-4 w-[72%] border-t border-gray-400 print:border-black"
+        ></div>
+        <div v-if="photoFrame" class="absolute right-0 top-0 bg-white pr-0.5">
             <div
-                class="flex h-24 w-20 items-center justify-center border print:border-black"
+                class="flex h-24 w-20 items-center justify-center border p-4 print:border-black"
             >
                 <label class="text-sm text-gray-500 print:text-black">
                     ছবি
                 </label>
+            </div>
+        </div>
+        <div v-if="photoUrl" class="absolute right-0 top-0 bg-white pr-0.5">
+            <div
+                class="flex aspect-[40/48] w-20 items-center justify-center overflow-hidden border"
+            >
+                <img class="w-full" :src="photoUrl" alt="ছবি" />
             </div>
         </div>
     </div>
@@ -36,6 +45,10 @@ export default {
         photoFrame: {
             type: Boolean,
             default: false,
+        },
+        photoUrl: {
+            type: String,
+            default: "",
         },
     },
 };

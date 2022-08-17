@@ -4,8 +4,14 @@
         :class="classes"
         @click="open = !open"
     >
-        <div class="flex items-center gap-4">
+        <div class="relative flex items-center gap-4">
             <slot />
+            <span
+                v-if="newBadge"
+                class="absolute left-0 top-2 rounded-md bg-rose-600 px-1.5 text-xs text-white"
+            >
+                New
+            </span>
         </div>
         <ChevronDownIcon
             class="hidden h-5 w-5 transition-all ease-linear md:block"
@@ -26,7 +32,16 @@ export default {
         ChevronDownIcon,
     },
 
-    props: ["active"],
+    props: {
+        active: {
+            type: Boolean,
+            default: false,
+        },
+        newBadge: {
+            type: Boolean,
+            default: false,
+        },
+    },
 
     created() {
         this.open = this.active;

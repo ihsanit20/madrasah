@@ -1,35 +1,24 @@
 <template>
-    <Head title="Exam" />
+    <Head title="পরীক্ষা" />
 
-    <app-layout>
-        <div class="flex max-w-3xl items-center justify-end print:hidden">
-            <div
-                class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
-            >
-                View Exam
+    <app-layout pageTitle="পরীক্ষা">
+        <div class="max-w-xl rounded border bg-white p-3 shadow md:p-4">
+            <div class="flex justify-end">
+                <action-button-edit :href="route('exams.edit', data.exam.id)" />
             </div>
-            <button
-                @click="print"
-                type="button"
-                class="flex items-center justify-center gap-2 text-sky-600"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20.346"
-                    height="18.311"
-                    viewBox="0 0 20.346 18.311"
-                >
-                    <path
-                        d="M20.294,9.586H6.052A3.048,3.048,0,0,0,3,12.638v6.1H7.069v4.069H19.277V18.742h4.069v-6.1A3.048,3.048,0,0,0,20.294,9.586Zm-3.052,11.19H9.1V15.69h8.138Zm3.052-7.121a1.017,1.017,0,1,1,1.017-1.017A1.02,1.02,0,0,1,20.294,13.656ZM19.277,4.5H7.069V8.569H19.277Z"
-                        transform="translate(-3 -4.5)"
-                        fill="currentColor"
-                    />
-                </svg>
-                <span class="font-bold">Print Exam</span>
-            </button>
+            <div class="grid gap-4">
+                <form-heading>{{ data.exam.name }}</form-heading>
+                <div class="flex items-center justify-center font-bold">
+                    সেশন : {{ data.exam.session }}
+                </div>
+                <inline-data title="ক্লাস ‍সমূহ :" />
+                <ul class="ml-4 grid list-disc md:grid-cols-3">
+                    <li v-for="classes in data.exam.classes">
+                        {{ classes.name }}
+                    </li>
+                </ul>
+            </div>
         </div>
-
-        <ExamTemplete :data="data" class="max-w-3xl" />
     </app-layout>
 </template>
 
@@ -37,32 +26,21 @@
 import AppLayout from "@/Layouts/App.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
-import FormHeading from "@/Components/FormHeading.vue";
 import InlineData from "@/Components/InlineData.vue";
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
-import Button from "@/Components/Button.vue";
-import ExamTemplete from "@/Templete/Exam.vue";
+import FormHeading from "@/Components/FormHeading.vue";
 
 export default {
     components: {
         AppLayout,
         Head,
         ActionButtonEdit,
-        FormHeading,
         InlineData,
-        ApplicationLogo,
-        Button,
-        ExamTemplete,
+        FormHeading,
     },
     props: {
         data: {
             type: Object,
             default: {},
-        },
-    },
-    methods: {
-        print() {
-            window.print();
         },
     },
 };

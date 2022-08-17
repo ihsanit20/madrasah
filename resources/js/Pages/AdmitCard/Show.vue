@@ -1,26 +1,28 @@
 <template>
-    <Head title="পরীক্ষা সমুহ" />
+    <Head :title="`${data.exam.name} এর ক্লাস সমুহ`" />
 
-    <app-layout pageTitle="পরীক্ষা সমুহ">
+    <app-layout :pageTitle="`${data.exam.name} এর ক্লাস সমুহ`">
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <Link
-                v-for="exam in data.exams"
-                :key="exam.id"
-                :href="route('admit-card.show', exam.id)"
+                v-for="classes in data.classes"
+                :key="classes.id"
+                :href="route('admit-card.list', [data.exam.id, classes.id])"
                 class="flex items-center gap-2 rounded-md border bg-white p-2 hover:shadow md:gap-4 md:p-4"
             >
                 <div
                     class="flex h-10 w-10 shrink-0 grow-0 items-center justify-center rounded-full bg-gray-200 text-xl font-bold text-gray-500 md:h-12 md:w-12 md:text-2xl"
                 >
-                    <ExamSvg class="w-6" />
+                    {{ $e2bnumber(classes.code).padStart(2, $e2bnumber("0")) }}
                 </div>
                 <div class="shrink grow">
                     <div class="text-md font-bold text-sky-600 md:text-xl">
-                        {{ exam.name }}
+                        {{ classes.name }}
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="text-gray-600">
-                            সেশন: {{ exam.session }}
+                        <ClassSvg class="w-5 text-gray-400" />
+                        <span class="text-gray-600"> শিক্ষার্থী: </span>
+                        <span class="font-bold text-gray-800">
+                            {{ $e2bnumber(classes.totalStudent) }} জন
                         </span>
                     </div>
                 </div>
@@ -49,7 +51,7 @@
 
 <script>
 import AppLayout from "@/Layouts/App.vue";
-import { ClassSvg, ExamSvg } from "@/Layouts/Navigation/SvgIcon";
+import { ClassSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 
 export default {
@@ -58,7 +60,6 @@ export default {
         Head,
         Link,
         ClassSvg,
-        ExamSvg,
     },
     props: {
         data: {

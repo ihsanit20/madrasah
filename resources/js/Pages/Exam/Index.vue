@@ -12,13 +12,7 @@
                     {{ exam.name }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ exam.class_name }}
-                </table-td>
-                <table-td class="text-left">
-                    {{ exam.subject_name }}
-                </table-td>
-                <table-td class="text-center">
-                    {{ exam.mark }}
+                    {{ exam.session }}
                 </table-td>
                 <table-td class="text-center">
                     <div class="flex justify-center gap-2">
@@ -65,9 +59,7 @@ export default {
         return {
             columns: [
                 { title: "পরীক্ষার নাম", align: "left" },
-                { title: "ক্লাস", align: "left" },
-                { title: "বিষয়", align: "left" },
-                { title: "পূর্ণমান", align: "center" },
+                { title: "সেশন", align: "left" },
                 { title: "Action", align: "center" },
             ],
         };

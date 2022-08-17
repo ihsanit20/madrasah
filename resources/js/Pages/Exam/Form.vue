@@ -18,7 +18,7 @@
                         v-model="form.session"
                         required
                     >
-                        <option value="৪৩-৪৪">৪৩-৪৪</option>
+                        <option value="১৪৪৩-৪৪">১৪৪৩-৪৪</option>
                     </Select>
                 </form-group>
             </div>

@@ -215,16 +215,16 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                name: this.data.exam.name,
-                session: this.data.exam.session || "৪৩-৪৪",
-                class_id: this.data.exam.class_id,
-                subject_code: this.data.exam.subject_code,
-                top_text: this.data.exam.top_text,
-                bottom_text: this.data.exam.bottom_text,
-                hour: this.data.exam.hour,
-                minute: this.data.exam.minute,
-                mark: this.data.exam.mark,
-                language_type: this.data.exam.language_type || 1,
+                name: this.data.questionPaper.name || "",
+                session: this.data.questionPaper.session || "৪৩-৪৪",
+                class_id: this.data.questionPaper.class_id,
+                subject_code: this.data.questionPaper.subject_code,
+                top_text: this.data.questionPaper.top_text,
+                bottom_text: this.data.questionPaper.bottom_text,
+                hour: this.data.questionPaper.hour,
+                minute: this.data.questionPaper.minute,
+                mark: this.data.questionPaper.mark,
+                language_type: this.data.questionPaper.language_type || 1,
                 questions: [],
             }),
             classList: [],
@@ -235,11 +235,11 @@ export default {
     methods: {
         submit() {
             if (this.moduleAction == "store") {
-                return this.form.post(this.route("exams.store"));
+                return this.form.post(this.route("question-papers.store"));
             }
             if (this.moduleAction == "update") {
                 return this.form.put(
-                    this.route("exams.update", this.data.exam.id)
+                    this.route("question-papers.update", this.data.questionPaper.id)
                 );
             }
         },
@@ -258,7 +258,7 @@ export default {
         questionFormated(question = {}) {
             return {
                 id: question.id || "",
-                exam_id: question.exam_id || "",
+                question_paper_id: question.question_paper_id || "",
                 title: question.title || "",
                 body: question.body || "",
                 mark: question.mark || "",

@@ -1,32 +1,32 @@
 <template>
-    <Head title="Exam" />
+    <Head title="প্রশ্নপত্র" />
 
-    <app-layout pageTitle="Exams" :addNewHref="route('exams.create')">
+    <app-layout pageTitle="প্রশ্নপত্র" :addNewHref="route('question-papers.create')">
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
             :columns="columns"
         >
-            <template #default="{ item: exam }">
+            <template #default="{ item: questionPaper }">
                 <table-td class="text-left">
-                    {{ exam.name }}
+                    {{ questionPaper.name }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ exam.class_name }}
+                    {{ questionPaper.class_name }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ exam.subject_name }}
+                    {{ questionPaper.subject_name }}
                 </table-td>
                 <table-td class="text-center">
-                    {{ exam.mark }}
+                    {{ questionPaper.mark }}
                 </table-td>
                 <table-td class="text-center">
                     <div class="flex justify-center gap-2">
                         <action-button-show
-                            :href="route('exams.show', exam.id)"
+                            :href="route('question-papers.show', questionPaper.id)"
                         />
                         <action-button-edit
-                            :href="route('exams.edit', exam.id)"
+                            :href="route('question-papers.edit', questionPaper.id)"
                         />
                     </div>
                 </table-td>

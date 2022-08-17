@@ -14,7 +14,7 @@
             </div>
         </div>
         <div
-            class="mx-auto mt-4 w-[72%] border-t border-gray-400 print:border-black"
+            class="mx-auto mt-4 w-[72%] border-t border-gray-400 print:border-gray-700"
         ></div>
         <div v-if="photoFrame" class="absolute right-0 top-0 bg-white pr-0.5">
             <div

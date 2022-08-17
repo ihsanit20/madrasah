@@ -49,6 +49,7 @@ class HandleInertiaRequests extends Middleware
                 'studentAgreement' => $this->getSettingValueByProperty($settings, 'student-agreement'),
                 'guardianAgreement' => $this->getSettingValueByProperty($settings, 'guardian-agreement'),
                 'idCardTime' => $this->getSettingValueByProperty($settings, 'id-card-time'),
+                'admitCardText' => $this->getSettingValueByProperty($settings, 'admit-card-text'),
             ]
         ]);
     }

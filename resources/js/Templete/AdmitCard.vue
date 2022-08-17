@@ -1,28 +1,85 @@
 <template>
-    <div class="bg-white px-6 py-4 print:py-0 print:px-4">
+    <div class="bg-white px-12 py-4 print:py-0 print:px-4">
         <letter-head :photoUrl="student.imageUrl || '/images/hijab-icon.jpg'" />
-        <div class="mt-4 mb-2 flex items-center justify-center">
+
+        <div class="mt-3 mb-2 flex items-center justify-center">
             <div
                 class="rounded-md border px-4 py-1 text-center text-2xl font-bold print:border-black print:text-black"
             >
                 প্রবেশ পত্র
             </div>
         </div>
-        <div class="grid gap-2">
-            <hr class="print:hidden" />
-            <h3
-                class="mt-3 text-center text-2xl font-bold print:mt-28 print:text-black"
-            >
-                শিক্ষার্থীর অঙ্গীকার
-            </h3>
-            <div>
-                আমি অত্র মাদরাসায় ভর্তি হতে ইচ্ছুক। আমি মনে প্রাণে অঙ্গীকার করছি
-                যে,
+
+        <div class="grid grid-cols-5">
+            <div class="col-span-3 flex gap-2">
+                <div class="w-24 text-gray-500">পরীক্ষা</div>
+                <span>:</span>
+                <div>{{ data.exam.name }}</div>
             </div>
-            <div class="flex items-center justify-between gap-4">
-                <div>
-                    <inline-data title="আবেদনকারীর স্বাক্ষর" />
+            <div class="col-span-2 flex gap-2">
+                <div class="w-20 text-gray-500">শিক্ষা বর্ষ</div>
+                <span>:</span>
+                <div>{{ data.exam.session }} হিজরি</div>
+            </div>
+            <div class="col-span-3 flex gap-2">
+                <div class="w-24 text-gray-500">শিক্ষার্থীর নাম</div>
+                <span>:</span>
+                <div>{{ student.name }}</div>
+            </div>
+            <div class="col-span-2 flex gap-2">
+                <div class="w-20 text-gray-500">রেজি. নং</div>
+                <span>:</span>
+                <div>{{ student.registration }}</div>
+            </div>
+            <div class="col-span-3 flex gap-2">
+                <div class="w-24 text-gray-500">শ্রেণী</div>
+                <span>:</span>
+                <div>{{ student.currentClassName }}</div>
+            </div>
+            <div class="col-span-2 flex gap-2">
+                <div class="w-20 text-gray-500">শ্রেণী রোল</div>
+                <span>:</span>
+                <div>{{ student.currentClassRoll }}</div>
+            </div>
+            <div class="col-span-3 flex gap-2">
+                <div class="w-24 text-gray-500">অভিভাক</div>
+                <span>:</span>
+                <div>{{ student.guardianInfo.name }}</div>
+            </div>
+            <div class="col-span-2 flex gap-2">
+                <div class="w-20 text-gray-500">আসন নং</div>
+                <span>:</span>
+                <div></div>
+            </div>
+        </div>
+
+        <hr class="mt-1" />
+
+        <div class="grid py-1">
+            <div class="text-lg font-bold">বিষয় কোডসহ পরীক্ষার বিষয়সমূহ :</div>
+            <div class="grid grid-cols-3 gap-x-3 px-3">
+                <div
+                    v-for="subject in data.class.subjects"
+                    :key="subject.id"
+                    class="text-sm font-semibold"
+                >
+                    {{ subject.code }} - {{ subject.name }}
                 </div>
+            </div>
+        </div>
+
+        <hr class="mb-1" />
+
+        <div class="flex items-end justify-between gap-4 py-2">
+            <div class="">
+                <div class="text-xs">পরীক্ষার্থীদের জন্য জ্ঞতব্য বিষয়</div>
+                <div class="whitespace-pre-wrap text-xs print:px-4 md:px-6">
+                    {{ $page.props.settings.admitCardText }}
+                </div>
+            </div>
+            <div class="flex min-w-max flex-col items-center justify-center">
+                <img :src="data.signature" class="w-28" />
+                <div>আবেদনকারীর স্বাক্ষর</div>
             </div>
         </div>
     </div>

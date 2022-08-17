@@ -50,15 +50,24 @@ class AdmitCardController extends Controller
             ? ($principal->signature->url ?? '')
             : '';
 
+        $class->load('subjects');
+
         StudentResource::withoutWrapping();
         ClassesResource::withoutWrapping();
         ExamResource::withoutWrapping();
+
+        $students = $class->students()
+            ->with([
+                'current_admission',
+                'guardian_info',
+            ])
+            ->get();
 
         return Inertia::render('AdmitCard/List', [
             'data' => [
                 'exam'      => new ExamResource($exam),
                 'class'     => new ClassesResource($class),
-                'students'  => StudentResource::collection($class->students()->with('current_admission')->get()),
+                'students'  => StudentResource::collection($students),
                 'signature' => $signature,
             ]
         ]);

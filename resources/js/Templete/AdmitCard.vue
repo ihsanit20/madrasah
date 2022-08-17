@@ -1,5 +1,7 @@
 <template>
-    <div class="bg-white px-12 py-4 print:py-0 print:px-4">
+    <div
+        class="bg-white bg-[url('/images/wmlogo.png')] bg-center bg-no-repeat px-12 py-4 print:py-0 print:px-4"
+    >
         <letter-head :photoUrl="student.imageUrl || '/images/hijab-icon.jpg'" />
 
         <div class="mt-3 mb-2 flex items-center justify-center">
@@ -29,7 +31,7 @@
             <div class="col-span-2 flex gap-2">
                 <div class="w-20 text-gray-500">রেজি. নং</div>
                 <span>:</span>
-                <div>{{ student.registration }}</div>
+                <div>{{ $e2bnumber(student.registration) }}</div>
             </div>
             <div class="col-span-3 flex gap-2">
                 <div class="w-24 text-gray-500">শ্রেণী</div>
@@ -39,7 +41,7 @@
             <div class="col-span-2 flex gap-2">
                 <div class="w-20 text-gray-500">শ্রেণী রোল</div>
                 <span>:</span>
-                <div>{{ student.currentClassRoll }}</div>
+                <div>{{ $e2bnumber(student.currentClassRoll) }}</div>
             </div>
             <div class="col-span-3 flex gap-2">
                 <div class="w-24 text-gray-500">অভিভাক</div>
@@ -63,7 +65,7 @@
                     :key="subject.id"
                     class="text-sm font-semibold"
                 >
-                    {{ subject.code }} - {{ subject.name }}
+                    {{ $e2bnumber(subject.code) }} - {{ subject.name }}
                 </div>
             </div>
         </div>

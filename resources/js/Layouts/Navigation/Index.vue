@@ -22,7 +22,11 @@
             </span>
         </nav-link>
 
-        <dropdown-nav-link :active="route().current('(question-papers|admit-card).*')">
+        <dropdown-nav-link
+            :active="
+                route().current('(question-papers|admit-card|seat-plan).*')
+            "
+        >
             <ExamSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 পরীক্ষা সংক্রান্ত
@@ -57,8 +61,8 @@
                     </span>
                 </nav-link>
                 <nav-link
-                    :href="route('admissions.index')"
-                    :active="route().current('admissions.(index|show|edit)')"
+                    :href="route('seat-plan.index')"
+                    :active="route().current('seat-plan.*')"
                     class="flex items-center gap-2 md:gap-4"
                     :newBadge="true"
                 >

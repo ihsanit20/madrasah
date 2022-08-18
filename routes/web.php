@@ -18,6 +18,7 @@ use App\Http\Controllers\OtherPurposeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentPurposeController;
 use App\Http\Controllers\PurposeController;
+use App\Http\Controllers\SeatPlanController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentClassController;
@@ -53,6 +54,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('admit-card', [AdmitCardController::class, 'index'])->name('admit-card.index');
     Route::get('admit-card/{exam}', [AdmitCardController::class, 'show'])->name('admit-card.show');
     Route::get('admit-card/{exam}/class/{class}', [AdmitCardController::class, 'list'])->name('admit-card.list');
+
+    Route::get('seat-plan', [SeatPlanController::class, 'index'])->name('seat-plan.index');
+    Route::get('seat-plan/{exam}', [SeatPlanController::class, 'show'])->name('seat-plan.show');
 
     Route::get('payment-purpose', [PaymentPurposeController::class, 'index'])->name('payments.purpose.index');
     Route::get('payment-purpose/{purpose}', [PaymentPurposeController::class, 'show'])->name('payments.purpose.show');

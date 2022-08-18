@@ -21,4 +21,9 @@ class Exam extends Model
     {
         return $this->hasMany(ExamClass::class);
     }
+
+    public function seat_plans()
+    {
+        return $this->hasMany(SeatPlan::class);
+    }
 }

@@ -83,7 +83,7 @@ class SeatPlanController extends Controller
             ->pluck('class_id')
             ->toArray();
 
-        return Inertia::render('SeatPlan/List', [
+        return Inertia::render('SeatPlan/Show', [
             'data' => [
                 'exam'          => $exam,
                 'serials'       => $serials,

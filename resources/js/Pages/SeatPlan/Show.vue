@@ -68,7 +68,7 @@
 
             <div
                 v-for="(seatPlan, index) in data.seat_plans"
-                :key="seatPlan.id"
+                :key="index"
                 class="py-1"
             >
                 <div
@@ -204,6 +204,7 @@ export default {
                 {
                     onSuccess: () => {
                         this.form.reset("class_ids");
+                        this.setLimit();
                     },
                 }
             );
@@ -227,7 +228,6 @@ export default {
             );
         },
         getLimit(index) {
-            this.setLimit();
             return this.limit[index];
         },
         setLimit() {

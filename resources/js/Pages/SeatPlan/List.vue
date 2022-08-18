@@ -234,10 +234,10 @@ export default {
             this.limit = [];
             this.total = 0;
 
-            this.data.seat_plan_seats.forEach((seatPlan) => {
+            this.data.seat_plans.forEach((seatPlan) => {
                 let initial = String(this.total + 1).padStart(3, "0");
 
-                Object.keys(seatPlan).forEach((seatNo) => {
+                Object.keys(seatPlan.seats).forEach((seatNo) => {
                     this.total++;
                 });
 

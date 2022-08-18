@@ -83,16 +83,13 @@ class SeatPlanController extends Controller
             ->pluck('class_id')
             ->toArray();
 
-        ExamResource::withoutWrapping();
-
-        return Inertia::render('SeatPlan/Show', [
+        return Inertia::render('SeatPlan/List', [
             'data' => [
-                'exam'      => new ExamResource($exam),
-                'serials' => $serials,
-                'seat_plans' => $exam->seat_plans()->get(),
-                'exam_classes' => Classes::whereIn('id', $unselected_class_ids)->get(),
-                'classes' => Classes::whereIn('id', $seat_plan_classe_array)->whereNotIn('id', $unselected_class_ids)->get(['id', 'name']),
-                'seat_plan_seats' => $seat_plans,
+                'exam'          => $exam,
+                'serials'       => $serials,
+                'seat_plans'    => $exam->seat_plans()->get(),
+                'exam_classes'  => Classes::whereIn('id', $unselected_class_ids)->get(),
+                'classes'       => Classes::whereIn('id', $seat_plan_classe_array)->whereNotIn('id', $unselected_class_ids)->get(['id', 'name']),
             ]
         ]);
     }

@@ -5,22 +5,22 @@
         </h3>
         <div class="w-full text-xs">
             <div class="col-span-3 flex gap-2">
-                <div class="w-12 text-gray-500">নাম</div>
+                <div class="w-11 text-gray-500">নাম</div>
                 <span>:</span>
                 <div>{{ data.student_name }}</div>
             </div>
             <div class="col-span-3 flex gap-2">
-                <div class="w-12 text-gray-500">শ্রেণী</div>
+                <div class="w-11 text-gray-500">শ্রেণী</div>
                 <span>:</span>
                 <div>{{ data.class_name }}</div>
             </div>
             <div class="col-span-2 flex gap-2">
-                <div class="w-12 text-gray-500">রোল</div>
+                <div class="w-11 text-gray-500">রোল</div>
                 <span>:</span>
                 <div>{{ $e2bnumber(data.class_roll) }}</div>
             </div>
             <div class="col-span-2 flex gap-2">
-                <div class="w-12 text-gray-500">রেজি. নং</div>
+                <div class="w-11 text-gray-500">রেজি. নং</div>
                 <span>:</span>
                 <div>{{ $e2bnumber(data.registration) }}</div>
             </div>

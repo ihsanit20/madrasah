@@ -51,7 +51,11 @@
             <div class="col-span-2 flex gap-2">
                 <div class="w-20 text-gray-500">আসন নং</div>
                 <span>:</span>
-                <div></div>
+                <div>
+                    {{
+                        $e2bnumber(String(student.seatNumber).padStart(3, "0"))
+                    }}
+                </div>
             </div>
         </div>
 

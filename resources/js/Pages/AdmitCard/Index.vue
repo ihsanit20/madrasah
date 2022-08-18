@@ -1,7 +1,7 @@
 <template>
-    <Head title="পরীক্ষা সমুহ" />
+    <Head title="প্রবেশপত্র : পরীক্ষা সমুহ" />
 
-    <app-layout pageTitle="পরীক্ষা সমুহ">
+    <app-layout pageTitle="প্রবেশপত্র : পরীক্ষা সমুহ">
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <Link
                 v-for="exam in data.exams"

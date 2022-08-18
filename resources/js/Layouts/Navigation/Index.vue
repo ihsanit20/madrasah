@@ -35,7 +35,7 @@
                 <nav-link
                     :href="route('question-papers.index')"
                     :active="route().current('question-papers.*')"
-                    class="flex items-center gap-2 md:gap-4"
+                    class="hidden items-center gap-2 md:gap-4"
                     :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />

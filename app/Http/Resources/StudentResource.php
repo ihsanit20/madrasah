@@ -55,6 +55,7 @@ class StudentResource extends JsonResource
             // 'due'                   => (double) ($latest_payments ? $latest_payments->first()->due : 0),
             'imageUrl'              => (string) ($this->image->url ?? ''),
             // 'imageUrl'              => $this->when($this->whenLoaded('image', 1, 0), fn () => (string) $this->image->url ?? ''),
+            'seatNumber'            => (string) ($this->seat_no ?? ''),
         ];
 
     }

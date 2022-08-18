@@ -25,6 +25,30 @@
                             {{ $e2bnumber(classes.totalStudent) }} জন
                         </span>
                     </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-gray-600">আসন নং:</span>
+                        <span
+                            class="font-bold text-gray-800"
+                            :class="{
+                                'text-green-600':
+                                    data.seat_plan_classes.includes(
+                                        Number(classes.id) || String(classes.id)
+                                    ),
+                                'text-rose-600':
+                                    !data.seat_plan_classes.includes(
+                                        Number(classes.id) || String(classes.id)
+                                    ),
+                            }"
+                        >
+                            {{
+                                data.seat_plan_classes.includes(
+                                    Number(classes.id) || String(classes.id)
+                                )
+                                    ? "প্রদর্শনীয়"
+                                    : "অনুপস্থিত"
+                            }}
+                        </span>
+                    </div>
                 </div>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

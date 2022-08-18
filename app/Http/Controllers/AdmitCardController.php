@@ -31,10 +31,24 @@ class AdmitCardController extends Controller
     {
         ClassesResource::withoutWrapping();
 
+        $exam->load('seat_plans');
+
+        $seat_plans = $exam->seat_plans()
+            ->pluck('classes');
+
+        $seat_plan_classes = Array();
+
+        foreach($seat_plans as $seat_plan) {
+            foreach($seat_plan as $class) {
+                $seat_plan_classes[] = $class;
+            }
+        }
+
         return Inertia::render('AdmitCard/Show', [
             'data' => [
                 'exam'      => new ExamResource($exam),
                 'classes'   => ClassesResource::collection($exam->classes()->with('students')->get()),
+                'seat_plan_classes' => $seat_plan_classes,
             ]
         ]);
     }
@@ -62,6 +76,21 @@ class AdmitCardController extends Controller
                 'guardian_info',
             ])
             ->get();
+
+        $exam->load('seat_plans');
+
+        $seat_plans = $exam->seat_plans()
+            ->pluck('seats');
+
+        foreach($seat_plans as $seat_plan) {
+            foreach($seat_plan as $index => $seat) {
+                $student = $students->where('id', $seat)->first();
+                
+                if($student) {
+                    $student->seat_no = $index + 1;
+                }
+            }
+        }
 
         return Inertia::render('AdmitCard/List', [
             'data' => [

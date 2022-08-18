@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ClassesResource;
 use App\Http\Resources\ExamResource;
 use App\Models\Admission;
+use App\Models\Classes;
 use App\Models\Exam;
+use App\Models\ExamClass;
 use App\Models\SeatPlan;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -61,17 +63,52 @@ class SeatPlanController extends Controller
             }
         }
 
+        $seat_plan_classes = $exam->seat_plans()
+            ->pluck('classes');
+
+        $seat_plan_classe_array = Array();
+
+        foreach($seat_plan_classes as $seat_plan_class_array) {
+            foreach($seat_plan_class_array as $class_id) {
+                $seat_plan_classe_array[] = $class_id;
+            }
+        }
+
+        $unselected_class_ids = ExamClass::query()
+            ->where('exam_id', $exam->id)
+            ->whereNotIn('class_id', $seat_plan_classe_array)
+            ->pluck('class_id')
+            ->toArray();
+
+        ExamResource::withoutWrapping();
+
         return Inertia::render('SeatPlan/Show', [
             'data' => [
+                'exam'      => new ExamResource($exam),
                 'serials' => $serials,
+                'seat_plans' => $exam->seat_plans()->get(),
+                'exam_classes' => Classes::whereIn('id', $unselected_class_ids)->get(),
+                'classes' => Classes::whereIn('id', $seat_plan_classe_array)->whereNotIn('id', $unselected_class_ids)->get(),
             ]
         ]);
     }
 
     public function store(Exam $exam, Request $request)
     {
+        $request->validate([
+            'class_ids' => 'required|array',
+        ]);
+
+        $exam_prev_class_array = $exam->seat_plans()->pluck('classes');
+
+        $request_class_ids = $request->class_ids;
+
+        foreach($exam_prev_class_array as $exam_prev_class) {
+            $request_class_ids = array_values(array_diff($request_class_ids, $exam_prev_class));
+        }
+
         $class_ids = $exam->classes()
-            ->whereIn('class_id', $request->class_ids)
+            ->whereIn('class_id', $request_class_ids)
             ->pluck('class_id')
             ->toArray();
 
@@ -110,7 +147,7 @@ class SeatPlanController extends Controller
             [] ,
             [
                 'exam_id'       => $exam->id,
-                'classes'       => $request->class_ids,
+                'classes'       => $request_class_ids,
                 'seats'         => $seats,
                 'deleted_at'    => null,
             ]

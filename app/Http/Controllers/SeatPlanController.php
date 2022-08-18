@@ -36,7 +36,10 @@ class SeatPlanController extends Controller
             ->toArray();
 
         $admissions = Admission::query()
-            ->with('student:id,name,registration')
+            ->with([
+                'student:id,name,registration',
+                'class:id,name',
+            ])
             ->student()
             ->whereIn('class_id', $class_ids)
             ->where('session', $this->getCurrentSession())

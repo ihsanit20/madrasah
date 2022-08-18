@@ -4,15 +4,7 @@
     >
         <letter-head :photoUrl="student.imageUrl || '/images/hijab-icon.jpg'" />
 
-        <div class="mt-3 mb-2 flex items-center justify-center">
-            <div
-                class="rounded-md border px-4 py-1 text-center text-2xl font-bold print:border-black print:text-black"
-            >
-                প্রবেশ পত্র
-            </div>
-        </div>
-
-        <div class="grid grid-cols-5">
+        <div class="mt-2 grid grid-cols-5">
             <div class="col-span-3 flex gap-2">
                 <div class="w-24 text-gray-500">পরীক্ষা</div>
                 <span>:</span>
@@ -23,6 +15,17 @@
                 <span>:</span>
                 <div>{{ data.exam.session }} হিজরি</div>
             </div>
+        </div>
+
+        <div class="mt-1 mb-2 flex items-center justify-center">
+            <div
+                class="rounded-md border px-4 py-0.5 text-center text-2xl font-bold print:border-black print:text-black"
+            >
+                প্রবেশ পত্র
+            </div>
+        </div>
+
+        <div class="grid grid-cols-5">
             <div class="col-span-3 flex gap-2">
                 <div class="w-24 text-gray-500">শিক্ষার্থীর নাম</div>
                 <span>:</span>
@@ -51,7 +54,7 @@
             <div class="col-span-2 flex gap-2">
                 <div class="w-20 text-gray-500">আসন নং</div>
                 <span>:</span>
-                <div>
+                <div v-if="student.seatNumber">
                     {{
                         $e2bnumber(String(student.seatNumber).padStart(3, "0"))
                     }}
@@ -85,7 +88,7 @@
             </div>
             <div class="flex min-w-max flex-col items-center justify-center">
                 <img :src="data.signature" class="w-28" />
-                <div>আবেদনকারীর স্বাক্ষর</div>
+                <div>অধ্যক্ষের স্বাক্ষর</div>
             </div>
         </div>
     </div>

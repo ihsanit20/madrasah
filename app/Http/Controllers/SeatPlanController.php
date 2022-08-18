@@ -88,7 +88,8 @@ class SeatPlanController extends Controller
                 'serials' => $serials,
                 'seat_plans' => $exam->seat_plans()->get(),
                 'exam_classes' => Classes::whereIn('id', $unselected_class_ids)->get(),
-                'classes' => Classes::whereIn('id', $seat_plan_classe_array)->whereNotIn('id', $unselected_class_ids)->get(),
+                'classes' => Classes::whereIn('id', $seat_plan_classe_array)->whereNotIn('id', $unselected_class_ids)->get(['id', 'name']),
+                'seat_plan_seats' => $seat_plans,
             ]
         ]);
     }

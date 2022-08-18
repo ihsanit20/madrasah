@@ -47,13 +47,20 @@
             </form>
             <div>যে সকল ক্লাসের জন্য আসন নং করা হয়েছে</div>
             <div
-                v-for="seatPlan in data.seat_plans"
+                v-for="(seatPlan, index) in data.seat_plans"
                 :key="seatPlan.id"
                 class="py-1"
             >
                 <div
-                    class="grid gap-3 rounded border bg-white p-4 md:grid-cols-3"
+                    class="grid gap-2 rounded border bg-white p-4 md:grid-cols-3"
                 >
+                    <div class="col-span-full">
+                        আসন নং
+                        <span class="rounded-md border px-3 py-0.5">
+                            {{ $e2bnumber(limit[index]) }}
+                        </span>
+                    </div>
+                    <hr class="col-span-full" />
                     <div v-for="classId in seatPlan.classes" :key="classId">
                         <label class="flex items-center gap-2">
                             <Input
@@ -132,7 +139,17 @@ export default {
 
         this.classNameArray = [...new Set(this.classNameArray)];
 
-        this.total = Math.ceil(this.data.serials.length / 9);
+        this.data.seat_plan_seats.forEach((seatPlan) => {
+            let initial = String(this.total + 1).padStart(3, "0");
+
+            Object.keys(seatPlan).forEach((seatNo) => {
+                this.total++;
+            });
+
+            let final = String(this.total).padStart(3, "0");
+
+            this.limit.push(`${initial} - ${final}`);
+        });
     },
     data() {
         return {
@@ -150,6 +167,7 @@ export default {
                 "bg-gray-500/25",
             ],
             total: 0,
+            limit: [],
             form: this.$inertia.form({
                 class_ids: [],
             }),

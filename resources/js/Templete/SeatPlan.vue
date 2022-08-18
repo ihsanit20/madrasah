@@ -1,5 +1,9 @@
 <template>
-    <div class="px-5 py-[17.5px] print:bg-white" :class="bgClorClass">
+    <div class="px-5 py-4 print:bg-white" :class="bgClorClass">
+        <div class="flex justify-center gap-2 text-xs">
+            <div>{{ exam.name }}</div>
+            <div>{{ exam.session }} হিজরি</div>
+        </div>
         <h3 class="text-center text-2xl font-extrabold">
             আসন নং- {{ $e2bnumber(String(seatNo).padStart(3, "0")) }}
         </h3>
@@ -39,6 +43,10 @@ export default {
             type: Object,
             default: {},
         },
+        exam: {
+            type: Object,
+            default: {},
+        },
         seatNo: {
             type: Number,
             default: 0,
@@ -47,11 +55,6 @@ export default {
             type: String,
             default: "bg-gray-200",
         },
-    },
-    created() {
-        if (this.data.class_name == "") {
-            this.data.class_name = "অনুরোধ করা হয় নি";
-        }
     },
 };
 </script>

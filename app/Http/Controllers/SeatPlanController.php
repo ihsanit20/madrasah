@@ -137,7 +137,7 @@ class SeatPlanController extends Controller
         
         $seats = Array();
 
-        $max_class_id = $this->getMaxClassId($students);
+        $max_class_id = $this->getMaxClassId($students, 12);
 
         while($max_class_id) {
             $seats[] = array_pop($students[$max_class_id]) ?? null;
@@ -159,6 +159,16 @@ class SeatPlanController extends Controller
             ->with('status', 'The record has been added successfully.');
     }
 
+    public function destroy(Exam $exam)
+    {
+        SeatPlan::query()
+            ->where('exam_id', $exam->id)
+            ->delete();
+
+        return redirect()
+            ->route('seat-plan.show', $exam->id);
+    }
+
     public function getMaxClassId($students, $ignore_class_id = null)
     {
         $array = $students;
@@ -167,12 +177,14 @@ class SeatPlanController extends Controller
             unset($array[$ignore_class_id]);
         }
 
-        $count_array = array_map('count', $array);
+        if(!empty($array)) {
+            $count_array = array_map('count', $array);
 
-        $max_class_id = array_keys($count_array, max($count_array))[0];
+            $max_class_id = array_keys($count_array, max($count_array))[0];
 
-        if(count($students[$max_class_id])) {
-            return $max_class_id;
+            if(count($students[$max_class_id])) {
+                return $max_class_id;
+            }
         }
 
         if(count($students[$ignore_class_id])) {

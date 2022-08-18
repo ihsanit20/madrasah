@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('seat-plan', [SeatPlanController::class, 'index'])->name('seat-plan.index');
     Route::get('seat-plan/{exam}', [SeatPlanController::class, 'show'])->name('seat-plan.show');
     Route::post('seat-plan/{exam}', [SeatPlanController::class, 'store'])->name('seat-plan.store');
+    Route::delete('seat-plan/{exam}', [SeatPlanController::class, 'destroy'])->name('seat-plan.destroy');
 
     Route::get('payment-purpose', [PaymentPurposeController::class, 'index'])->name('payments.purpose.index');
     Route::get('payment-purpose/{purpose}', [PaymentPurposeController::class, 'show'])->name('payments.purpose.show');

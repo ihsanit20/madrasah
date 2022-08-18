@@ -33,19 +33,39 @@
                     </div>
                 </div>
                 <div class="mt-2 flex items-center justify-between">
-                    <span class="text-sm"
-                        >প্রয়োজনীয় ক্লাস নির্বাচন করুন ও ‘আসন নং তৈরি করুন’
-                        বাটনে ক্লিক করুন
+                    <span class="text-sm">
+                        প্রয়োজনীয় ক্লাস নির্বাচন করুন ও ‘আসন নং তৈরি করুন’ বাটনে
+                        ক্লিক করুন
                     </span>
                     <button
                         type="submit"
-                        class="bg-sky-400 py-1 px-3 text-white"
+                        class="bg-sky-600 py-1 px-3 text-white"
+                        :class="{
+                            'cursor-not-allowed opacity-50':
+                                !form.class_ids.length,
+                        }"
+                        :disabled="!form.class_ids.length"
                     >
                         আসন নং তৈরি করুন
                     </button>
                 </div>
             </form>
-            <div>যে সকল ক্লাসের জন্য আসন নং করা হয়েছে</div>
+
+            <div
+                v-if="Object.keys(data.seat_plans).length"
+                class="mt-2 flex items-center justify-between"
+            >
+                <div>যে সকল ক্লাসের জন্য আসন নং করা হয়েছে</div>
+                <form @submit.prevent="destroy">
+                    <button
+                        type="submit"
+                        class="bg-rose-600 py-1 px-3 text-white"
+                    >
+                        আসন রিসেট করুন
+                    </button>
+                </form>
+            </div>
+
             <div
                 v-for="(seatPlan, index) in data.seat_plans"
                 :key="seatPlan.id"
@@ -57,7 +77,7 @@
                     <div class="col-span-full">
                         আসন নং
                         <span class="rounded-md border px-3 py-0.5">
-                            {{ $e2bnumber(limit[index]) }}
+                            {{ $e2bnumber(getLimit(index)) }}
                         </span>
                     </div>
                     <hr class="col-span-full" />
@@ -84,14 +104,15 @@
                 </div>
             </div>
         </div>
-        <div class="grid gap-4 print:grid-cols-3 md:grid-cols-3">
+        <div class="grid gap-x-4 gap-y-[28px] print:grid-cols-3 md:grid-cols-3">
             <div
                 v-for="(serial, index) in data.serials"
                 :key="index"
-                class="print:bottom-2 print:break-before-page print:border"
+                class="print:bottom-2 print:border"
             >
                 <SeatPlan
                     :data="serial"
+                    :exam="data.exam"
                     :bgClorClass="
                         bgClors[classNameArray.indexOf(serial.class_name)]
                     "
@@ -139,21 +160,17 @@ export default {
 
         this.classNameArray = [...new Set(this.classNameArray)];
 
-        this.data.seat_plan_seats.forEach((seatPlan) => {
-            let initial = String(this.total + 1).padStart(3, "0");
-
-            Object.keys(seatPlan).forEach((seatNo) => {
-                this.total++;
-            });
-
-            let final = String(this.total).padStart(3, "0");
-
-            this.limit.push(`${initial} - ${final}`);
-        });
+        this.setLimit();
     },
     data() {
         return {
             classNameArray: [],
+            total: 0,
+            limit: [],
+            form: this.$inertia.form({
+                class_ids: [],
+            }),
+            destroy_form: this.$inertia.form({}),
             bgClors: [
                 "bg-red-500/25",
                 "bg-yellow-500/25",
@@ -165,12 +182,19 @@ export default {
                 "bg-purple-500/25",
                 "bg-teal-500/25",
                 "bg-gray-500/25",
+                "bg-rose-400/25",
+                "bg-sky-400/25",
+                "bg-lime-400/25",
+                "bg-brown-400/25",
+                "bg-indigo-400/25",
+                "bg-orange-400/25",
+                "bg-pink-400/25",
+                "bg-purple-400/25",
+                "bg-teal-400/25",
+                "bg-gray-400/25",
+                "bg-red-400/25",
+                "bg-yellow-400/25",
             ],
-            total: 0,
-            limit: [],
-            form: this.$inertia.form({
-                class_ids: [],
-            }),
         };
     },
     methods: {
@@ -192,6 +216,35 @@ export default {
             let index = this.form.class_ids.indexOf(event.target.value);
 
             return this.form.class_ids.splice(index, 1);
+        },
+        destroy() {
+            if (!confirm("আপনি কি আসন রিসেট করতে চান?")) {
+                return;
+            }
+
+            return this.destroy_form.delete(
+                this.route("seat-plan.destroy", this.data.exam.id)
+            );
+        },
+        getLimit(index) {
+            this.setLimit();
+            return this.limit[index];
+        },
+        setLimit() {
+            this.limit = [];
+            this.total = 0;
+
+            this.data.seat_plan_seats.forEach((seatPlan) => {
+                let initial = String(this.total + 1).padStart(3, "0");
+
+                Object.keys(seatPlan).forEach((seatNo) => {
+                    this.total++;
+                });
+
+                let final = String(this.total).padStart(3, "0");
+
+                this.limit.push(`${initial} - ${final}`);
+            });
         },
     },
 };

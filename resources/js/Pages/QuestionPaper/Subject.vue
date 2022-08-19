@@ -10,7 +10,13 @@
             <Link
                 v-for="subject in data.subjects"
                 :key="subject.id"
-                :href="route('question-papers.classes', data.exam.id)"
+                :href="
+                    route('question-papers.question-paper', [
+                        data.exam.id,
+                        data.class.id,
+                        subject.code,
+                    ])
+                "
                 class="flex items-center gap-2 rounded-md border bg-white p-2 hover:shadow md:gap-4 md:p-4"
             >
                 <div

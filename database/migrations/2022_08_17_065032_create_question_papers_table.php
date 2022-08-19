@@ -15,7 +15,8 @@ class CreateQuestionPapersTable extends Migration
     {
         Schema::create('question_papers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('exam_class_id')->index();
+            $table->unsignedBigInteger('exam_id');
+            $table->unsignedBigInteger('class_id');
             $table->string('subject_code', 4);
             $table->unsignedSmallInteger('time_in_minute')->default(180);
             $table->unsignedFloat('mark')->default(100);
@@ -23,6 +24,7 @@ class CreateQuestionPapersTable extends Migration
             $table->string('top_text')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['exam_id', 'class_id', 'subject_code']);
         });
     }
 
@@ -33,6 +35,6 @@ class CreateQuestionPapersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exam_papers');
+        Schema::dropIfExists('question_papers');
     }
 }

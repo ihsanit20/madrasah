@@ -58,6 +58,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('question-papers/exams', [QuestionPaperController::class, 'exams'])->name('question-papers.exams');
     Route::get('question-papers/exams/{exam}/classes', [QuestionPaperController::class, 'classes'])->name('question-papers.classes');
     Route::get('question-papers/exams/{exam}/classes/{class}/subjects', [QuestionPaperController::class, 'subjects'])->name('question-papers.subjects');
+    Route::get('question-papers/exams/{exam}/classes/{class}/subjects/{subject}', [QuestionPaperController::class, 'questionPaper'])->name('question-papers.question-paper');
+    Route::post('question-papers/exams/{exam}/classes/{class}/subjects/{subject}', [QuestionPaperController::class, 'questionPaperSave']);
 
     Route::get('seat-plan', [SeatPlanController::class, 'index'])->name('seat-plan.index');
     Route::get('seat-plan/{exam}', [SeatPlanController::class, 'show'])->name('seat-plan.show');

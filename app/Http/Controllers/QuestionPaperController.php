@@ -9,7 +9,9 @@ use App\Http\Resources\QuestionPaperResource;
 use App\Http\Resources\SubjectResource;
 use App\Models\Classes;
 use App\Models\Exam;
+use App\Models\Question;
 use App\Models\QuestionPaper;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -37,7 +39,7 @@ class QuestionPaperController extends Controller
         return Inertia::render('QuestionPaper/Class', [
             'data' => [
                 'exam'      => new ExamResource($exam),
-                'classes'   => ClassesResource::collection($exam->classes()->with('students')->get()),
+                'classes'   => ClassesResource::collection($exam->classes()->with('subjects')->get()),
             ]
         ]);
     }
@@ -57,101 +59,79 @@ class QuestionPaperController extends Controller
         ]);
     }
 
-    public function index()
+    public function questionPaper(Exam $exam, Classes $class, $subject_code)
     {
-        $collections = Exam::query()
-            ->latest();
-
-        ExamResource::withoutWrapping();
-
-        return Inertia::render('QuestionPaper/Index', [
-            'data' => [
-                'exams' => ExamResource::collection($collections->get()),
-            ]
+        $class->load([
+            'subjects:id,name,class_id'
         ]);
-    }
 
-    public function create()
-    {
-        return Inertia::render('QuestionPaper/Create', [
-            'data' => $this->data(new QuestionPaper())
+        $subject = $class->subjects->where('code', $subject_code)->first() ?? abort(404);
+
+        $questionPaper = QuestionPaper::withTrashed()
+            ->updateOrCreate(
+                [
+                    'exam_id'       => $exam->id,
+                    'class_id'      => $class->id,
+                    'subject_code'  => $subject_code,
+                ], 
+                [
+                    'deleted_at'    => null,
+                ]
+            );
+
+        $questionPaper->load([
+            'exam',
+            'class',
+            'questions'
         ]);
-    }
 
-    public function store(Request $request)
-    {
-        $questionPaper = QuestionPaper::create($this->validatedData($request));
-
-        return redirect()
-            ->route('question-papers.show', $questionPaper->id)
-            ->with('status', 'The record has been added successfully.');
-    }
-
-    public function show(Exam $exam)
-    {
-        ClassesResource::withoutWrapping();
-
-        $exam->load('seat_plans');
-
-        return Inertia::render('QuestionPaper/Show', [
-            'data' => [
-                'exam'      => new ExamResource($exam),
-                'classes'   => ClassesResource::collection($exam->classes()->with('students')->get()),
-            ]
-        ]);
-    }
-
-    public function edit(QuestionPaper $questionPaper)
-    {
-        return Inertia::render('QuestionPaper/Edit', [
-            'data' => $this->data($questionPaper)
-        ]);
-    }
-
-    public function update(Request $request, QuestionPaper $questionPaper)
-    {
-        $questionPaper->update($this->validatedData($request, $questionPaper->id));
-
-        return redirect()
-            ->route('question-papers.show', $questionPaper->id)
-            ->with('status', 'The record has been update successfully.');
-    }
-
-    public function destroy(QuestionPaper $questionPaper)
-    {
-        $questionPaper->delete();
-
-        return redirect()
-            ->route('question-papers.index')
-            ->with('status', 'The record has been delete successfully.');
-    }
-
-    protected function data($questionPaper)
-    {
-        return [
-            'questionPaper' => $this->formatedData($questionPaper),
-        ];
-    }
-
-    protected function formatedData($questionPaper)
-    {
         QuestionPaperResource::withoutWrapping();
+        SubjectResource::withoutWrapping();
 
-        return new QuestionPaperResource($questionPaper);
-    }
-
-    protected function getFilterProperty()
-    {
-        return [
-            //
-        ];
-    }
-
-    protected function validatedData($request, $id = '')
-    {
-        return $request->validate([
-            //
+        return Inertia::render('QuestionPaper/QuestionPaper', [
+            'data' => [
+                'questionPaper' => new QuestionPaperResource($questionPaper),
+                'subject'       => new SubjectResource($subject),
+                'languageList'  => QuestionPaper::getLanguageType(),
+                'madrasahName'  => QuestionPaper::getMadrasahName(),
+            ]
         ]);
     }
 
+    public function questionPaperSave(Request $request, Exam $exam, Classes $class, $subject_code)
+    {
+        $questionPaper = QuestionPaper::query()
+            ->where([
+                'exam_id'       => $exam->id,
+                'class_id'      => $class->id,
+                'subject_code'  => $subject_code,
+            ])->first();
+
+        $questionPaper->update([
+            'language_type' => $request->language_type,
+            'mark'          => $request->mark,
+            'top_text'      => $request->top_text,
+            'time_in_minute'=> $request->hour * 60 + $request->minute,    
+        ]);
+
+        Question::where('question_paper_id', $questionPaper->id)->delete();
+
+        if(is_array($request->questions)) {
+            foreach($request->questions as $question) {
+                Question::onlyTrashed()
+                    ->updateOrCreate(
+                        [],
+                        [
+                            'question_paper_id' => $questionPaper->id,
+                            'title'             => $question["title"],
+                            'body'              => $question["body"],
+                            'mark'              => $question["mark"],
+                            'deleted_at'        => null,
+                        ]
+                    );
+            }
+        }
+
+        return redirect()->route('question-papers.question-paper', [ $exam->id, $class->id, $subject_code]);
+    }
 }

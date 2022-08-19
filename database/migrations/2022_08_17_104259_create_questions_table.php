@@ -16,7 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('question_paper_id')->index();
-            $table->text('heading')->nullable();
+            $table->text('title')->nullable();
             $table->text('body')->nullable();
             $table->unsignedFloat('mark')->nullable();
             $table->timestamps();

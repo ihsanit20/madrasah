@@ -25,9 +25,9 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <ClassSvg class="w-5 text-gray-400" />
-                        <span class="text-gray-600"> শিক্ষার্থী: </span>
+                        <span class="text-gray-600"> বিষয়: </span>
                         <span class="font-bold text-gray-800">
-                            {{ $e2bnumber(classes.totalStudent) }} জন
+                            {{ $e2bnumber(classes.totalSubject) }} টি
                         </span>
                     </div>
                 </div>

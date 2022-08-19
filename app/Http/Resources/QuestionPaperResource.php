@@ -14,6 +14,19 @@ class QuestionPaperResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'            => (int) ($this->id ?? 0),
+            'exam_id'       => (int) ($this->exam_id ?? 0),
+            'exam'          => new ExamResource($this->whenLoaded('exam')),
+            'class_id'      => (int) ($this->class_id ?? 0),
+            'class'         => new ClassesResource($this->whenLoaded('class')),
+            'subject_code'  => (int) ($this->subject_code ?? 0),
+            'hour'          => (int) ($this->time_in_minute / 60 ?? 0),
+            'minute'        => (int) ($this->time_in_minute % 60 ?? 0),
+            'language_type' => (int) ($this->language_type ?? 1),
+            'mark'          => (float) ($this->mark ?? 0),
+            'top_text'      => (string) ($this->top_text ?? ''),
+            'questions'     => QuestionResouce::collection($this->whenLoaded('questions')),
+        ];
     }
 }

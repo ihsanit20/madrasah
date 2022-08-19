@@ -18,13 +18,34 @@ class QuestionPaper extends Model
         3 => 'English',
     ];
 
+    const MADRASAH_NAME = [
+        1 => 'মাদরাসা সায়্যিদাতুল জান্নাত (রা.)',
+        2 => 'مدرسة سيدة الجنة (رض)',
+        3 => 'Madrasah Saiyedatul Zannat (R.)',
+    ];
+
     public static function getLanguageType()
     {
         return self::LANGUAGE_TYPE;
     }
 
+    public static function getMadrasahName()
+    {
+        return self::MADRASAH_NAME;
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class);
     }
 }

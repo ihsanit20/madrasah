@@ -55,6 +55,11 @@ body::-webkit-scrollbar-thumb {
     color: #be123c;
 }
 
+.required::after {
+    content: " *";
+    color: #be123c;
+}
+
 @media print {
     .pagebreak {
         page-break-before: always;

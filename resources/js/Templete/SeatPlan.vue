@@ -1,5 +1,5 @@
 <template>
-    <div class="px-5 py-4 print:bg-white" :class="bgClorClass">
+    <div class="px-4 py-4 print:bg-white" :class="bgClorClass">
         <div class="flex justify-center gap-2 text-xs">
             <div>{{ exam.name }}</div>
             <div>{{ exam.session }} হিজরি</div>

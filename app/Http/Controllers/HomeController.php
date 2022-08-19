@@ -36,19 +36,25 @@ class HomeController extends Controller
 
         $response = $response->object();
         
-        $current_weekday = $response->data->gregorian->weekday->en;
+        $current_weekday = $response->data->gregorian->weekday->en ?? '';
 
-        $current_day = $response->data->hijri->day;
+        $current_day = $response->data->hijri->day ?? '';
 
-        $current_month = $response->data->hijri->month;
+        $current_month = $response->data->hijri->month ?? '';
+        
+        $bn = HijriMonth::find($current_month->number ?? 0)->bengali ?? ($current_month->en ?? '');
 
-        $current_month->bn = HijriMonth::find($current_month->number)->bengali ?? $current_month->en;
+        if(isset($current_month->bn)) {
+            $current_month->bn = $bn;
+        }
 
-        $current_year = $response->data->hijri->year;
+        $current_year = $response->data->hijri->year ?? '';
 
-        $response = Http::get("{$api_base_url}/v1/hToGCalendar/{$current_month->number}/{$current_year}");
+        // if(isset($current_month->number) && $current_year) {
+        //     $response = Http::get("{$api_base_url}/v1/hToGCalendar/{$current_month->number}/{$current_year}");
+        // }
 
-        $response = $response->object();
+        // $response = $response->object() ?? '';
 
         return Inertia::render('Home/Index', [
             'data' => [
@@ -61,7 +67,7 @@ class HomeController extends Controller
                     'currentYear'   => $current_year,
                     'currentMonth'  => $current_month,
                     'currentDay'    => $current_day,
-                    'days'          => $response->data,
+                    'days'          => $response->data ?? '',
                     'startFrom'     => $this->getStratFromOfWeekDay($current_weekday, $current_day),
                 ]
             ]
@@ -70,6 +76,10 @@ class HomeController extends Controller
 
     public function getStratFromOfWeekDay($current_weekday, $current_day)
     {
+        if(!$current_weekday && !$current_day) {
+            return 0;
+        }
+        
         $current_day = $current_day % 7;
         $startFrom = 0;
 

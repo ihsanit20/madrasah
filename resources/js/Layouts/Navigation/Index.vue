@@ -33,9 +33,9 @@
             </span>
             <template #items>
                 <nav-link
-                    :href="route('question-papers.index')"
+                    :href="route('question-papers.exams')"
                     :active="route().current('question-papers.*')"
-                    class="hidden items-center gap-2 md:gap-4"
+                    class="flex items-center gap-2 md:gap-4"
                     :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />

@@ -55,6 +55,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('admit-card/{exam}', [AdmitCardController::class, 'show'])->name('admit-card.show');
     Route::get('admit-card/{exam}/class/{class}', [AdmitCardController::class, 'list'])->name('admit-card.list');
 
+    Route::get('question-papers/exams', [QuestionPaperController::class, 'exams'])->name('question-papers.exams');
+    Route::get('question-papers/exams/{exam}/classes', [QuestionPaperController::class, 'classes'])->name('question-papers.classes');
+    Route::get('question-papers/exams/{exam}/classes/{class}/subjects', [QuestionPaperController::class, 'subjects'])->name('question-papers.subjects');
+
     Route::get('seat-plan', [SeatPlanController::class, 'index'])->name('seat-plan.index');
     Route::get('seat-plan/{exam}', [SeatPlanController::class, 'show'])->name('seat-plan.show');
     Route::post('seat-plan/{exam}', [SeatPlanController::class, 'store'])->name('seat-plan.store');
@@ -86,7 +90,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'payments'          => PaymentController::class,
         'purposes'          => PurposeController::class,
         'exams'             => ExamController::class,
-        'question-papers'   => QuestionPaperController::class,
     ]);
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');

@@ -185,7 +185,6 @@ export default {
                 "bg-rose-400/25",
                 "bg-sky-400/25",
                 "bg-lime-400/25",
-                "bg-brown-400/25",
                 "bg-indigo-400/25",
                 "bg-orange-400/25",
                 "bg-pink-400/25",

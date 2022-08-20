@@ -47,7 +47,7 @@
                 <div>{{ $e2bnumber(student.currentClassRoll) }}</div>
             </div>
             <div class="col-span-3 flex gap-2">
-                <div class="w-24 text-gray-500">অভিভাক</div>
+                <div class="w-24 text-gray-500">অভিভাবক</div>
                 <span>:</span>
                 <div>{{ student.guardianInfo.name }}</div>
             </div>

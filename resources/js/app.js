@@ -23,6 +23,13 @@ createInertiaApp({
                             return bengali[+w];
                         });
                     },
+                    $e2anumber(position) {
+                        let arabic = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+                        position = new String(position);
+                        return position.replace(/[0-9]/g, function (w) {
+                            return arabic[+w];
+                        });
+                    }
                 } 
             })
             .mount(el);

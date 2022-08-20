@@ -47,24 +47,29 @@
                             title="সময়:"
                             :value="`${
                                 data.questionPaper.hour
-                                    ? $e2bnumber(data.questionPaper.hour) +
+                                    ? checkConvert(data.questionPaper.hour) +
                                       ' ঘণ্টা'
                                     : ''
                             } ${
                                 data.questionPaper.minute
-                                    ? $e2bnumber(data.questionPaper.minute) +
+                                    ? checkConvert(data.questionPaper.minute) +
                                       ' মিনিট'
                                     : ''
                             }`"
                         />
                         <inline-data
                             title="পূর্ণমান:"
-                            :value="$e2bnumber(data.questionPaper.mark)"
+                            :value="checkConvert(data.questionPaper.mark)"
                             class="justify-end"
                         />
                     </div>
                 </div>
                 <hr class="my-3" />
+                <div class="mb-2 flex items-center justify-center">
+                    <div class="text-lg font-bold">
+                        {{ data.questionPaper.top_text }}
+                    </div>
+                </div>
                 <div class="grid gap-4">
                     <div
                         v-for="(question, index) in this.data.questionPaper
@@ -72,23 +77,44 @@
                         :key="index"
                         class="flex items-start"
                     >
+                        <div
+                            v-if="Number(form.language_type) === 2"
+                            class="w-10"
+                        >
+                            <div class="text-right text-xl font-bold">
+                                {{ checkConvert(question.mark) }}
+                            </div>
+                        </div>
                         <div class="grid w-full">
                             <div
+                                :dir="
+                                    Number(form.language_type) === 2
+                                        ? 'rtl'
+                                        : 'ltr'
+                                "
                                 class="font-bold"
                                 v-html="
-                                    $e2bnumber(index + 1) +
+                                    checkConvert(index + 1) +
                                     '. ' +
-                                    question.title
+                                    checkConvert(question.title)
                                 "
                             ></div>
                             <div
-                                class="whitespace-pre-wrap pl-5 font-normal"
-                                v-html="question.body"
+                                :dir="
+                                    Number(form.language_type) === 2
+                                        ? 'rtl'
+                                        : 'ltr'
+                                "
+                                class="whitespace-pre-wrap px-5 font-normal"
+                                v-html="checkConvert(question.body)"
                             ></div>
                         </div>
-                        <div class="w-20">
-                            <div class="text-xl font-bold">
-                                {{ $e2bnumber(question.mark) }}
+                        <div
+                            v-if="Number(form.language_type) !== 2"
+                            class="w-10"
+                        >
+                            <div class="text-right text-xl font-bold">
+                                {{ checkConvert(question.mark) }}
                             </div>
                         </div>
                     </div>
@@ -156,7 +182,6 @@
                         type="text"
                         class="block w-full text-center"
                         v-model="form.top_text"
-                        required
                         placeholder="প্রশ্নের উপরের লেখা (যেমন: যেকোন ৫টি প্রশ্নের উত্তর দাও)"
                     />
                 </div>
@@ -184,14 +209,20 @@
                     </div>
                     <div class="grid shrink grow gap-3">
                         <Textarea
-                            class="block h-20 w-full text-sm font-bold md:h-14 md:text-lg"
+                            :dir="
+                                Number(form.language_type) === 2 ? 'rtl' : 'ltr'
+                            "
+                            class="block w-full resize-none text-sm font-bold md:text-lg"
                             v-model="question.title"
                             @keyup="resizeTextarea"
                             @focus="resizeTextarea"
                             placeholder="প্রশ্ন/প্রশ্নের শিরনাম (Bold Font)"
                         ></Textarea>
                         <Textarea
-                            class="block h-14 w-full text-sm md:text-lg"
+                            :dir="
+                                Number(form.language_type) === 2 ? 'rtl' : 'ltr'
+                            "
+                            class="block w-full resize-none text-sm font-normal md:text-lg"
                             v-model="question.body"
                             @keyup="resizeTextarea"
                             @focus="resizeTextarea"
@@ -312,8 +343,10 @@ export default {
         },
         resizeTextarea(e) {
             let area = e.target;
+            let bothSideBorder = 2;
+            area.style.height = "auto";
             area.style.overflow = "hidden";
-            area.style.height = area.scrollHeight + "px";
+            area.style.height = area.scrollHeight + bothSideBorder + "px";
         },
         changeClass() {
             let selectedClass = Object.values(this.classList).find(
@@ -342,6 +375,17 @@ export default {
             this.form.questions.splice(index, 1);
 
             // this.form.questions.length == 0 && this.addQuestionSlot();
+        },
+        checkConvert(value) {
+            if (Number(this.form.language_type) === 1) {
+                return this.$e2bnumber(value);
+            }
+
+            if (Number(this.form.language_type) === 2) {
+                return this.$e2anumber(value);
+            }
+
+            return value;
         },
     },
 };

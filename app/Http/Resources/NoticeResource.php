@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use Alkoumi\LaravelHijriDate\Hijri;
+use App\Models\HijriMonth;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NoticeResource extends JsonResource
@@ -14,10 +16,14 @@ class NoticeResource extends JsonResource
      */
     public function toArray($request)
     {
+        $months = HijriMonth::get();
+
+        $formated_date = $this->date ? Hijri::Date('d') . ' - ' . (HijriMonth::find(Hijri::Date('m'))->bengali ?? Hijri::Date('m')) . ' - ' . Hijri::Date('Y') : '';
+
         return [
             'id'            => (int) ($this->id),
             'date'          => (string) ($this->date ? $this->date->format('Y-m-d') : ''),
-            'formatedDate'  => (string) ($this->date ? $this->date->format('d M Y') : ''),
+            'formatedDate'  => (string) ($formated_date ?? ''),
             'title'         => (string) ($this->title ?? ''),
             'body'          => (string) ($this->body ?? ''),
             'staffId'       => (int) ($this->staff_id ?? 0),

@@ -128,11 +128,11 @@
                                     class="flex h-6 w-6 items-center justify-center rounded-full"
                                     :class="{
                                         'bg-orange-600 text-white':
-                                            day.hijri.day ===
-                                            calendar.currentDay,
+                                            Number(day) ===
+                                            Number(calendar.currentDay),
                                     }"
                                 >
-                                    {{ $e2bnumber(day.hijri.day) }}
+                                    {{ $e2bnumber(day) }}
                                 </div>
                             </div>
                         </div>

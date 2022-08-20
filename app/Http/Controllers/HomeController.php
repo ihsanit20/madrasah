@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Alkoumi\LaravelHijriDate\Hijri;
 
 class HomeController extends Controller
 {
@@ -26,35 +27,22 @@ class HomeController extends Controller
             ->take(10)
             ->get();
 
-        $today = date("d-m-Y");
+        $date = date("Y-m-d");
 
-        // $today = "01-01-2022"; //testing
+        $hijri_month_data = HijriMonth::find(Hijri::Date('m', $date));
 
-        $api_base_url = env('API_BASE_URL', "https://api.aladhan.com");
-
-        $response = Http::get("{$api_base_url}/v1/gToH?date={$today}");
-
-        $response = $response->object();
-        
-        $current_weekday = $response->data->gregorian->weekday->en ?? '';
-
-        $current_day = $response->data->hijri->day ?? '';
-
-        $current_month = $response->data->hijri->month ?? '';
-        
-        $bn = HijriMonth::find($current_month->number ?? 0)->bengali ?? ($current_month->en ?? '');
-
-        if(isset($current_month->bn)) {
-            $current_month->bn = $bn;
-        }
-
-        $current_year = $response->data->hijri->year ?? '';
-
-        // if(isset($current_month->number) && $current_year) {
-        //     $response = Http::get("{$api_base_url}/v1/hToGCalendar/{$current_month->number}/{$current_year}");
-        // }
-
-        // $response = $response->object() ?? '';
+        $calender = [
+            'currentYear'   => Hijri::Date('Y', $date),
+            'currentMonth'  => [
+                'number' => (int) Hijri::Date('m', $date),
+                'en'     => $hijri_month_data->english ?? '',
+                'bn'     => $hijri_month_data->bengali ?? '',
+                'ar'     => $hijri_month_data->arabic ?? '',
+            ],
+            'currentDay'    => Hijri::Date('d', $date),
+            'days'          => $this->getMonthDays($date),
+            'startFrom'     => $this->getStratFromOfWeekDay(Hijri::Date('w', $date), Hijri::Date('d', $date)),
+        ];
 
         return Inertia::render('Home/Index', [
             'data' => [
@@ -63,15 +51,30 @@ class HomeController extends Controller
                 'principalMessage' => $this->getSettingProperty('principal-message'),
                 'headline' => $this->getSettingProperty('headline'),
                 'ourMessage' => $this->getSettingProperty('our-message'),
-                'calendar' => [
-                    'currentYear'   => $current_year,
-                    'currentMonth'  => $current_month,
-                    'currentDay'    => $current_day,
-                    'days'          => $response->data ?? '',
-                    'startFrom'     => $this->getStratFromOfWeekDay($current_weekday, $current_day),
-                ]
+                'calendar' => $calender,
             ]
         ]);
+    }
+
+    public function getMonthDays($date = null)
+    {
+        $date = $date ?? date("Y-m-d");
+
+        $date_array = explode("-", $date);
+
+        if(strlen($date_array[2]) == 4) {
+            $date_array = array_reverse($date_array);
+        }
+
+        $date = implode("-", $date_array);
+
+        $days = Array();
+
+        for($i = 1; $i <= Hijri::Date('t', $date); $i++) {
+            $days[] = $i;
+        }
+
+        return $days;
     }
 
     public function getStratFromOfWeekDay($current_weekday, $current_day)
@@ -84,31 +87,31 @@ class HomeController extends Controller
         $startFrom = 0;
 
         switch($current_weekday) {
-            case $current_weekday == 'Saturday':
+            case $current_weekday == 6:
                 $startFrom = abs(1 - $current_day);
                 break;
 
-            case $current_weekday == 'Sunday':
+            case $current_weekday == 0:
                 $startFrom = abs(2 - $current_day);
                 break;
 
-            case $current_weekday == 'Monday':
+            case $current_weekday == 1:
                 $startFrom = abs(3 - $current_day);
                 break;
 
-            case $current_weekday == 'Tuesday':
+            case $current_weekday == 2:
                 $startFrom = abs(4 - $current_day);
                 break;
 
-            case $current_weekday == 'Wednesday':
+            case $current_weekday == 3:
                 $startFrom = abs(5 - $current_day);
                 break;
 
-            case $current_weekday == 'Thursday':
+            case $current_weekday == 4:
                 $startFrom = abs(6 - $current_day);
                 break;
 
-            case $current_weekday == 'Friday':
+            case $current_weekday == 5:
                 $startFrom = abs(7 - $current_day);
                 break;
         }

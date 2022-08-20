@@ -75,7 +75,7 @@
                                 class="block"
                             >
                                 <p class="text-xl font-bold text-orange-500">
-                                    {{ notice.formatedDate }}
+                                    {{ $e2bnumber(notice.formatedDate) }}
                                 </p>
                                 <h3 class="line-clamp-2">
                                     {{ notice.title }}

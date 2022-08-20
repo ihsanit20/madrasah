@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Resources\SettingResource;
 use App\Models\HijriMonth;
 use App\Models\Setting;
@@ -46,23 +47,21 @@ class Controller extends BaseController
     {
         $date = $date ?? date("d-m-Y");
 
-        $api_base_url = env('API_BASE_URL', "https://api.aladhan.com");
+        $date_array = explode("-", $date);
 
-        $response = Http::get("{$api_base_url}/v1/gToH?date={$date}");
+        if(strlen($date_array[2]) == 4) {
+            $date_array = array_reverse($date_array);
+        }
 
-        $response = $response->object();
+        $date = implode("-", $date_array);
+
+        $day = Hijri::Date("d", $date);
+        $month = Hijri::Date("m", $date);
+        $year = Hijri::Date("Y", $date);
+
+        $month = HijriMonth::find($month)->bengali ?? $month;
         
-        $current_weekday = $response->data->gregorian->weekday->en;
-
-        $current_day = $response->data->hijri->day;
-
-        $current_month = $response->data->hijri->month;
-
-        $current_month->bn = HijriMonth::find($current_month->number)->bengali ?? $current_month->en;
-
-        $current_year = $response->data->hijri->year;
-
-        return "{$current_day} - $current_month->bn - {$current_year}";
+        return "{$day} - {$month} - {$year}";
     }
 
     public function imageUploadGetLink()

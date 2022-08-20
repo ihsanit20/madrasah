@@ -2,7 +2,7 @@
     <div class="bg-white p-10">
         <letter-head />
         <div class="py-3 print:text-black">
-            তারিখ: <b>{{ data.notice.formatedDate }}</b>
+            তারিখ: <b>{{ $e2bnumber(data.notice.formatedDate) }}</b>
         </div>
         <h2 class="mt-4 mb-2 text-center text-2xl font-bold print:text-black">
             {{ data.notice.title }}

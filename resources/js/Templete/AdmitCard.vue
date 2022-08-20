@@ -1,23 +1,15 @@
 <template>
     <div
-        class="bg-white bg-[url('/images/wmlogo.png')] bg-center bg-no-repeat px-12 py-4 print:py-0 print:px-4"
+        class="w-full bg-white bg-[url('/images/wmlogo.png')] bg-center bg-no-repeat px-12 py-4 print:py-0 print:px-4"
     >
         <letter-head :photoUrl="student.imageUrl || '/images/hijab-icon.jpg'" />
 
-        <div class="mt-2 grid grid-cols-5">
-            <div class="col-span-3 flex gap-2">
-                <div class="w-24 text-gray-500">পরীক্ষা</div>
-                <span>:</span>
-                <div>{{ data.exam.name }}</div>
-            </div>
-            <div class="col-span-2 flex gap-2">
-                <div class="w-20 text-gray-500">শিক্ষা বর্ষ</div>
-                <span>:</span>
-                <div>{{ data.exam.session }} হিজরি</div>
-            </div>
+        <div class="mt-2 flex items-center justify-center gap-4 font-bold">
+            <div>{{ data.exam.name }}</div>
+            <div>{{ data.exam.session }} হিজরি</div>
         </div>
 
-        <div class="mt-1 mb-2 flex items-center justify-center">
+        <div class="mb-2 flex items-center justify-center">
             <div
                 class="rounded-md border px-4 py-0.5 text-center text-2xl font-bold print:border-black print:text-black"
             >

@@ -18,7 +18,7 @@ class NoticeResource extends JsonResource
     {
         $months = HijriMonth::get();
 
-        $formated_date = $this->date ? Hijri::Date('d') . ' - ' . (HijriMonth::find(Hijri::Date('m'))->bengali ?? Hijri::Date('m')) . ' - ' . Hijri::Date('Y') : '';
+        $formated_date = $this->date ? Hijri::Date('d', $this->date) . ' - ' . (HijriMonth::find(Hijri::Date('m', $this->date))->bengali ?? Hijri::Date('m', $this->date)) . ' - ' . Hijri::Date('Y', $this->date) : '';
 
         return [
             'id'            => (int) ($this->id),

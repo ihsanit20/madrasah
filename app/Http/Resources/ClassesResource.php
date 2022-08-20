@@ -17,6 +17,8 @@ class ClassesResource extends JsonResource
         return [
             'id'            => (int) $this->id,
             'name'          => (string) ($this->name ?? ''),
+            'arabic'        => (string) ($this->arabic ?? ''),
+            'english'       => (string) ($this->english ?? ''),
             'code'          => (string) ($this->code ?? ''),
             'description'   => (string) ($this->description ?? ''),
             'staffId'       => (int) ($this->staff_id ?? 0),

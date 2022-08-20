@@ -17,6 +17,8 @@ class ExamResource extends JsonResource
         return [
             'id'            => (int) ($this->id ?? 0),
             'name'          => (string) ($this->name ?? ''),
+            'arabic'        => (string) ($this->arabic ?? ''),
+            'english'       => (string) ($this->english ?? ''),
             'session'       => (string) ($this->session ?? ''),
             'classes'       => ClassesResource::collection($this->whenLoaded('classes')),
         ];

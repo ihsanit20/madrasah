@@ -25,8 +25,22 @@
                 <div class="space-y-1">
                     <div class="grid grid-cols-2 gap-8">
                         <inline-data
+                            v-if="Number(form.language_type) === 1"
                             title="পরীক্ষা:"
                             :value="data.questionPaper.exam.name"
+                            class="justify-end"
+                        />
+                        <inline-data
+                        dir="rtl"
+                            v-if="Number(form.language_type) === 2"
+                            title="الامنحان:"
+                            :value="data.questionPaper.exam.arabic"
+                            class="justify-start"
+                        />
+                        <inline-data
+                            v-if="Number(form.language_type) === 3"
+                            title="Exam:"
+                            :value="data.questionPaper.exam.english"
                             class="justify-end"
                         />
                         <inline-data

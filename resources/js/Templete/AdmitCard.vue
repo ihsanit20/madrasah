@@ -4,12 +4,14 @@
     >
         <letter-head :photoUrl="student.imageUrl || '/images/hijab-icon.jpg'" />
 
-        <div class="mt-2 flex items-center justify-center gap-4 font-bold">
+        <div
+            class="mt-2 flex items-center justify-center gap-4 text-lg font-bold"
+        >
             <div>{{ data.exam.name }}</div>
             <div>{{ data.exam.session }} হিজরি</div>
         </div>
 
-        <div class="mb-2 flex items-center justify-center">
+        <div class="mt-1.5 mb-2 flex items-center justify-center">
             <div
                 class="rounded-md border px-4 py-0.5 text-center text-2xl font-bold print:border-black print:text-black"
             >
@@ -19,32 +21,36 @@
 
         <div class="grid grid-cols-5">
             <div class="col-span-3 flex gap-2">
-                <div class="w-24 text-gray-500">শিক্ষার্থীর নাম</div>
+                <div class="w-24 text-gray-500 print:text-black">
+                    শিক্ষার্থীর নাম
+                </div>
                 <span>:</span>
                 <div>{{ student.name }}</div>
             </div>
             <div class="col-span-2 flex gap-2">
-                <div class="w-20 text-gray-500">রেজি. নং</div>
+                <div class="w-20 text-gray-500 print:text-black">রেজি. নং</div>
                 <span>:</span>
                 <div>{{ $e2bnumber(student.registration) }}</div>
             </div>
             <div class="col-span-3 flex gap-2">
-                <div class="w-24 text-gray-500">শ্রেণী</div>
+                <div class="w-24 text-gray-500 print:text-black">শ্রেণী</div>
                 <span>:</span>
                 <div>{{ student.currentClassName }}</div>
             </div>
             <div class="col-span-2 flex gap-2">
-                <div class="w-20 text-gray-500">শ্রেণী রোল</div>
+                <div class="w-20 text-gray-500 print:text-black">
+                    শ্রেণী রোল
+                </div>
                 <span>:</span>
                 <div>{{ $e2bnumber(student.currentClassRoll) }}</div>
             </div>
             <div class="col-span-3 flex gap-2">
-                <div class="w-24 text-gray-500">অভিভাবক</div>
+                <div class="w-24 text-gray-500 print:text-black">অভিভাবক</div>
                 <span>:</span>
                 <div>{{ student.guardianInfo.name }}</div>
             </div>
             <div class="col-span-2 flex gap-2">
-                <div class="w-20 text-gray-500">আসন নং</div>
+                <div class="w-20 text-gray-500 print:text-black">আসন নং</div>
                 <span>:</span>
                 <div v-if="student.seatNumber">
                     {{
@@ -57,7 +63,7 @@
         <hr class="mt-1" />
 
         <div class="grid py-1">
-            <div class="text-lg font-bold">বিষয় কোডসহ পরীক্ষার বিষয়সমূহ :</div>
+            <div class="text-md font-bold">বিষয় কোডসহ পরীক্ষার বিষয়সমূহ :</div>
             <div class="grid grid-cols-3 gap-x-3 px-3">
                 <div
                     v-for="subject in data.class.subjects"

@@ -16,7 +16,7 @@
         <div
             class="mx-auto mt-4 w-[72%] border-t border-gray-400 print:border-gray-700"
         ></div>
-        <div v-if="photoFrame" class="absolute right-0 top-0 bg-white pr-0.5">
+        <div v-if="photoFrame" class="absolute right-0 top-0 bg-white">
             <div
                 class="flex h-24 w-20 items-center justify-center border p-4 print:border-black"
             >
@@ -25,7 +25,7 @@
                 </label>
             </div>
         </div>
-        <div v-if="photoUrl" class="absolute right-0 top-0 bg-white pr-0.5">
+        <div v-if="photoUrl" class="absolute right-0 top-0 bg-white">
             <div
                 class="flex aspect-[40/48] w-20 items-center justify-center overflow-hidden border"
             >

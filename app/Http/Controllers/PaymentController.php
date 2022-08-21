@@ -15,6 +15,7 @@ use App\Models\Payment;
 use App\Models\PaymentDetail;
 use App\Models\Purpose;
 use App\Models\PurposeFee;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -25,6 +26,8 @@ class PaymentController extends Controller
     public function index()
     {
         $collections = Payment::query()
+            ->search(['id'],['admission.student:name'])
+            ->filter(request())
             ->latest('id')
             ->with([
                 'admission',
@@ -32,7 +35,7 @@ class PaymentController extends Controller
 
         return Inertia::render('Payment/Index', [
             'data' => [
-                'collections'   => PaymentResource::collection($collections->paginate()->appends(request()->input())),
+                'collections'   => PaymentResource::collection($collections->paginate(request()->perpage)->appends(request()->input())),
                 'filters'       => $this->getFilterProperty(),
             ]
         ]);
@@ -311,7 +314,12 @@ class PaymentController extends Controller
     protected function getFilterProperty()
     {
         return [
-            //
+            'class' => Classes::pluck('name', 'id'),
+            // 'student' => Student::pluck('name', 'id'),
+            'purpose' => collect(Fee::getPurpose())->map(function($purpose) {
+                    return $purpose['title'];
+                })->toArray(),
+            'other_purpose' => Purpose::pluck('title', 'id'),
         ];
     }
 

@@ -20,7 +20,7 @@
                         Edit
                     </button>
                 </div>
-                <div class="text-center text-4xl font-bold">
+                <div class="text-center text-4xl font-bold" dir="auto">
                     {{ data.madrasahName[form.language_type] }}
                 </div>
                 <hr class="my-3" />

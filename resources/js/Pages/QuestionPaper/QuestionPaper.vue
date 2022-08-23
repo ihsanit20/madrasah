@@ -53,7 +53,7 @@
                             v-if="Number(form.language_type) === 2"
                             class="w-10"
                         >
-                            <div class="text-right font-bold">
+                            <div class="text-right">
                                 {{ checkConvert(question.mark) }}
                             </div>
                         </div>

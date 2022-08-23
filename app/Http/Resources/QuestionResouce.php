@@ -14,6 +14,11 @@ class QuestionResouce extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'            => (int) ($this->id ?? 0),
+            'title'         => (string) ($this->title ?? ''),
+            'body'          => (string) ($this->body ?? ''),
+            'mark'          => (float) ($this->mark ?? 0),
+        ];
     }
 }

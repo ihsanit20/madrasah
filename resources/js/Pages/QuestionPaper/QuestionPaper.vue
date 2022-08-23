@@ -3,12 +3,14 @@
 
     <app-layout pageTitle="প্রশ্নপত্র">
         <div
-            class="w-full max-w-3xl rounded border bg-white p-4 shadow print:border-0 print:shadow-none"
+            class="w-full max-w-3xl rounded border bg-white p-6 shadow print:border-0 print:shadow-none"
         >
             <validation-errors class="mb-4 print:hidden" />
 
             <div v-if="!isEdit">
-                <div class="flex items-center justify-between print:hidden">
+                <div
+                    class="mb-4 flex items-center justify-between print:hidden"
+                >
                     <print-button />
                     <button
                         type="button"
@@ -22,62 +24,18 @@
                     {{ data.madrasahName[form.language_type] }}
                 </div>
                 <hr class="my-3" />
-                <div class="space-y-1">
-                    <div class="grid grid-cols-2 gap-8">
-                        <inline-data
-                            v-if="Number(form.language_type) === 1"
-                            title="পরীক্ষা:"
-                            :value="data.questionPaper.exam.name"
-                            class="justify-end"
-                        />
-                        <inline-data
-                        dir="rtl"
-                            v-if="Number(form.language_type) === 2"
-                            title="الامنحان:"
-                            :value="data.questionPaper.exam.arabic"
-                            class="justify-start"
-                        />
-                        <inline-data
-                            v-if="Number(form.language_type) === 3"
-                            title="Exam:"
-                            :value="data.questionPaper.exam.english"
-                            class="justify-end"
-                        />
-                        <inline-data
-                            title="শিক্ষাবর্ষ:"
-                            :value="`${data.questionPaper.exam.session} হিজরি`"
-                        />
-                    </div>
-                    <div class="grid grid-cols-2 gap-8">
-                        <inline-data
-                            title="শ্রেণী:"
-                            :value="data.questionPaper.class.name"
-                            class="justify-end"
-                        />
-                        <inline-data title="বিষয়:" :value="data.subject.name" />
-                    </div>
-                    <div class="grid grid-cols-2 gap-8">
-                        <inline-data
-                            title="সময়:"
-                            :value="`${
-                                data.questionPaper.hour
-                                    ? checkConvert(data.questionPaper.hour) +
-                                      ' ঘণ্টা'
-                                    : ''
-                            } ${
-                                data.questionPaper.minute
-                                    ? checkConvert(data.questionPaper.minute) +
-                                      ' মিনিট'
-                                    : ''
-                            }`"
-                        />
-                        <inline-data
-                            title="পূর্ণমান:"
-                            :value="checkConvert(data.questionPaper.mark)"
-                            class="justify-end"
-                        />
-                    </div>
-                </div>
+                <question-paper-head
+                    :data="data"
+                    v-if="Number(form.language_type) === 1"
+                />
+                <question-paper-arabic-head
+                    :data="data"
+                    v-if="Number(form.language_type) === 2"
+                />
+                <question-paper-english-head
+                    :data="data"
+                    v-if="Number(form.language_type) === 3"
+                />
                 <hr class="my-3" />
                 <div class="mb-2 flex items-center justify-center">
                     <div class="text-lg font-bold">
@@ -95,7 +53,7 @@
                             v-if="Number(form.language_type) === 2"
                             class="w-10"
                         >
-                            <div class="text-right text-xl font-bold">
+                            <div class="text-right font-bold">
                                 {{ checkConvert(question.mark) }}
                             </div>
                         </div>
@@ -127,7 +85,7 @@
                             v-if="Number(form.language_type) !== 2"
                             class="w-10"
                         >
-                            <div class="text-right text-xl font-bold">
+                            <div class="text-right font-bold">
                                 {{ checkConvert(question.mark) }}
                             </div>
                         </div>
@@ -268,7 +226,14 @@
 
                 <hr class="my-4 w-full" />
 
-                <div class="flex items-center justify-end">
+                <div class="flex items-center justify-end gap-4">
+                    <button
+                        type="button"
+                        class="rounded-md bg-gray-500 px-4 py-2 text-base font-semibold uppercase tracking-widest text-white"
+                        @click="isEdit = false"
+                    >
+                        Cancel
+                    </button>
                     <Button
                         class=""
                         :class="{ 'opacity-25': form.processing }"
@@ -294,6 +259,9 @@ import Textarea from "@/Components/Textarea.vue";
 import { TrashIcon } from "@heroicons/vue/outline";
 import InlineData from "@/Components/InlineData.vue";
 import PrintButton from "@/Components/PrintButton.vue";
+import QuestionPaperHead from "./QuestionPaperHead.vue";
+import QuestionPaperArabicHead from "./QuestionPaperArabicHead.vue";
+import QuestionPaperEnglishHead from "./QuestionPaperEnglishHead.vue";
 
 export default {
     components: {
@@ -308,6 +276,9 @@ export default {
         TrashIcon,
         InlineData,
         PrintButton,
+        QuestionPaperHead,
+        QuestionPaperArabicHead,
+        QuestionPaperEnglishHead,
     },
     props: {
         data: {

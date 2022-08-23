@@ -29,7 +29,7 @@ createInertiaApp({
                         return position.replace(/[0-9]/g, function (w) {
                             return arabic[+w];
                         });
-                    }
+                    },
                 } 
             })
             .mount(el);

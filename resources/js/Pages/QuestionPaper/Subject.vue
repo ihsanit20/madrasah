@@ -6,6 +6,15 @@
     <app-layout
         :pageTitle="`${data.exam.name} : ${data.class.name} ক্লাস এর বিষয় সমুহ`"
     >
+        <div class="flex items-center justify-start py-2">
+            <Link
+                :href="route('question-papers.classes', [data.exam.id])"
+                class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
+            >
+                <ArrowLeftIcon class="w-5" />
+                পূর্বের পেজ
+            </Link>
+        </div>
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <Link
                 v-for="subject in data.subjects"
@@ -27,6 +36,11 @@
                 <div class="shrink grow">
                     <div class="text-md font-bold text-sky-600 md:text-xl">
                         {{ subject.name }}
+                    </div>
+                    <div
+                        class="text-md text-xs font-bold text-gray-600 md:text-sm"
+                    >
+                        {{ subject.book }}
                     </div>
                 </div>
                 <svg
@@ -56,6 +70,7 @@
 import AppLayout from "@/Layouts/App.vue";
 import { ClassSvg, ExamSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import { ArrowLeftIcon } from "@heroicons/vue/outline";
 
 export default {
     components: {
@@ -64,6 +79,7 @@ export default {
         Link,
         ClassSvg,
         ExamSvg,
+        ArrowLeftIcon,
     },
     props: {
         data: {

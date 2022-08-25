@@ -62,7 +62,7 @@ class QuestionPaperController extends Controller
     public function questionPaper(Exam $exam, Classes $class, $subject_code)
     {
         $class->load([
-            'subjects:id,name,class_id'
+            'subjects'
         ]);
 
         $subject = $class->subjects->where('code', $subject_code)->first() ?? abort(404);
@@ -110,7 +110,9 @@ class QuestionPaperController extends Controller
         $questionPaper->update([
             'language_type' => $request->language_type,
             'mark'          => $request->mark,
+            'book_name'     => $request->book_name,
             'top_text'      => $request->top_text,
+            'bottom_text'   => $request->bottom_text,
             'time_in_minute'=> $request->hour * 60 + $request->minute,    
         ]);
 

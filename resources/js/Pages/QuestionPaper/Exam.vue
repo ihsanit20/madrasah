@@ -20,7 +20,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="text-gray-600">
-                            সেশন: {{ exam.session }} হিজরি
+                            সেশন: {{ $e2bnumber(exam.session) }} হিজরি
                         </span>
                     </div>
                 </div>

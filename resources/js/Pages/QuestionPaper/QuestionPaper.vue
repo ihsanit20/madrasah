@@ -3,23 +3,36 @@
 
     <app-layout pageTitle="প্রশ্নপত্র">
         <div
-            class="w-full max-w-3xl rounded border bg-white p-6 shadow print:border-0 print:shadow-none"
+            class="w-full max-w-3xl rounded border bg-white px-6 py-6 shadow print:border-0 print:py-0 print:shadow-none"
         >
-            <validation-errors class="mb-4 print:hidden" />
-
             <div v-if="!isEdit">
                 <div
-                    class="mb-4 flex items-center justify-between print:hidden"
+                    class="mb-4 flex items-center justify-between print:mb-0 print:hidden"
                 >
+                    <Link
+                        :href="
+                            route('question-papers.subjects', [
+                                data.questionPaper.exam.id,
+                                data.questionPaper.class.id,
+                                data.subject.id,
+                            ])
+                        "
+                        class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
+                    >
+                        <ArrowLeftIcon class="w-5" />
+                        <span>পূর্বের পেজ</span>
+                    </Link>
                     <print-button />
                     <button
                         type="button"
-                        class="rounded bg-sky-600 px-3 py-1 text-white"
+                        class="flex items-center justify-center gap-2 rounded bg-sky-600 px-3 py-1 text-white"
                         @click="isEdit = true"
                     >
-                        Edit
+                        <PencilAltIcon class="w-5" />
+                        <span>সম্পাদনা</span>
                     </button>
                 </div>
+                <hr class="my-3 print:hidden" />
                 <div class="text-center text-4xl font-bold" dir="auto">
                     {{ data.madrasahName[form.language_type] }}
                 </div>
@@ -38,7 +51,7 @@
                 />
                 <hr class="my-3" />
                 <div class="mb-2 flex items-center justify-center">
-                    <div class="text-lg font-bold">
+                    <div dir="auto" class="text-lg font-bold">
                         {{ data.questionPaper.top_text }}
                     </div>
                 </div>
@@ -91,6 +104,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="mt-2 flex items-center justify-center">
+                    <div dir="auto" class="text-lg font-bold">
+                        {{ data.questionPaper.bottom_text }}
+                    </div>
+                </div>
             </div>
 
             <form
@@ -98,11 +116,8 @@
                 @submit.prevent="submit"
                 class="space-y-4 print:hidden"
             >
-                <div class="grid gap-4 md:grid-cols-5">
-                    <form-group
-                        class="w-full md:col-span-2"
-                        label="প্রশ্নের ভাষা"
-                    >
+                <div class="grid gap-4 md:grid-cols-5 md:gap-x-8">
+                    <form-group class="md:col-span-2" label="প্রশ্নের ভাষা">
                         <Select
                             class="block w-full"
                             v-model="form.language_type"
@@ -118,7 +133,18 @@
                         </Select>
                     </form-group>
                     <form-group
-                        class="w-full md:col-span-2"
+                        class="md:col-span-3"
+                        :label="`কিতাব : ${data.subject.book}`"
+                    >
+                        <Input
+                            type="text"
+                            class="block w-full"
+                            v-model="form.book_name"
+                            placeholder="কিতাবের নাম (যদি প্রয়োজন হয়)"
+                        />
+                    </form-group>
+                    <form-group
+                        class="md:col-span-2"
                         label="সময়"
                         :required="true"
                     >
@@ -139,7 +165,7 @@
                             <span>মিনিট</span>
                         </div>
                     </form-group>
-                    <form-group class="w-full" label="পূর্নমান">
+                    <form-group class="col-span-1 col-end-6" label="পূর্নমান">
                         <Input
                             type="number"
                             class="block w-full text-center"
@@ -149,7 +175,7 @@
                     </form-group>
                 </div>
 
-                <div class="grid gap-4">
+                <div class="grid gap-4 py-3">
                     <Input
                         type="text"
                         class="block w-full text-center"
@@ -224,6 +250,15 @@
                     </button>
                 </div>
 
+                <div class="grid gap-4 py-3">
+                    <Input
+                        type="text"
+                        class="block w-full text-center"
+                        v-model="form.bottom_text"
+                        placeholder="প্রশ্নের নিচের লেখা (যেমন: সুন্দর হস্তাক্ষরের জন্য ৪ নম্বর)"
+                    />
+                </div>
+
                 <hr class="my-4 w-full" />
 
                 <div class="flex items-center justify-end gap-4">
@@ -249,14 +284,18 @@
 
 <script>
 import AppLayout from "@/Layouts/App.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import ValidationErrors from "@/Components/ValidationErrors.vue";
 import Button from "@/Components/Button.vue";
 import Input from "@/Components/Input.vue";
 import Select from "@/Components/Select.vue";
 import FormGroup from "@/Components/FormGroup.vue";
 import Textarea from "@/Components/Textarea.vue";
-import { TrashIcon } from "@heroicons/vue/outline";
+import {
+    TrashIcon,
+    PencilAltIcon,
+    ArrowLeftIcon,
+} from "@heroicons/vue/outline";
 import InlineData from "@/Components/InlineData.vue";
 import PrintButton from "@/Components/PrintButton.vue";
 import QuestionPaperHead from "./QuestionPaperHead.vue";
@@ -267,6 +306,7 @@ export default {
     components: {
         AppLayout,
         Head,
+        Link,
         ValidationErrors,
         Button,
         Input,
@@ -274,6 +314,8 @@ export default {
         FormGroup,
         Textarea,
         TrashIcon,
+        PencilAltIcon,
+        ArrowLeftIcon,
         InlineData,
         PrintButton,
         QuestionPaperHead,
@@ -301,6 +343,8 @@ export default {
         return {
             form: this.$inertia.form({
                 top_text: this.data.questionPaper.top_text,
+                bottom_text: this.data.questionPaper.bottom_text,
+                book_name: this.data.questionPaper.book_name,
                 hour: this.data.questionPaper.hour,
                 minute: this.data.questionPaper.minute,
                 mark: this.data.questionPaper.mark,

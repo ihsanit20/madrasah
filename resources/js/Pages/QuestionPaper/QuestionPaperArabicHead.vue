@@ -12,6 +12,9 @@
             />
             <inline-data title="الموضوع:" :value="data.subject.arabic" />
         </div>
+        <div dir="rtl" class="flex items-center justify-center gap-4">
+            <div>{{ data.questionPaper.book_name }}</div>
+        </div>
         <div class="grid grid-cols-2 gap-8">
             <inline-data
                 title="القيمة الكاملة:"

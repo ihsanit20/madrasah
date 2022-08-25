@@ -19,7 +19,8 @@ class Exam extends Model
 
     public function exam_classes()
     {
-        return $this->hasMany(ExamClass::class);
+        return $this->hasMany(ExamClass::class)
+            ->orderBy('exam_classes.class_id');
     }
 
     public function seat_plans()

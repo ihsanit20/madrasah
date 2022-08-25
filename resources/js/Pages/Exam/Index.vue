@@ -12,7 +12,7 @@
                     {{ exam.name }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ exam.session }}
+                    {{ $e2bnumber(exam.session) }}
                 </table-td>
                 <table-td class="text-center">
                     <div class="flex justify-center gap-2">

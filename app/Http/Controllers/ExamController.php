@@ -125,6 +125,8 @@ class ExamController extends Controller
         ExamClass::where('exam_id', $exam->id)->delete();
 
         if (!empty($classes)) {
+            $classes = array_unique($classes);
+
             foreach ($classes as $class) {
                 ExamClass::onlyTrashed()->updateOrCreate(
                     [], 

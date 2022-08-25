@@ -9,11 +9,11 @@
             <div class="grid gap-4">
                 <form-heading>{{ data.exam.name }}</form-heading>
                 <div class="flex items-center justify-center font-bold">
-                    সেশন : {{ data.exam.session }}
+                    সেশন : {{ $e2bnumber(data.exam.session) }} হিজরি
                 </div>
                 <inline-data title="ক্লাস ‍সমূহ :" />
                 <ul class="ml-4 grid list-disc md:grid-cols-3">
-                    <li v-for="classes in data.exam.classes">
+                    <li v-for="classes in data.exam.classes" :key="classes.id">
                         {{ classes.name }}
                     </li>
                 </ul>

@@ -25,7 +25,9 @@ class QuestionPaperResource extends JsonResource
             'minute'        => (int) ($this->time_in_minute % 60 ?? 0),
             'language_type' => (int) ($this->language_type ?? 1),
             'mark'          => (float) ($this->mark ?? 0),
+            'book_name'     => (string) ($this->book_name ?? ''),
             'top_text'      => (string) ($this->top_text ?? ''),
+            'bottom_text'   => (string) ($this->bottom_text ?? ''),
             'questions'     => QuestionResouce::collection($this->whenLoaded('questions')),
         ];
     }

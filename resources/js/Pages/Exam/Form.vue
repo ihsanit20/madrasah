@@ -104,6 +104,8 @@ export default {
     },
     methods: {
         submit() {
+            this.filterClass();
+
             if (this.moduleAction == "store") {
                 return this.form.post(this.route("exams.store"));
             }
@@ -115,12 +117,17 @@ export default {
         },
         changeClass(event) {
             if (event.target.checked) {
-                return this.form.classes.push(Number(event.target.value));
+                this.form.classes.push(Number(event.target.value));
+            } else {
+                let index = this.form.classes.indexOf(event.target.value);
+
+                this.form.classes.splice(index, 1);
             }
 
-            let index = this.form.classes.indexOf(event.target.value);
-
-            return this.form.classes.splice(index, 1);
+            return this.filterClass();
+        },
+        filterClass() {
+            // this.form.classes = [...new Set(this.form.classes)];
         },
     },
 };

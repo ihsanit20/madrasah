@@ -24,7 +24,10 @@
                                         'text-right': column.align == 'right',
                                     }"
                                 >
-                                    <div v-html="column.title"></div>
+                                    <div
+                                        v-html="column.title"
+                                        :class="column.rotate || ''"
+                                    ></div>
                                 </th>
                                 <slot name="header" />
                             </tr>

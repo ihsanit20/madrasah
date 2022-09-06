@@ -18,6 +18,7 @@ use App\Http\Controllers\OtherPurposeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentPurposeController;
 use App\Http\Controllers\PurposeController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SeatPlanController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
@@ -60,6 +61,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('question-papers/exams/{exam}/classes/{class}/subjects', [QuestionPaperController::class, 'subjects'])->name('question-papers.subjects');
     Route::get('question-papers/exams/{exam}/classes/{class}/subjects/{subject}', [QuestionPaperController::class, 'questionPaper'])->name('question-papers.question-paper');
     Route::post('question-papers/exams/{exam}/classes/{class}/subjects/{subject}', [QuestionPaperController::class, 'questionPaperSave']);
+
+    Route::redirect('results', 'results/exams', 301);
+    Route::get('results/exams', [ResultController::class, 'exams'])->name('results.exams');
+    Route::get('results/exams/{exam}/classes', [ResultController::class, 'classes'])->name('results.classes');
+    Route::get('results/exams/{exam}/classes/{class}/subjects', [ResultController::class, 'subjects'])->name('results.subjects');
+    Route::get('results/exams/{exam}/classes/{class}/subjects/{subject}', [ResultController::class, 'result'])->name('results.list');
+    Route::post('results/exams/{exam}/classes/{class}/subjects/{subject}', [ResultController::class, 'resultSave']);
 
     Route::get('seat-plan', [SeatPlanController::class, 'index'])->name('seat-plan.index');
     Route::get('seat-plan/{exam}', [SeatPlanController::class, 'show'])->name('seat-plan.show');

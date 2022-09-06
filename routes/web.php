@@ -25,8 +25,38 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VerificationController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/php-artisan/{command}/{parameters?}', function ($command, $parameters = []) {
+    $allowCommands = [
+        "migrate:install",
+        "migrate:status",
+        "migrate",
+        "key:generate",
+        "storage:link",
+        "route:cache",
+        "route:clear",
+        "view:cache",
+        "view:clear",
+        "cache:clear",
+        "config:cache",
+        "config:clear",
+    ];
+
+    if($command == 'list') {
+        return $allowCommands;
+    }
+
+    if(!in_array($command, $allowCommands)) {
+        return "Not Allow";
+    }
+
+    Artisan::call($command, $parameters);
+
+    dd(Artisan::output());
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/notice/{notice}', [HomeController::class, 'notice'])->name('page.notice');

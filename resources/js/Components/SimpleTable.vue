@@ -26,7 +26,7 @@
                                 >
                                     <div
                                         v-html="column.title"
-                                        :class="column.rotate || ''"
+                                        :class="column.class || ''"
                                     ></div>
                                 </th>
                                 <slot name="header" />

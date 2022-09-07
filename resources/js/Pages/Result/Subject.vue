@@ -16,23 +16,83 @@
             </Link>
         </div>
         <div class="">
-            <simple-table :columns="columns" :collections="data.students">
-                <template #default="{ item: student }">
-                    <table-td class="text-left">
-                        {{ student.name }}
-                    </table-td>
-                    <table-td class="text-center">
-                        {{ $e2bnumber(student.roll) }}
-                    </table-td>
-                    <table-td
-                        v-for="subject in data.subjects"
-                        :key="subject.code"
-                        class="text-center"
+            <table
+                class="table-fixed divide-y divide-gray-200 dark:divide-gray-700 print:divide-black"
+            >
+                <thead class="bg-white">
+                    <tr>
+                        <th
+                            colspan="2"
+                            class="border p-3"
+                            style="writing-mode: vertical-rl"
+                        >
+                            <div class="-rotate-180 break-all text-center">
+                                বিষয়
+                            </div>
+                        </th>
+                        <th
+                            v-for="subject in data.subjects"
+                            :key="subject.code"
+                            class="max-h-[200px] border p-3"
+                            style="writing-mode: vertical-rl"
+                        >
+                            <div class="-rotate-180 break-all text-left">
+                                {{ subject.name }}
+                            </div>
+                        </th>
+                        <th colspan="5" class="border p-3"></th>
+                    </tr>
+                    <tr>
+                        <th class="border p-3">রোল</th>
+                        <th class="border p-3">শিক্ষার্থী</th>
+                        <th
+                            v-for="subject in data.subjects"
+                            :key="subject.code"
+                            class="border p-3"
+                        >
+                            <div class="text-center">
+                                {{ subject.code }}
+                            </div>
+                        </th>
+                        <th class="border p-3">মোট</th>
+                        <th class="border p-3">গড়</th>
+                        <th class="border p-3">গ্রেড</th>
+                        <!-- <th class="border p-3">মেধা তালিকা</th> -->
+                    </tr>
+                </thead>
+                <tbody
+                    class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800 print:divide-black"
+                >
+                    <tr
+                        v-for="(student, index) in data.students"
+                        :key="index"
+                        class="hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                        {{ getTotalMark(student, subject) }}
-                    </table-td>
-                </template>
-            </simple-table>
+                        <td class="border p-3 text-center">
+                            {{ $e2bnumber(student.roll) }}
+                        </td>
+                        <td class="border p-3 text-left">
+                            {{ student.name }}
+                        </td>
+                        <td
+                            v-for="subject in data.subjects"
+                            :key="subject.code"
+                            class="border p-3 text-center"
+                        >
+                            {{ $e2bnumber(getSubjectMark(student, subject)) }}
+                        </td>
+                        <td class="border p-3 text-center">
+                            {{ $e2bnumber(getTotalMark(student)) }}
+                        </td>
+                        <td class="border p-3 text-center">
+                            {{ $e2bnumber(getAverageMark(student)) }}
+                        </td>
+                        <td class="border p-3 text-center">
+                            {{ $e2bnumber(getGrade(student)) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </app-layout>
 </template>
@@ -61,7 +121,7 @@ export default {
             this.columns.push({
                 title: `${subject.name} (${this.$e2bnumber(subject.code)})`,
                 align: "left",
-                rotate: "-rotate-90",
+                class: "-rotate-90 -m-4",
             });
         });
     },
@@ -74,13 +134,13 @@ export default {
     data() {
         return {
             columns: [
-                { title: "শিক্ষার্থী", align: "left" },
                 { title: "রোল", align: "right" },
+                { title: "শিক্ষার্থী", align: "left" },
             ],
         };
     },
     methods: {
-        getTotalMark(student, subject) {
+        getSubjectMark(student, subject) {
             let mark = student.marks.find(
                 (mark) => Number(mark.subject_code) === Number(subject.code)
             );
@@ -88,6 +148,75 @@ export default {
             return mark
                 ? Number(mark.speaking || 0) + Number(mark.writing || 0)
                 : "";
+        },
+        getTotalMark(student) {
+            let total = 0;
+
+            student.marks.forEach((mark) => {
+                total += Number(
+                    Number(mark.speaking || 0) + Number(mark.writing || 0)
+                );
+            });
+
+            return total ? total : "";
+        },
+        getAverageMark(student) {
+            let length = Object.keys(student.marks).length;
+            let total = this.getTotalMark(student);
+
+            return length && total ? Number(total / length) : "";
+        },
+        getMinSubjectMark(student) {
+            return Math.min.apply(
+                Math,
+                Object.values(
+                    student.marks.map((mark) =>
+                        Number(
+                            Number(mark.speaking || 0) +
+                                Number(mark.writing || 0)
+                        )
+                    )
+                )
+            );
+        },
+        getGrade(student) {
+            let min = this.getMinSubjectMark(student);
+
+            if (min < 33) {
+                return "F";
+            }
+
+            let average = this.getAverageMark(student);
+
+            if (average === "") {
+                return "";
+            }
+
+            if (average >= 80) {
+                return "A+";
+            }
+
+            if (average >= 70) {
+                return "A";
+            }
+
+            if (average >= 60) {
+                return "A-";
+            }
+
+            if (average >= 50) {
+                return "B";
+            }
+
+            if (average >= 40) {
+                return "C";
+            }
+
+            if (average >= 33) {
+                return "D";
+            }
+
+            return "F";
         },
     },
 };

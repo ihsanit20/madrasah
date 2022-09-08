@@ -57,7 +57,7 @@
                         <th class="border p-3">মোট</th>
                         <th class="border p-3">গড়</th>
                         <th class="border p-3">গ্রেড</th>
-                        <!-- <th class="border p-3">মেধা তালিকা</th> -->
+                        <th class="border p-3">মেধাক্রম</th>
                     </tr>
                 </thead>
                 <tbody
@@ -89,6 +89,9 @@
                         </td>
                         <td class="border p-3 text-center">
                             {{ $e2bnumber(getGrade(student)) }}
+                        </td>
+                        <td class="border p-3 text-center">
+                            {{ $e2bnumber(getMeritList(student)) }}
                         </td>
                     </tr>
                 </tbody>
@@ -217,6 +220,50 @@ export default {
             }
 
             return "F";
+        },
+        getMeritList(student) {
+            let totalMark = this.getTotalMark(student);
+
+            if (totalMark === "") {
+                return "";
+            }
+
+            let markArray = [];
+
+            Object.values(this.data.students).forEach((student) => {
+                let total = this.getTotalMark(student);
+
+                total &&
+                    this.getGrade(student) !== "F" &&
+                    markArray.push(total);
+            });
+
+            markArray.sort((a, b) => a - b).reverse();
+
+            let markSet = new Set([...markArray]);
+
+            markArray = [...markSet];
+
+            console.log({ markArray, totalMark });
+
+            let meritPosition = markArray.indexOf(totalMark) + 1;
+
+            return this.getMeritTextByPosition(meritPosition);
+        },
+        getMeritTextByPosition(position) {
+            if (position === 1) {
+                return "১ম";
+            }
+
+            if (position === 2) {
+                return "২য়";
+            }
+
+            if (position === 3) {
+                return "৩য়";
+            }
+
+            return "";
         },
     },
 };

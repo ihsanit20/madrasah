@@ -13,15 +13,29 @@ class CreateResultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('results', function (Blueprint $table) {
+        $markJsonFormat = '[
+            {
+                "writing": double,
+                "speaking": double,
+                "student_id": int,
+            },
+            {
+                "writing": double,
+                "speaking": double,
+                "student_id": int,
+            }
+        ]';
+
+        Schema::create('results', function (Blueprint $table) use ($markJsonFormat) {
             $table->id();
             $table->unsignedBigInteger('exam_id');
             $table->unsignedBigInteger('class_id');
-            $table->unsignedBigInteger('student_id');
-            $table->json('marks');
+            $table->unsignedBigInteger('subject_code');
+            $table->json('marks')->nullable()->comment($markJsonFormat);
             $table->timestamps();
             $table->softDeletes();
-            $table->index(['exam_id', 'class_id', 'student_id']);
+
+            $table->index(['exam_id', 'class_id', 'subject_code']);
         });
     }
 

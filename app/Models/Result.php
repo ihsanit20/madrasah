@@ -15,4 +15,14 @@ class Result extends Model
     protected $casts = [
         "marks" => "json",
     ];
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'class_id');
+    }
 }

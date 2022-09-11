@@ -24,7 +24,9 @@
 
         <dropdown-nav-link
             :active="
-                route().current('(question-papers|admit-card|seat-plan).*')
+                route().current(
+                    '(question-papers|admit-card|seat-plan|results).*'
+                )
             "
         >
             <ExamSvg class="h-6 w-6 md:h-8 md:w-8" />
@@ -36,7 +38,6 @@
                     :href="route('question-papers.exams')"
                     :active="route().current('question-papers.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -50,7 +51,6 @@
                     :href="route('admit-card.index')"
                     :active="route().current('admit-card.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -64,7 +64,6 @@
                     :href="route('seat-plan.index')"
                     :active="route().current('seat-plan.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -72,6 +71,20 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         আসন নং
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('results.exams')"
+                    :active="route().current('results.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        ফলাফল
                     </span>
                 </nav-link>
             </template>
@@ -247,7 +260,6 @@
                     :href="route('exams.index')"
                     :active="route().current('exams.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span

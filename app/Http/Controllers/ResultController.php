@@ -65,6 +65,7 @@ class ResultController extends Controller
                 'roll',
             ]);
 
+        // return
         $results = Result::query()
             ->where([
                 'exam_id'   => $exam->id,
@@ -72,14 +73,15 @@ class ResultController extends Controller
             ])
             ->get();
 
-        $students = $admissions->map(function ($admission) use ($results) {
+        $students = $admissions->map(function ($admission) {
             return [
                 "id"    => $admission->student->id,
                 "name"  => $admission->student->name,
                 "roll"  => $admission->roll,
-                "marks" => $results->where('student_id', $admission->student->id)->first()->marks ?? [],
             ];
         });
+
+        // return $students;
 
         return Inertia::render('Result/Subject', [
             'data' => [
@@ -87,85 +89,103 @@ class ResultController extends Controller
                 'class'     => ClassesResource::make($class),
                 'subjects'  => SubjectResource::collection($class->subjects()->get()),
                 'students'  => $students,
+                'results'   => $results,
             ]
         ]);
     }
 
-    public function result(Exam $exam, Classes $class, $subject_code)
+    public function create(Exam $exam, Classes $class, $subject_code)
     {
         $class->load([
-            'subjects:id,class_id,name,book'
+            'subjects:id,class_id,name,book',
         ]);
 
-        $subject = $class->subjects->where('code', $subject_code)->first() ?? abort(404);
+        $subject = $class->subjects
+            ->where('code', $subject_code)
+            ->first() ?? abort(404);
 
-        $result = Result::withTrashed()
-            ->updateOrCreate(
+        $admissions = Admission::query()
+            ->with([
+                'student:id,name',
+            ])
+            ->student()
+            ->current()
+            ->where([
+                'class_id' => $class->id,
+            ])
+            ->get([
+                'id',
+                'class_id',
+                'student_id',
+                'roll',
+            ]);
+
+        $students = $admissions->map(function ($admission) {
+            return [
+                "id"    => $admission->student->id,
+                "name"  => $admission->student->name,
+                "roll"  => $admission->roll,
+            ];
+        });
+
+        $marks = [];
+
+        foreach($students as $student) {
+            $marks[] = [
+                'student_id'    => $student['id'],
+                'writing'       => "",
+                'speaking'      => "",
+            ];
+        }
+
+        $result = Result::query()
+            ->firstOrCreate(
                 [
                     'exam_id'       => $exam->id,
                     'class_id'      => $class->id,
-                    'subject_code'  => $subject_code,
-                ], 
+                    'subject_code'  => $subject->code,
+                ],
                 [
-                    'deleted_at'    => null,
+                    'marks'         => $marks,
                 ]
             );
 
         $result->load([
-            'exam',
-            'class',
-            'questions'
+            'exam:id,name,session',
+            'class:id,name',
         ]);
 
-        ResultResource::withoutWrapping();
-        SubjectResource::withoutWrapping();
+        $result->subject = $subject;
 
-        return Inertia::render('Result/Result', [
+        // return $result;
+
+        ResultResource::withoutWrapping();
+
+        // return ResultResource::make($result);
+
+        return Inertia::render('Result/Create', [
             'data' => [
-                'result' => new ResultResource($result),
-                'subject'       => new SubjectResource($subject),
-                'languageList'  => Result::getLanguageType(),
-                'madrasahName'  => Result::getMadrasahName(),
+                'result'    => ResultResource::make($result),
+                'students'  => $students,
             ]
         ]);
     }
 
-    public function resultSave(Request $request, Exam $exam, Classes $class, $subject_code)
+    public function store(Request $request, Exam $exam, Classes $class, $subject_code)
     {
         $result = Result::query()
             ->where([
                 'exam_id'       => $exam->id,
                 'class_id'      => $class->id,
                 'subject_code'  => $subject_code,
-            ])->first();
+            ])->firstOrFail();
 
         $result->update([
-            'language_type' => $request->language_type,
-            'mark'          => $request->mark,
-            'book_name'     => $request->book_name,
-            'top_text'      => $request->top_text,
-            'bottom_text'   => $request->bottom_text,
-            'time_in_minute'=> $request->hour * 60 + $request->minute,    
+            'marks' => $request->result["marks"],
         ]);
 
-        Question::where('question_paper_id', $result->id)->delete();
-
-        if(is_array($request->questions)) {
-            foreach($request->questions as $question) {
-                Question::onlyTrashed()
-                    ->updateOrCreate(
-                        [],
-                        [
-                            'question_paper_id' => $result->id,
-                            'title'             => $question["title"],
-                            'body'              => $question["body"],
-                            'mark'              => $question["mark"],
-                            'deleted_at'        => null,
-                        ]
-                    );
-            }
-        }
-
-        return redirect()->route('question-papers.question-paper', [ $exam->id, $class->id, $subject_code]);
+        return redirect()->route('results.subjects', [
+            $exam->id, $class->id, $subject_code
+        ]);
     }
 }

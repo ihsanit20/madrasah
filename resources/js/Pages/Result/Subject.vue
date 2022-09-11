@@ -6,7 +6,7 @@
     <app-layout
         :pageTitle="`${data.exam.name} : ${data.class.name} ক্লাস এর বিষয় সমুহ`"
     >
-        <div class="flex items-center justify-start py-2">
+        <div class="flex items-center justify-between py-2 print:hidden">
             <Link
                 :href="route('results.classes', [data.exam.id])"
                 class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
@@ -14,16 +14,17 @@
                 <ArrowLeftIcon class="w-5" />
                 পূর্বের পেজ
             </Link>
+            <print-button />
         </div>
-        <div class="">
+        <div class="grid">
             <table
                 class="table-fixed divide-y divide-gray-200 dark:divide-gray-700 print:divide-black"
             >
                 <thead class="bg-white">
-                    <tr>
+                    <tr class="print:hidden">
                         <th
                             colspan="2"
-                            class="border p-3"
+                            class="border p-2 print:p-2"
                             style="writing-mode: vertical-rl"
                         >
                             <div class="-rotate-180 break-all text-center">
@@ -33,31 +34,42 @@
                         <th
                             v-for="subject in data.subjects"
                             :key="subject.code"
-                            class="max-h-[200px] border p-3"
+                            class="max-h-[220px] border p-2 print:p-2"
                             style="writing-mode: vertical-rl"
                         >
                             <div class="-rotate-180 break-all text-left">
                                 {{ subject.name }}
                             </div>
                         </th>
-                        <th colspan="5" class="border p-3"></th>
+                        <th colspan="5" class="border p-2 print:p-2"></th>
                     </tr>
                     <tr>
-                        <th class="border p-3">রোল</th>
-                        <th class="border p-3">শিক্ষার্থী</th>
+                        <th class="border p-2 print:p-2">রোল</th>
+                        <th class="border p-2 print:p-2">শিক্ষার্থী</th>
                         <th
                             v-for="subject in data.subjects"
                             :key="subject.code"
-                            class="border p-3"
+                            class="border p-2 print:p-2"
                         >
                             <div class="text-center">
-                                {{ subject.code }}
+                                <Link
+                                    :href="
+                                        route('results.create', [
+                                            data.exam.id,
+                                            data.class.id,
+                                            subject.code,
+                                        ])
+                                    "
+                                    class="text-sky-600 underline print:text-black print:no-underline"
+                                >
+                                    {{ $e2bnumber(subject.code) }}
+                                </Link>
                             </div>
                         </th>
-                        <th class="border p-3">মোট</th>
-                        <th class="border p-3">গড়</th>
-                        <th class="border p-3">গ্রেড</th>
-                        <th class="border p-3">মেধাক্রম</th>
+                        <th class="border p-2 print:p-2">মোট</th>
+                        <th class="border p-2 print:p-2">গড়</th>
+                        <th class="border p-2 print:p-2">গ্রেড</th>
+                        <th class="border p-2 print:p-2">মেধাক্রম</th>
                     </tr>
                 </thead>
                 <tbody
@@ -68,29 +80,29 @@
                         :key="index"
                         class="hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                        <td class="border p-3 text-center">
+                        <td class="border p-2 text-center print:p-2">
                             {{ $e2bnumber(student.roll) }}
                         </td>
-                        <td class="border p-3 text-left">
+                        <td class="border p-2 text-left print:p-2">
                             {{ student.name }}
                         </td>
                         <td
                             v-for="subject in data.subjects"
                             :key="subject.code"
-                            class="border p-3 text-center"
+                            class="border p-2 text-center print:p-2"
                         >
                             {{ $e2bnumber(getSubjectMark(student, subject)) }}
                         </td>
-                        <td class="border p-3 text-center">
+                        <td class="border p-2 text-center print:p-2">
                             {{ $e2bnumber(getTotalMark(student)) }}
                         </td>
-                        <td class="border p-3 text-center">
+                        <td class="border p-2 text-center print:p-2">
                             {{ $e2bnumber(getAverageMark(student)) }}
                         </td>
-                        <td class="border p-3 text-center">
+                        <td class="border p-2 text-center print:p-2">
                             {{ $e2bnumber(getGrade(student)) }}
                         </td>
-                        <td class="border p-3 text-center">
+                        <td class="border p-2 text-center print:p-2">
                             {{ $e2bnumber(getMeritList(student)) }}
                         </td>
                     </tr>
@@ -107,6 +119,7 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ArrowLeftIcon } from "@heroicons/vue/outline";
 import SimpleTable from "@/Components/SimpleTable.vue";
 import TableTd from "@/Components/TableTd.vue";
+import PrintButton from "@/Components/PrintButton.vue";
 
 export default {
     components: {
@@ -118,6 +131,7 @@ export default {
         ArrowLeftIcon,
         SimpleTable,
         TableTd,
+        PrintButton,
     },
     created() {
         Object.values(this.data.subjects).forEach((subject) => {
@@ -144,42 +158,95 @@ export default {
     },
     methods: {
         getSubjectMark(student, subject) {
-            let mark = student.marks.find(
-                (mark) => Number(mark.subject_code) === Number(subject.code)
+            let result = Object.values(this.data.results).find(
+                (result) => Number(result.subject_code) === Number(subject.code)
             );
 
-            return mark
+            if (!result) {
+                return "";
+            }
+
+            let mark = result.marks.find(
+                (mark) => Number(mark.student_id) === Number(student.id)
+            );
+
+            return mark && (mark.speaking !== "" || mark.writing !== "")
                 ? Number(mark.speaking || 0) + Number(mark.writing || 0)
                 : "";
         },
         getTotalMark(student) {
             let total = 0;
 
-            student.marks.forEach((mark) => {
-                total += Number(
-                    Number(mark.speaking || 0) + Number(mark.writing || 0)
+            Object.values(this.data.subjects).forEach((subject) => {
+                let result = Object.values(this.data.results).find(
+                    (result) =>
+                        Number(result.subject_code) === Number(subject.code)
                 );
+
+                if (result) {
+                    let mark = Object.values(result.marks).find(
+                        (mark) => Number(mark.student_id) === Number(student.id)
+                    );
+
+                    if (mark) {
+                        total += Number(mark.speaking) + Number(mark.writing);
+                    }
+                }
             });
 
             return total ? total : "";
         },
         getAverageMark(student) {
-            let length = Object.keys(student.marks).length;
             let total = this.getTotalMark(student);
 
-            return length && total ? Number(total / length) : "";
+            let subjects_count = 0;
+
+            Object.values(this.data.subjects).forEach((subject) => {
+                let result = Object.values(this.data.results).find(
+                    (result) =>
+                        Number(result.subject_code) === Number(subject.code)
+                );
+
+                if (result) {
+                    let mark = Object.values(result.marks).find(
+                        (mark) => Number(mark.student_id) === Number(student.id)
+                    );
+
+                    if (mark) {
+                        subjects_count++;
+                    }
+                }
+            });
+
+            return subjects_count && total
+                ? Number(total / subjects_count)
+                : "";
         },
         getMinSubjectMark(student) {
+            const markArray = [];
+
+            Object.values(this.data.subjects).forEach((subject) => {
+                let result = Object.values(this.data.results).find(
+                    (result) =>
+                        Number(result.subject_code) === Number(subject.code)
+                );
+
+                if (result) {
+                    let mark = Object.values(result.marks).find(
+                        (mark) => Number(mark.student_id) === Number(student.id)
+                    );
+
+                    if (mark) {
+                        markArray.push(
+                            Number(mark.speaking) + Number(mark.writing)
+                        );
+                    }
+                }
+            });
+
             return Math.min.apply(
                 Math,
-                Object.values(
-                    student.marks.map((mark) =>
-                        Number(
-                            Number(mark.speaking || 0) +
-                                Number(mark.writing || 0)
-                        )
-                    )
-                )
+                markArray.map((mark) => Number(mark))
             );
         },
         getGrade(student) {
@@ -243,8 +310,6 @@ export default {
             let markSet = new Set([...markArray]);
 
             markArray = [...markSet];
-
-            console.log({ markArray, totalMark });
 
             let meritPosition = markArray.indexOf(totalMark) + 1;
 

@@ -29,6 +29,7 @@ class ClassesResource extends JsonResource
             'subjects'      => SubjectResource::collection($this->whenLoaded('subjects')),
             'fees'          => FeeResource::collection($this->whenLoaded('fees')),
             'classFees'     => ClassFeeResource::collection($this->whenLoaded('class_fees')),
+            'optional_subject_code' => (int) ($this->optional_subject_code ?? 0),
         ];
     }
 }

@@ -18,38 +18,40 @@
         </div>
         <div class="grid">
             <table
-                class="table-fixed divide-y divide-gray-200 dark:divide-gray-700 print:divide-black"
+                class="table-fixed divide-y divide-gray-200 dark:divide-gray-700 print:divide-black print:text-xs"
             >
                 <thead class="bg-white">
-                    <tr class="print:hidden">
+                    <tr class="">
                         <th
                             colspan="2"
-                            class="border p-2 print:p-2"
+                            class="border p-2 print:h-[120px] print:p-1"
                             style="writing-mode: vertical-rl"
                         >
-                            <div class="-rotate-180 break-all text-center">
+                            <!-- <div
+                                class="h-full -rotate-180 break-all text-center"
+                            >
                                 বিষয়
-                            </div>
+                            </div> -->
                         </th>
                         <th
                             v-for="subject in data.subjects"
                             :key="subject.code"
-                            class="max-h-[220px] border p-2 print:p-2"
+                            class="max-h-[220px] border p-2 print:h-[120px] print:p-1"
                             style="writing-mode: vertical-rl"
                         >
-                            <div class="-rotate-180 break-all text-left">
+                            <div class="h-full -rotate-180 break-all text-left">
                                 {{ subject.name }}
                             </div>
                         </th>
-                        <th colspan="5" class="border p-2 print:p-2"></th>
+                        <th colspan="5" class="border p-2 print:p-1"></th>
                     </tr>
                     <tr>
-                        <th class="border p-2 print:p-2">রোল</th>
-                        <th class="border p-2 print:p-2">শিক্ষার্থী</th>
+                        <th class="border p-2 print:p-1">রোল</th>
+                        <th class="border p-2 print:p-1">শিক্ষার্থী</th>
                         <th
                             v-for="subject in data.subjects"
                             :key="subject.code"
-                            class="border p-2 print:p-2"
+                            class="border p-2 print:p-1"
                         >
                             <div class="text-center">
                                 <Link
@@ -66,10 +68,10 @@
                                 </Link>
                             </div>
                         </th>
-                        <th class="border p-2 print:p-2">মোট</th>
-                        <th class="border p-2 print:p-2">গড়</th>
-                        <th class="border p-2 print:p-2">গ্রেড</th>
-                        <th class="border p-2 print:p-2">মেধাক্রম</th>
+                        <th class="border p-2 print:p-1">মোট</th>
+                        <th class="border p-2 print:p-1">গড়</th>
+                        <th class="border p-2 print:p-1">গ্রেড</th>
+                        <th class="border p-2 print:p-1">মেধাক্রম</th>
                     </tr>
                 </thead>
                 <tbody
@@ -80,29 +82,29 @@
                         :key="index"
                         class="hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                        <td class="border p-2 text-center print:p-2">
+                        <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(student.roll) }}
                         </td>
-                        <td class="border p-2 text-left print:p-2">
+                        <td class="border p-2 text-left print:p-1">
                             {{ student.name }}
                         </td>
                         <td
                             v-for="subject in data.subjects"
                             :key="subject.code"
-                            class="border p-2 text-center print:p-2"
+                            class="border p-2 text-center print:p-1"
                         >
                             {{ $e2bnumber(getSubjectMark(student, subject)) }}
                         </td>
-                        <td class="border p-2 text-center print:p-2">
+                        <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getTotalMark(student)) }}
                         </td>
-                        <td class="border p-2 text-center print:p-2">
+                        <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getAverageMark(student)) }}
                         </td>
-                        <td class="border p-2 text-center print:p-2">
+                        <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getGrade(student)) }}
                         </td>
-                        <td class="border p-2 text-center print:p-2">
+                        <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getMeritList(student)) }}
                         </td>
                     </tr>
@@ -202,6 +204,13 @@ export default {
             let subjects_count = 0;
 
             Object.values(this.data.subjects).forEach((subject) => {
+                if (
+                    Number(subject.code) ===
+                    Number(this.data.class.optional_subject_code)
+                ) {
+                    return;
+                }
+
                 let result = Object.values(this.data.results).find(
                     (result) =>
                         Number(result.subject_code) === Number(subject.code)
@@ -226,6 +235,13 @@ export default {
             const markArray = [];
 
             Object.values(this.data.subjects).forEach((subject) => {
+                if (
+                    Number(subject.code) ===
+                    Number(this.data.class.optional_subject_code)
+                ) {
+                    return;
+                }
+
                 let result = Object.values(this.data.results).find(
                     (result) =>
                         Number(result.subject_code) === Number(subject.code)
@@ -252,7 +268,7 @@ export default {
         getGrade(student) {
             let min = this.getMinSubjectMark(student);
 
-            if (min < 33) {
+            if (min < 35) {
                 return "F";
             }
 

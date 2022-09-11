@@ -219,7 +219,7 @@ export default {
             });
 
             return subjects_count && total
-                ? Number(total / subjects_count)
+                ? Number(total / subjects_count).toFixed(2)
                 : "";
         },
         getMinSubjectMark(student) {

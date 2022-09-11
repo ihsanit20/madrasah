@@ -185,7 +185,8 @@ class ResultController extends Controller
         ]);
 
         return redirect()->route('results.subjects', [
-            $exam->id, $class->id, $subject_code
+            $exam->id,
+            $class->id
         ]);
     }
 }

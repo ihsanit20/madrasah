@@ -222,7 +222,9 @@ export default {
                     );
 
                     if (mark) {
-                        subjects_count++;
+                        if (mark.speaking !== "" || mark.writing !== "") {
+                            subjects_count++;
+                        }
                     }
                 }
             });
@@ -253,9 +255,11 @@ export default {
                     );
 
                     if (mark) {
-                        markArray.push(
-                            Number(mark.speaking) + Number(mark.writing)
-                        );
+                        if (mark.speaking !== "" || mark.writing !== "") {
+                            markArray.push(
+                                Number(mark.speaking) + Number(mark.writing)
+                            );
+                        }
                     }
                 }
             });

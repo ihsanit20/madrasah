@@ -78,9 +78,5 @@ export default {
             default: {},
         },
     },
-    created() {
-        console.log(this.data);
-        console.log(this.data.classes);
-    },
 };
 </script>

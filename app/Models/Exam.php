@@ -14,7 +14,9 @@ class Exam extends Model
 
     public function classes()
     {
-        return $this->belongsToMany(Classes::class, 'exam_classes', 'exam_id', 'class_id')->whereNull('exam_classes.deleted_at');
+        return $this->belongsToMany(Classes::class, 'exam_classes', 'exam_id', 'class_id')
+            ->whereNull('exam_classes.deleted_at')
+            ->orderBy('exam_classes.class_id');
     }
 
     public function exam_classes()

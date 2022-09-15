@@ -171,6 +171,19 @@ class AdmissionController extends Controller
                 ->route('students.class.show', $admission->class_id)
                 ->with('status', 'The record has been update successfully.');
         }
+
+        if($request->step == 5) {
+            if($request->class_id != $admission->class_id) {
+                $admission->update([
+                    'class_id'  => $request->class_id,
+                    'roll'      => $this->getNewClassRoll($request->class_id),
+                ]);
+            }
+
+            return redirect()
+                ->route('students.show', $admission->student_id)
+                ->with('status', 'The record has been update successfully.');
+        }
     }
 
     public function destroy(Admission $admission)

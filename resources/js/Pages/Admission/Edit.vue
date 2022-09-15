@@ -10,6 +10,7 @@
             :data="data"
             module-action="update"
         />
+        <class-edit-component v-if="step === 5" :data="data" module-action="update" />
     </app-layout>
 </template>
 
@@ -20,6 +21,7 @@ import FormComponent from "./Form.vue";
 import TestComponent from "./Test.vue";
 import FeeComponent from "./Fee.vue";
 import CompleteComponent from "./Complete.vue";
+import ClassEditComponent from "./ClassEdit.vue";
 
 export default {
     components: {
@@ -29,6 +31,7 @@ export default {
         TestComponent,
         FeeComponent,
         CompleteComponent,
+        ClassEditComponent,
     },
 
     created() {

@@ -23,6 +23,12 @@
                 >
                     ফি সম্পাদনা
                 </Link>
+                <Link
+                    :href="route('admissions.edit', data.student.currentAdmissionId) + '?step=5'"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
+                >
+                    ক্লাস সম্পাদনা
+                </Link>
             </div>
         </div>
 
@@ -89,12 +95,36 @@
                             <div
                                 class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
                             >
+                                ক্লাস
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.student.currentClassName }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                রোল
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ $e2bnumber(data.student.currentClassRoll) }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
                                 জন্ম তারিখ:
                             </div>
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
-                                {{ data.student.dateOfBirthWithFormat }}
+                                {{ $e2bnumber(data.student.dateOfBirthWithFormat) }}
                             </div>
                         </div>
                         <div class="flex items-start gap-1.5">

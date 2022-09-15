@@ -58,6 +58,7 @@ class ResultController extends Controller
             ->where([
                 'class_id' => $class->id,
             ])
+            ->orderBy('roll')
             ->get([
                 'id',
                 'class_id',
@@ -110,6 +111,7 @@ class ResultController extends Controller
             ])
             ->student()
             ->current()
+            ->orderBy('roll')
             ->where([
                 'class_id' => $class->id,
             ])

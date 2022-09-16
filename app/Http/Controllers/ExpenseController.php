@@ -82,6 +82,38 @@ class ExpenseController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
+    public function categoriesIndex()
+    {
+        $categories = Category::query()
+            ->with('expenses:id,category_id,amount')
+            ->withCount('expenses')
+            ->get();
+
+        $categories->map(function(&$category) {
+            $category->total_amount = $category->expenses->sum('amount');
+        });
+
+        return Inertia::render('Expense/Category/Index', [
+            'data' => [
+                'categories' => $categories,
+            ]
+        ]);
+    }
+
+    public function categoriesShow(Category $category)
+    {
+        $collections = Expense::query()
+            ->where('category_id', $category->id)
+            ->latest('id');
+
+        return Inertia::render('Expense/Index', [
+            'data' => [
+                'collections'   => ExpenseResource::collection($collections->paginate()->appends(request()->input())),
+                'filters'       => $this->getFilterProperty(),
+            ]
+        ]);
+    }
+
     protected function data($expense)
     {
         CategoryResource::withoutWrapping();
@@ -114,10 +146,10 @@ class ExpenseController extends Controller
         return $request->validate([
             'category_id' => [
                 'required',
-                Rule::unique(Expense::class, 'category_id')
-                    ->whereNull('date', $request->date)
-                    ->whereNull('deleted_at')
-                    ->ignore($id)
+                // Rule::unique(Expense::class, 'category_id')
+                //     ->whereNull('date', $request->date)
+                //     ->whereNull('deleted_at')
+                //     ->ignore($id)
             ],
             'staff_id' => [
                 'required',

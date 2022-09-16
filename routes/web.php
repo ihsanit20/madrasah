@@ -115,6 +115,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
 
     Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
+
+    Route::get('expenses/categories', [ExpenseController::class, 'categoriesIndex'])->name('expenses.categories.index');
+    Route::get('expenses/categories/{category}', [ExpenseController::class, 'categoriesShow'])->name('expenses.categories.show');
     
     Route::resources([
         'fees'              => FeeController::class,

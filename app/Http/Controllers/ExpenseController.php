@@ -183,7 +183,10 @@ class ExpenseController extends Controller
     public function categoriesIndex()
     {
         $categories = Category::query()
-            ->with('expenses:id,category_id,amount')
+            ->with('expenses:id,category_id,amount,session')
+            ->whereHas('expenses', function($query) {
+                $query->where('session', $this->getCurrentSession());
+            })
             ->withCount('expenses')
             ->get();
 
@@ -202,6 +205,7 @@ class ExpenseController extends Controller
     {
         $collections = Expense::query()
             ->where('category_id', $category->id)
+            ->where('session', $this->getCurrentSession())
             ->latest('id');
 
         return Inertia::render('Expense/Index', [

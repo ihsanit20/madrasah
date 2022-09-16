@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ExpenseResource;
@@ -12,6 +13,7 @@ use App\Models\HijriMonth;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -82,6 +84,102 @@ class ExpenseController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
+    public function monthsIndex()
+    {
+        $expenses = Expense::query()
+            ->where('session', $this->getCurrentSession())
+            ->get([
+                'id',
+                'date',
+                'amount'
+            ]);
+
+        $expenses->map(function (&$expense) {
+            $expense->hijri_month = $this->getHijriMonth($expense->date);
+        });
+
+        $expenses_groups = $expenses->groupBy('hijri_month');
+
+        $index = 0;
+
+        foreach($expenses_groups as $month_id => $expenses) {
+            $months[$index] = HijriMonth::find($month_id, ['id', 'bengali']);
+            $months[$index]->expenses_count = $expenses->count();
+            $months[$index]->total_amount = $expenses->sum('amount');
+            $index++;
+        }
+
+        // return $months;
+        
+        return Inertia::render('Expense/Month/Index', [
+            'data' => [
+                'months' => $months,
+            ]
+        ]);
+    }
+
+    public function monthsShow(HijriMonth $month)
+    {
+        $expenses = Expense::query()
+            ->where('session', $this->getCurrentSession())
+            ->get([
+                'id',
+                'date',
+            ]);
+
+        $expenses->map(function (&$expense) {
+            $expense->hijri_month = $this->getHijriMonth($expense->date);
+        });
+
+        $expense_ids = $expenses->where('hijri_month', $month->id)->pluck('id');
+
+        $collections = Expense::query()
+            ->whereIn('id', $expense_ids)
+            ->latest('id');
+
+        return Inertia::render('Expense/Index', [
+            'data' => [
+                'collections'   => ExpenseResource::collection($collections->paginate()->appends(request()->input())),
+                'filters'       => $this->getFilterProperty(),
+            ]
+        ]);
+    }
+
+    public function monthsCategoriesIndex(HijriMonth $month)
+    {
+        $expenses = Expense::query()
+            ->where('session', $this->getCurrentSession())
+            ->get([
+                'id',
+                'date',
+                'category_id'
+            ]);
+
+        $expenses->map(function (&$expense) {
+            $expense->hijri_month = $this->getHijriMonth($expense->date);
+        });
+
+        $category_ids = $expenses->where('hijri_month', $month->id)->pluck('category_id');
+
+
+        $categories = Category::query()
+            ->with('expenses:id,category_id,amount')
+            ->withCount('expenses')
+            ->whereIn('id', $category_ids)
+            ->get();
+
+        $categories->map(function(&$category) {
+            $category->total_amount = $category->expenses->sum('amount');
+        });
+
+        return Inertia::render('Expense/Month/Show', [
+            'data' => [
+                'categories' => $categories,
+                'month'      => $month,
+            ]
+        ]);
+    }
+
     public function categoriesIndex()
     {
         $categories = Category::query()
@@ -110,6 +208,42 @@ class ExpenseController extends Controller
             'data' => [
                 'collections'   => ExpenseResource::collection($collections->paginate()->appends(request()->input())),
                 'filters'       => $this->getFilterProperty(),
+            ]
+        ]);
+    }
+
+    public function CategoriesmonthsIndex(Category $category)
+    {
+        $expenses = Expense::query()
+            ->where('session', $this->getCurrentSession())
+            ->where('category_id', $category->id)
+            ->get([
+                'id',
+                'date',
+                'amount'
+            ]);
+
+        $expenses->map(function (&$expense) {
+            $expense->hijri_month = $this->getHijriMonth($expense->date);
+        });
+
+        $expenses_groups = $expenses->groupBy('hijri_month');
+
+        $index = 0;
+
+        foreach($expenses_groups as $month_id => $expenses) {
+            $months[$index] = HijriMonth::find($month_id, ['id', 'bengali']);
+            $months[$index]->expenses_count = $expenses->count();
+            $months[$index]->total_amount = $expenses->sum('amount');
+            $index++;
+        }
+
+        // return $months;
+        
+        return Inertia::render('Expense/Category/Show', [
+            'data' => [
+                'months'    => $months,
+                'category'  => $category,
             ]
         ]);
     }

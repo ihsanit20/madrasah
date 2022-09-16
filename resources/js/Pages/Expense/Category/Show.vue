@@ -1,11 +1,22 @@
 <template>
-    <Head title="খাত সমুহ" />
+    <Head title="ব্যয়ের খাত সমুহ" />
 
-    <app-layout pageTitle="খাত সমুহ">
+    <app-layout :pageTitle="`'${data.category.name}' বাবদ মাস অনুযায়ী খরচ`">
+        <div
+            class="mb-4 flex items-center justify-between print:mb-0 print:hidden"
+        >
+            <Link
+                :href="route('expenses.categories.index')"
+                class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
+            >
+                <ArrowLeftIcon class="w-5" />
+                <span>পূর্বের পেজ</span>
+            </Link>
+        </div>
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <div
-                v-for="category in data.categories"
-                :key="category.id"
+                v-for="month in data.months"
+                :key="month.id"
                 class="flex items-center gap-2 rounded-md border bg-white p-2 hover:shadow md:gap-4 md:p-4"
             >
                 <div
@@ -15,32 +26,32 @@
                 </div>
                 <div class="shrink grow">
                     <div class="text-md font-bold text-sky-600 md:text-xl">
-                        {{ category.name }}
+                        {{ month.bengali }}
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="text-gray-600">
                             মোট টাকা:
-                            {{ $e2bnumber(category.total_amount) }}
+                            {{ $e2bnumber(month.total_amount) }}
                         </span>
                         <!-- <span class="text-gray-600">
                             মোট ভাউচার:
-                            {{ $e2bnumber(category.expenses_count) }}
+                            {{ $e2bnumber(month.expenses_count) }}
                         </span> -->
                     </div>
                     <div class="flex items-center gap-2">
-                        <Link
+                        <!-- <Link
                             :href="
                                 route(
-                                    'expenses.categories.months.index',
-                                    category.id
+                                    'expenses.months.categories.index',
+                                    month.id
                                 )
                             "
                             class="rounded bg-orange-100 px-3 py-1 text-sm text-orange-500"
                         >
-                            মাস অনুযায়ী দেখুন
-                        </Link>
+                            খাত অনুযায়ী দেখুন
+                        </Link> -->
                         <!-- <Link
-                            :href="route('expenses.categories.show', category.id)"
+                            :href="route('expenses.months.show', month.id)"
                             class="rounded bg-sky-500 px-3 py-1 text-sm text-white"
                         >
                             ভাউচার তালিকা
@@ -74,6 +85,7 @@
 import AppLayout from "@/Layouts/App.vue";
 import { MoneyReceiptSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import { ArrowLeftIcon } from "@heroicons/vue/outline";
 
 export default {
     components: {
@@ -81,6 +93,7 @@ export default {
         Head,
         Link,
         MoneyReceiptSvg,
+        ArrowLeftIcon,
     },
     props: {
         data: {

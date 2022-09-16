@@ -1,7 +1,18 @@
 <template>
     <Head title="খাত সমুহ" />
 
-    <app-layout pageTitle="খাত সমুহ">
+    <app-layout :pageTitle="`'${data.month.bengali}' এর খাত অনুযায়ী খরচ`">
+        <div
+            class="mb-4 flex items-center justify-between print:mb-0 print:hidden"
+        >
+            <Link
+                :href="route('expenses.months.index')"
+                class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
+            >
+                <ArrowLeftIcon class="w-5" />
+                <span>পূর্বের পেজ</span>
+            </Link>
+        </div>
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <div
                 v-for="category in data.categories"
@@ -28,7 +39,7 @@
                         </span> -->
                     </div>
                     <div class="flex items-center gap-2">
-                        <Link
+                        <!-- <Link
                             :href="
                                 route(
                                     'expenses.categories.months.index',
@@ -38,9 +49,11 @@
                             class="rounded bg-orange-100 px-3 py-1 text-sm text-orange-500"
                         >
                             মাস অনুযায়ী দেখুন
-                        </Link>
+                        </Link> -->
                         <!-- <Link
-                            :href="route('expenses.categories.show', category.id)"
+                            :href="
+                                route('expenses.categories.show', category.id)
+                            "
                             class="rounded bg-sky-500 px-3 py-1 text-sm text-white"
                         >
                             ভাউচার তালিকা
@@ -74,6 +87,7 @@
 import AppLayout from "@/Layouts/App.vue";
 import { MoneyReceiptSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
+import { ArrowLeftIcon } from "@heroicons/vue/outline";
 
 export default {
     components: {
@@ -81,6 +95,7 @@ export default {
         Head,
         Link,
         MoneyReceiptSvg,
+        ArrowLeftIcon,
     },
     props: {
         data: {

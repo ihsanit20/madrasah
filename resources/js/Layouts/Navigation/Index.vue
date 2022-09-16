@@ -221,9 +221,7 @@
                 </nav-link>
                 <nav-link
                     :href="route('expenses.categories.index')"
-                    :active="
-                        route().current('expenses.categories.(index|show)')
-                    "
+                    :active="route().current('expenses.categories.*')"
                     class="flex items-center gap-2 md:gap-4"
                     :newBadge="true"
                 >
@@ -233,6 +231,20 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         খাত অনুযায়ী
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('expenses.months.index')"
+                    :active="route().current('expenses.months.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        মাস অনুযায়ী
                     </span>
                 </nav-link>
             </template>

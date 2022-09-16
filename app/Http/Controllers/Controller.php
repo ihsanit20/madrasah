@@ -64,6 +64,21 @@ class Controller extends BaseController
         return "{$day} - {$month} - {$year}";
     }
 
+    public function getHijriMonth($date = null)
+    {
+        $date = $date ?? date("d-m-Y");
+
+        $date_array = explode("-", $date);
+
+        if(strlen($date_array[2]) == 4) {
+            $date_array = array_reverse($date_array);
+        }
+
+        $date = implode("-", $date_array);
+
+        return Hijri::Date("m", $date);
+    }
+
     public function imageUploadGetLink()
     {
         // return $request;

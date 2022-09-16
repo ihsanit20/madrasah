@@ -43,6 +43,7 @@ class ExpenseController extends Controller
     {
         $expense = Expense::create($this->validatedData($request) + [
             'user_id' => Auth::id(),
+            'session' => $this->getCurrentSession(),
         ]);
 
         return redirect()

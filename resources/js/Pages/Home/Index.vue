@@ -22,7 +22,7 @@
                         class="absolute inset-0 z-10 flex flex-col items-start justify-center bg-gradient-to-r from-blue-900 to-blue-900/0 px-4 text-white md:px-12"
                     >
                         <p class="text-base md:text-lg md:font-semibold">
-                            আসসালামু আলাইকুম ওয়া রামাতুল্লাহ
+                            আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহ
                         </p>
                         <p class="text-base md:text-lg md:font-semibold">
                             মাদরাসা সায়্যিদাতুল জান্নাত (রা.)-এর ওয়েব সাইটে
@@ -33,7 +33,7 @@
                         <p
                             class="py-2 text-base md:py-4 md:text-lg md:font-semibold"
                         >
-                            ১৪৪৩-৪৪ হি. শিক্ষাবর্ষে ভর্তি চলতে । অনলাইনে আবেদন
+                            ১৪৪৩-৪৪ হি. শিক্ষাবর্ষে ভর্তি চলছে । অনলাইনে আবেদন
                             করুন
                         </p>
                         <Link

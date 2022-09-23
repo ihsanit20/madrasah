@@ -95,6 +95,78 @@ class ResultController extends Controller
         ]);
     }
 
+    public function resultCard(Exam $exam, Classes $class)
+    {
+        // return
+        $admissions = Admission::query()
+            ->with([
+                'student:id,name,registration',
+            ])
+            ->student()
+            ->current()
+            ->where([
+                'class_id' => $class->id,
+            ])
+            ->orderBy('roll')
+            ->get([
+                'id',
+                'class_id',
+                'student_id',
+                'roll',
+            ]);
+
+        // return
+        $subjectwise_results = Result::query()
+            ->where([
+                'exam_id'   => $exam->id,
+                'class_id'  => $class->id,
+            ])
+            ->get();
+            
+        $studentwise_results = [];
+
+        foreach($subjectwise_results as $result) {
+
+            foreach($result->marks as $mark) {
+                $studentwise_results[$mark["student_id"]][$result->subject_code] = [
+                    'writing'       => $mark["writing"],
+                    'speaking'      => $mark["speaking"],
+                ];
+            }
+
+        }
+
+        // return $studentwise_results;   
+
+        $students = $admissions->map(function ($admission) use ($studentwise_results) {
+
+            return [
+                "id"            => $admission->student_id,
+                "name"          => $admission->student->name,
+                "roll"          => $admission->roll,
+                "results"       => $studentwise_results[$admission->student_id],
+                "registration"  => $admission->student->registration,
+            ];
+        });
+
+        // return $students;
+
+        
+        ClassesResource::withoutWrapping();
+        SubjectResource::withoutWrapping();
+        ResultResource::withoutWrapping();
+
+        return Inertia::render('Result/ResultCard', [
+            'data' => [
+                'exam'      => new ExamResource($exam),
+                'class'     => ClassesResource::make($class),
+                'subjects'  => SubjectResource::collection($class->subjects()->get()),
+                'students'  => $students,
+                'results'   => $subjectwise_results,
+            ]
+        ]);
+    }
+
     public function create(Exam $exam, Classes $class, $subject_code)
     {
         $class->load([

@@ -14,13 +14,44 @@
                 <ArrowLeftIcon class="w-5" />
                 পূর্বের পেজ
             </Link>
+            <Link
+                :href="
+                    route('results.result-cards', [data.exam.id, data.class.id])
+                "
+                class="flex items-center justify-center gap-2 rounded-md bg-sky-600 px-4 py-1 text-white"
+            >
+                রেজাল্ট কার্ড
+            </Link>
             <print-button />
         </div>
-        <div class="grid">
-            <table
-                class="table-fixed divide-y divide-gray-200 dark:divide-gray-700 print:divide-black print:text-xs"
+        <div
+            class="grid w-full space-y-2 bg-white bg-[url('/images/wmlogo.png')] bg-center bg-no-repeat px-6 py-4 print:py-0 print:px-4"
+        >
+            <letter-head />
+
+            <div
+                class="flex items-center justify-center gap-4 text-lg font-bold"
             >
-                <thead class="bg-white">
+                <div>{{ data.exam.name }}</div>
+                <div>{{ $e2bnumber(data.exam.session) }} হিজরি</div>
+            </div>
+
+            <div class="flex items-center justify-center gap-1">
+                <div class="">শ্রেণী</div>
+                <span>:</span>
+                <div>{{ data.class.name }}</div>
+            </div>
+
+            <div class="mt-1.5 mb-2 flex items-center justify-center">
+                <div
+                    class="rounded-md border px-4 py-0.5 text-center text-2xl font-bold print:border-black print:text-black"
+                >
+                    ফলাফল
+                </div>
+            </div>
+
+            <table class="w-full table-auto print:text-xs">
+                <thead class="">
                     <tr class="">
                         <th
                             colspan="2"
@@ -74,9 +105,7 @@
                         <th class="border p-2 print:p-1">মেধাক্রম</th>
                     </tr>
                 </thead>
-                <tbody
-                    class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800 print:divide-black"
-                >
+                <tbody class="">
                     <tr
                         v-for="(student, index) in data.students"
                         :key="index"
@@ -122,6 +151,7 @@ import { ArrowLeftIcon } from "@heroicons/vue/outline";
 import SimpleTable from "@/Components/SimpleTable.vue";
 import TableTd from "@/Components/TableTd.vue";
 import PrintButton from "@/Components/PrintButton.vue";
+import LetterHead from "@/Templete/LetterHead.vue";
 
 export default {
     components: {
@@ -134,6 +164,7 @@ export default {
         SimpleTable,
         TableTd,
         PrintButton,
+        LetterHead,
     },
     created() {
         Object.values(this.data.subjects).forEach((subject) => {

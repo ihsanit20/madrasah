@@ -8,7 +8,7 @@
             class="mt-2 flex items-center justify-center gap-4 text-lg font-bold"
         >
             <div>{{ data.exam.name }}</div>
-            <div>{{ data.exam.session }} হিজরি</div>
+            <div>{{ $e2bnumber(data.exam.session) }} হিজরি</div>
         </div>
 
         <div class="mt-1.5 mb-2 flex items-center justify-center">

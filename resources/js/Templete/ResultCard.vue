@@ -81,7 +81,30 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2"></th>
+                    <th colspan="2" rowspan="3" class="align-bottom">
+                        <div
+                            class="flex h-full w-full items-end justify-center"
+                        >
+                            <div
+                                class="mt-2 flex flex-col items-center justify-center"
+                            >
+                                <div
+                                    class="flex h-[40px] max-w-[100px] items-center justify-center"
+                                >
+                                    <img
+                                        v-if="signature"
+                                        :src="signature"
+                                        class="h-full w-full object-contain"
+                                    />
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <p class="text-sm font-bold">
+                                        অধ্যক্ষের স্বাক্ষর
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
                     <th colspan="2" class="border p-2 text-right print:p-1">
                         মোট
                     </th>
@@ -90,7 +113,6 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2"></th>
                     <th colspan="2" class="border p-2 text-right print:p-1">
                         গড়
                     </th>
@@ -99,7 +121,6 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2"></th>
                     <th colspan="2" class="border p-2 text-right print:p-1">
                         গ্রেড
                     </th>
@@ -136,6 +157,10 @@ export default {
         student: {
             type: Object,
             default: {},
+        },
+        signature: {
+            type: String,
+            default: "",
         },
     },
     data() {

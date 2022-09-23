@@ -10,6 +10,7 @@ use App\Models\Admission;
 use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\Result;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -84,6 +85,15 @@ class ResultController extends Controller
 
         // return $students;
 
+        $principal = Staff::query()
+            ->with('signature')
+            ->where('designation_id', 1)
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
+
         return Inertia::render('Result/Subject', [
             'data' => [
                 'exam'      => new ExamResource($exam),
@@ -91,7 +101,8 @@ class ResultController extends Controller
                 'subjects'  => SubjectResource::collection($class->subjects()->get()),
                 'students'  => $students,
                 'results'   => $results,
-            ]
+            ],
+            'signature' => $signature,
         ]);
     }
 
@@ -151,6 +162,14 @@ class ResultController extends Controller
 
         // return $students;
 
+        $principal = Staff::query()
+            ->with('signature')
+            ->where('designation_id', 1)
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
         
         ClassesResource::withoutWrapping();
         SubjectResource::withoutWrapping();
@@ -163,7 +182,8 @@ class ResultController extends Controller
                 'subjects'  => SubjectResource::collection($class->subjects()->get()),
                 'students'  => $students,
                 'results'   => $subjectwise_results,
-            ]
+            ],
+            'signature' => $signature,
         ]);
     }
 

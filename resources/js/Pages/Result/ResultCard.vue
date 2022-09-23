@@ -21,7 +21,11 @@
             :key="student.id"
             class="print:break-before-page"
         >
-            <ResultCardTemplete :student="student" :data="data" />
+            <ResultCardTemplete
+                :student="student"
+                :data="data"
+                :signature="signature"
+            />
         </div>
     </app-layout>
 </template>
@@ -47,6 +51,10 @@ export default {
         data: {
             type: Object,
             default: {},
+        },
+        signature: {
+            type: String,
+            default: "",
         },
     },
 };

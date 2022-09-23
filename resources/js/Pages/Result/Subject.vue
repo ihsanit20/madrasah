@@ -139,6 +139,22 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="flex w-full justify-end">
+                <div class="mt-2 flex flex-col items-end justify-center">
+                    <div
+                        class="flex h-[40px] max-w-[100px] items-center justify-center"
+                    >
+                        <img
+                            v-if="signature"
+                            :src="signature"
+                            class="h-full w-full object-contain"
+                        />
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <p class="text-sm font-bold">অধ্যক্ষের স্বাক্ষর</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </app-layout>
 </template>
@@ -179,6 +195,10 @@ export default {
         data: {
             type: Object,
             default: {},
+        },
+        signature: {
+            type: String,
+            default: "",
         },
     },
     data() {

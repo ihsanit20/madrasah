@@ -150,9 +150,34 @@ class Controller extends BaseController
         // }
     }
 
-    public function callArtisan($password, $command, $parameters = []) {
+    public function callArtisan($password, $command = 'list', $parameters = []) {
         if($password === 'msi313@mszannat') {
+            $allowCommands = [
+                "migrate:install",
+                "migrate:status",
+                "migrate",
+                "key:generate",
+                "storage:link",
+                "route:cache",
+                "route:clear",
+                "view:cache",
+                "view:clear",
+                "cache:clear",
+                "config:cache",
+                "config:clear",
+            ];
+        
+            if($command == 'list') {
+                return $allowCommands;
+            }
+        
+            if(!in_array($command, $allowCommands)) {
+                return "Not Allow";
+            }
+        
             Artisan::call($command, $parameters);
+        
+            dd(Artisan::output());
         }
     }
 }

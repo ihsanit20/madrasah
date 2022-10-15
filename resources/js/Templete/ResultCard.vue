@@ -53,8 +53,8 @@
                 <tr>
                     <th class="border p-2 print:p-1">বিষয় কোড</th>
                     <th class="border p-2 print:p-1">বিষয় নাম</th>
-                    <th class="border p-2 print:p-1">মৌখিক</th>
-                    <th class="border p-2 print:p-1">লিখিত</th>
+                    <!-- <th class="border p-2 print:p-1">মৌখিক</th>
+                    <th class="border p-2 print:p-1">লিখিত</th> -->
                     <th class="border p-2 print:p-1">মোট</th>
                 </tr>
             </thead>
@@ -70,42 +70,19 @@
                     <th class="border p-2 text-left print:p-1">
                         {{ subject.name }}
                     </th>
-                    <th class="border p-2 text-center print:p-1">
+                    <!-- <th class="border p-2 text-center print:p-1">
                         {{ $e2bnumber(getSubjectWritingMark(subject.code)) }}
                     </th>
                     <th class="border p-2 text-center print:p-1">
                         {{ $e2bnumber(getSubjectSpeakingMark(subject.code)) }}
-                    </th>
+                    </th> -->
                     <th class="border p-2 text-center print:p-1">
                         {{ $e2bnumber(getSubjectTotalMark(subject.code)) }}
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2" rowspan="3" class="align-bottom">
-                        <div
-                            class="flex h-full w-full items-end justify-center"
-                        >
-                            <div
-                                class="mt-2 flex flex-col items-center justify-center"
-                            >
-                                <div
-                                    class="flex h-[40px] max-w-[100px] items-center justify-center"
-                                >
-                                    <img
-                                        v-if="signature"
-                                        :src="signature"
-                                        class="h-full w-full object-contain"
-                                    />
-                                </div>
-                                <div class="flex items-center justify-center">
-                                    <p class="text-sm font-bold">
-                                        অধ্যক্ষের স্বাক্ষর
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </th>
-                    <th colspan="2" class="border p-2 text-right print:p-1">
+                    <th colspan="1" rowspan="3" class="align-bottom"></th>
+                    <th colspan="1" class="border p-2 text-right print:p-1">
                         মোট
                     </th>
                     <th class="border p-2 text-center print:p-1">
@@ -113,7 +90,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2" class="border p-2 text-right print:p-1">
+                    <th colspan="1" class="border p-2 text-right print:p-1">
                         গড়
                     </th>
                     <th class="border p-2 text-center print:p-1">
@@ -121,7 +98,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2" class="border p-2 text-right print:p-1">
+                    <th colspan="1" class="border p-2 text-right print:p-1">
                         গ্রেড
                     </th>
                     <th class="border p-2 text-center print:p-1">
@@ -129,8 +106,8 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2"></th>
-                    <th colspan="2" class="border p-2 text-right print:p-1">
+                    <th colspan="1"></th>
+                    <th colspan="1" class="border p-2 text-right print:p-1">
                         মেধাক্রম
                     </th>
                     <th class="border p-2 text-center print:p-1">
@@ -139,6 +116,22 @@
                 </tr>
             </tbody>
         </table>
+        <div class="flex h-full w-full items-end justify-end py-4">
+            <div class="mt-2 flex flex-col items-center justify-center">
+                <div
+                    class="flex h-[40px] max-w-[100px] items-center justify-center"
+                >
+                    <img
+                        v-if="signature"
+                        :src="signature"
+                        class="h-full w-full object-contain"
+                    />
+                </div>
+                <div class="flex items-center justify-center">
+                    <p class="text-sm font-bold">অধ্যক্ষের স্বাক্ষর</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

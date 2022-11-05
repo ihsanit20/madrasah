@@ -34,6 +34,8 @@ class CreateStaffTable extends Migration
             $table->unsignedBigInteger('present_address_id')->nullable();
             $table->unsignedBigInteger('permanent_address_id')->nullable();
 
+            $table->json('salaries')->nullable();
+
             $table->date('joining_date')->nullable();
             $table->boolean('active')->default(1);
 

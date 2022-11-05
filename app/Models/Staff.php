@@ -12,6 +12,10 @@ class Staff extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'salaries' => 'array',
+    ];
+
     public function designation()
     {
         return $this->belongsTo(Designation::class);

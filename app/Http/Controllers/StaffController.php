@@ -12,11 +12,11 @@ use Inertia\Inertia;
 
 class StaffController extends Controller
 {
-    public function index()
+    public function list()
     {
         $collections = Staff::query();
 
-        return Inertia::render('Staff/Index', [
+        return Inertia::render('Staff/List', [
             'data' => [
                 'collections'   => StaffResource::collection($collections->paginate()->appends(request()->input())),
                 'filters'       => $this->getFilterProperty(),
@@ -24,14 +24,14 @@ class StaffController extends Controller
         ]);
     }
 
-    public function list()
+    public function index()
     {
         $collections = Staff::query()
             ->orderBy('designation_id');
 
         StaffResource::withoutWrapping();
 
-        return Inertia::render('Staff/List', [
+        return Inertia::render('Staff/Index', [
             'data' => [
                 'staff'     => StaffResource::collection($collections->get()),
                 'filters'   => $this->getFilterProperty(),
@@ -66,6 +66,13 @@ class StaffController extends Controller
 
     public function edit(Staff $staff)
     {
+        if(request()->step == 'salary') {
+            return Inertia::render('Staff/Edit', [
+                'data'  => $this->data($staff),
+                'step'  => 'salary',
+            ]);
+        }
+
         return Inertia::render('Staff/Edit', [
             'data' => $this->data($staff)
         ]);
@@ -73,7 +80,13 @@ class StaffController extends Controller
 
     public function update(Request $request, Staff $staff)
     {
-        $staff->update($this->validatedData($request, $staff->id));
+        if($request->step == 'salary') {
+            $staff->update([
+                "salaries" => $request->salaries,
+            ]);
+        } else {
+            $staff->update($this->validatedData($request, $staff->id));
+        }
 
         return redirect()
             ->route('staff.show', $staff->id)

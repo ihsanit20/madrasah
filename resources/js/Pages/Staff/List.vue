@@ -1,35 +1,43 @@
 <template>
     <Head title="শিক্ষক/স্টাফ" />
 
-    <app-layout pageTitle="শিক্ষক/স্টাফ">
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
-            <div
-                v-for="staff in data.staff"
-                :key="staff.id"
-                class="flex items-center gap-2 rounded-md border bg-white p-2 hover:shadow md:gap-4 md:p-4"
-            >
-                <div
-                    class="flex h-14 w-14 shrink-0 grow-0 items-center justify-center rounded-full bg-gray-200 text-xl font-bold text-gray-500 md:h-16 md:w-16 md:text-2xl"
-                ></div>
-                <div class="shrink grow">
-                    <div class="text-md font-bold text-sky-600 md:text-xl">
+    <app-layout pageTitle="শিক্ষক/স্টাফ" :addNewHref="route('staff.create')">
+        <simple-table
+            :collections="data.collections"
+            :filters="data.filters"
+            :columns="columns"
+        >
+            <template #default="{ item: staff }">
+                <table-td class="text-left">
+                    <Link
+                        :href="route('staff.show', staff.id)"
+                        class="text-sky-600 hover:underline"
+                    >
                         {{ staff.name }}
+                    </Link>
+                </table-td>
+                <table-td class="text-left">
+                    <div
+                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
+                    >
+                        {{ staff.designationTitle }}
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-gray-600">পদবি: </span>
-                        <span class="font-bold text-gray-800">
-                            {{ staff.designation.name }}
-                        </span>
+                </table-td>
+                <table-td class="text-left">
+                    <div
+                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
+                    >
+                        {{ staff.phone }}
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-gray-600">ফোন: </span>
-                        <span class="font-bold text-gray-800">
-                            {{ staff.phone }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </table-td>
+                <table-td class="w-10 text-right">
+                    <action-button-delete
+                        v-if="staff.allowDeletion"
+                        :href="route('staff.destroy', staff.id)"
+                    />
+                </table-td>
+            </template>
+        </simple-table>
     </app-layout>
 </template>
 
@@ -66,7 +74,7 @@ export default {
             columns: [
                 { title: "নাম", align: "left" },
                 { title: "পদবি", align: "left" },
-                { title: "Phone", align: "left" },
+                { title: "ফোন", align: "left" },
                 { title: "", align: "right" },
             ],
         };

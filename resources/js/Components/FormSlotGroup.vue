@@ -1,6 +1,7 @@
 <template>
     <form-group :label="label">
         <div class="flex flex-col gap-2 rounded border px-2 py-3">
+            <slot name="header"></slot>
             <div
                 v-for="(item, index) in collections"
                 :key="index"
@@ -36,7 +37,9 @@ export default {
     props: ["label", "collections", "addSlotMethod"],
     methods: {
         removeSlot(index) {
-            this.collections.splice(index, 1);
+            if (confirm("Are you sure you want to delete?")) {
+                this.collections.splice(index, 1);
+            }
         },
     },
 };

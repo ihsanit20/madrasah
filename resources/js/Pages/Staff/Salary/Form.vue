@@ -71,7 +71,7 @@
                 <div
                     class="flex justify-end gap-2 border-t py-1 px-1.5 font-bold"
                 >
-                    <div>জমা:</div>
+                    <div>প্রদান:</div>
                     <div>
                         <Input
                             type="number"

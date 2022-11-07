@@ -82,7 +82,7 @@ class StaffController extends Controller
     {
         if($request->step == 'salary') {
             $staff->update([
-                "salaries" => $request->salaries,
+                "default_salaries" => $request->default_salaries,
             ]);
         } else {
             $staff->update($this->validatedData($request, $staff->id));

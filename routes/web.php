@@ -19,13 +19,14 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentPurposeController;
 use App\Http\Controllers\PurposeController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SeatPlanController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VerificationController;
-use Illuminate\Support\Facades\Http;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -88,6 +89,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
 
+    Route::get('staff/{staff}/salaries/create', [SalaryController::class, 'create'])->name('staff.salaries.create');
+    Route::post('staff/{staff}/salaries', [SalaryController::class, 'store'])->name('staff.salaries.store');
+
     Route::get('expenses/months', [ExpenseController::class, 'monthsIndex'])->name('expenses.months.index');
     Route::get('expenses/months/{month}', [ExpenseController::class, 'monthsShow'])->name('expenses.months.show');
 
@@ -121,23 +125,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/merge/admission-date/{password}', function($password) {
-    if($password == 313) {
-        $admissions = \App\Models\Admission::query()
-            ->whereNull('application_date')
-            ->take(10)
-            ->get();
-
-        foreach($admissions as $admission) {
-            $admission->update([
-                'application_date' => Http::get(url("/api/date-to-hijri-date/{$admission->created_at->format('d-m-Y')}"))
-            ]);
-        }
-
-        return \App\Models\Admission::query()
-            ->whereNull('application_date')
-            ->count();
-    }
-
-    return 420;
-});

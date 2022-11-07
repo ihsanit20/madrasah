@@ -24,7 +24,8 @@ class StaffResource extends JsonResource
             'allowDeletion'     => (boolean) (true),
             'imageUrl'          => (string) ($this->image->url ?? ''),
             'signatureUrl'      => (string) ($this->signature->url ?? ''),
-            'salaries'          => (array) ($this->salaries ?? []),
+            'default_salaries'  => (array) ($this->default_salaries ?? []),
+            'due'               => (int) ($this->due ?? 0),
         ];
     }
 }

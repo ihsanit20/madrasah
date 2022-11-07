@@ -42,11 +42,12 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-gray-600">বেতন: </span>
-                            <span class="font-bold text-gray-800">
-                                {{ $e2bnumber(totalSalary(staff.salaries)) }}
-                                টাকা
-                            </span>
+                            <Link
+                                :href="route('staff.salaries.create', staff.id)"
+                                class="rounded bg-orange-100 px-3 py-1 text-sm text-orange-500"
+                            >
+                                বেতন দিন
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -94,15 +95,6 @@ export default {
                 { title: "", align: "right" },
             ],
         };
-    },
-    methods: {
-        totalSalary(salaries) {
-            let total = salaries.reduce(function (prev, cur) {
-                return prev + parseInt(cur.amount);
-            }, 0);
-
-            return isNaN(total) ? 0 : total;
-        },
     },
 };
 </script>

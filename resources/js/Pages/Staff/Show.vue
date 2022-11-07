@@ -23,6 +23,12 @@
                 >
                     বেতন সম্পাদনা
                 </Link>
+                <Link
+                    :href="route('staff.salaries.create', data.staff.id)"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
+                >
+                    বেতন দিন
+                </Link>
             </div>
         </div>
 
@@ -332,7 +338,7 @@
             </div>
         </div>
 
-        <div class="max-w-3xl rounded p-3 md:p-4">
+        <div v-if="false" class="max-w-3xl rounded p-3 md:p-4">
             <div
                 class="flex flex-wrap items-end justify-between gap-4 print:hidden"
             >
@@ -343,10 +349,10 @@
                     রশিদগুলা
                 </Link>
                 <Link
-                    href="#"
+                    :href="route('staff.salaries.create', data.staff.id)"
                     class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
-                    টাকা জমা নিন
+                    বেতন দিন
                 </Link>
             </div>
         </div>

@@ -13,8 +13,21 @@ class Staff extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'salaries' => 'array',
+        'default_salaries' => 'array',
     ];
+
+    protected $appends = [
+        'due',
+    ];
+
+    public function getDueAttribute()
+    {
+        $salary = $this->salaries()->latest()->first() ?? null;
+
+        return $salary
+            ? $salary->due
+            : 0;
+    }
 
     public function designation()
     {
@@ -33,5 +46,10 @@ class Staff extends Model
         return $this->morphOne(Image::class, 'imageable')
             ->latest('images.id')
             ->where('images.type', 2);
+    }
+
+    public function salaries()
+    {
+        return $this->hasMany(Salary::class);
     }
 }

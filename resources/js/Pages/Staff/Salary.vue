@@ -26,7 +26,7 @@
         <form @submit.prevent="submit" class="">
             <div class="flex gap-4">
                 <form-slot-group
-                    :collections="form.salaries"
+                    :collections="form.default_salaries"
                     :addSlotMethod="addSalarySlot"
                     class="w-full"
                 >
@@ -113,7 +113,7 @@ export default {
     },
     computed: {
         totalSalary() {
-            let total = this.form.salaries.reduce(function (prev, cur) {
+            let total = this.form.default_salaries.reduce(function (prev, cur) {
                 return prev + parseInt(cur.amount);
             }, 0);
 
@@ -121,19 +121,19 @@ export default {
         },
     },
     created() {
-        this.form.salaries = this.data.staff.salaries;
+        this.form.default_salaries = this.data.staff.default_salaries;
     },
     data() {
         return {
             form: this.$inertia.form({
                 step: "salary",
-                salaries: [],
+                default_salaries: [],
             }),
         };
     },
     methods: {
         addSalarySlot() {
-            this.form.salaries.push({
+            this.form.default_salaries.push({
                 title: "",
                 amount: "",
             });

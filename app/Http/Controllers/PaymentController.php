@@ -96,7 +96,7 @@ class PaymentController extends Controller
         
         $period = $purpose_array["period"] ?? null;
         
-        if($admission && !request()->is_multiple_purpose && $purpose) {
+        if($admission && $purpose) {
             return Inertia::render('Payment/Create', [
                 'data' => [
                     'admission'     => new AdmissionResource($admission),

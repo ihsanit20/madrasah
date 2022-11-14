@@ -4,7 +4,7 @@
     <app-layout>
         <form-component
             :data="data"
-            :paid-purpose-ids="paid_purpose_ids"
+            :paid-purpose-ids="paidPurposeIds"
             module-action="store"
         />
     </app-layout>
@@ -30,6 +30,14 @@ export default {
             type: Array,
             default: [],
         },
+    },
+    created() {
+        this.paidPurposeIds = this.paid_purpose_ids.map((id) => Number(id));
+    },
+    data() {
+        return {
+            paidPurposeIds: [],
+        };
     },
 };
 </script>

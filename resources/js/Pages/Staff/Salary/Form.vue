@@ -19,11 +19,9 @@
                     v-for="(purpose, index) in data.purposes"
                     :key="index"
                     :value="index"
-                    :disabled="
-                        paidPurposeIds.includes(Number(index) || String(index))
-                    "
+                    :disabled="paidPurposeIds.includes(Number(index))"
                     v-html="
-                        (paidPurposeIds.includes(Number(index) || String(index))
+                        (paidPurposeIds.includes(Number(index))
                             ? '&#x2713; '
                             : '') + purpose
                     "

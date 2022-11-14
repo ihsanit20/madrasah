@@ -53,11 +53,38 @@
                             required
                         />
                     </form-group>
+
+                    <form-group
+                        v-if="false"
+                        class="col-span-full"
+                        label="রশিদ টাইপ"
+                    >
+                        <div class="flex items-center gap-4">
+                            <label>
+                                <Input
+                                    type="radio"
+                                    :checked="!form.is_multiple_purpose"
+                                    @click="form.is_multiple_purpose = false"
+                                />
+                                সিঙ্গেল
+                            </label>
+                            <label>
+                                <Input
+                                    type="radio"
+                                    :checked="form.is_multiple_purpose"
+                                    @click="form.is_multiple_purpose = true"
+                                />
+                                মালটিপল
+                            </label>
+                        </div>
+                    </form-group>
+
                     <form-group
                         class="col-span-full"
                         label="বাবদ নির্বাচন করুন"
                     >
                         <Select
+                            v-if="!form.is_multiple_purpose"
                             class="block w-full"
                             v-model="form.purpose"
                             required
@@ -93,10 +120,46 @@
                                 "
                             ></option>
                         </Select>
+                        <div
+                            v-else
+                            class="col-span-full rounded-xl border border-dashed p-4"
+                        >
+                            <label
+                                v-for="(purpose, index) in data.purposes"
+                                :key="index"
+                                class="flex items-center gap-2"
+                                :class="{
+                                    hidden: Array.isArray(purpose.classIds)
+                                        ? !(
+                                              purpose.classIds.includes(
+                                                  Number(this.classId)
+                                              ) ||
+                                              purpose.classIds.includes(
+                                                  String(this.classId)
+                                              )
+                                          )
+                                        : false,
+                                }"
+                            >
+                                <input
+                                    v-if="!paidPurpose.includes(Number(index))"
+                                    type="checkbox"
+                                    :value="index"
+                                    @change="multiPurposeHandler"
+                                />
+                                <span
+                                    v-if="!paidPurpose.includes(Number(index))"
+                                    >{{ purpose.title }}</span
+                                >
+                            </label>
+                        </div>
                     </form-group>
                 </div>
+
                 <div class="mt-4 flex items-center justify-end">
-                    <Button> পরবর্তী ধাপ &#8594; </Button>
+                    <Button v-if="isValided" type="submit">
+                        পরবর্তী ধাপ &#8594;
+                    </Button>
                 </div>
             </form>
         </div>
@@ -112,6 +175,7 @@ import InlineData from "@/Components/InlineData.vue";
 import Select from "@/Components/Select.vue";
 import Input from "@/Components/Input.vue";
 import Button from "@/Components/Button.vue";
+import Label from "@/Components/Label.vue";
 
 export default {
     components: {
@@ -123,11 +187,23 @@ export default {
         Select,
         Input,
         Button,
+        Label,
     },
     props: {
         data: {
             type: Object,
             default: {},
+        },
+    },
+    computed: {
+        isValided() {
+            return (
+                Boolean(this.form.admission) &&
+                ((!this.form.is_multiple_purpose &&
+                    Boolean(this.form.purpose)) ||
+                    (this.form.is_multiple_purpose &&
+                        Boolean(this.form.purposes.length)))
+            );
         },
     },
     created() {
@@ -140,6 +216,8 @@ export default {
             form: this.$inertia.form({
                 admission: "",
                 purpose: "",
+                purposes: [],
+                is_multiple_purpose: false,
             }),
             classId: "",
             roll: "",
@@ -152,7 +230,7 @@ export default {
     },
     methods: {
         submit() {
-            if (this.form.admission && this.form.purpose) {
+            if (this.isValided) {
                 return this.form.get(this.route("payments.create"));
             }
         },
@@ -226,6 +304,18 @@ export default {
         },
         resetDuringclassOrRollSelect() {
             this.registration = "";
+        },
+        multiPurposeHandler(event) {
+            let purposeInput = event.target;
+
+            if (purposeInput.checked) {
+                this.form.purposes.push(parseInt(purposeInput.value));
+            } else {
+                let indexOfValue = this.form.purposes.indexOf(
+                    parseInt(purposeInput.value)
+                );
+                this.form.purposes.splice(indexOfValue, 1);
+            }
         },
     },
 };

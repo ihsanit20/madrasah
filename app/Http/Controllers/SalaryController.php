@@ -18,6 +18,7 @@ class SalaryController extends Controller
             'salaries'
         ]);
 
+        // return
         $paid_purpose_ids = $staff->salaries->pluck('purpose_id')->toArray();
 
         return Inertia::render('Staff/Salary/Create', [

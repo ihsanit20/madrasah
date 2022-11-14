@@ -53,9 +53,21 @@ class PaymentController extends Controller
 
     public function create()
     {
+        // return request();
+
         AdmissionResource::withoutWrapping();
 
         ClassesResource::withoutWrapping();
+
+        $admission = Admission::query()
+            ->with([
+                'class',
+                'student',
+                'verified_by_admin',
+            ])
+            ->current()
+            ->student()
+            ->find(request()->admission);
 
         $purposes = Fee::getPurpose();
 
@@ -73,28 +85,18 @@ class PaymentController extends Controller
         }
 
         // return $purposes;
-        
+
         $periods = Fee::getPeriod();
 
         $purpose = request()->purpose ?? null;
-        
-        $purpose_array = in_array($purpose, array_keys($purposes)) ? $purposes[$purpose] : "";
 
+        $purpose_array = in_array($purpose, array_keys($purposes)) ? $purposes[$purpose] : "";
+        
         $purpose_text = $purpose_array["title"] ?? "";
         
         $period = $purpose_array["period"] ?? null;
-
-        $admission = Admission::query()
-            ->with([
-                'class',
-                'student',
-                'verified_by_admin',
-            ])
-            ->current()
-            ->student()
-            ->find(request()->admission);
         
-        if($admission && $purpose) {
+        if($admission && !request()->is_multiple_purpose && $purpose) {
             return Inertia::render('Payment/Create', [
                 'data' => [
                     'admission'     => new AdmissionResource($admission),

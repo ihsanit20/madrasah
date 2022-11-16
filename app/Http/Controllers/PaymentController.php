@@ -55,16 +55,6 @@ class PaymentController extends Controller
     {
         // return request();
 
-        $payments = Payment::query()
-            ->whereNull('purposes')
-            ->get();
-
-        foreach($payments as $payment) {
-            $payment->update([
-                'purposes' => explode(",", $payment->purpose)
-            ]);
-        }
-
         AdmissionResource::withoutWrapping();
 
         ClassesResource::withoutWrapping();

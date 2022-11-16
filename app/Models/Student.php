@@ -72,7 +72,9 @@ class Student extends Model
 
         if(is_array($purposes_array)) {
             foreach($purposes_array as $purpose_array) {
-                $purposes = array_merge($purposes, $purpose_array);
+                if(count($purpose_array ?? [])) {
+                    $purposes = array_merge($purposes, $purpose_array);
+                }
             }
         }
 

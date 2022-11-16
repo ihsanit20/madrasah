@@ -12,6 +12,10 @@ class Admission extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'paid_purposes' => 'array',
+    ];
+
     public function getVerificationsAttribute($value)
     {
         return json_decode($value, true);

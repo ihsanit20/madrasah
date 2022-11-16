@@ -17,6 +17,11 @@ class Payment extends Model
         'purpose_text',
     ];
 
+    
+    protected $casts = [
+        'purposes' => 'array',
+    ];
+
     public function scopeFilter($query, $request)
     {
         return $query

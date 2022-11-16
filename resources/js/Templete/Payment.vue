@@ -76,17 +76,20 @@
             </div>
 
             <div
-                class="my-1 border border-b-0 border-gray-400 print:border-black"
+                class="border border-b-0 border-gray-400 print:border-black"
             ></div>
 
-            <div class="flex items-center justify-center">
+            <div class="flex items-center justify-center py-2">
                 <span
                     class="rounded-full bg-sky-600 px-8 pt-1.5 pb-0.5 text-center text-base font-bold text-white print:bg-gray-500 print:text-sm"
                 >
                     টাকা জমার রশিদ
                 </span>
             </div>
-            <div class="flex items-center justify-center gap-4 py-1">
+            <div
+                v-if="data.payment.purposeText"
+                class="flex items-center justify-center gap-4 pb-1"
+            >
                 <div class="print:text-sm">
                     <inline-data
                         title="বাবদ:"

@@ -55,6 +55,16 @@ class PaymentController extends Controller
     {
         // return request();
 
+        $payments = Payment::query()
+            ->whereNull('purposes')
+            ->get();
+
+        foreach($payments as $payment) {
+            $payment->update([
+                'purposes' => explode(",", $payment->purpose)
+            ]);
+        }
+
         AdmissionResource::withoutWrapping();
 
         ClassesResource::withoutWrapping();
@@ -117,6 +127,7 @@ class PaymentController extends Controller
                     'fees'          => $fees,
                     'parentPayment' => [],
                     'paidPayments'  => [],
+                    'req_purposes'  => request()->purposes,
                 ],
             ]);
         }
@@ -280,10 +291,10 @@ class PaymentController extends Controller
             return abort(404);
         }
 
-        return $this->validatedData($request) + [
-            'due'       => $request->total - $request->paid,
-            'user_id'   => Auth::id(),
-        ];
+        // return $this->validatedData($request) + [
+        //     'due'       => $request->total - $request->paid,
+        //     'user_id'   => Auth::id(),
+        // ];
 
         $payment = Payment::create(
             $this->validatedData($request) + [
@@ -390,14 +401,15 @@ class PaymentController extends Controller
                 'required',
                 'numeric',
             ],
-            'purpose' => [
-                'required',
-                'numeric',
-                Rule::unique(Payment::class, 'purpose')
-                    ->where('admission_id', $request->admission_id)
-                    ->where('due', 0)
-                    ->ignore($id),
-            ],
+            // 'purpose' => [
+            //     'required',
+            //     'numeric',
+            //     Rule::unique(Payment::class, 'purpose')
+            //         ->where('admission_id', $request->admission_id)
+            //         ->where('due', 0)
+            //         ->ignore($id),
+            // ],
+            'purposes' => [],
             'total' => [
                 'required',
             ],
@@ -418,10 +430,10 @@ class PaymentController extends Controller
                         "payment_id" => $payment->id,
                     ],
                     [
-                        "fee_id"        => $item["feeId"],
+                        "fee_id"        => $item["feeId"] ?? null,
                         "title"         => $item["name"],
                         "amount"        => $item["amount"],
-                        "concession"    => $item["concession"],
+                        "concession"    => $item["concession"] ?? 0,
                         "deleted_at"    => null,
                     ]
                 );

@@ -61,10 +61,22 @@ class Student extends Model
     {
         $admission_id = $this->current_admission->id ?? '';
 
-        return Payment::query()
+        $purposes_array = Payment::query()
             ->where('admission_id', $admission_id)
-            ->pluck('purpose')
+            ->pluck('purposes')
             ->toArray();
+
+        // dd($purposes_array);
+
+        $purposes = [];
+
+        if(is_array($purposes_array)) {
+            foreach($purposes_array as $purpose_array) {
+                $purposes = array_merge($purposes, $purpose_array);
+            }
+        }
+
+        return (array) ($purposes);
     }
 
     public function getDuePurposeIdAttribute()

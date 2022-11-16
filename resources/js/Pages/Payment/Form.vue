@@ -210,6 +210,7 @@ export default {
     created() {
         this.form.admission_id = this.data.admission.id;
         this.form.purpose = this.data.purpose;
+        this.form.purposes = this.data.req_purposes;
         this.form.date = this.data.date;
 
         this.form.fees = this.data.fees;
@@ -258,6 +259,7 @@ export default {
             form: this.$inertia.form({
                 admission_id: "",
                 purpose: "",
+                purposes: "",
                 date: "",
                 total: "",
                 paid: "",

@@ -88,15 +88,48 @@ class PaymentController extends Controller
 
         $periods = Fee::getPeriod();
 
+        if(request()->is_multiple_purpose === 'true' && is_array(request()->purposes)) {
+
+            $fees = [];
+
+            foreach(request()->purposes as $purpose) {
+
+                $purpose_array = in_array($purpose, array_keys($purposes)) ? $purposes[$purpose] : "";
+        
+                $purpose_text = $purpose_array["title"] ?? "";
+                
+                $period = $purpose_array["period"] ?? null;
+                
+                if($admission && $period && $purpose) {
+                    $fees[] = [
+                        "name"   => $purpose_text,
+                        "amount" => $this->getAvailableTotalAmount($admission, $period, $purpose),
+                    ];
+                }
+            }
+
+            return Inertia::render('Payment/Create', [
+                'data' => [
+                    'admission'     => new AdmissionResource($admission),
+                    'purpose'       => $purpose,
+                    'purposeText'   => "টাকা জমার রশিদ",
+                    'date'          => $this->getHijriDate(),
+                    'fees'          => $fees,
+                    'parentPayment' => [],
+                    'paidPayments'  => [],
+                ],
+            ]);
+        }
+
         $purpose = request()->purpose ?? null;
 
         $purpose_array = in_array($purpose, array_keys($purposes)) ? $purposes[$purpose] : "";
         
         $purpose_text = $purpose_array["title"] ?? "";
-        
+
         $period = $purpose_array["period"] ?? null;
         
-        if($admission && !request()->is_multiple_purpose && $purpose) {
+        if($admission && $purpose) {
             return Inertia::render('Payment/Create', [
                 'data' => [
                     'admission'     => new AdmissionResource($admission),
@@ -134,6 +167,23 @@ class PaymentController extends Controller
                 'registration'  => request()->registration ?? '',
             ],
         ]);
+    }
+
+    protected function getAvailableTotalAmount($admission, $period, $purpose_id = null)
+    {
+        $total = 0;
+
+        $fees = $this->getAvailableFee($admission, $period, $purpose_id) ?? [];
+
+        foreach($fees as $fee) {
+            if(is_array($fee)) {
+                $total += ($fee['amount'] ?? 0);
+            } else {
+                $total += ($fee->amount ?? 0);
+            }
+        }
+        
+        return $total;
     }
 
     protected function getAvailableFee($admission, $period, $purpose_id = null)
@@ -230,6 +280,10 @@ class PaymentController extends Controller
             return abort(404);
         }
 
+        return $this->validatedData($request) + [
+            'due'       => $request->total - $request->paid,
+            'user_id'   => Auth::id(),
+        ];
 
         $payment = Payment::create(
             $this->validatedData($request) + [

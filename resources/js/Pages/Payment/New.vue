@@ -54,11 +54,7 @@
                         />
                     </form-group>
 
-                    <form-group
-                        v-if="false"
-                        class="col-span-full"
-                        label="রশিদ টাইপ"
-                    >
+                    <form-group class="col-span-full" label="রশিদ টাইপ">
                         <div class="flex items-center gap-4">
                             <label>
                                 <Input

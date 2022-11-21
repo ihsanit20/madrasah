@@ -54,7 +54,11 @@
                         />
                     </form-group>
 
-                    <form-group class="col-span-full" label="রশিদ টাইপ">
+                    <form-group
+                        v-if="false"
+                        class="col-span-full"
+                        label="রশিদ টাইপ"
+                    >
                         <div class="flex items-center gap-4">
                             <label>
                                 <Input
@@ -120,6 +124,12 @@
                             v-else
                             class="col-span-full rounded-xl border border-dashed p-4"
                         >
+                            <label v-if="due" class="flex items-center gap-2">
+                                <input type="checkbox" checked disabled />
+                                <span>
+                                    বকেয়া : <b>{{ due }}</b> টাকা
+                                </span>
+                            </label>
                             <label
                                 v-for="(purpose, index) in data.purposes"
                                 :key="index"
@@ -197,8 +207,7 @@ export default {
                 Boolean(this.form.admission) &&
                 ((!this.form.is_multiple_purpose &&
                     Boolean(this.form.purpose)) ||
-                    (this.form.is_multiple_purpose &&
-                        Boolean(this.form.purposes.length)))
+                    true)
             );
         },
     },
@@ -213,7 +222,7 @@ export default {
                 admission: "",
                 purpose: "",
                 purposes: [],
-                is_multiple_purpose: false,
+                is_multiple_purpose: true,
             }),
             classId: "",
             roll: "",

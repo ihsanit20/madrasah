@@ -88,11 +88,11 @@ class PaymentController extends Controller
 
         $periods = Fee::getPeriod();
 
-        if(request()->is_multiple_purpose === 'true' && is_array(request()->purposes)) {
+        if(request()->is_multiple_purpose === 'true') {
 
             $fees = [];
 
-            foreach(request()->purposes as $purpose) {
+            foreach(request()->purposes ?? [] as $purpose) {
 
                 $purpose_array = in_array($purpose, array_keys($purposes)) ? $purposes[$purpose] : "";
         

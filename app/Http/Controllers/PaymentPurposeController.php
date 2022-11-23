@@ -153,9 +153,9 @@ class PaymentPurposeController extends Controller
                 return in_array($purpose, $payment->purposes ?? []);
             });
             
-            $payments = $payments->filter(function($payment) use ($purpose) {
-                return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose && ($payment->admission->student->due ?? 0) > 0);
-            });
+            // $payments = $payments->filter(function($payment) use ($purpose) {
+            //     return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose && ($payment->admission->student->due ?? 0) > 0);
+            // });
 
             $data[$class->id] = $payments->groupBy(['admission_id'])->count();
         }

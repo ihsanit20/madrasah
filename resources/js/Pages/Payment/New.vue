@@ -152,6 +152,9 @@
                                     type="checkbox"
                                     :value="index"
                                     @change="multiPurposeHandler"
+                                    :checked="
+                                        Number(index) === Number(data.purposeId)
+                                    "
                                 />
                                 <span
                                     v-if="!paidPurpose.includes(Number(index))"

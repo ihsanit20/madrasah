@@ -64,9 +64,9 @@ class OtherPurposeController extends Controller
             ->student()
             ->get();
 
-        $students = $students->filter(function($student) use ($purpose) {
-            return ($student->due_purpose_id == $purpose && $student->due > 0) || ! in_array($purpose, $student->payment_purpose);
-        });
+        // $students = $students->filter(function($student) use ($purpose) {
+        //     return ($student->due_purpose_id == $purpose && $student->due > 0) || ! in_array($purpose, $student->payment_purpose);
+        // });
 
         return Inertia::render('Student/Index', [
             'data' => [

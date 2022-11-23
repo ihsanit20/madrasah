@@ -18,7 +18,7 @@
                     <div class="text-md font-bold text-sky-600 md:text-xl">
                         {{ purpose.title }}
                     </div>
-                    <div class="flex items-center gap-2">
+                    <div v-if="false" class="flex items-center gap-2">
                         <span class="text-gray-600"> আদায়: </span>
                         <span class="font-bold text-gray-800">
                             {{ $e2bnumber(data.totalPayment[purpose.id]) }} /

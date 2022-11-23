@@ -20,8 +20,8 @@ class OtherPurposeController extends Controller
             'data' => [
                 'purposes'      => Purpose::get(),
                 // 'totalStudent'  => Student::active()->student()->count(),
-                'totalStudent'  => $this->purposeWiseTotalStudent(),
-                'totalPayment'  => $this->purposeWiseTotalPayment(),
+                // 'totalStudent'  => $this->purposeWiseTotalStudent(),
+                // 'totalPayment'  => $this->purposeWiseTotalPayment(),
             ]
         ]);
     }
@@ -110,6 +110,7 @@ class OtherPurposeController extends Controller
         foreach($purposes as $purpose) {
             $index = $purpose->id;
 
+
             $payments = Payment::query()
                 ->with([
                     'admission:id,session,student_id',
@@ -118,9 +119,8 @@ class OtherPurposeController extends Controller
                 ->whereHas('admission', function ($query) {
                     $query->where('session', $this->getCurrentSession());
                 })
-                ->where('purpose', $index)
+                ->orWhereJsonContains('purposes', $index)
                 ->get();
-
                 
             $payments = $payments->filter(function($payment) use ($index) {
                 return ! (($payment->admission->student->due_purpose_id ?? 0) == $index && ($payment->admission->student->due ?? 0) > 0);
@@ -134,7 +134,7 @@ class OtherPurposeController extends Controller
 
     protected function purposeClassWiseTotalPayment($purpose)
     {
-        $classes = Classes::get();
+        $classes = Classes::latest()->get();
 
         $data = Array();
 
@@ -151,14 +151,17 @@ class OtherPurposeController extends Controller
                             'class_id'  => $class->id,
                         ]);
                 })
-                ->where('purpose', $purpose->id)
                 ->get();
+
+            $payments = $payments->filter(function($payment) use ($purpose) {
+                return in_array($purpose->id, $payment->purposes ?? []);
+            });
             
             $payments = $payments->filter(function($payment) use ($purpose) {
                 return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose->id && ($payment->admission->student->due ?? 0) > 0);
             });
 
-            $data[$class->id] = $payments->groupBy(['admission_id', 'purpose'])->count();
+            $data[$class->id] = $payments->groupBy(['admission_id'])->count();
         }
 
         return $data;

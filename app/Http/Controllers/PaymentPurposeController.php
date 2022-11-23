@@ -22,8 +22,8 @@ class PaymentPurposeController extends Controller
         return Inertia::render('Payment/Purpose', [
             'data' => [
                 'purposes'      => Fee::getPurpose(),
-                'totalStudent'  => Student::active()->student()->count(),
-                'totalPayment'  => $this->purposeWiseTotalPayment(),
+                // 'totalStudent'  => Student::active()->student()->count(),
+                // 'totalPayment'  => $this->purposeWiseTotalPayment(),
                 // 'otherPurposes' => PurposeResource::collection(Purpose::get()),
             ]
         ]);
@@ -147,14 +147,17 @@ class PaymentPurposeController extends Controller
                             'class_id'  => $class->id,
                         ]);
                 })
-                ->where('purpose', $purpose)
                 ->get();
+
+            $payments = $payments->filter(function($payment) use ($purpose) {
+                return in_array($purpose, $payment->purposes ?? []);
+            });
             
             $payments = $payments->filter(function($payment) use ($purpose) {
                 return ! (($payment->admission->student->due_purpose_id ?? 0) == $purpose && ($payment->admission->student->due ?? 0) > 0);
             });
 
-            $data[$class->id] = $payments->groupBy(['admission_id', 'purpose'])->count();
+            $data[$class->id] = $payments->groupBy(['admission_id'])->count();
         }
 
         return $data;

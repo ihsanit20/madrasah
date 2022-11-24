@@ -62,16 +62,21 @@ class PaymentPurposeController extends Controller
             ->student()
             ->get();
 
-        $students = $students->filter(function($student) use ($purpose) {
+        $due_students = $students->filter(function($student) use ($purpose) {
             return ! in_array($purpose, $student->payment_purpose);
             // return ($student->due_purpose_id == $purpose && $student->due > 0) || ! in_array($purpose, $student->payment_purpose);
         });
 
+        $paid_students = $students->filter(function($student) use ($purpose) {
+            return in_array($purpose, $student->payment_purpose);
+        });
+
         return Inertia::render('Student/Index', [
             'data' => [
-                'classes'   => new ClassesResource($class),
-                'students'  => StudentResource::collection($students),
-                'purposeId' => $purpose,
+                'classes'       => new ClassesResource($class),
+                'students'      => StudentResource::collection($due_students),
+                'paidStudents'  => StudentResource::collection($paid_students),
+                'purposeId'     => $purpose,
             ]
         ]);
     }

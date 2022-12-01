@@ -20,7 +20,6 @@
             </div>
         </div>
 
-        <div class="pt-2 text-2xl font-bold">অনাদায় তালিকা</div>
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <div
                 v-for="student in data.students"
@@ -74,7 +73,9 @@
             </div>
         </div>
 
-        <div class="pt-12 text-2xl font-bold">আদায় তালিকা</div>
+        <div v-if="data.paidStudents" class="pt-12 text-2xl font-bold">
+            আদায় তালিকা
+        </div>
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <div
                 v-for="student in data.paidStudents"

@@ -27,7 +27,6 @@
                     </div>
                 </div>
                 <Link
-                    v-if="data.totalPayment[classes.id] < classes.totalStudent"
                     :href="
                         route('others.purpose.class', [
                             data.purposeId,
@@ -36,7 +35,7 @@
                     "
                     class="border bg-rose-600/70 px-3 pt-2 pb-1 text-white"
                 >
-                    অনাদায়
+                    বিস্তারিত
                 </Link>
             </div>
         </div>

@@ -21,6 +21,7 @@ class SimpleStudentResource extends JsonResource
             'currentAdmissionId'    => (int) ($this->current_admission->id ?? 0),
             'currentClassName'      => (string) ($this->current_admission->class->name ?? ''),
             'currentClassRoll'      => (int) ($this->current_admission->roll ?? ''),
+            'due'                   => (double) ($this->due ?? 0),
         ];
     }
 }

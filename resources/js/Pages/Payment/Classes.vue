@@ -26,8 +26,7 @@
                         </span>
                     </div>
                 </div>
-                <Link
-                    v-if="data.totalPayment[classes.id] < classes.totalStudent"
+                <nav-link
                     :href="
                         route('payments.purpose.class', [
                             data.purposeId,
@@ -36,8 +35,8 @@
                     "
                     class="border bg-rose-600/70 px-3 pt-2 pb-1 text-white"
                 >
-                    অনাদায়
-                </Link>
+                    বিস্তারিত
+                </nav-link>
             </div>
         </div>
     </app-layout>

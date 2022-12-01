@@ -218,6 +218,9 @@ export default {
         this.registration = this.data.registration;
         this.registrationHandler();
         this.form.purpose = this.data.purposeId;
+        if(Number(this.data.purposeId) > 0) {
+            this.form.purposes.push(Number(this.data.purposeId));
+        }
     },
     data() {
         return {

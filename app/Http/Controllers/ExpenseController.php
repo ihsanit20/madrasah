@@ -85,6 +85,34 @@ class ExpenseController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
+    public function summary()
+    {
+        $categories = Category::query()
+            ->with([
+                'expenses' => function($query) {
+                    $query
+                        ->select(['id', 'amount', 'category_id', 'date'])
+                        ->where('session', $this->getCurrentSession());
+                }
+            ])
+            ->get();
+
+        // return 
+        $categories = $categories->map(function($category) {
+            return [
+                "id"    => $category->id,
+                "name"  => $category->name,
+                "total" => $category->expenses->sum('amount'),
+            ]; 
+        });
+
+        return Inertia::render('Expense/Summary', [
+            'data' => [
+                'categories' => $categories,
+            ]
+        ]);
+    }
+
     public function monthsIndex()
     {
         $expenses = Expense::query()

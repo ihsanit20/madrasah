@@ -85,14 +85,25 @@ class ExpenseController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
-    public function summary()
+    public function summary(Request $request)
     {
+        // return $request;
+
+        $from = $request->from ?? date("Y-m-01");
+        $to = $request->to ?? date("Y-m-d");
+
         $categories = Category::query()
             ->with([
-                'expenses' => function($query) {
+                'expenses' => function($query) use ($from, $to) {
                     $query
                         ->select(['id', 'amount', 'category_id', 'date'])
-                        ->where('session', $this->getCurrentSession());
+                        ->where('session', $this->getCurrentSession())
+                        ->when($from, function($query, $from) {
+                            $query->whereDate('date', '>=', $from);
+                        })
+                        ->when($to, function($query, $to) {
+                            $query->whereDate('date', '<=', $to);
+                        });
                 }
             ])
             ->get();
@@ -108,7 +119,9 @@ class ExpenseController extends Controller
 
         return Inertia::render('Expense/Summary', [
             'data' => [
-                'categories' => $categories,
+                'categories'    => $categories,
+                'from'          => $from,
+                'to'            => $to,
             ]
         ]);
     }

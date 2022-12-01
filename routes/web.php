@@ -97,11 +97,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('expenses/months/{month}/categories', [ExpenseController::class, 'monthsCategoriesIndex'])->name('expenses.months.categories.index');
     
+    Route::get('expenses/summary', [ExpenseController::class, 'summary'])->name('expenses.summary');
+    
     Route::get('expenses/categories', [ExpenseController::class, 'categoriesIndex'])->name('expenses.categories.index');
     Route::get('expenses/categories/{category}', [ExpenseController::class, 'categoriesShow'])->name('expenses.categories.show');
 
-    Route::get('expenses/summary', [ExpenseController::class, 'summary'])->name('expenses.summary');
-    
     Route::get('expenses/categories/{category}/categories', [ExpenseController::class, 'CategoriesmonthsIndex'])->name('expenses.categories.months.index');
 
     Route::resources([

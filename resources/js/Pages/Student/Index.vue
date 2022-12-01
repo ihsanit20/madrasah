@@ -6,7 +6,7 @@
             data.classes ? data.classes.name + ' এর' : 'সকল'
         } শিক্ষার্থী তালিকা`"
     >
-        <div class="rounded py-4">
+        <div v-if="!data.paidStudents" class="rounded py-4">
             <div
                 class="flex flex-wrap items-end justify-between gap-4 print:hidden"
             >

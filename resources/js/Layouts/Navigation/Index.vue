@@ -220,6 +220,7 @@
                     </span>
                 </nav-link>
                 <nav-link
+                    v-if="false"
                     :href="route('expenses.summary')"
                     :active="route().current('expenses.summary')"
                     class="flex items-center gap-2 md:gap-4"
@@ -234,6 +235,7 @@
                     </span>
                 </nav-link>
                 <nav-link
+                    v-if="false"
                     :href="route('expenses.categories.index')"
                     :active="route().current('expenses.categories.*')"
                     class="flex items-center gap-2 md:gap-4"
@@ -248,6 +250,7 @@
                     </span>
                 </nav-link>
                 <nav-link
+                    v-if="false"
                     :href="route('expenses.months.index')"
                     :active="route().current('expenses.months.*')"
                     class="flex items-center gap-2 md:gap-4"
@@ -284,6 +287,17 @@
                 </nav-link>
             </template>
         </dropdown-nav-link>
+
+        <nav-link
+            :href="route('summary')"
+            :active="route().current('summary')"
+            class="flex items-center gap-2 md:gap-4"
+        >
+            <ScaleIcon class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                আয়-ব্যয় সামারি
+            </span>
+        </nav-link>
 
         <nav-link
             :href="route('notices.index')"
@@ -440,6 +454,7 @@ import {
     IdentificationIcon,
     LibraryIcon,
     MenuIcon,
+    ScaleIcon,
 } from "@heroicons/vue/outline";
 import { Link } from "@inertiajs/inertia-vue3";
 import {
@@ -475,6 +490,7 @@ export default {
         LibraryIcon,
         ClipboardListIcon,
         CogIcon,
+        ScaleIcon,
     },
     props: {
         navigation: {

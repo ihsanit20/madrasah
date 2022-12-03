@@ -33,6 +33,16 @@ class Classes extends Model
         return $this->hasMany(Subject::class, 'class_id');
     }
 
+    public function admissions()
+    {
+        return $this->hasMany(Admission::class, 'class_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasManyThrough(Payment::class, Admission::class, 'class_id', 'admission_id');
+    }
+
     public function students()
     {
         return $this->belongsToMany(Student::class, 'admissions', 'class_id', 'student_id');

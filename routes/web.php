@@ -25,6 +25,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\VerificationController;
 
 use Illuminate\Support\Facades\Route;
@@ -101,6 +102,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('expenses/categories/{category}', [ExpenseController::class, 'categoriesShow'])->name('expenses.categories.show');
 
     Route::get('expenses/summary', [ExpenseController::class, 'summary'])->name('expenses.summary');
+
+    Route::get('summary', SummaryController::class)->name('summary');
     
     Route::get('expenses/categories/{category}/categories', [ExpenseController::class, 'CategoriesmonthsIndex'])->name('expenses.categories.months.index');
 

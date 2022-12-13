@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Classes;
+use App\Models\Salary;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -46,6 +47,24 @@ class SummaryController extends Controller
                 "total" => $category->expenses->sum('amount'),
             ]; 
         });
+
+        // return
+        $total_salary = Salary::query()
+            ->when($from, function($query, $from) {
+                $query->whereDate('created_at', '>=', $from);
+            })
+            ->when($to, function($query, $to) {
+                $query->whereDate('created_at', '<=', $to);
+            })
+            ->sum('total');
+
+        $categories->push([
+            "id"    => 0,
+            "name"  => "শিক্ষক/স্টাফ বেতন",
+            "total" => $total_salary,
+        ]);
+
+        // return $categories;
 
         // return
         $classes = Classes::query()

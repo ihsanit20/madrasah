@@ -42,9 +42,9 @@ class SummaryController extends Controller
         // return 
         $categories = $categories->map(function($category) {
             return [
-                "id"    => $category->id,
-                "name"  => $category->name,
-                "total" => $category->expenses->sum('amount'),
+                "id"    => (int) ($category->id ?? 0),
+                "name"  => (string) ($category->name ?? ''),
+                "total" => (double) ($category->expenses->sum('amount') ?? 0),
             ]; 
         });
 
@@ -59,9 +59,9 @@ class SummaryController extends Controller
             ->sum('total');
 
         $categories->push([
-            "id"    => 0,
-            "name"  => "শিক্ষক/স্টাফ বেতন",
-            "total" => $total_salary,
+            "id"    => (int) (0),
+            "name"  => (string) ("শিক্ষক/স্টাফ বেতন"),
+            "total" => (double) ($total_salary ?? 0),
         ]);
 
         // return $categories;
@@ -88,9 +88,9 @@ class SummaryController extends Controller
         // return 
         $classes = $classes->map(function($class) {
             return [
-                "id"    => $class->id,
-                "name"  => $class->name,
-                "total" => $class->payments->sum('paid'),
+                "id"    => (int) ($class->id ?? 0),
+                "name"  => (string) ($class->name ?? ''),
+                "total" => (double) ($class->payments->sum('paid') ?? 0),
             ]; 
         });
 

@@ -54,7 +54,7 @@
                 <thead class="">
                     <tr class="">
                         <th
-                            colspan="3"
+                            colspan="2"
                             class="border p-2 print:h-[120px] print:p-1"
                         >
                             কৃতকার্য শিক্ষার্থী তালিকা
@@ -72,9 +72,8 @@
                         <th colspan="4" class="border p-2 print:p-1"></th>
                     </tr>
                     <tr>
-                        <th class="border p-2 print:p-1">মেধাক্রম</th>
-                        <th class="border p-2 print:p-1">শিক্ষার্থী</th>
                         <th class="border p-2 print:p-1">রোল</th>
+                        <th class="border p-2 print:p-1">শিক্ষার্থী</th>
                         <th
                             v-for="subject in data.subjects"
                             :key="subject.code"
@@ -98,6 +97,7 @@
                         <th class="border p-2 print:p-1">মোট</th>
                         <th class="border p-2 print:p-1">গড়</th>
                         <th class="border p-2 print:p-1">গ্রেড</th>
+                        <th class="border p-2 print:p-1">মেধাক্রম</th>
                     </tr>
                 </thead>
                 <tbody class="">
@@ -110,13 +110,10 @@
                         }"
                     >
                         <td class="border p-2 text-center print:p-1">
-                            {{ $e2bnumber(getMeritList(student)) }}
+                            {{ $e2bnumber(student.roll) }}
                         </td>
                         <td class="border p-2 text-left print:p-1">
                             {{ student.name }}
-                        </td>
-                        <td class="border p-2 text-center print:p-1">
-                            {{ $e2bnumber(student.roll) }}
                         </td>
                         <td
                             v-for="subject in data.subjects"
@@ -134,6 +131,9 @@
                         <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getGrade(student)) }}
                         </td>
+                        <td class="border p-2 text-center print:p-1">
+                            {{ $e2bnumber(getMeritList(student)) }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -143,9 +143,8 @@
                         <th colspan="2">অকৃতকার্য শিক্ষার্থী তালিকা</th>
                     </tr>
                     <tr>
-                        <th class="border p-2 print:p-1">মেধাক্রম</th>
-                        <th class="border p-2 print:p-1">শিক্ষার্থী</th>
                         <th class="border p-2 print:p-1">রোল</th>
+                        <th class="border p-2 print:p-1">শিক্ষার্থী</th>
                         <th
                             v-for="subject in data.subjects"
                             :key="subject.code"
@@ -169,6 +168,7 @@
                         <th class="border p-2 print:p-1">মোট</th>
                         <th class="border p-2 print:p-1">গড়</th>
                         <th class="border p-2 print:p-1">গ্রেড</th>
+                        <th class="border p-2 print:p-1">মেধাক্রম</th>
                     </tr>
                 </thead>
                 <tbody class="">
@@ -181,13 +181,10 @@
                         }"
                     >
                         <td class="border p-2 text-center print:p-1">
-                            {{ $e2bnumber(getMeritList(student)) }}
+                            {{ $e2bnumber(student.roll) }}
                         </td>
                         <td class="border p-2 text-left print:p-1">
                             {{ student.name }}
-                        </td>
-                        <td class="border p-2 text-center print:p-1">
-                            {{ $e2bnumber(student.roll) }}
                         </td>
                         <td
                             v-for="subject in data.subjects"
@@ -204,6 +201,9 @@
                         </td>
                         <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getGrade(student)) }}
+                        </td>
+                        <td class="border p-2 text-center print:p-1">
+                            {{ $e2bnumber(getMeritList(student)) }}
                         </td>
                     </tr>
                 </tbody>

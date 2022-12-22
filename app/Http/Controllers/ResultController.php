@@ -197,6 +197,7 @@ class ResultController extends Controller
             ->where('code', $subject_code)
             ->first() ?? abort(404);
 
+        // return
         $admissions = Admission::query()
             ->with([
                 'student:id,name',
@@ -214,7 +215,13 @@ class ResultController extends Controller
                 'roll',
             ]);
 
-        $students = $admissions->map(function ($admission) {
+        $class_student_ids = [];
+        $result_student_ids = [];
+
+        // return
+        $students = $admissions->map(function ($admission) use (&$class_student_ids) {
+            array_push($class_student_ids, $admission->student->id);
+
             return [
                 "id"    => $admission->student->id,
                 "name"  => $admission->student->name,
@@ -231,6 +238,8 @@ class ResultController extends Controller
                 'speaking'      => "",
             ];
         }
+
+        // return $marks;
 
         $result = Result::query()
             ->firstOrCreate(
@@ -249,9 +258,33 @@ class ResultController extends Controller
             'class:id,name',
         ]);
 
-        $result->subject = $subject;
+        foreach($result->marks as $mark) {
+            array_push($result_student_ids, $mark["student_id"]);
+        }
+
+        // return compact('class_student_ids', 'result_student_ids');
+
+        // return
+        $diff_ids = array_diff($class_student_ids, $result_student_ids);
+
+        if(count($diff_ids)) {
+            // return
+            $result_marks = $result->marks;
+
+            foreach($diff_ids as $diff_id) {
+                array_push($result_marks, [
+                    'student_id'    => $diff_id,
+                    'writing'       => "",
+                    'speaking'      => "",
+                ]);
+            }
+
+            $result->update(['marks' => $result_marks]);
+        }
 
         // return $result;
+        
+        $result->subject = $subject;
 
         ResultResource::withoutWrapping();
 

@@ -50,6 +50,8 @@ class ResultController extends Controller
         SubjectResource::withoutWrapping();
         ResultResource::withoutWrapping();
 
+        $optional_subject_code = $class->optional_subject_code;
+
         $admissions = Admission::query()
             ->with([
                 'student:id,name',
@@ -75,12 +77,44 @@ class ResultController extends Controller
             ])
             ->get();
 
-        $students = $admissions->map(function ($admission) {
+        $final_results = [];
+
+        foreach($results as $result) {
+            foreach($result->marks as $mark) {
+                // if($mark['writing'] == null && $mark['speaking'] == null) {
+                //     continue;
+                // }
+
+                if(!isset($final_results[$mark['student_id']][$result->subject_code])) {
+                    $final_results[$mark['student_id']][$result->subject_code] = 0;
+                }
+
+                $final_results[$mark['student_id']][$result->subject_code] += (int) ($mark['writing'] ?? 0);
+                $final_results[$mark['student_id']][$result->subject_code] += (int) ($mark['speaking'] ?? 0);
+            }
+        }
+
+        // foreach($final_results as $final_result) {
+        //     dd(array_sum($final_result));
+        // }
+
+        // return $final_results;
+
+        $students = $admissions->map(function ($admission) use ($final_results, $optional_subject_code) {
             return [
-                "id"    => $admission->student->id,
-                "name"  => $admission->student->name,
-                "roll"  => $admission->roll,
+                "id"        => $admission->student->id,
+                "name"      => $admission->student->name,
+                "roll"      => $admission->roll,
+                "total"     => array_sum($final_results[$admission->student->id] ?? []),
+                "result"    => $final_results[$admission->student->id] ?? [],
             ];
+        });
+
+        // return $students->sortBy('total');
+        $students = $students->toArray();
+        
+        usort($students, function($a, $b) {
+            return strcmp($b['total'], $a['total']);
         });
 
         // return $students;
@@ -104,6 +138,17 @@ class ResultController extends Controller
             ],
             'signature' => $signature,
         ]);
+    }
+
+    private function getAverage($marks, $optional_subject_code)
+    {
+        unset($marks[$optional_subject_code]);
+
+        $total_subject = count($marks);
+
+        return $total_subject
+            ? round(array_sum($marks) / $total_subject, 2)
+            : 0;
     }
 
     public function resultCard(Exam $exam, Classes $class)

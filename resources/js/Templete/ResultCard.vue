@@ -353,19 +353,11 @@ export default {
             return this.getMeritTextByPosition(meritPosition);
         },
         getMeritTextByPosition(position) {
-            if (position === 1) {
-                return "১ম";
+            if (position === 0) {
+                return "";
             }
 
-            if (position === 2) {
-                return "২য়";
-            }
-
-            if (position === 3) {
-                return "৩য়";
-            }
-
-            return "-";
+            return position;
         },
     },
 };

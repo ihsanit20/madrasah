@@ -54,15 +54,10 @@
                 <thead class="">
                     <tr class="">
                         <th
-                            colspan="2"
+                            colspan="3"
                             class="border p-2 print:h-[120px] print:p-1"
-                            style="writing-mode: vertical-rl"
                         >
-                            <!-- <div
-                                class="h-full -rotate-180 break-all text-center"
-                            >
-                                বিষয়
-                            </div> -->
+                            কৃতকার্য শিক্ষার্থী তালিকা
                         </th>
                         <th
                             v-for="subject in data.subjects"
@@ -74,11 +69,12 @@
                                 {{ subject.name }}
                             </div>
                         </th>
-                        <th colspan="5" class="border p-2 print:p-1"></th>
+                        <th colspan="4" class="border p-2 print:p-1"></th>
                     </tr>
                     <tr>
-                        <th class="border p-2 print:p-1">রোল</th>
+                        <th class="border p-2 print:p-1">মেধাক্রম</th>
                         <th class="border p-2 print:p-1">শিক্ষার্থী</th>
+                        <th class="border p-2 print:p-1">রোল</th>
                         <th
                             v-for="subject in data.subjects"
                             :key="subject.code"
@@ -102,7 +98,6 @@
                         <th class="border p-2 print:p-1">মোট</th>
                         <th class="border p-2 print:p-1">গড়</th>
                         <th class="border p-2 print:p-1">গ্রেড</th>
-                        <th class="border p-2 print:p-1">মেধাক্রম</th>
                     </tr>
                 </thead>
                 <tbody class="">
@@ -110,12 +105,18 @@
                         v-for="(student, index) in data.students"
                         :key="index"
                         class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                        :class="{
+                            'hidden': getMeritList(student) === '-'
+                        }"
                     >
                         <td class="border p-2 text-center print:p-1">
-                            {{ $e2bnumber(student.roll) }}
+                            {{ $e2bnumber(getMeritList(student)) }}
                         </td>
                         <td class="border p-2 text-left print:p-1">
                             {{ student.name }}
+                        </td>
+                        <td class="border p-2 text-center print:p-1">
+                            {{ $e2bnumber(student.roll) }}
                         </td>
                         <td
                             v-for="subject in data.subjects"
@@ -133,8 +134,76 @@
                         <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getGrade(student)) }}
                         </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="w-full table-auto print:text-xs">
+                <thead class="">
+                    <tr class="">
+                        <th colspan="2">অকৃতকার্য শিক্ষার্থী তালিকা</th>
+                    </tr>
+                    <tr>
+                        <th class="border p-2 print:p-1">মেধাক্রম</th>
+                        <th class="border p-2 print:p-1">শিক্ষার্থী</th>
+                        <th class="border p-2 print:p-1">রোল</th>
+                        <th
+                            v-for="subject in data.subjects"
+                            :key="subject.code"
+                            class="border p-2 print:p-1"
+                        >
+                            <div class="text-center">
+                                <Link
+                                    :href="
+                                        route('results.create', [
+                                            data.exam.id,
+                                            data.class.id,
+                                            subject.code,
+                                        ])
+                                    "
+                                    class="text-sky-600 underline print:text-black print:no-underline"
+                                >
+                                    {{ $e2bnumber(subject.code) }}
+                                </Link>
+                            </div>
+                        </th>
+                        <th class="border p-2 print:p-1">মোট</th>
+                        <th class="border p-2 print:p-1">গড়</th>
+                        <th class="border p-2 print:p-1">গ্রেড</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    <tr
+                        v-for="(student, index) in data.students"
+                        :key="index"
+                        class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                        :class="{
+                            'hidden': getMeritList(student) !== '-'
+                        }"
+                    >
                         <td class="border p-2 text-center print:p-1">
                             {{ $e2bnumber(getMeritList(student)) }}
+                        </td>
+                        <td class="border p-2 text-left print:p-1">
+                            {{ student.name }}
+                        </td>
+                        <td class="border p-2 text-center print:p-1">
+                            {{ $e2bnumber(student.roll) }}
+                        </td>
+                        <td
+                            v-for="subject in data.subjects"
+                            :key="subject.code"
+                            class="border p-2 text-center print:p-1"
+                        >
+                            {{ $e2bnumber(getSubjectMark(student, subject)) }}
+                        </td>
+                        <td class="border p-2 text-center print:p-1">
+                            {{ $e2bnumber(getTotalMark(student)) }}
+                        </td>
+                        <td class="border p-2 text-center print:p-1">
+                            {{ $e2bnumber(getAverageMark(student)) }}
+                        </td>
+                        <td class="border p-2 text-center print:p-1">
+                            {{ $e2bnumber(getGrade(student)) }}
                         </td>
                     </tr>
                 </tbody>
@@ -363,7 +432,7 @@ export default {
             let totalMark = this.getTotalMark(student);
 
             if (totalMark === "") {
-                return "";
+                return "-";
             }
 
             let markArray = [];
@@ -387,19 +456,11 @@ export default {
             return this.getMeritTextByPosition(meritPosition);
         },
         getMeritTextByPosition(position) {
-            if (position === 1) {
-                return "১ম";
+            if(parseInt(position) === 0) {
+                return "-";
             }
 
-            if (position === 2) {
-                return "২য়";
-            }
-
-            if (position === 3) {
-                return "৩য়";
-            }
-
-            return "";
+            return position;
         },
     },
 };

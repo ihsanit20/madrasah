@@ -84,4 +84,20 @@ class StudentClassController extends Controller
             'signature' => $signature,
         ]);
     }
+
+    public function attendancePage(Classes $class)
+    {
+        // return
+        $class->load([
+            'current_admissions:id,student_id,class_id,student_id,status,roll',
+            'current_admissions.student:id,name,registration,resident',
+        ]);
+
+        return Inertia::render('Student/AttendancePage', [
+            'data' => [
+                'class_info' => $class,
+                'admissions' => $class->current_admissions,
+            ],
+        ]);
+    }
 }

@@ -14,6 +14,7 @@ class Student extends Model
     protected $guarded = [];
 
     protected $appends = [
+        'resident_text',
         'gender_text',
         'guardian_type',
         // 'payment_purpose',

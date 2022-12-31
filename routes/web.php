@@ -54,6 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('student-class', [StudentClassController::class, 'index'])->name('students.class.index');
     Route::get('student-class/{class}', [StudentClassController::class, 'show'])->name('students.class.show');
     Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
+    Route::get('student-class/{class}/attendance-page', [StudentClassController::class, 'attendancePage'])->name('students.class.attendance-page');
 
     Route::get('admit-card', [AdmitCardController::class, 'index'])->name('admit-card.index');
     Route::get('admit-card/{exam}', [AdmitCardController::class, 'show'])->name('admit-card.show');

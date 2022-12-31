@@ -38,6 +38,16 @@ class Classes extends Model
         return $this->hasMany(Admission::class, 'class_id');
     }
 
+    public function current_admissions()
+    {
+        $session = "43-44";
+
+        return $this->hasMany(Admission::class, 'class_id')
+            ->where('admissions.session', $session)
+            ->where('admissions.status', 4)
+            ->orderBy('admissions.roll');
+    }
+
     public function payments()
     {
         return $this->hasManyThrough(Payment::class, Admission::class, 'class_id', 'admission_id');

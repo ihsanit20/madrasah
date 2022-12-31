@@ -12,7 +12,7 @@
                                     v-if="serialColumn"
                                     class="py-3 px-6 text-left text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
                                 >
-                                    SL
+                                    ক্রম
                                 </th>
                                 <th
                                     v-for="(column, index) in columns"
@@ -44,7 +44,7 @@
                                     v-if="serialColumn"
                                     class="whitespace-nowrap py-4 px-6 text-xs font-medium text-gray-900 dark:text-white print:text-black md:text-sm"
                                 >
-                                    {{ index + 1 }}
+                                    {{ $e2bnumber(index + 1) }}
                                 </td>
 
                                 <slot

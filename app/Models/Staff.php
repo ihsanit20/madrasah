@@ -18,6 +18,7 @@ class Staff extends Model
 
     protected $appends = [
         'due',
+        'due_purpose_id',
     ];
 
     public function getDueAttribute()
@@ -26,6 +27,15 @@ class Staff extends Model
 
         return $salary
             ? $salary->due
+            : 0;
+    }
+
+    public function getDuePurposeIdAttribute()
+    {
+        $salary = $this->salaries()->latest()->first() ?? null;
+
+        return $salary && $salary->due > 0
+            ? $salary->purpose_id
             : 0;
     }
 
@@ -50,6 +60,7 @@ class Staff extends Model
 
     public function salaries()
     {
-        return $this->hasMany(Salary::class);
+        return $this->hasMany(Salary::class)
+            ->latest();
     }
 }

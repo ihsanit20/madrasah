@@ -13,6 +13,7 @@ class SalaryController extends Controller
 {
     public function create(Staff $staff)
     {
+        // return
         $staff->load([
             'designation',
             'salaries'
@@ -20,6 +21,8 @@ class SalaryController extends Controller
 
         // return
         $paid_purpose_ids = $staff->salaries->pluck('purpose_id')->toArray();
+
+        // return $this->data($staff);
 
         return Inertia::render('Staff/Salary/Create', [
             'data' => $this->data($staff),
@@ -29,7 +32,13 @@ class SalaryController extends Controller
 
     public function store(Request $request, Staff $staff)
     {
-        $staff_payment = $this->save($request, $staff);
+        // return $request;
+        $staff_payment = Salary::Create(
+            [
+                'staff_id'      => $staff->id,
+                'purpose_id'    => $request->purpose_id,
+            ] + $this->validatedData($request)
+        );
 
         return redirect()
             ->route('staff.show', $staff->id)

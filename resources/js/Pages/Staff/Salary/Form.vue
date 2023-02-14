@@ -6,22 +6,30 @@
             <inline-data title="রশিদ নং:" />
             <inline-data title="তারিখ:" />
         </div>
-
         <div class="flex items-center justify-between">
             <inline-data title="নাম:" :value="data.staff.name" />
             <inline-data title="পদবি:" :value="data.staff.designation.name" />
         </div>
-
         <form-group class="col-span-full" label="বাবদ নির্বাচন করুন">
-            <Select class="block w-full" v-model="form.purpose_id" required>
+            <Select
+                class="block w-full"
+                v-model="form.purpose_id"
+                @change="purposeChangeHandler"
+                required
+            >
                 <option value="">-- নির্বাচন করুন --</option>
                 <option
                     v-for="(purpose, index) in data.purposes"
                     :key="index"
                     :value="index"
-                    :disabled="paidPurposeIds.includes(Number(index))"
+                    :disabled="
+                        Number(data.staff.due_purpose_id) !== Number(index) &&
+                        paidPurposeIds.includes(Number(index))
+                    "
                     v-html="
-                        (paidPurposeIds.includes(Number(index))
+                        (Number(data.staff.due_purpose_id) === Number(index)
+                            ? '&#9888; (বকেয়া) '
+                            : paidPurposeIds.includes(Number(index))
                             ? '&#x2713; '
                             : '') + purpose
                     "
@@ -137,14 +145,7 @@ export default {
     },
     created() {
         if (this.moduleAction == "store") {
-            this.form.salaries = this.data.staff.default_salaries;
-
-            if (this.data.staff.due) {
-                this.form.salaries.unshift({
-                    title: "বকেয়া",
-                    amount: this.data.staff.due,
-                });
-            }
+            this.setDefaultSaraly();
         }
 
         if (this.moduleAction == "update") {
@@ -156,13 +157,9 @@ export default {
     },
     computed: {
         totalSalary() {
-            let total = this.data.staff.default_salaries.reduce(function (
-                prev,
-                cur
-            ) {
+            let total = this.form.salaries.reduce(function (prev, cur) {
                 return prev + parseInt(cur.amount);
-            },
-            0);
+            }, 0);
 
             total = isNaN(total) ? 0 : total;
 
@@ -189,7 +186,7 @@ export default {
         return {
             form: this.$inertia.form({
                 purpose_id: "",
-                salaries: this.data.staff.salaries || [],
+                salaries: [],
                 total: "",
                 paid: "",
                 due: "",
@@ -216,6 +213,48 @@ export default {
                     this.route("staff.salaries.update", this.data.staff.id)
                 );
             }
+        },
+        setDefaultSaraly() {
+            this.form.salaries = [...(this.data.staff.default_salaries || [])];
+
+            if (this.data.staff.due) {
+                this.form.salaries.unshift({
+                    title: "বকেয়া",
+                    amount: this.data.staff.due,
+                });
+            }
+        },
+        purposeChangeHandler() {
+            let selectedPurpose = Object.values(
+                this.data.staff.paid_salaries
+            ).find(
+                (salary) =>
+                    Number(salary.purpose_id) === Number(this.form.purpose_id)
+            );
+
+            if (selectedPurpose) {
+                this.form.salaries = [...selectedPurpose.salaries];
+
+                console.log(selectedPurpose.paid);
+
+                if (selectedPurpose.paid) {
+                    this.form.salaries.push({
+                        title: "বেতন প্রদান",
+                        amount: -selectedPurpose.paid,
+                    });
+                }
+            } else {
+                this.setDefaultSaraly();
+            }
+
+            // if (
+            //     Number(this.form.purpose_id) ===
+            //     Number(this.data.staff.due_purpose_id)
+            // ) {
+
+            // } else {
+            //     console.log("select purpose");
+            // }
         },
     },
 };

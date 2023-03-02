@@ -8,7 +8,7 @@
             <slot />
             <span
                 v-if="newBadge"
-                class="absolute left-0 top-2 rounded-md bg-rose-600 px-1.5 text-xs text-white"
+                class="absolute -top-2 -left-3 -rotate-45 scale-75 rounded-md bg-rose-600 px-1.5 text-xs text-white md:top-2 md:-left-6"
             >
                 New
             </span>

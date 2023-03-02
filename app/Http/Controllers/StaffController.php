@@ -24,6 +24,23 @@ class StaffController extends Controller
         ]);
     }
 
+    public function attendancePage()
+    {
+        // return
+        $staff = Staff::query()
+            ->with('designation')
+            ->orderBy('designation_id')
+            ->get();
+
+        StaffResource::withoutWrapping();
+
+        return Inertia::render('Staff/AttendancePage', [
+            'data' => [
+                'staff' => StaffResource::collection($staff),
+            ],
+        ]);
+    }
+
     public function index()
     {
         $collections = Staff::query()

@@ -90,6 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
 
     Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
+    Route::get('staff-attendance-page', [StaffController::class, 'attendancePage'])->name('staff-attendance-page');
 
     Route::get('staff/{staff}/salaries/create', [SalaryController::class, 'create'])->name('staff.salaries.create');
     Route::post('staff/{staff}/salaries', [SalaryController::class, 'store'])->name('staff.salaries.store');

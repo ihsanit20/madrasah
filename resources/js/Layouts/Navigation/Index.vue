@@ -77,7 +77,6 @@
                     :href="route('results.exams')"
                     :active="route().current('results.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <ExamSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -266,7 +265,10 @@
                 </nav-link>
             </template>
         </dropdown-nav-link>
-        <dropdown-nav-link :active="route().current('(staff).*')">
+        <dropdown-nav-link
+            :active="route().current('(staff).*|staff-attendance-page')"
+            :newBadge="true"
+        >
             <AdminSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 শিক্ষক/স্টাফ
@@ -283,6 +285,20 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         শিক্ষক/স্টাফ তালিকা
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('staff-attendance-page')"
+                    :active="route().current('staff-attendance-page')"
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        শিক্ষক/স্টাফ হাজিরা
                     </span>
                 </nav-link>
             </template>

@@ -2,6 +2,18 @@
     <Head title="শিক্ষক/স্টাফ" />
 
     <app-layout pageTitle="শিক্ষক/স্টাফ">
+        <div class="rounded py-4">
+            <div
+                class="flex flex-wrap items-end justify-start gap-4 print:hidden"
+            >
+                <Link
+                    :href="route('staff-attendance-page')"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
+                >
+                    হাজিরা খাতা
+                </Link>
+            </div>
+        </div>
         <div class="grid gap-2 md:grid-cols-2 md:gap-4">
             <div
                 v-for="staff in data.staff"

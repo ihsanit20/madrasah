@@ -24,19 +24,58 @@ class StaffController extends Controller
         ]);
     }
 
+//     id
+// name
+// phone
+// designationId
+// designationTitle
+// designation
+// allowDeletion
+// imageUrl
+// signatureUrl
+// paid_salaries
+// default_salaries
+// due
+// due_purpose_id
+
+    private function getStaffQuery()
+    {
+        return Staff::query()
+            ->select([
+                'staff.id as id',
+                'staff.name as name',
+                'designations.name as designation',
+            ])
+            ->join('designations', 'designations.id', 'staff.designation_id')
+            ->orderBy('designations.priority');
+    }
+
+    private function getMaleStaffData()
+    {
+        return $this->getStaffQuery()
+            ->male()
+            ->get();
+    }
+
+    private function getFemaleStaffData()
+    {
+        return $this->getStaffQuery()
+            ->female()
+            ->get();
+    }
+
     public function attendancePage()
     {
         // return
-        $staff = Staff::query()
-            ->with('designation')
-            ->orderBy('designation_id')
-            ->get();
+        $male_staff = $this->getMaleStaffData();
 
-        StaffResource::withoutWrapping();
+        // return
+        $female_staff = $this->getFemaleStaffData();
 
         return Inertia::render('Staff/AttendancePage', [
             'data' => [
-                'staff' => StaffResource::collection($staff),
+                'male_staff'    => $male_staff,
+                'female_staff'  => $female_staff,
             ],
         ]);
     }

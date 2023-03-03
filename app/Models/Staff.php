@@ -39,6 +39,16 @@ class Staff extends Model
             : 0;
     }
 
+    public function scopeMale($query)
+    {
+        return $query->where('gender', 1);
+    }
+
+    public function scopeFemale($query)
+    {
+        return $query->where('gender', 2);
+    }
+
     public function designation()
     {
         return $this->belongsTo(Designation::class);

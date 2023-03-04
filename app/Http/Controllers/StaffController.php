@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AreaResource;
 use App\Http\Resources\DesignationResource;
+use App\Http\Resources\DistrictResource;
+use App\Http\Resources\DivisionResource;
 use App\Http\Resources\StaffResource;
+use App\Models\Area;
 use App\Models\Designation;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Staff;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -23,20 +30,6 @@ class StaffController extends Controller
             ]
         ]);
     }
-
-//     id
-// name
-// phone
-// designationId
-// designationTitle
-// designation
-// allowDeletion
-// imageUrl
-// signatureUrl
-// paid_salaries
-// default_salaries
-// due
-// due_purpose_id
 
     private function getStaffQuery()
     {
@@ -164,7 +157,11 @@ class StaffController extends Controller
 
         return [
             'staff' => $this->formatedData($staff),
+            'divisions'     => DivisionResource::collection(Division::orderBy('name')->get()),
+            'districts'     => DistrictResource::collection(District::orderBy('name')->get()),
+            'areas'         => AreaResource::collection(Area::orderBy('name')->get()),
             'designations' => DesignationResource::collection(Designation::get()),
+            'bloodGroups'   => Student::getBloodGroups()
         ];
     }
 

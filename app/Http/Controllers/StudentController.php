@@ -38,6 +38,7 @@ class StudentController extends Controller
                 'current_admission.class:id,name',
             ])
             ->latest()
+            ->has('current_admission')
             ->student();
 
         SimpleStudentResource::withoutWrapping();

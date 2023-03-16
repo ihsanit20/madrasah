@@ -21,9 +21,17 @@ class Admission extends Model
         return json_decode($value, true);
     }
 
-    public function scopeCurrent($query)
+    public function scopeLastSession($query)
     {
         $current_session = "43-44";
+
+        return $query->where('session', $current_session);
+    }
+
+    public function scopeCurrent($query)
+    {
+        // $current_session = "43-44";
+        $current_session = "44-45";
 
         return $query->where('session', $current_session);
     }

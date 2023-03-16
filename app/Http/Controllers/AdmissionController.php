@@ -21,6 +21,7 @@ use App\Models\Division;
 use App\Models\Fee;
 use App\Models\Guardian;
 use App\Models\PayableFee;
+use App\Models\Setting;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -44,10 +45,79 @@ class AdmissionController extends Controller
         ]);
     }
 
+    public function admission(Request $request)
+    {
+        // return
+        $admissions = Admission::query()
+            ->with([
+                'student:id,name,registration',
+            ])
+            ->lastSession()
+            ->student()
+            ->get([
+                // '*'
+                'id',
+                'student_id',
+                'class_id',
+                'session',
+                'status',
+                'roll',
+            ]);
+
+        $classes = Classes::query()
+            // ->latest('name')
+            ->get([
+                'id',
+                'name',
+            ]);
+
+        // return [
+        //     'admissions'    => $admissions,
+        //     'classes'       => $classes,
+        // ];
+
+        return Inertia::render('Admission/Admission', [
+            'data' => [
+                'admissions'    => $admissions,
+                'classes'       => $classes,
+            ],
+        ]);
+    }
+
     public function create()
     {
+        $student = Student::find((int) (request()->student ?? 0));
+
+        $type = request()->type === 'old' ? 'old' : 'new';
+
+        if($student && $type == 'old') {
+            $admission = Admission::query()
+                ->with('class')
+                ->lastSession()
+                ->student()
+                ->where('student_id', $student->id)
+                ->first();
+
+            if($admission) {
+                $setting = Setting::where('key', 'site-name')->first();
+
+                $school_name = $setting
+                    ? ($setting->value ?? $setting->dummy) 
+                    : '';
+
+                $previous_school_info = [
+                    "previous_school" => $school_name ?? "",
+                    "previous_class" => $admission->class->name ?? "",
+                    "previous_roll" => $admission->roll ?? "",
+                    "previous_result" => "",
+                ];
+            }
+        }
+
         return Inertia::render('Admission/Create', [
-            'data' => $this->data(new Admission())
+            'data' => $this->data(new Admission(), $student ?? null, $previous_school_info ?? null),
+            'type' => $type,
+            'old_student_id' => (int) ($student && $type == 'old' ? $student->id : 0),
         ]);
     }
 
@@ -55,11 +125,23 @@ class AdmissionController extends Controller
     {
         // return $request;
 
-        $student = Student::create(
-            $this->validatedStudentData($request)
-            + $this->storeGuardian($request)
-            + $this->storeAddress($request)
-        );
+        $student = Student::find((int) (request()->student ?? 0));
+
+        $type = request()->type === 'old' ? 'old' : 'new';
+
+        if($student && $type == 'old') {
+            $student->update(
+                $this->validatedStudentData($request, $student->id)
+                + $this->storeGuardian($request, $student)
+                + $this->storeAddress($request, $student)
+            );
+        } else {
+            $student = Student::create(
+                $this->validatedStudentData($request)
+                + $this->storeGuardian($request)
+                + $this->storeAddress($request)
+            );
+        }
 
         $admission = $student->admissions()->create(
             $this->validatedAdmissionData($request)
@@ -195,10 +277,25 @@ class AdmissionController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
-    protected function data($admission)
+    protected function data($admission, $student = null, $previous_school_info = null)
     {
-        $student = $admission->student()->first() ?? new Student();
-    
+        if(!$student) {
+            $student = $admission->student()->first() ?? null;
+        }
+
+        $has_student = (boolean) ($student ?? false);
+
+        if(!$has_student) {
+            $student = new Student();
+        }
+        
+        if($previous_school_info) {
+            $admission->previous_school = $previous_school_info['previous_school'] ?? '';
+            $admission->previous_class = $previous_school_info['previous_class'] ?? '';
+            $admission->previous_roll = $previous_school_info['previous_roll'] ?? '';
+            $admission->previous_result = $previous_school_info['previous_result'] ?? '';
+        }
+
         return [
             'admission'     => $this->formatedData($admission),
             'student'       => $this->formatedStudentData($student),
@@ -210,6 +307,7 @@ class AdmissionController extends Controller
             'residentArray' => Student::getResidentArrayData(),
             'yearlyFees'    => $this->getClassFee($admission->class_id, 1, $student->resident),
             'monthlyFees'   => $this->getClassFee($admission->class_id, 2, $student->resident),
+            'hasStudent'    => (boolean) ($has_student ?? false),
         ];
     }
 

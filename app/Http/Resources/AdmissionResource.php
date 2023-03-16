@@ -2,9 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\JsonResource;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class AdmissionResource extends JsonResource
 {

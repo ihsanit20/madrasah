@@ -38,9 +38,15 @@ class Controller extends BaseController
         return new SettingResource($setting);
     }
 
-    protected function getCurrentSession()
+    protected function getLastSession()
     {
         return "43-44";
+    }
+
+    protected function getCurrentSession()
+    {
+        return "44-45";
+        // return "43-44";
     }
 
     public function getHijriDate($date = null)

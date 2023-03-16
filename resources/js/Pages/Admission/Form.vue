@@ -484,6 +484,14 @@ export default {
             type: Object,
             default: {},
         },
+        type: {
+            type: String,
+            default: "new",
+        },
+        student: {
+            type: Number,
+            default: 0,
+        },
     },
     created() {
         this.present_address.divisions = this.data.divisions;
@@ -494,7 +502,7 @@ export default {
         this.permanent_address.districts = this.data.districts;
         this.permanent_address.areas = this.data.areas;
 
-        if (this.moduleAction == "update") {
+        if (this.data.hasStudent) {
             this.form.father_info = this.data.student.fatherInfo;
             this.form.mother_info = this.data.student.motherInfo;
             this.form.guardian_info = this.data.student.guardianInfo;
@@ -537,6 +545,8 @@ export default {
                 areas: "",
             },
             form: this.$inertia.form({
+                type: this.type,
+                student: this.student,
                 step: 1,
                 name: this.data.student.name,
                 date_of_birth: this.data.student.dateOfBirth,
@@ -555,20 +565,18 @@ export default {
                     occupation: "",
                     relation: "মাতা",
                 },
-                guardian_type:
-                    this.moduleAction == "update"
-                        ? this.data.student.guardianType
-                        : 0,
+                guardian_type: this.data.hasStudent
+                    ? this.data.student.guardianType
+                    : 0,
                 guardian_info: {
                     name: "",
                     phone: "",
                     occupation: "",
                     relation: "",
                 },
-                is_same_address:
-                    this.moduleAction == "update"
-                        ? this.data.student.isSameAddress
-                        : 0,
+                is_same_address: this.data.hasStudent
+                    ? this.data.student.isSameAddress
+                    : 0,
                 present_address: {
                     division: "",
                     district: "",

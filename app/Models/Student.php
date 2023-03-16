@@ -176,9 +176,16 @@ class Student extends Model
         return $this->hasMany(Admission::class);
     }
 
-    public function current_admission()
+    public function last_session_admission()
     {
         $session = "43-44";
+
+        return $this->hasOne(Admission::class)->where('admissions.session', $session);
+    }
+
+    public function current_admission()
+    {
+        $session = "44-45";
 
         return $this->hasOne(Admission::class)->where('admissions.session', $session);
     }

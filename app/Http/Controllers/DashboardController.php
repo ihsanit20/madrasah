@@ -19,7 +19,10 @@ class DashboardController extends Controller
     {
         $counter = [
             "classes"       => Classes::count(),
-            "students"      => Student::student()->count(),
+            "students"      => Student::query()
+                ->has('current_admission')
+                ->student()
+                ->count(),
             "staff"         => Staff::count(),
             "admissions"    => Admission::admission()->count(),
             "notices"       => Notice::count(),

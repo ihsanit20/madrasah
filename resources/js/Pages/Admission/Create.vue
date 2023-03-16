@@ -2,7 +2,12 @@
     <Head title="ভর্তি আবেদন ফরম" />
 
     <app-layout pageTitle="ভর্তি আবেদন ফরম">
-        <form-component :data="data" module-action="store" />
+        <form-component
+            :data="data"
+            :type="type"
+            :student="old_student_id"
+            module-action="store"
+        />
     </app-layout>
 </template>
 
@@ -21,6 +26,14 @@ export default {
         data: {
             type: Object,
             default: {},
+        },
+        type: {
+            type: String,
+            default: "new",
+        },
+        old_student_id: {
+            type: Boolean,
+            default: false,
         },
     },
 };

@@ -18,7 +18,8 @@
                         v-model="form.session"
                         required
                     >
-                        <option value="1443-44">১৪৪৩-৪৪</option>
+                        <!-- <option value="1443-44">১৪৪৩-৪৪</option> -->
+                        <option value="1444-45">১৪৪৪-৪৫</option>
                     </Select>
                 </form-group>
             </div>
@@ -97,7 +98,8 @@ export default {
         return {
             form: this.$inertia.form({
                 name: this.data.exam.name,
-                session: this.data.exam.session || "1443-44",
+                // session: this.data.exam.session || "1443-44",
+                session: this.data.exam.session || "1444-45",
                 classes: [],
             }),
         };

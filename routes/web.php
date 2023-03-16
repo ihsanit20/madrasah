@@ -111,6 +111,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('expenses/categories/{category}/categories', [ExpenseController::class, 'CategoriesmonthsIndex'])->name('expenses.categories.months.index');
 
+    Route::get('admissions/admission', [AdmissionController::class, 'admission'])->name('admissions.admission');
+
     Route::resources([
         'fees'              => FeeController::class,
         'classes'           => ClassesController::class,

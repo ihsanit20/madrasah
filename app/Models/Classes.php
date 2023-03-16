@@ -18,6 +18,16 @@ class Classes extends Model
         'code'
     ];
 
+    public function last_session()
+    {
+        return "43-44";
+    }
+
+    public function current_session()
+    {
+        return "44-45";
+    }
+
     public function getCodeAttribute()
     {
         return $this->id;
@@ -38,9 +48,19 @@ class Classes extends Model
         return $this->hasMany(Admission::class, 'class_id');
     }
 
-    public function current_admissions()
+    public function last_session_admissions()
     {
         $session = "43-44";
+
+        return $this->hasMany(Admission::class, 'class_id')
+            ->where('admissions.session', $session)
+            ->where('admissions.status', 4)
+            ->orderBy('admissions.roll');
+    }
+
+    public function current_admissions()
+    {
+        $session = "44-45";
 
         return $this->hasMany(Admission::class, 'class_id')
             ->where('admissions.session', $session)
@@ -55,7 +75,8 @@ class Classes extends Model
 
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'admissions', 'class_id', 'student_id');
+        return $this->belongsToMany(Student::class, 'admissions', 'class_id', 'student_id')
+            ->where('session', $this->current_session());
     }
 
     public function teacher()

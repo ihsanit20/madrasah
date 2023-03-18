@@ -16,7 +16,10 @@
 
         <!-- <search /> -->
 
-        <account v-if="hasAccount" />
+        <div class="flex items-center justify-between gap-2">
+            <session v-if="hasAccount" />
+            <account v-if="hasAccount" />
+        </div>
     </div>
 </template>
 
@@ -25,6 +28,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Search from "./Search.vue";
 import Account from "./Account.vue";
+import Session from "./Session.vue";
 import { MenuIcon } from "@heroicons/vue/outline";
 export default {
     components: {
@@ -32,11 +36,16 @@ export default {
         ApplicationLogo,
         Search,
         Account,
+        Session,
         MenuIcon,
     },
     props: {
         navigationController: Function,
         hasAccount: {
+            type: Boolean,
+            default: false,
+        },
+        hasSession: {
             type: Boolean,
             default: false,
         },

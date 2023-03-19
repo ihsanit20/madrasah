@@ -3,12 +3,30 @@
 namespace App\Http\Middleware;
 
 use App\Http\Resources\SettingResource;
+use App\Models\AcademicSession;
+use App\Models\Admission;
+use App\Models\Classes;
+use App\Models\Exam;
+use App\Models\Expense;
+use App\Models\Fee;
+use App\Models\Payment;
 use App\Models\Setting;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
+    const DYNAMIC_ACADEMIC_SESSION_ABLE_MODELS = [
+        Classes::class,
+        Student::class,
+        Admission::class,
+        Expense::class,
+        Payment::class,
+        Exam::class,
+        Fee::class,
+    ];
+
     /**
      * The root template that is loaded on the first page visit.
      *
@@ -37,6 +55,25 @@ class HandleInertiaRequests extends Middleware
     {
         $settings = Setting::get();
 
+        $current_academic_session = AcademicSession::query()
+            ->where('value', $request->session ?? "44-45")
+            ->latest("id")
+            ->first();
+
+        if(!$current_academic_session) {
+            $current_academic_session = AcademicSession::query()
+                ->latest("id")
+                ->first();
+        }
+
+        $previous_academic_session = AcademicSession::query()
+            ->where('id', '<', $current_academic_session->id)
+            ->latest()
+            ->first();
+
+        // Set current academic session && previous academic session
+        $this->setAcademicSession($current_academic_session->value ?? null, $previous_academic_session->value ?? null);
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -50,7 +87,13 @@ class HandleInertiaRequests extends Middleware
                 'guardianAgreement' => $this->getSettingValueByProperty($settings, 'guardian-agreement'),
                 'idCardTime' => $this->getSettingValueByProperty($settings, 'id-card-time'),
                 'admitCardText' => $this->getSettingValueByProperty($settings, 'admit-card-text'),
-            ]
+            ],
+            'academic_sessions' => AcademicSession::get([
+                'value',
+                'bengali',
+            ]),
+            'current_academic_session' => $current_academic_session,
+            'previous_academic_session' => $previous_academic_session,
         ]);
     }
 
@@ -61,5 +104,18 @@ class HandleInertiaRequests extends Middleware
         return $setting
             ? ($setting->value ?? $setting->dummy) 
             : '';
+    }
+
+    private function setAcademicSession($current_academic_session = null, $previous_academic_session = null)
+    {
+        foreach(self::DYNAMIC_ACADEMIC_SESSION_ABLE_MODELS as $model) {
+            if(isset($model::$current_session)) {
+                $model::$current_session = $current_academic_session;
+            }
+
+            if(isset($model::$previous_session)) {
+                $model::$previous_session = $previous_academic_session;
+            }
+        }
     }
 }

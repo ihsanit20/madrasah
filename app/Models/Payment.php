@@ -10,13 +10,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Payment extends Model
 {
     use HasFactory, SoftDeletes, ScopeSearch;
+    
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
 
     protected $guarded = [];
 
     protected $appends = [
         'purpose_text',
     ];
-
     
     protected $casts = [
         'purposes' => 'array',
@@ -67,6 +70,12 @@ class Payment extends Model
     public function admission()
     {
         return $this->belongsTo(Admission::class);
+    }
+
+    public function current_admission()
+    {
+        return $this->belongsTo(Admission::class, 'admission_id')
+            ->where('session', self::$current_session);
     }
 
     public function payment_details()

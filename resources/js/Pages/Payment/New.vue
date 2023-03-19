@@ -158,8 +158,9 @@
                                 />
                                 <span
                                     v-if="!paidPurpose.includes(Number(index))"
-                                    >{{ purpose.title }}</span
                                 >
+                                    {{ $e2bnumber(purpose.title) }}
+                                </span>
                             </label>
                         </div>
                     </form-group>
@@ -218,7 +219,7 @@ export default {
         this.registration = this.data.registration;
         this.registrationHandler();
         this.form.purpose = this.data.purposeId;
-        if(Number(this.data.purposeId) > 0) {
+        if (Number(this.data.purposeId) > 0) {
             this.form.purposes.push(Number(this.data.purposeId));
         }
     },
@@ -272,7 +273,7 @@ export default {
                 selectedAdmission = Object.values(this.data.admissions).filter(
                     (admission) => {
                         return (
-                            admission.classId == this.classId &&
+                            admission.class_id == this.classId &&
                             admission.roll == this.roll
                         );
                     }
@@ -288,8 +289,8 @@ export default {
         },
         setCommonData(selectedAdmission) {
             this.form.admission = selectedAdmission.id;
-            this.studentName = selectedAdmission.studentName;
-            this.paidPurpose = selectedAdmission.student.paidPurpose.map(
+            this.studentName = selectedAdmission.student.name;
+            this.paidPurpose = selectedAdmission.student.payment_purpose.map(
                 (purpose) => Number(purpose)
             );
             this.duePurposeId = selectedAdmission.student.duePurposeId;

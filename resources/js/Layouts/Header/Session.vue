@@ -9,8 +9,8 @@
                             type="button"
                             class="flex items-center gap-1 rounded-md border border-transparent bg-white py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                         >
-                            <span class="-mb-0.5 hidden md:block">
-                                {{ sessions[session] }}
+                            <span class="-mb-0.5 hidden text-blue-900 md:block">
+                                <b>সেশন {{ selectedAcademicSession }}</b>
                             </span>
 
                             <svg
@@ -31,13 +31,17 @@
 
                 <template #content>
                     <button
-                        v-for="(session_text, session_value) in sessions"
-                        :key="session_value"
+                        v-for="academic_session in $page.props
+                            .academic_sessions"
+                        :key="academic_session.id"
                         type="button"
-                        @click="setSession(session_value)"
-                        class="m w-full bg-gray-200 py-2 text-center"
+                        @click="setSession(academic_session.value)"
+                        class="w-full rounded-md py-2 text-center hover:bg-gray-200"
+                        :class="{
+                            'text-blue-900': session === academic_session.value,
+                        }"
                     >
-                        {{ session_text }}
+                        <b>সেশন {{ academic_session.bengali }}</b>
                     </button>
                 </template>
             </Dropdown>
@@ -54,41 +58,74 @@ export default {
         DropdownLink,
     },
     created() {
-        this.getSession();
+        this.getSession(
+            this.currentAcademicSession.value ||
+                this.$page.props.current_academic_session.value
+        );
+    },
+    props: {
+        currentAcademicSession: {
+            type: Object,
+            default: {},
+        },
+        previousAcademicSession: {
+            type: Object,
+            default: {},
+        },
+    },
+    computed: {
+        selectedAcademicSession() {
+            let selectedSession = this.$page.props.academic_sessions.find(
+                (academic_session) => academic_session.value === this.session
+            );
+
+            return selectedSession ? selectedSession.bengali : "";
+        },
     },
     data() {
         return {
             session: "",
-            sessions: {
-                "44-45": "সেশন ১৪৪৪-৪৫",
-                "43-44": "সেশন ১৪৪৩-৪৪",
-            },
         };
     },
     methods: {
         setSession(session) {
-            localStorage.setItem("session", session);
+            // localStorage.setItem("session", session);
 
             this.session = session;
 
-            window.location.reload();
-
-            let url = window.location.href;
-
-            url += `${url.indexOf("?") > -1 ? "&" : "?"}session=${session}`;
-
-            window.location.href = url;
+            return (window.location.href = this.replaceUrlParam(
+                window.location.href,
+                "session",
+                session
+            ));
         },
-        getSession() {
-            let session = localStorage.getItem("session");
+        getSession(defaultSession = null) {
+            let session = ""; // localStorage.getItem("session");
 
             if (!session) {
-                localStorage.setItem("session", "44-45");
+                // localStorage.setItem("session", defaultSession);
 
-                return (this.session = "44-45");
+                return (this.session = defaultSession);
             }
 
             return (this.session = session);
+        },
+        replaceUrlParam(url, paramName, paramValue) {
+            if (paramValue == null) {
+                paramValue = "";
+            }
+            var pattern = new RegExp("\\b(" + paramName + "=).*?(&|#|$)");
+            if (url.search(pattern) >= 0) {
+                return url.replace(pattern, "$1" + paramValue + "$2");
+            }
+            url = url.replace(/[?#]$/, "");
+            return (
+                url +
+                (url.indexOf("?") > 0 ? "&" : "?") +
+                paramName +
+                "=" +
+                paramValue
+            );
         },
     },
 };

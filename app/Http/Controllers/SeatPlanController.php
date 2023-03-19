@@ -18,6 +18,7 @@ class SeatPlanController extends Controller
     public function index()
     {
         $collections = Exam::query()
+            ->current()
             ->latest();
 
         ExamResource::withoutWrapping();

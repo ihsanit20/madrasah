@@ -12,6 +12,20 @@ class Exam extends Model
 
     protected $guarded = [];
 
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
+
+
+    public function scopeCurrent($query)
+    {
+        $current_session = self::$current_session;
+
+        $prefix = "14";
+
+        return $query->where('session', $prefix . $current_session);
+    }
+
     public function classes()
     {
         return $this->belongsToMany(Classes::class, 'exam_classes', 'exam_id', 'class_id')

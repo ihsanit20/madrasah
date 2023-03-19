@@ -34,6 +34,7 @@ class AdmissionController extends Controller
     public function index()
     {
         $collections = Admission::query()
+            ->current()
             ->admission()
             ->with('student.father_info');
 

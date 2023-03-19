@@ -20,6 +20,7 @@ class QuestionPaperController extends Controller
     public function exams()
     {
         $collections = Exam::query()
+            ->current()
             ->latest();
 
         ExamResource::withoutWrapping();
@@ -30,7 +31,6 @@ class QuestionPaperController extends Controller
             ]
         ]);
     }
-
     
     public function classes(Exam $exam)
     {

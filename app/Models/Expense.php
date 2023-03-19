@@ -11,6 +11,17 @@ class Expense extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+    
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
+
+    public function scopeCurrent($query)
+    {
+        $current_session = self::$current_session;
+
+        return $query->where('session', $current_session);
+    }
 
     public function category()
     {

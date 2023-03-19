@@ -26,6 +26,7 @@ class PaymentController extends Controller
     public function index()
     {
         $collections = Payment::query()
+            ->has('current_admission')
             ->search(['id'],['admission.student:name'])
             ->filter(request())
             ->latest('id')
@@ -59,6 +60,7 @@ class PaymentController extends Controller
 
         ClassesResource::withoutWrapping();
 
+        // return
         $admission = Admission::query()
             ->with([
                 'class',
@@ -144,24 +146,36 @@ class PaymentController extends Controller
             ]);
         }
 
+        // return
         $admissions = Admission::query()
             ->with([
-                'class',
-                'student',
-                'verified_by_admin',
+                'student:id,name,status,registration',
+                'student.current_admission:id,student_id,class_id,session,status,roll',
             ])
             ->current()
             ->student()
-            ->get();
+            ->get([
+                'id',
+                'student_id',
+                'class_id',
+                'session',
+                'status',
+                'roll',
+            ]);
 
+        // return
         $classes = Classes::query()
-            ->with('teacher')
-            ->get();
+            ->get([
+                'id',
+                'name',
+            ]);
+
+        // return $purposes;
 
         return Inertia::render('Payment/New', [
             'data' => [
-                'admissions'    => AdmissionResource::collection($admissions),
-                'classes'       => ClassesResource::collection($classes),
+                'admissions'    => $admissions,
+                'classes'       => $classes,
                 'periods'       => $periods,
                 'purposes'      => $purposes,
                 'purposeId'     => request()->purpose ?? '',

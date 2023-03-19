@@ -16,7 +16,7 @@
                 </div>
                 <div class="shrink grow">
                     <div class="text-md font-bold text-sky-600 md:text-xl">
-                        {{ purpose.title }}
+                        {{ $e2bnumber(purpose.title) }}
                     </div>
                     <div v-if="false" class="flex items-center gap-2">
                         <span class="text-gray-600"> আদায়: </span>

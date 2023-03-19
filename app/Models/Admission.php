@@ -16,6 +16,10 @@ class Admission extends Model
         'paid_purposes' => 'array',
     ];
 
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
+
     public function getVerificationsAttribute($value)
     {
         return json_decode($value, true);
@@ -23,15 +27,14 @@ class Admission extends Model
 
     public function scopeLastSession($query)
     {
-        $current_session = "43-44";
+        $current_session = self::$previous_session;
 
         return $query->where('session', $current_session);
     }
 
     public function scopeCurrent($query)
     {
-        // $current_session = "43-44";
-        $current_session = "44-45";
+        $current_session = self::$current_session;
 
         return $query->where('session', $current_session);
     }

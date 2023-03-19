@@ -18,6 +18,10 @@ class Classes extends Model
         'code'
     ];
 
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
+
     public function last_session()
     {
         return "43-44";
@@ -50,7 +54,7 @@ class Classes extends Model
 
     public function last_session_admissions()
     {
-        $session = "43-44";
+        $session = self::$previous_session;
 
         return $this->hasMany(Admission::class, 'class_id')
             ->where('admissions.session', $session)
@@ -60,7 +64,7 @@ class Classes extends Model
 
     public function current_admissions()
     {
-        $session = "44-45";
+        $session = self::$current_session;
 
         return $this->hasMany(Admission::class, 'class_id')
             ->where('admissions.session', $session)
@@ -76,7 +80,10 @@ class Classes extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'admissions', 'class_id', 'student_id')
-            ->where('session', $this->current_session());
+            ->where([
+                'admissions.session'   => self::$current_session,
+                'admissions.status'    => 4,
+            ]);
     }
 
     public function teacher()

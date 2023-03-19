@@ -20,6 +20,7 @@ class ResultController extends Controller
     public function exams()
     {
         $collections = Exam::query()
+            ->current()
             ->latest();
 
         ExamResource::withoutWrapping();

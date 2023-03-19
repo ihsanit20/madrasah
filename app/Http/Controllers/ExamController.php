@@ -16,7 +16,8 @@ class ExamController extends Controller
 {
     public function index()
     {
-        $collections = Exam::query();
+        $collections = Exam::query()
+            ->current();
 
         return Inertia::render('Exam/Index', [
             'data' => [

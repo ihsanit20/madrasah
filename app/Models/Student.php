@@ -17,7 +17,7 @@ class Student extends Model
         'resident_text',
         'gender_text',
         'guardian_type',
-        // 'payment_purpose',
+        'payment_purpose',
         // 'due',
         // 'due_purpose_id',
     ];
@@ -25,6 +25,10 @@ class Student extends Model
     protected $casts = [
         'date_of_birth' => 'date',
     ];
+
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
 
     public static $gender_array = [
         1 => 'ছেলে',
@@ -178,16 +182,20 @@ class Student extends Model
 
     public function last_session_admission()
     {
-        $session = "43-44";
+        $session = self::$previous_session;
 
-        return $this->hasOne(Admission::class)->where('admissions.session', $session);
+        return $this->hasOne(Admission::class)
+            ->where('admissions.session', $session)
+            ->whereIn('status', [4]);
     }
 
     public function current_admission()
     {
-        $session = "44-45";
+        $session = self::$current_session;
 
-        return $this->hasOne(Admission::class)->where('admissions.session', $session);
+        return $this->hasOne(Admission::class)
+            ->where('admissions.session', $session)
+            ->whereIn('status', [4]);
     }
 
     public function image()

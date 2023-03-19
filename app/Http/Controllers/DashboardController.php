@@ -19,16 +19,13 @@ class DashboardController extends Controller
     {
         $counter = [
             "classes"       => Classes::count(),
-            "students"      => Student::query()
-                ->has('current_admission')
-                ->student()
-                ->count(),
+            "students"      => Student::has('current_admission')->student()->count(),
             "staff"         => Staff::count(),
-            "admissions"    => Admission::admission()->count(),
+            "admissions"    => Admission::admission()->current()->count(),
             "notices"       => Notice::count(),
             "admins"        => User::count(),
-            "expenses"      => Expense::count(),
-            "payments"      => Payment::count(),
+            "expenses"      => Expense::current()->count(),
+            "payments"      => Payment::has('current_admission')->count(),
         ];
 
         return Inertia::render('Dashboard/Index', [

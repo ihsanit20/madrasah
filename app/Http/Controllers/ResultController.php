@@ -34,6 +34,13 @@ class ResultController extends Controller
 
     public function classes(Exam $exam)
     {
+        if($exam->academic_session !== request()->session) {
+            return redirect()->route('results.classes', [
+                $exam->id,
+                'session' => $exam->academic_session,
+            ]);
+        }
+
         ClassesResource::withoutWrapping();
 
         return Inertia::render('Result/Class', [
@@ -129,6 +136,8 @@ class ResultController extends Controller
             ? ($principal->signature->url ?? '')
             : '';
 
+        // return $students;
+
         return Inertia::render('Result/Subject', [
             'data' => [
                 'exam'      => new ExamResource($exam),
@@ -170,6 +179,7 @@ class ResultController extends Controller
                 'class_id',
                 'student_id',
                 'roll',
+                'session',
             ]);
 
         // return
@@ -195,13 +205,30 @@ class ResultController extends Controller
 
         // return $studentwise_results;   
 
-        $students = $admissions->map(function ($admission) use ($studentwise_results) {
+        $students = $admissions->map(function ($admission) use ($studentwise_results, $subjectwise_results) {
+            
+            //dd($studentwise_results[$admission->student_id]);
+
+            if(isset($studentwise_results[$admission->student_id])) {
+                $results = $studentwise_results[$admission->student_id];
+            } else {
+                $results = [];
+
+                foreach($subjectwise_results as $result) {
+                    $results[$result->subject_code] = [
+                        'writing'   => 0,
+                        'speaking'  => 0,
+                    ];
+                }
+
+                // dd($results);
+            }
 
             return [
                 "id"            => $admission->student_id,
                 "name"          => $admission->student->name,
                 "roll"          => $admission->roll,
-                "results"       => $studentwise_results[$admission->student_id],
+                "results"       => $results,
                 "registration"  => $admission->student->registration,
             ];
         });
@@ -357,9 +384,12 @@ class ResultController extends Controller
             'marks' => $request->result["marks"],
         ]);
 
+        $result->load('exam');
+
         return redirect()->route('results.subjects', [
             $exam->id,
-            $class->id
+            $class->id,
+            'session' => substr($result->exam->session ?? "", -5, 5),
         ]);
     }
 }

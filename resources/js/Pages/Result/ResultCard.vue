@@ -8,7 +8,11 @@
     >
         <div class="flex items-center justify-between py-2 print:hidden">
             <Link
-                :href="route('results.subjects', [data.exam.id, data.class.id])"
+                :href="
+                    route('results.subjects', [data.exam.id, data.class.id]) +
+                    '?session=' +
+                    $page.props.current_academic_session.value
+                "
                 class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
             >
                 <ArrowLeftIcon class="w-5" />

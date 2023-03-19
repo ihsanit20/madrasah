@@ -16,6 +16,10 @@ class Exam extends Model
 
     public static $current_session = "44-45";
 
+    public function getAcademicSessionAttribute()
+    {
+        return substr($this->session ?? "", -5, 5);
+    }
 
     public function scopeCurrent($query)
     {

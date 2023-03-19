@@ -8,7 +8,11 @@
     >
         <div class="flex items-center justify-between py-2 print:hidden">
             <Link
-                :href="route('results.classes', [data.exam.id])"
+                :href="
+                    route('results.classes', [data.exam.id]) +
+                    '?session=' +
+                    $page.props.current_academic_session.value
+                "
                 class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
             >
                 <ArrowLeftIcon class="w-5" />
@@ -16,7 +20,12 @@
             </Link>
             <Link
                 :href="
-                    route('results.result-cards', [data.exam.id, data.class.id])
+                    route('results.result-cards', [
+                        data.exam.id,
+                        data.class.id,
+                    ]) +
+                    '?session=' +
+                    $page.props.current_academic_session.value
                 "
                 class="flex items-center justify-center gap-2 rounded-md bg-sky-600 px-4 py-1 text-white"
             >
@@ -86,7 +95,10 @@
                                             data.exam.id,
                                             data.class.id,
                                             subject.code,
-                                        ])
+                                        ]) +
+                                        '?session=' +
+                                        $page.props.current_academic_session
+                                            .value
                                     "
                                     class="text-sky-600 underline print:text-black print:no-underline"
                                 >
@@ -106,7 +118,7 @@
                         :key="index"
                         class="hover:bg-gray-100 dark:hover:bg-gray-700"
                         :class="{
-                            'hidden': getMeritList(student) === '-'
+                            hidden: getMeritList(student) === '-',
                         }"
                     >
                         <td class="border p-2 text-center print:p-1">
@@ -177,7 +189,7 @@
                         :key="index"
                         class="hover:bg-gray-100 dark:hover:bg-gray-700"
                         :class="{
-                            'hidden': getMeritList(student) !== '-'
+                            hidden: getMeritList(student) !== '-',
                         }"
                     >
                         <td class="border p-2 text-center print:p-1">
@@ -456,7 +468,7 @@ export default {
             return this.getMeritTextByPosition(meritPosition);
         },
         getMeritTextByPosition(position) {
-            if(parseInt(position) === 0) {
+            if (parseInt(position) === 0) {
                 return "-";
             }
 

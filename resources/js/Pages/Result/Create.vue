@@ -10,7 +10,9 @@
                     route('results.subjects', [
                         data.result.exam_id,
                         data.result.class_id,
-                    ])
+                    ]) +
+                    '?session=' +
+                    $page.props.current_academic_session.value
                 "
                 class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
             >

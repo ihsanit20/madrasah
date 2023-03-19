@@ -166,12 +166,20 @@ export default {
             return this.student.results[Number(subject_code)];
         },
         getSubjectWritingMark(subject_code) {
-            let writing = this.getSubjectMark(subject_code)["writing"];
+            if (!this.getSubjectMark(subject_code)) {
+                return "";
+            }
+
+            let writing = this.getSubjectMark(subject_code)["writing"] || "";
 
             return writing === null ? "" : writing;
         },
         getSubjectSpeakingMark(subject_code) {
-            let speaking = this.getSubjectMark(subject_code)["speaking"];
+            if (!this.getSubjectMark(subject_code)) {
+                return "";
+            }
+
+            let speaking = this.getSubjectMark(subject_code)["speaking"] || "";
 
             return speaking === null ? "" : speaking;
         },

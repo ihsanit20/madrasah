@@ -6,7 +6,11 @@
             <Link
                 v-for="exam in data.exams"
                 :key="exam.id"
-                :href="route('results.classes', exam.id)"
+                :href="
+                    route('results.classes', exam.id) +
+                    '?session=' +
+                    $page.props.current_academic_session.value
+                "
                 class="flex items-center gap-2 rounded-md border bg-white p-2 hover:shadow md:gap-4 md:p-4"
             >
                 <div

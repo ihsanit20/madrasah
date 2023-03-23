@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\SettingResource;
 use App\Models\AcademicSession;
 use App\Models\Admission;
@@ -13,6 +14,7 @@ use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -55,8 +57,14 @@ class HandleInertiaRequests extends Middleware
     {
         $settings = Setting::get();
 
+        if($request->session) {
+            Auth::user()->update(['active_academic_session' => $request->session]);
+        } else {
+            $active_academic_session = Auth::user()->active_academic_session ?? "44-45";
+        }
+
         $current_academic_session = AcademicSession::query()
-            ->where('value', $request->session ?? "44-45")
+            ->where('value', $active_academic_session)
             ->latest("id")
             ->first();
 
@@ -73,6 +81,9 @@ class HandleInertiaRequests extends Middleware
 
         // Set current academic session && previous academic session
         $this->setAcademicSession($current_academic_session->value ?? null, $previous_academic_session->value ?? null);
+
+        Controller::$current_academic_session = $current_academic_session->value ?? "";
+        Controller::$current_academic_session = $previous_academic_session->value ?? "";
 
         return array_merge(parent::share($request), [
             'auth' => [

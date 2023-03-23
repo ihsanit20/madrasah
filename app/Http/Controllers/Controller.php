@@ -23,6 +23,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public static $current_academic_session = "44-45";
+
+    public static $previous_academic_session = "43-44";
+
     protected function getSettingProperty($key)
     {
         SettingResource::withoutWrapping();
@@ -40,13 +44,22 @@ class Controller extends BaseController
 
     protected function getLastSession()
     {
-        return "43-44";
+        return self::$previous_academic_session;
+    }
+
+    protected function setLastSession($academic_session)
+    {
+        self::$previous_academic_session = $academic_session;
     }
 
     protected function getCurrentSession()
     {
-        return "44-45";
-        // return "43-44";
+        return self::$current_academic_session;
+    }
+
+    protected function setCurrentSession($academic_session)
+    {
+        self::$current_academic_session = $academic_session;
     }
 
     public function getHijriDate($date = null)

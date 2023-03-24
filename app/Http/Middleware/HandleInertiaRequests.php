@@ -59,9 +59,9 @@ class HandleInertiaRequests extends Middleware
 
         if($request->session) {
             Auth::user()->update(['active_academic_session' => $request->session]);
-        } else {
-            $active_academic_session = Auth::user()->active_academic_session ?? "44-45";
         }
+
+        $active_academic_session = Auth::user()->active_academic_session ?? "44-45";
 
         $current_academic_session = AcademicSession::query()
             ->where('value', $active_academic_session)

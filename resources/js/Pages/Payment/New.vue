@@ -298,7 +298,7 @@ export default {
         },
         setDuringRegistrationSelect(selectedAdmission) {
             this.roll = selectedAdmission.roll;
-            this.classId = selectedAdmission.classId;
+            this.classId = selectedAdmission.class_id;
         },
         setDuringclassOrRollSelect(selectedAdmission) {
             this.registration = selectedAdmission.student.registration;

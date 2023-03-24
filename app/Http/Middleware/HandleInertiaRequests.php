@@ -83,7 +83,7 @@ class HandleInertiaRequests extends Middleware
         $this->setAcademicSession($current_academic_session->value ?? null, $previous_academic_session->value ?? null);
 
         Controller::$current_academic_session = $current_academic_session->value ?? "";
-        Controller::$current_academic_session = $previous_academic_session->value ?? "";
+        Controller::$previous_academic_session = $previous_academic_session->value ?? "";
 
         return array_merge(parent::share($request), [
             'auth' => [

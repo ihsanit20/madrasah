@@ -18,7 +18,7 @@ class Student extends Model
         'gender_text',
         'guardian_type',
         'payment_purpose',
-        // 'due',
+        'due',
         // 'due_purpose_id',
     ];
     

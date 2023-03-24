@@ -25,9 +25,6 @@ class PaymentController extends Controller
 {
     public function index()
     {
-
-        dd($this->getCurrentSession());
-
         $collections = Payment::query()
             ->has('current_admission')
             ->search(['id'],['admission.student:name'])

@@ -12,6 +12,13 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public $timestamps = false;
+
+    public function scopeType($query, int $type)
+    {
+        return $query->where('type', $type);
+    }
+
     public function expenses()
     {
         return $this->hasMany(Expense::class);

@@ -1,7 +1,12 @@
 <template>
     <Head title="ব্যয়ের খাত" />
 
-    <app-layout pageTitle="ব্যয়ের খাত" :addNewHref="route('categories.create')">
+    <app-layout
+        pageTitle="ব্যয়ের খাত"
+        :addNewHref="
+            route('categories.create', [{ type: $page.props.request.type }])
+        "
+    >
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
@@ -13,7 +18,12 @@
                         class="overflow-hidden whitespace-normal break-all line-clamp-6"
                     >
                         <Link
-                            :href="route('categories.edit', category.id)"
+                            :href="
+                                route('categories.edit', [
+                                    category.id,
+                                    { type: $page.props.request.type },
+                                ])
+                            "
                             class="text-sky-600 hover:underline"
                         >
                             {{ category.name }}

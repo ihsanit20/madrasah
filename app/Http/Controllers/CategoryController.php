@@ -12,7 +12,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $collections = Category::query();
+        $collections = Category::query()
+            ->type(request()->type);
 
         return Inertia::render('Category/Index', [
             'data' => [
@@ -25,7 +26,7 @@ class CategoryController extends Controller
     public function create()
     {
         return Inertia::render('Category/Create', [
-            'data' => $this->data(new Category())
+            'data' => $this->data(new Category(), request()->type)
         ]);
     }
 
@@ -34,7 +35,9 @@ class CategoryController extends Controller
         $category = Category::create($this->validatedData($request));
 
         return redirect()
-            ->route('categories.index')
+            ->route('categories.index', [
+                'type' => $category->type
+            ])
             ->with('status', 'The record has been added successfully.');
 
         return redirect()
@@ -53,8 +56,12 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        if(request()->type != $category->type) {
+            abort(404);
+        }
+
         return Inertia::render('Category/Edit', [
-            'data' => $this->data($category)
+            'data' => $this->data($category, $category->type)
         ]);
     }
 
@@ -63,11 +70,16 @@ class CategoryController extends Controller
         $category->update($this->validatedData($request, $category->id));
 
         return redirect()
-            ->route('categories.index')
+            ->route('categories.index', [
+                'type' => $category->type
+            ])
             ->with('status', 'The record has been update successfully.');
 
         return redirect()
-            ->route('categories.show', $category->id)
+            ->route('categories.show', [
+                $category->id,
+                'type' => $category->type
+            ])
             ->with('status', 'The record has been update successfully.');
     }
 
@@ -76,14 +88,17 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()
-            ->route('categories.index')
+            ->route('categories.index', [
+                'type' => $category->type
+            ])
             ->with('status', 'The record has been delete successfully.');
     }
 
-    protected function data($category)
+    protected function data($category, int $type)
     {
         return [
-            'category' => $this->formatedData($category),
+            'category'  => $this->formatedData($category),
+            'type'      => $type
         ];
     }
 
@@ -107,6 +122,10 @@ class CategoryController extends Controller
             'name' => [
                 'required',
                 'string',
+            ],
+            'type' => [
+                'required',
+                'numeric',
             ]
         ]);
     }

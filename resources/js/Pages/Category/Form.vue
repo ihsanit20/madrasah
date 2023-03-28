@@ -67,11 +67,18 @@ export default {
     methods: {
         submit() {
             if (this.moduleAction == "store") {
-                return this.form.post(this.route("categories.store"));
+                return this.form.post(
+                    this.route("categories.store", [
+                        { type: this.$page.props.request.type },
+                    ])
+                );
             }
             if (this.moduleAction == "update") {
                 return this.form.put(
-                    this.route("categories.update", this.data.category.id)
+                    this.route("categories.update", [
+                        this.data.category.id,
+                        { type: this.$page.props.request.type },
+                    ])
                 );
             }
         },

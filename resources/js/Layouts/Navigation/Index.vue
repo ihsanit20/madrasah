@@ -334,6 +334,7 @@
                     '(classes|fees|designations|categories|admins|settings|purposes|exams).*|staff-list'
                 )
             "
+            :newBadge="true"
         >
             <SettingsSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -419,8 +420,28 @@
                     </span>
                 </nav-link>
                 <nav-link
-                    :href="route('categories.index')"
-                    :active="route().current('categories.*')"
+                    :href="route('categories.index', [{ type: 1 }])"
+                    :active="
+                        route().current('categories.*') &&
+                        parseInt($page.props.request.type) === 1
+                    "
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        আয়ের খাত
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('categories.index', [{ type: 2 }])"
+                    :active="
+                        route().current('categories.*') &&
+                        parseInt($page.props.request.type) === 2
+                    "
                     class="flex items-center gap-2 md:gap-4"
                 >
                     <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />

@@ -1,7 +1,7 @@
 <template>
-    <Head title="Expense" />
+    <Head title="আয়" />
 
-    <app-layout pageTitle="Expense Edit">
+    <app-layout pageTitle="আয় সম্পাদনা">
         <form-component :data="data" module-action="update" />
     </app-layout>
 </template>

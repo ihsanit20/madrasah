@@ -32,17 +32,17 @@
 
             <div class="grid gap-3 print:grid-cols-2 md:grid-cols-2">
                 <simple-table
-                    :collections="data.classes"
+                    :collections="data.incomes"
                     :totalRow="true"
                     :columns="incomeColumns"
                 >
-                    <template #default="{ item: classes }">
+                    <template #default="{ item: income }">
                         <table-td class="text-right">
-                            {{ classes.name }}
+                            {{ income.name }}
                         </table-td>
                         <table-td class="text-right">
                             <div class="flex justify-end gap-2">
-                                {{ $e2bnumber(classes.total) }}
+                                {{ $e2bnumber(income.total) }}
                                 <span>টাকা</span>
                             </div>
                         </table-td>
@@ -60,17 +60,17 @@
                     </template>
                 </simple-table>
                 <simple-table
-                    :collections="data.categories"
+                    :collections="data.expenses"
                     :totalRow="true"
                     :columns="expenseColumns"
                 >
-                    <template #default="{ item: category }">
+                    <template #default="{ item: expense }">
                         <table-td class="text-right">
-                            {{ category.name }}
+                            {{ expense.name }}
                         </table-td>
                         <table-td class="text-right">
                             <div class="flex justify-end gap-2">
-                                {{ $e2bnumber(category.total) }}
+                                {{ $e2bnumber(expense.total) }}
                                 <span>টাকা</span>
                             </div>
                         </table-td>
@@ -122,7 +122,7 @@ export default {
         totalExpence() {
             let total = 0;
 
-            Object.values(this.data.categories).forEach((category) => {
+            Object.values(this.data.expenses).forEach((category) => {
                 total += parseInt(category.total || 0);
             });
 
@@ -131,7 +131,7 @@ export default {
         totalIncome() {
             let total = 0;
 
-            Object.values(this.data.classes).forEach((classes) => {
+            Object.values(this.data.incomes).forEach((classes) => {
                 total += parseInt(classes.total || 0);
             });
 

@@ -85,13 +85,23 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        $category->delete();
+        $allow_deletion = true;
+
+        if($category->type == 1) {
+            $allow_deletion = !($category->incomes()->count() ?? 0);
+        } elseif($category->type == 2) {
+            $allow_deletion = !($category->expenses()->count() ?? 0);
+        }
+
+        if($allow_deletion) {
+            $category->delete();
+        }
 
         return redirect()
             ->route('categories.index', [
                 'type' => $category->type
             ])
-            ->with('status', 'The record has been delete successfully.');
+            ->with('status', $allow_deletion ? 'The record has been delete successfully.' : 'Delete is not allowed');
     }
 
     protected function data($category, int $type)

@@ -10,6 +10,7 @@ use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\Expense;
 use App\Models\Fee;
+use App\Models\Income;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\Student;
@@ -24,6 +25,7 @@ class HandleInertiaRequests extends Middleware
         Student::class,
         Admission::class,
         Expense::class,
+        Income::class,
         Payment::class,
         Exam::class,
         Fee::class,

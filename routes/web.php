@@ -13,6 +13,7 @@ use App\Http\Controllers\QuestionPaperController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OtherPurposeController;
 use App\Http\Controllers\PaymentController;
@@ -95,21 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('staff/{staff}/salaries/create', [SalaryController::class, 'create'])->name('staff.salaries.create');
     Route::post('staff/{staff}/salaries', [SalaryController::class, 'store'])->name('staff.salaries.store');
 
-    Route::get('expenses/months', [ExpenseController::class, 'monthsIndex'])->name('expenses.months.index');
-    Route::get('expenses/months/{month}', [ExpenseController::class, 'monthsShow'])->name('expenses.months.show');
-
-    Route::get('expenses/months/{month}/categories', [ExpenseController::class, 'monthsCategoriesIndex'])->name('expenses.months.categories.index');
-    
-    Route::get('expenses/summary', [ExpenseController::class, 'summary'])->name('expenses.summary');
-    
-    Route::get('expenses/categories', [ExpenseController::class, 'categoriesIndex'])->name('expenses.categories.index');
-    Route::get('expenses/categories/{category}', [ExpenseController::class, 'categoriesShow'])->name('expenses.categories.show');
-
-    Route::get('expenses/summary', [ExpenseController::class, 'summary'])->name('expenses.summary');
-
     Route::get('summary', SummaryController::class)->name('summary');
-
-    Route::get('expenses/categories/{category}/categories', [ExpenseController::class, 'CategoriesmonthsIndex'])->name('expenses.categories.months.index');
 
     Route::get('admissions/admission', [AdmissionController::class, 'admission'])->name('admissions.admission');
 
@@ -119,6 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'students'          => StudentController::class,
         'admissions'        => AdmissionController::class,
         'expenses'          => ExpenseController::class,
+        'incomes'           => IncomeController::class,
         'categories'        => CategoryController::class,
         'admins'            => AdminController::class,
         'staff'             => StaffController::class,

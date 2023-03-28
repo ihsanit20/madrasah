@@ -14,10 +14,20 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
+        $allow_deletion = true;
+
+        // check allow deletion
+        if($this->type == 1) {
+            $allow_deletion = !($this->incomes()->count() ?? 0);
+        } elseif($this->type == 2) {
+            $allow_deletion = !($this->expenses()->count() ?? 0);
+        }
+
         return [
             'id'            => (int) ($this->id),
             'name'          => (string) ($this->name ?? ''),
-            'allowDeletion' => (boolean) !($this->expenses()->count() ?? 0),
+            'type'          => (int) ($this->type ?? 0),
+            'allowDeletion' => (boolean) ($allow_deletion ?? true),
         ];
     }
 }

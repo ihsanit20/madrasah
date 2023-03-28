@@ -270,6 +270,44 @@
             </template>
         </dropdown-nav-link>
         <dropdown-nav-link
+            :active="route().current('incomes.*')"
+            :newBadge="true"
+        >
+            <PaymentSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                আয়ের রশিদ
+            </span>
+
+            <template #items>
+                <nav-link
+                    :href="route('incomes.create')"
+                    :active="route().current('incomes.create')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        নতুন রশিদ
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('incomes.index')"
+                    :active="route().current('incomes.(index|show|edit)')"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        রশিদ তালিকা
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
+        <dropdown-nav-link
             :active="route().current('(staff).*|staff-attendance-page')"
         >
             <AdminSvg class="h-6 w-6 md:h-8 md:w-8" />

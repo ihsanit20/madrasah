@@ -302,7 +302,7 @@ class ExpenseController extends Controller
         return [
             'expense'       => $this->formatedData($expense),
             'staff'         => StaffResource::collection(Staff::orderBy('designation_id')->get()),
-            'categories'    => CategoryResource::collection(Category::orderBy('name')->get()),
+            'categories'    => CategoryResource::collection(Category::type(2)->orderBy('name')->get()),
             'hijriMonths'   => HijriMonth::get(),
         ];
     }

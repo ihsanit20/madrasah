@@ -91,6 +91,8 @@ export default {
         setSession(session) {
             // localStorage.setItem("session", session);
 
+            this.setCookie('academic_session', session);
+
             this.session = session;
 
             return (window.location.href = this.replaceUrlParam(
@@ -98,6 +100,12 @@ export default {
                 "session",
                 session
             ));
+        },
+        setCookie(cname, cvalue, exdays = 1) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         },
         getSession(defaultSession = null) {
             let session = ""; // localStorage.getItem("session");

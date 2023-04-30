@@ -83,7 +83,9 @@ class Classes extends Model
             ->where([
                 'admissions.session'   => self::$current_session,
                 'admissions.status'    => 4,
-            ]);
+            ])
+            ->whereNull('admissions.deleted_at')
+            ->orderBy('admissions.roll');
     }
 
     public function teacher()

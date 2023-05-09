@@ -91,21 +91,24 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'request' => $request,
-            'settings' => [
-                'siteName' => $this->getSettingValueByProperty($settings, 'site-name'),
-                'siteAddress' => $this->getSettingValueByProperty($settings, 'site-address'),
-                'sitePhone' => $this->getSettingValueByProperty($settings, 'site-phone'),
-                'studentAgreement' => $this->getSettingValueByProperty($settings, 'student-agreement'),
+            'request'   => $request,
+            'settings'  => [
+                'siteName'          => $this->getSettingValueByProperty($settings, 'site-name'),
+                'siteAddress'       => $this->getSettingValueByProperty($settings, 'site-address'),
+                'sitePhone'         => $this->getSettingValueByProperty($settings, 'site-phone'),
+                'studentAgreement'  => $this->getSettingValueByProperty($settings, 'student-agreement'),
                 'guardianAgreement' => $this->getSettingValueByProperty($settings, 'guardian-agreement'),
-                'idCardTime' => $this->getSettingValueByProperty($settings, 'id-card-time'),
-                'admitCardText' => $this->getSettingValueByProperty($settings, 'admit-card-text'),
+                'idCardTime'        => $this->getSettingValueByProperty($settings, 'id-card-time'),
+                'admitCardText'     => $this->getSettingValueByProperty($settings, 'admit-card-text'),
             ],
-            'academic_sessions' => AcademicSession::get([
-                'value',
-                'bengali',
-            ]),
-            'current_academic_session' => $current_academic_session,
+            'academic_sessions'     => AcademicSession::query()
+                ->latest()
+                ->get([
+                    'value',
+                    'bengali',
+                ]),
+
+            'current_academic_session'  => $current_academic_session,
             'previous_academic_session' => $previous_academic_session,
         ]);
     }

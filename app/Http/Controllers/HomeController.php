@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Alkoumi\LaravelHijriDate\Hijri;
+use App\Http\Resources\AdmissionResource;
+use App\Http\Resources\AreaResource;
+use App\Http\Resources\ClassFeeResource;
+use App\Http\Resources\DistrictResource;
+use App\Http\Resources\DivisionResource;
+use App\Http\Resources\StudentResource;
+use App\Models\Admission;
+use App\Models\Area;
+use App\Models\ClassFee;
+use App\Models\District;
+use App\Models\Division;
 
 class HomeController extends Controller
 {
@@ -149,6 +160,14 @@ class HomeController extends Controller
 
     public function admissionForm()
     {
+        $type = 'new';
+
+        return Inertia::render('Page/AdmissionForm', [
+            'data' => $this->data(new Admission(), $previous_school_info ?? null),
+            'type' => $type,
+            'old_student_id' => (int) (0),
+        ]);
+
         return Inertia::render('Page/AdmissionForm', [
             'data' => [
                 //
@@ -163,5 +182,86 @@ class HomeController extends Controller
                 //
             ]
         ]);
+    }
+
+    protected function data($admission, $student = null, $previous_school_info = null)
+    {
+        if(!$student) {
+            $student = $admission->student()->first() ?? null;
+        }
+
+        $has_student = (boolean) ($student ?? false);
+
+        if(!$has_student) {
+            $student = new Student();
+        }
+        
+        if($previous_school_info) {
+            $admission->previous_school = $previous_school_info['previous_school'] ?? '';
+            $admission->previous_class = $previous_school_info['previous_class'] ?? '';
+            $admission->previous_roll = $previous_school_info['previous_roll'] ?? '';
+            $admission->previous_result = $previous_school_info['previous_result'] ?? '';
+        }
+
+        return [
+            'admission'     => $this->formatedData($admission),
+            'student'       => $this->formatedStudentData($student),
+            'divisions'     => DivisionResource::collection(Division::orderBy('name')->get()),
+            'districts'     => DistrictResource::collection(District::orderBy('name')->get()),
+            'areas'         => AreaResource::collection(Area::orderBy('name')->get()),
+            'classes'       => ClassesResource::collection(Classes::get()),
+            'bloodGroups'   => Student::getBloodGroups(),
+            'residentArray' => Student::getResidentArrayData(),
+            'yearlyFees'    => $this->getClassFee($admission->class_id, 1, $student->resident),
+            'monthlyFees'   => $this->getClassFee($admission->class_id, 2, $student->resident),
+            'hasStudent'    => (boolean) ($has_student ?? false),
+        ];
+    }
+
+    protected function formatedData($admission)
+    {
+        AdmissionResource::withoutWrapping();
+
+        return new AdmissionResource($admission);
+    }
+
+    protected function formatedStudentData($student)
+    {
+        StudentResource::withoutWrapping();
+
+        return new StudentResource(
+            $student->load([
+                'father_info',
+                'mother_info',
+                'guardian_info',
+                'present_address.area.district',
+                'permanent_address.area.district',
+            ]
+        ));
+    }
+
+    protected function getClassFee($class_id, $period = null, $resident = null)
+    {
+        ClassFeeResource::withoutWrapping();
+
+        $query = ClassFee::query()
+            ->where('class_id', $class_id)
+            ->where(function ($query) use ($period) {
+                $query->when($period, function ($query) use ($period) {
+                    $query->whereHas('fee', function ($query) use ($period) {
+                        $query->where('period', $period);
+                    });
+                });
+            });
+        
+        $class_fees = $query->get();
+
+        if($resident) {
+            $class_fees = $class_fees->filter(function ($class_fee) use ($resident) {
+                return in_array($resident, json_decode($class_fee->package));
+            });
+        }
+
+        return ClassFeeResource::collection($class_fees);
     }
 }

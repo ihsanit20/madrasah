@@ -69,7 +69,7 @@
                     </form-group>
                 </div>
             </div>
-            
+
             <form-heading class="mt-8">পারিবারিক তথ্য</form-heading>
 
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-2">
@@ -123,20 +123,14 @@
                         v-model="form.reference.phone"
                     />
                 </form-group>
-                <form-group
-                    class="w-full"
-                    label="সম্পর্ক"
-                >
+                <form-group class="w-full" label="সম্পর্ক">
                     <Input
                         type="text"
                         class="block w-full"
                         v-model="form.reference.relation"
                     />
                 </form-group>
-                <form-group
-                    class="w-full col-span-full"
-                    label="ঠিকানা"
-                >
+                <form-group class="col-span-full w-full" label="ঠিকানা">
                     <Input
                         type="text"
                         class="block w-full"
@@ -310,6 +304,8 @@
 
             <hr class="my-4 w-full" />
 
+            {{ form }}
+
             <div class="flex items-center justify-end">
                 <Button
                     class=""
@@ -363,31 +359,31 @@ export default {
         this.permanent_address.areas = this.data.areas;
 
         if (this.moduleAction == "update") {
-            this.form.father_info = this.data.student.fatherInfo;
-            this.form.mother_info = this.data.student.motherInfo;
-            this.form.guardian_info = this.data.student.guardianInfo;
+            this.form.father_info = this.data.staff.fatherInfo;
+            this.form.mother_info = this.data.staff.motherInfo;
+            this.form.guardian_info = this.data.staff.guardianInfo;
 
             this.form.present_address.postoffice =
-                this.data.student.presentAddress.postoffice;
+                this.data.staff.presentAddress.postoffice;
             this.form.present_address.address =
-                this.data.student.presentAddress.value;
+                this.data.staff.presentAddress.value;
             this.form.present_address.area =
-                this.data.student.presentAddress.areaId;
+                this.data.staff.presentAddress.areaId;
             this.form.present_address.district =
-                this.data.student.presentAddress.area.districtId;
+                this.data.staff.presentAddress.area.districtId;
             this.form.present_address.division =
-                this.data.student.presentAddress.area.district.divisionId;
+                this.data.staff.presentAddress.area.district.divisionId;
 
             this.form.permanent_address.postoffice =
-                this.data.student.permanentAddress.postoffice;
+                this.data.staff.permanentAddress.postoffice;
             this.form.permanent_address.address =
-                this.data.student.permanentAddress.value;
+                this.data.staff.permanentAddress.value;
             this.form.permanent_address.area =
-                this.data.student.permanentAddress.areaId;
+                this.data.staff.permanentAddress.areaId;
             this.form.permanent_address.district =
-                this.data.student.permanentAddress.area.districtId;
+                this.data.staff.permanentAddress.area.districtId;
             this.form.permanent_address.division =
-                this.data.student.permanentAddress.area.district.divisionId;
+                this.data.staff.permanentAddress.area.district.divisionId;
         }
     },
     data() {
@@ -408,9 +404,13 @@ export default {
                 name: this.data.staff.name || "",
                 phone: this.data.staff.phone || "",
                 designation_id: this.data.staff.designationId || "",
-                father_info: this.data.staff.father_info || [],
-                mother_info: this.data.staff.mother_info || [],
-                reference: this.data.staff.reference || [],
+                father_info: this.data.staff.father_info || {},
+                mother_info: this.data.staff.mother_info || {},
+                reference: this.data.staff.reference || {},
+                is_same_address:
+                    this.moduleAction == "update"
+                        ? this.data.student.isSameAddress
+                        : 0,
                 present_address: {
                     division: "",
                     district: "",

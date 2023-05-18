@@ -13,6 +13,7 @@ use App\Models\Fee;
 use App\Models\Income;
 use App\Models\Payment;
 use App\Models\Setting;
+use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class HandleInertiaRequests extends Middleware
         Payment::class,
         Exam::class,
         Fee::class,
+        Staff::class,
     ];
 
     /**

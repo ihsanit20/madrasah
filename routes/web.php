@@ -24,6 +24,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SeatPlanController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StaffFormController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SummaryController;
@@ -109,6 +110,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'incomes'           => IncomeController::class,
         'categories'        => CategoryController::class,
         'admins'            => AdminController::class,
+        'staff-form'        => StaffFormController::class,
         'staff'             => StaffController::class,
         'designations'      => DesignationController::class,
         'notices'           => NoticeController::class,

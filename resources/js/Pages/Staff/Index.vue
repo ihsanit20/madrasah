@@ -41,7 +41,7 @@
                     <div class="flex items-center gap-2">
                         <span class="text-gray-600">পদবি: </span>
                         <span class="font-bold text-gray-800">
-                            {{ staff.designation.name }}
+                            {{ staff.designationTitle }}
                         </span>
                     </div>
                     <div

@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait BloodGroup
 {
-    static $blood_groups = [
+    public static $blood_groups = [
         1 => "A (+)",
         2 => "A (-)",
         3 => "B (+)",
@@ -15,7 +15,7 @@ trait BloodGroup
         8 => "O (-)",
     ];
 
-    static function getBloodGroups()
+    public static function getBloodGroups()
     {
         return self::$blood_groups;
     }

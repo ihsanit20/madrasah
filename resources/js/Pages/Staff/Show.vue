@@ -65,7 +65,7 @@
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
-                                {{ data.staff.designation.name }}
+                                {{ data.staff.designationTitle }}
                             </div>
                         </div>
                         <div class="flex items-start gap-1.5">

@@ -7,113 +7,33 @@ use App\Http\Resources\AreaResource;
 use App\Http\Resources\DesignationResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
-use App\Http\Resources\StaffResource;
+use App\Http\Resources\StaffFormResource;
 use App\Models\Address;
 use App\Models\Appointment;
 use App\Models\Area;
 use App\Models\Designation;
 use App\Models\District;
 use App\Models\Division;
-use App\Models\Staff;
+use App\Models\StaffForm;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class StaffController extends Controller
+class StaffFormController extends Controller
 {
-    public function list()
-    {
-        $collections = Staff::query();
-
-        return 
-        $collections
-            ->with([
-                'current_appointment',
-                'educational_qualifications',
-            ])
-            ->first();
-
-        // $all_staff = $collections->get();
-
-        // foreach($all_staff as $staff) {
-        //     Appointment::updateOrCreate(
-        //         [
-        //             "staff_id" => $staff->id,
-        //         ],
-        //         [
-        //             "designation_id"    => $staff->designation_id,
-        //             "active"            => $staff->active,
-        //             "default_salaries"  => $staff->default_salaries,
-        //             "deleted_at"        => null,
-        //             "session"           => "43-44",
-        //         ]
-        //     );
-        // }
-
-        // return Appointment::get();
-
-        return Inertia::render('Staff/List', [
-            'data' => [
-                'collections'   => StaffResource::collection($collections->with('current_appointment')->has('current_appointment')->paginate()->appends(request()->input())),
-                'filters'       => $this->getFilterProperty(),
-            ]
-        ]);
-    }
-
-    private function getStaffQuery()
-    {
-        return Staff::query()
-            ->select([
-                'staff.id as id',
-                'staff.name as name',
-                'designations.name as designation',
-            ])
-            ->join('designations', 'designations.id', 'staff.designation_id')
-            ->orderBy('designations.priority');
-    }
-
-    private function getMaleStaffData()
-    {
-        return $this->getStaffQuery()
-            ->male()
-            ->get();
-    }
-
-    private function getFemaleStaffData()
-    {
-        return $this->getStaffQuery()
-            ->female()
-            ->get();
-    }
-
-    public function attendancePage()
-    {
-        // return
-        $male_staff = $this->getMaleStaffData();
-
-        // return
-        $female_staff = $this->getFemaleStaffData();
-
-        return Inertia::render('Staff/AttendancePage', [
-            'data' => [
-                'male_staff'    => $male_staff,
-                'female_staff'  => $female_staff,
-            ],
-        ]);
-    }
-
     public function index()
     {
-        $collections = Staff::query()
-            ->with('current_appointment.designation')
-            ->has('current_appointment');
+        $collections = StaffForm::query()
+            ->active();
 
-        StaffResource::withoutWrapping();
+        StaffFormResource::withoutWrapping();
 
-        return Inertia::render('Staff/Index', [
+        // return $collections->paginate();
+
+        return Inertia::render('StaffForm/Index', [
             'data' => [
-                'staff'     => StaffResource::collection($collections->get()),
-                'filters'   => $this->getFilterProperty(),
+                'collections'   => StaffFormResource::collection($collections->paginate()->appends(request()->input())),
+                'filters'       => $this->getFilterProperty(),
             ]
         ]);
     }

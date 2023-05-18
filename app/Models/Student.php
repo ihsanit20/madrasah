@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\BloodGroup;
+use App\Traits\Gender;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Student extends Model
 {
-    use HasFactory, SoftDeletes, BloodGroup;
+    use HasFactory, SoftDeletes, BloodGroup, Gender;
 
     protected $guarded = [];
 
@@ -30,11 +31,6 @@ class Student extends Model
 
     public static $current_session = "44-45";
 
-    public static $gender_array = [
-        1 => 'ছেলে',
-        2 => 'মেয়ে',
-    ];
-
     public static $resident_array = [
         1 => 'আবাসিক',
         2 => 'অনাবাসিক',
@@ -42,19 +38,9 @@ class Student extends Model
         4 => 'সেমি-আবাসিক',
     ];
 
-    public static function getGenderArrayData()
-    {
-        return self::$gender_array;
-    }
-
     public static function getResidentArrayData()
     {
         return self::$resident_array;
-    }
-
-    public function getGenderTextAttribute()
-    {
-        return self::getGenderArrayData()[$this->gender] ?? '';
     }
 
     public function getResidentTextAttribute()

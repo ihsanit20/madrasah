@@ -91,7 +91,6 @@
 
         <dropdown-nav-link
             :active="route().current('(admissions).*')"
-            :newBadge="true"
         >
             <AdmissionSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -102,7 +101,6 @@
                     :href="route('admissions.admission')"
                     :active="route().current('admissions.admission')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <AdmissionSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -227,7 +225,6 @@
                     :href="route('expenses.summary')"
                     :active="route().current('expenses.summary')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -242,7 +239,6 @@
                     :href="route('expenses.categories.index')"
                     :active="route().current('expenses.categories.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -257,7 +253,6 @@
                     :href="route('expenses.months.index')"
                     :active="route().current('expenses.months.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -271,7 +266,6 @@
         </dropdown-nav-link>
         <dropdown-nav-link
             :active="route().current('incomes.*')"
-            :newBadge="true"
         >
             <PaymentSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -308,7 +302,8 @@
             </template>
         </dropdown-nav-link>
         <dropdown-nav-link
-            :active="route().current('(staff).*|staff-attendance-page')"
+            :active="route().current('(staff|staff-form).*|staff-attendance-page')"
+            :newBadge="true"
         >
             <AdminSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -339,6 +334,20 @@
                         :class="{ 'hidden md:block': !navigation }"
                     >
                         শিক্ষক/স্টাফ হাজিরা
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('staff-form.index')"
+                    :active="route().current('staff-form.*')"
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        শিক্ষক/স্টাফ আবেদন
                     </span>
                 </nav-link>
             </template>
@@ -372,7 +381,6 @@
                     '(classes|fees|designations|categories|admins|settings|purposes|exams).*|staff-list'
                 )
             "
-            :newBadge="true"
         >
             <SettingsSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -464,7 +472,6 @@
                         parseInt($page.props.request.type) === 1
                     "
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
                 >
                     <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span

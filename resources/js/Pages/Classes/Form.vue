@@ -28,7 +28,10 @@
                     :addSlotMethod="addSubjectSlot"
                 >
                     <template #default="{ item: subject }">
-                        <form-group label="বিষয়ের নাম" class="w-1/3">
+                        <form-group 
+                            label="বিষয়ের নাম"
+                            class="w-full md:w-1/3"
+                        >
                             <Input
                                 type="text"
                                 class="block w-full"
@@ -38,7 +41,7 @@
                         </form-group>
                         <form-group
                             label="কিতাবের নাম (একাধিক হলে কমা ব্যবহার করুন)"
-                            class="w-2/3"
+                            class="w-full md:w-2/3"
                         >
                             <Input
                                 type="text"
@@ -50,139 +53,143 @@
                     </template>
                 </form-slot-group>
 
-                <simple-table
-                    :columns="columns1"
-                    :collections="form.fees"
-                    filter-row-name="period"
-                    :filter-row-value="1"
-                    :total-row="true"
-                >
-                    <template #header>
-                        <th
-                            v-for="(packageName, packageId) in data.packages"
-                            :key="packageId"
-                            class="py-3 px-2 text-center text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
-                        >
-                            {{ packageName }}
-                        </th>
-                    </template>
-                    <template #default="{ item: fee }">
-                        <table-td class="whitespace-pre-wrap text-left">
-                            <label
-                                class="flex w-full items-center justify-start gap-2"
+                <div class="w-full overflow-auto">
+                    <simple-table
+                        :columns="columns1"
+                        :collections="form.fees"
+                        filter-row-name="period"
+                        :filter-row-value="1"
+                        :total-row="true"
+                    >
+                        <template #header>
+                            <th
+                                v-for="(packageName, packageId) in data.packages"
+                                :key="packageId"
+                                class="py-3 px-2 text-center text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                            >
+                                {{ packageName }}
+                            </th>
+                        </template>
+                        <template #default="{ item: fee }">
+                            <table-td class="whitespace-pre-wrap text-left">
+                                <label
+                                    class="flex w-full items-center justify-start gap-2"
+                                >
+                                    <Input
+                                        type="checkbox"
+                                        @click="fee.checked = !fee.checked"
+                                        :checked="fee.checked"
+                                    />
+                                    <span>{{ fee.name }}</span>
+                                </label>
+                            </table-td>
+                            <td class="px-3 text-center">
+                                <div class="mx-auto w-20">
+                                    <Input
+                                        v-if="fee.checked"
+                                        type="number"
+                                        v-model="fee.amount"
+                                        class="w-20 text-right"
+                                        required
+                                    />
+                                </div>
+                            </td>
+                            <table-td
+                                v-for="(packageName, packageId) in data.packages"
+                                :key="packageId"
+                                class="text-center"
                             >
                                 <Input
-                                    type="checkbox"
-                                    @click="fee.checked = !fee.checked"
-                                    :checked="fee.checked"
-                                />
-                                <span>{{ fee.name }}</span>
-                            </label>
-                        </table-td>
-                        <td class="px-3 text-center">
-                            <div class="mx-auto w-20">
-                                <Input
                                     v-if="fee.checked"
-                                    type="number"
-                                    v-model="fee.amount"
-                                    class="w-20 text-right"
-                                    required
+                                    type="checkbox"
+                                    @change="packageHandler($event, fee, packageId)"
+                                    :checked="fee.package.includes(packageId)"
                                 />
-                            </div>
-                        </td>
-                        <table-td
-                            v-for="(packageName, packageId) in data.packages"
-                            :key="packageId"
-                            class="text-center"
-                        >
-                            <Input
-                                v-if="fee.checked"
-                                type="checkbox"
-                                @change="packageHandler($event, fee, packageId)"
-                                :checked="fee.package.includes(packageId)"
-                            />
-                        </table-td>
-                    </template>
-                    <template #totalRow>
-                        <table-td class="text-right" colspan="2">
-                            মোট ভর্তিকালীন প্রদেয়
-                        </table-td>
-                        <table-td
-                            v-for="(packageName, packageId) in data.packages"
-                            :key="packageId"
-                            class="text-center"
-                        >
-                            {{ getFeeTotal(1, packageId) }}
-                        </table-td>
-                    </template>
-                </simple-table>
+                            </table-td>
+                        </template>
+                        <template #totalRow>
+                            <table-td class="text-right" colspan="2">
+                                মোট ভর্তিকালীন প্রদেয়
+                            </table-td>
+                            <table-td
+                                v-for="(packageName, packageId) in data.packages"
+                                :key="packageId"
+                                class="text-center"
+                            >
+                                {{ getFeeTotal(1, packageId) }}
+                            </table-td>
+                        </template>
+                    </simple-table>
+                </div>
 
-                <simple-table
-                    :columns="columns2"
-                    :collections="form.fees"
-                    filter-row-name="period"
-                    :filter-row-value="2"
-                    :total-row="true"
-                >
-                    <template #header>
-                        <th
-                            v-for="(packageName, packageId) in data.packages"
-                            :key="packageId"
-                            class="py-3 px-2 text-center text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
-                        >
-                            {{ packageName }}
-                        </th>
-                    </template>
-                    <template #default="{ item: fee }">
-                        <table-td class="whitespace-pre-wrap text-left">
-                            <label
-                                class="flex w-full items-center justify-start gap-2"
+                <div class="w-full overflow-auto">
+                    <simple-table
+                        :columns="columns2"
+                        :collections="form.fees"
+                        filter-row-name="period"
+                        :filter-row-value="2"
+                        :total-row="true"
+                    >
+                        <template #header>
+                            <th
+                                v-for="(packageName, packageId) in data.packages"
+                                :key="packageId"
+                                class="py-3 px-2 text-center text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 print:text-black md:text-sm"
+                            >
+                                {{ packageName }}
+                            </th>
+                        </template>
+                        <template #default="{ item: fee }">
+                            <table-td class="whitespace-pre-wrap text-left">
+                                <label
+                                    class="flex w-full items-center justify-start gap-2"
+                                >
+                                    <Input
+                                        type="checkbox"
+                                        @click="fee.checked = !fee.checked"
+                                        :checked="fee.checked"
+                                    />
+                                    <span>{{ fee.name }}</span>
+                                </label>
+                            </table-td>
+                            <td class="px-3 text-center">
+                                <div class="mx-auto w-20">
+                                    <Input
+                                        v-if="fee.checked"
+                                        type="number"
+                                        v-model="fee.amount"
+                                        class="w-20 text-right"
+                                        required
+                                    />
+                                </div>
+                            </td>
+                            <table-td
+                                v-for="(packageName, packageId) in data.packages"
+                                :key="packageId"
+                                class="text-center"
                             >
                                 <Input
-                                    type="checkbox"
-                                    @click="fee.checked = !fee.checked"
-                                    :checked="fee.checked"
-                                />
-                                <span>{{ fee.name }}</span>
-                            </label>
-                        </table-td>
-                        <td class="px-3 text-center">
-                            <div class="mx-auto w-20">
-                                <Input
                                     v-if="fee.checked"
-                                    type="number"
-                                    v-model="fee.amount"
-                                    class="w-20 text-right"
-                                    required
+                                    type="checkbox"
+                                    @change="packageHandler($event, fee, packageId)"
+                                    :checked="fee.package.includes(packageId)"
                                 />
-                            </div>
-                        </td>
-                        <table-td
-                            v-for="(packageName, packageId) in data.packages"
-                            :key="packageId"
-                            class="text-center"
-                        >
-                            <Input
-                                v-if="fee.checked"
-                                type="checkbox"
-                                @change="packageHandler($event, fee, packageId)"
-                                :checked="fee.package.includes(packageId)"
-                            />
-                        </table-td>
-                    </template>
-                    <template #totalRow>
-                        <table-td colspan="2" class="text-right">
-                            মোট মাসিক প্রদেয়
-                        </table-td>
-                        <table-td
-                            v-for="(packageName, packageId) in data.packages"
-                            :key="packageId"
-                            class="text-center"
-                        >
-                            {{ getFeeTotal(2, packageId) }}
-                        </table-td>
-                    </template>
-                </simple-table>
+                            </table-td>
+                        </template>
+                        <template #totalRow>
+                            <table-td colspan="2" class="text-right">
+                                মোট মাসিক প্রদেয়
+                            </table-td>
+                            <table-td
+                                v-for="(packageName, packageId) in data.packages"
+                                :key="packageId"
+                                class="text-center"
+                            >
+                                {{ getFeeTotal(2, packageId) }}
+                            </table-td>
+                        </template>
+                    </simple-table>
+                </div>
 
                 <form-group class="col-span-full" label="শ্রেণী শিক্ষক">
                     <Select v-model="form.staff_id" class="block w-full">

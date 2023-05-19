@@ -347,7 +347,7 @@
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
                     >
-                        শিক্ষক/স্টাফ আবেদন
+                        আবেদন তালিকা
                     </span>
                 </nav-link>
             </template>

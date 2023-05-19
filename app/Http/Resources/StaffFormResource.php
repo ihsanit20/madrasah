@@ -14,6 +14,32 @@ class StaffFormResource extends JsonResource
      */
     public function toArray($request)
     {
+        $father_mother_empty_info = [
+            "name"  => "",
+            "phone" => "",
+        ];
+
+        $reference_empty_info = [
+            "name"      => "",
+            "phone"     => "",
+            "relation"  => "",
+            "address"   => "",
+        ];
+
+        $address_empty_info = [
+            "division"  => "",
+            "district"  => "",
+            "area"      => "",
+            "postoffice"=> "",
+            "address"   => ""
+        ];
+
+        $previous_experience_empty = [
+            "institute_name"    => "",
+            "designation"       => "",
+            "period"            => "",
+        ];
+
         return [
             'id'                => (int) $this->id,
             'name'              => (string) ($this->name ?? ''),
@@ -29,19 +55,20 @@ class StaffFormResource extends JsonResource
             'blood_group'       => (string) ($this->blood_group ?? ''),
             'blood_group_text'  => (string) ($this->blood_group_text ?? ''),
             
-            'fathers_info'      => (object) ($this->fathers_info ?? []),
-            'mothers_info'      => (object) ($this->mothers_info ?? []),
-            'reference_info'    => (object) ($this->reference_info ?? []),
+            'fathers_info'      => (object) ($this->fathers_info ?? $father_mother_empty_info),
+            'mothers_info'      => (object) ($this->mothers_info ?? $father_mother_empty_info),
+            'reference_info'    => (object) ($this->reference_info ?? $reference_empty_info),
             
-            'present_address_info'          => (object) ($this->present_address_info ?? []),
-            'permanent_address_info'        => (object) ($this->permanent_address_info ?? []),
+            'present_address_info'          => (object) ($this->present_address_info ?? $address_empty_info),
+            'permanent_address_info'        => (object) ($this->permanent_address_info ?? $address_empty_info),
             'is_same_address'               => (boolean) ($this->is_same_address ?? false),
-            'educational_qualifications'    => (object) ($this->educational_qualifications ?? []),
+
+            'educational_qualifications'    => (array) ($this->educational_qualifications ?? []),
             
+            'previous_experience'           => (object) ($this->previous_experience ?? $previous_experience_empty),
             
             'designation_id'        => (int) ($this->designation_id ?? 0),
             'designation_title'     => (string) ($this->designation->name ?? ""),
-            'previous_experience'   => (string) ($this->previous_experience ?? ''),
             'expected_salary'       => (double) ($this->expected_salary ?? 0),
             
             'date_of_birth'             => (string) ($this->date_of_birth ? $this->date_of_birth->format('Y-m-d') : ''),

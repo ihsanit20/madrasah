@@ -28,8 +28,6 @@ class StaffFormController extends Controller
 
         StaffFormResource::withoutWrapping();
 
-        // return $collections->paginate();
-
         return Inertia::render('StaffForm/Index', [
             'data' => [
                 'collections'   => StaffFormResource::collection($collections->paginate()->appends(request()->input())),
@@ -40,8 +38,8 @@ class StaffFormController extends Controller
 
     public function create()
     {
-        return Inertia::render('Staff/Create', [
-            'data' => $this->data(new Staff())
+        return Inertia::render('StaffForm/Create', [
+            'data' => $this->data(new StaffForm())
         ]);
     }
 
@@ -49,95 +47,84 @@ class StaffFormController extends Controller
     {
         // return $request;
 
-        $staff = Staff::create(
-            $this->validatedData($request)
-            + $this->storeAddress($request)
-        );
+        $staff_form = StaffForm::create($this->validatedData($request));
 
         return redirect()
-            ->route('staff.show', $staff->id)
+            ->route('staff-form.show', $staff_form->id)
             ->with('status', 'The record has been added successfully.');
     }
 
-    public function show(Staff $staff)
+    public function show(StaffForm $staff_form)
     {
-        // return $staff;
+        // return $staff_form;
 
-        $staff->load([
-            'current_appointment.designation',
+        $staff_form->load([
+            'designation',
         ]);
 
-        return Inertia::render('Staff/Show', [
-            'data' => [
-                'staff' => $this->formatedData($staff)
-            ]
+        return Inertia::render('StaffForm/Show', [
+            'data' => $this->data($staff_form),
         ]);
     }
 
-    public function edit(Staff $staff)
+    public function edit(StaffForm $staff_form)
     {
         if(request()->step == 'salary') {
             return Inertia::render('Staff/Edit', [
-                'data'  => $this->data($staff),
+                'data'  => $this->data($staff_form),
                 'step'  => 'salary',
             ]);
         }
 
-        $staff->load([
-            'present_address',
-            'permanent_address',
+        $staff_form->load([
+            'designation',
         ]);
 
-        // return $this->data($staff);
-
-        return Inertia::render('Staff/Edit', [
-            'data' => $this->data($staff)
+        return Inertia::render('StaffForm/Edit', [
+            'data' => $this->data($staff_form)
         ]);
     }
 
-    public function update(Request $request, Staff $staff)
+    public function update(Request $request, StaffForm $staff_form)
     {
-        if($request->step == 'salary') {
-            $staff->update([
-                "default_salaries" => $request->default_salaries,
-            ]);
-        } else {
-            $staff->update($this->validatedData($request, $staff->id));
-        }
+        $staff_form->update($this->validatedData($request, $staff_form->id));
 
         return redirect()
-            ->route('staff.show', $staff->id)
+            ->route('staff-form.show', $staff_form->id)
             ->with('status', 'The record has been update successfully.');
     }
 
-    public function destroy(Staff $staff)
+    public function destroy(StaffForm $staff_form)
     {
-        $staff->delete();
+        $staff_form->delete();
 
         return redirect()
-            ->route('staff.index')
+            ->route('staff-form.index')
             ->with('status', 'The record has been delete successfully.');
     }
 
-    protected function data($staff)
+    protected function data($staff_form)
     {
+        DivisionResource::withoutWrapping();
+        DistrictResource::withoutWrapping();
+        AreaResource::withoutWrapping();
         DesignationResource::withoutWrapping();
 
         return [
-            'staff'         => $this->formatedData($staff),
+            'staff'         => $this->formatedData($staff_form),
             'divisions'     => DivisionResource::collection(Division::orderBy('name')->get()),
             'districts'     => DistrictResource::collection(District::orderBy('name')->get()),
             'areas'         => AreaResource::collection(Area::orderBy('name')->get()),
-            'designations'  => DesignationResource::collection(Designation::get()),
+            'designations'  => DesignationResource::collection(Designation::orderBy('priority')->get()),
             'bloodGroups'   => Student::getBloodGroups()
         ];
     }
 
-    protected function formatedData($staff)
+    protected function formatedData($staff_form)
     {
-        StaffResource::withoutWrapping();
+        StaffFormResource::withoutWrapping();
 
-        return new StaffResource($staff);
+        return StaffFormResource::make($staff_form);
     }
 
     protected function getFilterProperty()
@@ -154,10 +141,6 @@ class StaffFormController extends Controller
                 'required',
                 'string',
             ],
-            // 'designation_id' => [
-            //     'required',
-            //     'numeric',
-            // ],
             'date_of_birth' => [
                 'required',
                 'string',
@@ -173,59 +156,19 @@ class StaffFormController extends Controller
             'gender' => [
                 'required',
             ],
-            'father_info' => [
-                'required',
+            'fathers_info' => [],
+            'mothers_info' => [],
+            'reference_info' => [],
+            'present_address_info' => [],
+            'permanent_address_info' => [],
+            'is_same_address' => [],
+            'educational_qualifications' => [],
+            'previous_experience' => [],
+            'designation_id' => [
+                'required'
             ],
-            'mother_info' => [
-                'required',
-            ],
-            'reference' => [
-                'required',
-            ],
+            'expected_salary' => [],
         ]);
-    }
-
-    
-    protected function storeAddress($request, $staff = null)
-    {
-        if($staff) {
-            Address::query()
-                ->whereIn('id', [
-                    $staff->present_address_id,
-                    $staff->permanent_address_id
-                ])
-                ->delete();
-        }
-
-        $present_address_id = $this->storeAddressGetId($request->present_address);
-
-        $permanent_address_id = $request->is_same_address
-            ? $present_address_id
-            : $this->storeAddressGetId($request->permanent_address);
-
-        return [
-            'present_address_id'    => $present_address_id,
-            'permanent_address_id'  => $permanent_address_id,
-        ];
-    }
-    
-    protected function storeAddressGetId($address, $old_id = '')
-    {
-        if($old_id) {
-            Address::where('id', $old_id)->delete();
-        }
-
-        $response = Address::onlyTrashed()->updateOrCreate(
-            [],
-            [
-                'area_id'       => $address['area'] ?? null,
-                'value'         => $address['address'] ?? null,
-                'postoffice'    => $address['postoffice'] ?? null,
-                'deleted_at'    => null,
-            ]
-        );
-
-        return $response->id ?? null;
     }
 
 }

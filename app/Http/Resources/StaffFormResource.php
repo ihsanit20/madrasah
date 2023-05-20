@@ -69,12 +69,14 @@ class StaffFormResource extends JsonResource
             
             'designation_id'        => (int) ($this->designation_id ?? 0),
             'designation_title'     => (string) ($this->designation->name ?? ""),
-            'expected_salary'       => (double) ($this->expected_salary ?? 0),
+            'expected_salary'       => (string) ($this->expected_salary ?? ""),
             
-            'date_of_birth'             => (string) ($this->date_of_birth ? $this->date_of_birth->format('Y-m-d') : ''),
-            'date_of_birth_with_format' => (string) ($this->date_of_birth ? $this->date_of_birth->format('d-m-Y') : ''),
+            'date_of_birth'                 => (string) ($this->date_of_birth ? $this->date_of_birth->format('Y-m-d') : ''),
+            'date_of_birth_with_format'     => (string) ($this->date_of_birth ? $this->date_of_birth->format('d-m-Y') : ''),
 
-            'status'                    => (int) ($this->status ?? 0),
+            'application_date_with_format'  => (string) ($this->created_at ? $this->created_at->format('d-m-Y') : ''),
+
+            'status'                        => (int) ($this->status ?? 0),
         ];
     }
 

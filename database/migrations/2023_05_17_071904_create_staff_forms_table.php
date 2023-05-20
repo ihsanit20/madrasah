@@ -16,6 +16,8 @@ class CreateStaffFormsTable extends Migration
         Schema::create('staff_forms', function (Blueprint $table) {
             $table->id();
 
+            $table->string('session')->index();
+
             $table->string('name');
             $table->date('date_of_birth')->nullable();
 
@@ -39,7 +41,7 @@ class CreateStaffFormsTable extends Migration
             $table->json('previous_experience')->nullable();
 
             $table->unsignedSmallInteger('designation_id');
-            $table->float('expected_salary')->default(0);
+            $table->string('expected_salary')->nullable();
 
             $table->unsignedTinyInteger('status')->default(1);
 

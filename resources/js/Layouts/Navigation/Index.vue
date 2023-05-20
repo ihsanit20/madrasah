@@ -305,7 +305,7 @@
             :active="route().current('(staff|staff-form).*|staff-attendance-page')"
             :newBadge="true"
         >
-            <AdminSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <TeacherSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
                 শিক্ষক/স্টাফ
             </span>
@@ -315,7 +315,7 @@
                     :active="route().current('staff.index')"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <TeacherSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
@@ -328,7 +328,7 @@
                     :active="route().current('staff-attendance-page')"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <TeacherSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
@@ -342,7 +342,7 @@
                     class="flex items-center gap-2 md:gap-4"
                     :newBadge="true"
                 >
-                    <AdminSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <TeacherSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
                         class="-mb-1"
                         :class="{ 'hidden md:block': !navigation }"
@@ -440,6 +440,7 @@
                     </span>
                 </nav-link>
                 <nav-link
+                    v-if="false"
                     :href="route('staff-list')"
                     :active="route().current('staff-list')"
                     class="flex items-center gap-2 md:gap-4"

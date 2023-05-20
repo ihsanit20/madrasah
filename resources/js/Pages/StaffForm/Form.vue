@@ -371,7 +371,6 @@
                         type="text"
                         class="block w-full"
                         v-model="form.previous_experience.institute_name"
-                        required
                     />
                 </form-group>
                 <form-group class="w-full" label="পদবি">
@@ -540,11 +539,11 @@ export default {
     methods: {
         submit() {
             if (this.moduleAction == "store") {
-                return this.form.post(this.route("staff.store"));
+                return this.form.post(this.route("staff-form.store"));
             }
             if (this.moduleAction == "update") {
                 return this.form.put(
-                    this.route("staff.update", this.data.staff.id)
+                    this.route("staff-form.update", this.data.staff.id)
                 );
             }
         },

@@ -9,7 +9,7 @@
                 <h2
                     class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
                 >
-                    শিক্ষার্থীর প্রফাইল
+                    শিক্ষক/স্টাফ প্রফাইল
                 </h2>
                 <Link
                     :href="route('staff-form.edit', data.staff.id)"
@@ -36,7 +36,7 @@
                             <div
                                 class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
                             >
-                                শিক্ষার্থীর নাম:
+                                শিক্ষক/স্টাফ নাম:
                             </div>
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
@@ -60,14 +60,14 @@
                             <div
                                 class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
                             >
-                                নিয়োগের তারিখ:
+                                আবেদনের তারিখ:
                             </div>
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
                                 {{
                                     $e2bnumber(
-                                        data.staff.dateOfBirthWithFormat || ""
+                                        data.staff.application_date_with_format || ""
                                     )
                                 }}
                             </div>
@@ -83,7 +83,7 @@
                             >
                                 {{
                                     $e2bnumber(
-                                        data.staff.dateOfBirthWithFormat || ""
+                                        data.staff.date_of_birth_with_format || ""
                                     )
                                 }}
                             </div>
@@ -97,7 +97,7 @@
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
-                                {{ data.staff.birthCertificate }}
+                                {{ data.staff.nid }}
                             </div>
                         </div>
                         <div class="flex items-start gap-1.5">
@@ -109,7 +109,7 @@
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
-                                {{ data.staff.bloodGroupText }}
+                                {{ data.staff.blood_group_text }}
                             </div>
                         </div>
                         <div class="flex items-start gap-1.5">
@@ -121,7 +121,55 @@
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
-                                {{ data.staff.genderText }}
+                                {{ data.staff.gender_text }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                পিতার নাম:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.staff.fathers_info.name }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                পিতার ফোন:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.staff.fathers_info.phone }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                মাতার নাম:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.staff.mothers_info.name }}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <div
+                                class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
+                            >
+                                মাতার ফোন:
+                            </div>
+                            <div
+                                class="shrink grow pt-1 text-sm font-semibold text-gray-800"
+                            >
+                                {{ data.staff.mothers_info.phone }}
                             </div>
                         </div>
                     </div>
@@ -172,11 +220,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        {{ data.staff.permanent_address_info.address }},
-                        {{ data.staff.permanent_address_info.postoffice }},
-                        {{ data.staff.permanent_address_info.area }},
-                        {{ data.staff.permanent_address_info.district }},
-                        {{ data.staff.permanent_address_info.division }}
+                        {{ permanent_address_text }}
                     </div>
                 </div>
             </div>
@@ -201,7 +245,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.name }}
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -213,7 +257,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.relation }}
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -225,7 +269,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.phone }}
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -237,7 +281,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.address }}
                     </div>
                 </div>
             </div>
@@ -297,12 +341,6 @@
                     class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
                 >
                     রশিদগুলা
-                </Link>
-                <Link
-                    :href="route('staff.salaries.create', data.staff.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
-                >
-                    বেতন দিন
                 </Link>
             </div>
         </div>

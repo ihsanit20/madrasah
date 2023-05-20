@@ -14,6 +14,7 @@ use App\Models\Area;
 use App\Models\Designation;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\Staff;
 use App\Models\StaffForm;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class StaffFormController extends Controller
     public function index()
     {
         $collections = StaffForm::query()
+            ->current()
             ->active();
 
         StaffFormResource::withoutWrapping();
@@ -47,7 +49,9 @@ class StaffFormController extends Controller
     {
         // return $request;
 
-        $staff_form = StaffForm::create($this->validatedData($request));
+        $staff_form = StaffForm::create($this->validatedData($request) + [
+            'session' => StaffForm::$current_session,
+        ]);
 
         return redirect()
             ->route('staff-form.show', $staff_form->id)

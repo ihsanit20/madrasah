@@ -14,6 +14,10 @@ class StaffForm extends Model
 
     protected $guarded = [];
 
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
+
     protected $casts = [
         'date_of_birth'                 => 'date',
         'fathers_info'                  => 'json',
@@ -28,6 +32,11 @@ class StaffForm extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+
+    public function scopeCurrent($query)
+    {
+        return $query->where('session', self::$current_session);
     }
 
     public function designation()

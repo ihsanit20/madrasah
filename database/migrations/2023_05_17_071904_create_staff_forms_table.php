@@ -43,6 +43,8 @@ class CreateStaffFormsTable extends Migration
             $table->unsignedSmallInteger('designation_id');
             $table->string('expected_salary')->nullable();
 
+            $table->json('default_salaries')->nullable();
+
             $table->unsignedTinyInteger('status')->default(1);
 
             $table->timestamps();

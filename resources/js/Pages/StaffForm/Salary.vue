@@ -6,14 +6,18 @@
 
         <div class="grid md:grid-cols-2">
             <inline-data title="নাম:" :value="data.staff.name" />
+            <inline-data class="justify-end" title="ফোন:" :value="data.staff.phone" />
             <inline-data
-                class="justify-end"
                 title="পদ:"
-                :value="data.staff.designation.name"
+                :value="data.staff.designation_title"
             />
-            <inline-data title="ফোন:" :value="data.staff.phone" />
             <inline-data
                 class="justify-end"
+                title="প্রত্যাশা:"
+                :value="data.staff.expected_salary"
+            />
+            <inline-data
+                class="justify-center col-span-full"
                 title="মোট বেতন:"
                 :value="$e2bnumber(totalSalary)"
             />
@@ -67,13 +71,21 @@
 
             <hr class="my-4 w-full" />
 
-            <div class="flex items-center justify-end">
+            <div class="flex items-center justify-between print:hidden">
+                <Link
+                    :href="
+                        route('staff-form.show', data.staff.id)
+                    "
+                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                >
+                    &#8592; পূর্ববর্তী ধাপ
+                </Link>
                 <Button
-                    class=""
+                    v-if="form.default_salaries.length"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    {{ buttonValue }}
+                    Save & পরবর্তী ধাপ &#8594;
                 </Button>
             </div>
         </form>
@@ -81,6 +93,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3"
 import ValidationErrors from "@/Components/ValidationErrors.vue";
 import Button from "@/Components/Button.vue";
 import Input from "@/Components/Input.vue";
@@ -92,6 +105,7 @@ import FormGroup from "@/Components/FormGroup.vue";
 
 export default {
     components: {
+        Link,
         ValidationErrors,
         Button,
         Input,
@@ -114,14 +128,14 @@ export default {
     computed: {
         totalSalary() {
             let total = this.form.default_salaries.reduce(function (prev, cur) {
-                return prev + parseInt(cur.amount);
+                return prev + parseInt(cur.amount || 0);
             }, 0);
 
             return isNaN(total) ? 0 : total;
         },
     },
     created() {
-        this.form.default_salaries = this.data.staff.default_salaries;
+        this.form.default_salaries = this.data.staff.default_salaries ?? [];
     },
     data() {
         return {
@@ -140,7 +154,7 @@ export default {
         },
         submit() {
             return this.form.put(
-                this.route("staff.update", this.data.staff.id)
+                this.route("staff-form.update", this.data.staff.id)
             );
         },
     },

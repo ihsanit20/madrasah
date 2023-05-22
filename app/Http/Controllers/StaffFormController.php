@@ -73,10 +73,19 @@ class StaffFormController extends Controller
 
     public function edit(StaffForm $staff_form)
     {
+        // return $this->data($staff_form);
+
         if(request()->step == 'salary') {
-            return Inertia::render('Staff/Edit', [
+            return Inertia::render('StaffForm/Edit', [
                 'data'  => $this->data($staff_form),
                 'step'  => 'salary',
+            ]);
+        }
+
+        if(request()->step == 'complete') {
+            return Inertia::render('StaffForm/Edit', [
+                'data'  => $this->data($staff_form),
+                'step'  => 'complete',
             ]);
         }
 
@@ -91,6 +100,23 @@ class StaffFormController extends Controller
 
     public function update(Request $request, StaffForm $staff_form)
     {
+        if($request->step == 'salary')
+        {
+            $staff_form->update([
+                "default_salaries" => $request->default_salaries,
+            ]);
+
+            return redirect()
+                ->route('staff-form.edit', [
+                    $staff_form->id,
+                    "step=complete"
+                ]);
+        }
+        elseif($request->step == 'complete')
+        {
+            return $request;
+        }
+        
         $staff_form->update($this->validatedData($request, $staff_form->id));
 
         return redirect()

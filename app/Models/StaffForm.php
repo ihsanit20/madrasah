@@ -27,6 +27,7 @@ class StaffForm extends Model
         'permanent_address_info'        => 'json',
         'educational_qualifications'    => 'json',
         'previous_experience'           => 'json',
+        'default_salaries'              => 'json',
     ];
 
     public function scopeActive($query)

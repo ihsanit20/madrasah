@@ -46,6 +46,8 @@ class CreateStaffFormsTable extends Migration
             $table->json('default_salaries')->nullable();
 
             $table->unsignedTinyInteger('status')->default(1);
+            $table->unsignedBigInteger('staff_id')->nullable();
+            $table->unsignedBigInteger('complete_by')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

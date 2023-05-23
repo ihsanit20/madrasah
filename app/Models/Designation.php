@@ -14,6 +14,6 @@ class Designation extends Model
 
     public function teachers()
     {
-        return $this->hasMany(Staff::class);
+        return $this->hasMany(Appointment::class, 'staff_id');
     }
 }

@@ -30,6 +30,7 @@ class StaffResource extends JsonResource
             'id'                => (int) $this->id,
             'name'              => (string) ($this->name ?? ''),
             'phone'             => (string) ($this->phone ?? ''),
+            'alternative_phone' => (string) ($this->alternative_phone ?? ''),
             'designationId'     => (int) ($this->current_appointment->designation_id ?? 0),
             'designationTitle'  => (string) ($this->current_appointment->designation->name ?? ''),
             // 'designation'       => new DesignationResource($this->whenLoaded('designation')),
@@ -47,21 +48,23 @@ class StaffResource extends JsonResource
             'bloodGroupText'    => (string) ($this->blood_group_text ?? ''),
             'nid'               => (string) ($this->nid ?? ''),
 
-            'father_info'       => (object) ($this->father_info ?? $father_mother_empty_info),
-            'mother_info'       => (object) ($this->mother_info ?? $father_mother_empty_info),
-            'reference'         => (object) ($this->reference ?? $reference_empty_info),
+            'fathers_info'      => (object) ($this->fathers_info ?? $father_mother_empty_info),
+            'mothers_info'      => (object) ($this->mothers_info ?? $father_mother_empty_info),
+            'reference_info'    => (object) ($this->reference_info ?? $reference_empty_info),
             
-            'presentAddressId'      => (int) ($this->present_address_id ?? 0),
-            'presentAddress'        => new AddressResource($this->whenLoaded('present_address')),
-            'permanentAddressId'    => (int) ($this->permanent_address_id ?? 0),
-            'permanentAddress'      => new AddressResource($this->whenLoaded('permanent_address')),
-            'isSameAddress'         => (boolean) ($this->is_same_address ?? 0),
+            'present_address_id'        => (int) ($this->present_address_id ?? 0),
+            'present_address_info'      => new AddressResource($this->whenLoaded('present_address')),
+            'permanent_address_id'      => (int) ($this->permanent_address_id ?? 0),
+            'permanent_address_info'    => new AddressResource($this->whenLoaded('permanent_address')),
+            'is_same_address'           => (boolean) ($this->is_same_address ?? 0),
 
             'joining_date'              => (string) ($this->joining_date ? $this->joining_date->format('Y-m-d') : ''),
             'joining_date_with_format'  => (string) ($this->joining_date ? $this->joining_date->format('d-m-Y') : ''),
 
             'date_of_birth'             => (string) ($this->date_of_birth ? $this->date_of_birth->format('Y-m-d') : ''),
             'date_of_birth_with_format' => (string) ($this->date_of_birth ? $this->date_of_birth->format('d-m-Y') : ''),
+
+            'educational_qualifications' => EducationalQualificationResource::collection($this->whenLoaded('educational_qualifications')),
         ];
     }
 

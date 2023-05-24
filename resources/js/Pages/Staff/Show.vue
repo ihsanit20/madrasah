@@ -187,7 +187,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.phone }}<span v-if="data.staff.alternative_phone">, {{ data.staff.alternative_phone }}</span>
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -199,7 +199,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ present_address_text }}
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -211,7 +211,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ permanent_address_text }}
                     </div>
                 </div>
             </div>
@@ -236,7 +236,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.name }}
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -248,7 +248,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.relation }}
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -260,7 +260,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.phone }}
                     </div>
                 </div>
                 <div class="flex items-start gap-1.5">
@@ -272,7 +272,7 @@
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        ---
+                        {{ data.staff.reference_info.address }}
                     </div>
                 </div>
             </div>
@@ -298,41 +298,26 @@
                         <th class="pt-1.5 pb-0.5">বোর্ড</th>
                         <th class="bg-gray-200 pt-1.5 pb-0.5">ফলাফল</th>
                     </tr>
-                    <tr class="text-center">
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">পরীক্ষার নাম</td>
-                        <td class="pt-1.5 pb-0.5">{{ $e2bnumber(2013) }}</td>
+                    <tr
+                        v-for="(educational_qualification, key) in data.staff.educational_qualifications"
+                        :key="key"
+                        class="text-center"
+                    >
                         <td class="bg-gray-200 pt-1.5 pb-0.5">
-                            প্রতিষ্ঠানের নাম
+                            {{ educational_qualification.exam_name }}
                         </td>
-                        <td class="pt-1.5 pb-0.5">বোর্ড</td>
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">ফলাফল</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">পরীক্ষার নাম</td>
-                        <td class="pt-1.5 pb-0.5">{{ $e2bnumber(2013) }}</td>
+                        <td class="pt-1.5 pb-0.5">
+                            {{ $e2bnumber(educational_qualification.year) }}
+                        </td>
                         <td class="bg-gray-200 pt-1.5 pb-0.5">
-                            প্রতিষ্ঠানের নাম
+                            {{ educational_qualification.institute_name }}
                         </td>
-                        <td class="pt-1.5 pb-0.5">বোর্ড</td>
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">ফলাফল</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">পরীক্ষার নাম</td>
-                        <td class="pt-1.5 pb-0.5">{{ $e2bnumber(2013) }}</td>
+                        <td class="pt-1.5 pb-0.5">
+                            {{ educational_qualification.board }}
+                        </td>
                         <td class="bg-gray-200 pt-1.5 pb-0.5">
-                            প্রতিষ্ঠানের নাম
+                            {{ educational_qualification.result }}
                         </td>
-                        <td class="pt-1.5 pb-0.5">বোর্ড</td>
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">ফলাফল</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">পরীক্ষার নাম</td>
-                        <td class="pt-1.5 pb-0.5">{{ $e2bnumber(2013) }}</td>
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">
-                            প্রতিষ্ঠানের নাম
-                        </td>
-                        <td class="pt-1.5 pb-0.5">বোর্ড</td>
-                        <td class="bg-gray-200 pt-1.5 pb-0.5">ফলাফল</td>
                     </tr>
                 </table>
             </div>
@@ -384,6 +369,56 @@ export default {
         AdmissionFormTemplete,
         CheckUncheckIcon,
         ImagePrevieWithSave,
+    },
+    computed: {
+        present_address_text() {
+            let addressText = '';
+
+            addressText += this.data.staff.present_address_info.address;
+            addressText += ", " + this.data.staff.present_address_info.postoffice;
+
+            let selectedArea = Object.values(this.data.areas).find((area) => {
+                return parseInt(area.id) === parseInt(this.data.staff.present_address_info.area);
+            })
+
+            let selectedDistrict = Object.values(this.data.districts).find((district) => {
+                return parseInt(district.id) === parseInt(this.data.staff.present_address_info.district);
+            })
+
+            let selectedDivision = Object.values(this.data.divisions).find((division) => {
+                return parseInt(division.id) === parseInt(this.data.staff.present_address_info.division);
+            })
+
+            addressText += ", " + (selectedArea ? selectedArea.name : "");
+            addressText += ", " + (selectedArea ? selectedDistrict.name : "");
+            addressText += ", " + (selectedArea ? selectedDivision.name : "");
+
+            return addressText;
+        },
+        permanent_address_text() {
+            let addressText = '';
+
+            addressText += this.data.staff.permanent_address_info.address;
+            addressText += ", " + this.data.staff.permanent_address_info.postoffice;
+
+            let selectedArea = Object.values(this.data.areas).find((area) => {
+                return parseInt(area.id) === parseInt(this.data.staff.permanent_address_info.area);
+            })
+
+            let selectedDistrict = Object.values(this.data.districts).find((district) => {
+                return parseInt(district.id) === parseInt(this.data.staff.permanent_address_info.district);
+            })
+
+            let selectedDivision = Object.values(this.data.divisions).find((division) => {
+                return parseInt(division.id) === parseInt(this.data.staff.permanent_address_info.division);
+            })
+
+            addressText += ", " + (selectedArea ? selectedArea.name : "");
+            addressText += ", " + (selectedArea ? selectedDistrict.name : "");
+            addressText += ", " + (selectedArea ? selectedDivision.name : "");
+
+            return addressText;
+        }
     },
     props: {
         data: {

@@ -20,16 +20,11 @@ class Staff extends Model
 
     protected $casts = [
         'default_salaries'  => 'array',
-        'father_info'       => 'json',
-        'mother_info'       => 'json',
-        'reference'         => 'json',
+        'fathers_info'      => 'json',
+        'mothers_info'      => 'json',
+        'reference_info'    => 'json',
         'date_of_birth'     => 'date',
         'joining_date'      => 'date',
-    ];
-
-    protected $hidden = [
-        'default_salaries',
-        'designation_id',
     ];
 
     protected $appends = [
@@ -131,5 +126,7 @@ class Staff extends Model
         return $this->hasOne(Appointment::class)
             ->where('appointments.session', $session);
     }
+
+    
 
 }

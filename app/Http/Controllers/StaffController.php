@@ -142,14 +142,30 @@ class StaffController extends Controller
     public function show(Staff $staff)
     {
         // return $staff;
-
+        
         $staff->load([
             'current_appointment.designation',
+            'educational_qualifications',
         ]);
+
+        // return $staff;
+
+        // return $this->formatedData($staff);
+
+        return
+        $address = Address::query()
+            ->with([
+                'area'
+            ])
+            ->whereIn('id', [$staff->present_address_id, $staff->permanent_address_id])
+            ->get();
 
         return Inertia::render('Staff/Show', [
             'data' => [
-                'staff' => $this->formatedData($staff)
+                'staff'     => $this->formatedData($staff),
+                'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
+                'districts' => DistrictResource::collection(District::orderBy('name')->get()),
+                'areas'     => AreaResource::collection($areas),
             ]
         ]);
     }

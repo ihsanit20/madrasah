@@ -14,10 +14,12 @@ use App\Models\Area;
 use App\Models\Designation;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\EducationalQualification;
 use App\Models\Staff;
 use App\Models\StaffForm;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class StaffFormController extends Controller
@@ -112,9 +114,58 @@ class StaffFormController extends Controller
                     "step=complete"
                 ]);
         }
-        elseif($request->step == 'complete')
+
+        if($request->step == 'complete')
         {
-            return $request;
+            $staff = Staff::create([
+                "name"  => $staff_form->name,
+                "date_of_birth"  => $staff_form->date_of_birth,
+                "phone"  => $staff_form->phone,
+                "alternative_phone"  => $staff_form->alternative_phone,
+                "nid"  => $staff_form->nid,
+                "gender"  => $staff_form->gender,
+                "blood_group"  => $staff_form->blood_group,
+                "fathers_info"  => $staff_form->fathers_info,
+                "mothers_info"  => $staff_form->mothers_info,
+                "reference_info"  => $staff_form->reference_info,
+
+                "present_address_info"  => $staff_form->present_address_info,
+                "permanent_address_info"  => $staff_form->permanent_address_info,
+            ]);
+
+            // appointment : designation_id : default_salaries
+            $appointment = Appointment::create([
+                'staff_id'          => $staff->id,
+                'session'           => Staff::$current_session,
+                'designation_id'    => $staff_form->designation_id,
+                'default_salaries'  => $staff_form->default_salaries,
+            ]);
+
+            // educational_qualifications
+            if(count($staff_form->educational_qualifications))
+            {
+                foreach($staff_form->educational_qualifications as $educational_qualification)
+                {
+                    EducationalQualification::create([
+                        "staff_id"          => $staff->id,
+                        "exam_name"         => $educational_qualification["exam_name"],
+                        "year"              => $educational_qualification["year"],
+                        "institute_name"    => $educational_qualification["institute_name"],
+                        "board"             => $educational_qualification["board"],
+                        "result"            => $educational_qualification["result"],
+                    ]);
+                }
+            }
+
+            // update staff-form
+            $staff_form->update([
+                "status"        => 2,
+                "staff_id"      => $staff->id,
+                "complete_by"   => Auth::id(),
+            ]);
+
+            return redirect()
+                ->route('staff.show', $staff->id);
         }
         
         $staff_form->update($this->validatedData($request, $staff_form->id));

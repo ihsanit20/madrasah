@@ -51,11 +51,9 @@ class StaffResource extends JsonResource
             'fathers_info'      => (object) ($this->fathers_info ?? $father_mother_empty_info),
             'mothers_info'      => (object) ($this->mothers_info ?? $father_mother_empty_info),
             'reference_info'    => (object) ($this->reference_info ?? $reference_empty_info),
-            
-            'present_address_id'        => (int) ($this->present_address_id ?? 0),
-            'present_address_info'      => new AddressResource($this->whenLoaded('present_address')),
-            'permanent_address_id'      => (int) ($this->permanent_address_id ?? 0),
-            'permanent_address_info'    => new AddressResource($this->whenLoaded('permanent_address')),
+
+            'present_address_info'      => (object) ($this->present_address_info ?? []),
+            'permanent_address_info'    => (object) ($this->permanent_address_info ?? []),
             'is_same_address'           => (boolean) ($this->is_same_address ?? 0),
 
             'joining_date'              => (string) ($this->joining_date ? $this->joining_date->format('Y-m-d') : ''),
@@ -64,7 +62,7 @@ class StaffResource extends JsonResource
             'date_of_birth'             => (string) ($this->date_of_birth ? $this->date_of_birth->format('Y-m-d') : ''),
             'date_of_birth_with_format' => (string) ($this->date_of_birth ? $this->date_of_birth->format('d-m-Y') : ''),
 
-            'educational_qualifications' => EducationalQualificationResource::collection($this->whenLoaded('educational_qualifications')),
+            'educational_qualifications'    => EducationalQualificationResource::collection($this->whenLoaded('educational_qualifications')),
         ];
     }
 

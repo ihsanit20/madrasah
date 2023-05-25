@@ -9,7 +9,7 @@
             <inline-data
                 class="justify-end"
                 title="পদ:"
-                :value="data.staff.designation.name"
+                :value="data.staff.designationTitle"
             />
             <inline-data title="ফোন:" :value="data.staff.phone" />
             <inline-data

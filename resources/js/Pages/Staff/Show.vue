@@ -12,6 +12,7 @@
                     শিক্ষার্থীর প্রফাইল
                 </h2>
                 <Link
+                    v-if="false"
                     :href="route('staff.edit', data.staff.id)"
                     class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
                 >
@@ -79,7 +80,7 @@
                             >
                                 {{
                                     $e2bnumber(
-                                        data.staff.dateOfBirthWithFormat || ""
+                                        data.staff.joining_date_with_format || ""
                                     )
                                 }}
                             </div>
@@ -95,7 +96,7 @@
                             >
                                 {{
                                     $e2bnumber(
-                                        data.staff.dateOfBirthWithFormat || ""
+                                        data.staff.date_of_birth_with_format || ""
                                     )
                                 }}
                             </div>
@@ -109,7 +110,7 @@
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
                             >
-                                {{ data.staff.birthCertificate }}
+                                {{ data.staff.nid }}
                             </div>
                         </div>
                         <div class="flex items-start gap-1.5">

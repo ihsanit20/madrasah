@@ -411,20 +411,9 @@ export default {
                 gender: this.data.staff.gender,
                 blood_group: this.data.staff.bloodGroup,
                 // designation_id: this.data.staff.designationId || "",
-                father_info: this.data.staff.father_info || {
-                    name: "",
-                    phone: "",
-                },
-                mother_info: this.data.staff.mother_info || {
-                    name: "",
-                    phone: "",
-                },
-                reference: this.data.staff.reference || {
-                    name: "",
-                    phone: "",
-                    relation: "",
-                    address: "",
-                },
+                father_info: this.data.staff.father_info,
+                mother_info: this.data.staff.mother_info,
+                reference: this.data.staff.reference,
                 is_same_address:
                     this.moduleAction == "update"
                         ? this.data.staff.isSameAddress

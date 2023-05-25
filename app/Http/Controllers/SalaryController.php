@@ -15,7 +15,6 @@ class SalaryController extends Controller
     {
         // return
         $staff->load([
-            'designation',
             'salaries'
         ]);
 

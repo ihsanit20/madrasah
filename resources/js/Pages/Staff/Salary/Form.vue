@@ -8,7 +8,7 @@
         </div>
         <div class="flex items-center justify-between">
             <inline-data title="নাম:" :value="data.staff.name" />
-            <inline-data title="পদবি:" :value="data.staff.designation.name" />
+            <inline-data title="পদবি:" :value="data.staff.designationTitle" />
         </div>
         <form-group class="col-span-full" label="বাবদ নির্বাচন করুন">
             <Select
@@ -238,6 +238,10 @@ export default {
                 console.log(selectedPurpose.paid);
 
                 if (selectedPurpose.paid) {
+                    this.form.salaries.push({
+                        title: "কর্তন",
+                        amount: -selectedPurpose.cut,
+                    });
                     this.form.salaries.push({
                         title: "বেতন প্রদান",
                         amount: -selectedPurpose.paid,

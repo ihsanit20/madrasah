@@ -118,19 +118,22 @@ class StaffFormController extends Controller
         if($request->step == 'complete')
         {
             $staff = Staff::create([
-                "name"  => $staff_form->name,
-                "date_of_birth"  => $staff_form->date_of_birth,
-                "phone"  => $staff_form->phone,
-                "alternative_phone"  => $staff_form->alternative_phone,
-                "nid"  => $staff_form->nid,
-                "gender"  => $staff_form->gender,
-                "blood_group"  => $staff_form->blood_group,
-                "fathers_info"  => $staff_form->fathers_info,
-                "mothers_info"  => $staff_form->mothers_info,
-                "reference_info"  => $staff_form->reference_info,
+                "name"              => $staff_form->name,
+                "date_of_birth"     => $staff_form->date_of_birth,
+                "phone"             => $staff_form->phone,
+                "alternative_phone" => $staff_form->alternative_phone,
+                "nid"               => $staff_form->nid,
+                "gender"            => $staff_form->gender,
+                "blood_group"       => $staff_form->blood_group,
+                "fathers_info"      => $staff_form->fathers_info,
+                "mothers_info"      => $staff_form->mothers_info,
+                "reference_info"    => $staff_form->reference_info,
 
-                "present_address_info"  => $staff_form->present_address_info,
-                "permanent_address_info"  => $staff_form->permanent_address_info,
+                "present_address_info"      => $staff_form->present_address_info,
+                "permanent_address_info"    => $staff_form->permanent_address_info,
+                "is_same_address"           => $staff_form->is_same_address,
+
+                "joining_date"      => $request->joining_date,
             ]);
 
             // appointment : designation_id : default_salaries

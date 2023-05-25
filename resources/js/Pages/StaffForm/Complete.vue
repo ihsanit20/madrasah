@@ -37,8 +37,8 @@
 
             <hr />
 
-            <div class="grid gap-4">
-                <div class="p-6 text-center font-semibold text-rose-500">
+            <div class="grid gap-4 md:grid-cols-2">
+                <div class="p-6 text-center font-semibold text-rose-500 col-span-full">
                     এই আবেদনকারী যদি অত্র প্রতিষ্ঠানের উপযোগী
                     হয় এবং তিনি অঙ্গীকার পূরণে সম্মত হয় তাহলে এই
                     আবেদনকারীকে অত্র প্রতিষ্ঠানে নিয়োগ প্রদান করুন।
@@ -50,6 +50,15 @@
                         :value="verifiedBy"
                     />
                 </div>
+
+                <form-group class="w-full md:flex-row-reverse gap-2" label="নিয়োগের তারিখ:">
+                    <Input
+                        type="date"
+                        class="block w-full md:w-1/2"
+                        v-model="form.joining_date"
+                        required
+                    />
+                </form-group>
             </div>
 
             <hr />
@@ -124,6 +133,7 @@ export default {
             verifiedBy: this.$page.props.auth.user.name,
             form: this.$inertia.form({
                 step: "complete",
+                joining_date: "",
             }),
         };
     },

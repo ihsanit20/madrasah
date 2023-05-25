@@ -17,6 +17,7 @@ use App\Models\Division;
 use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class StaffController extends Controller
@@ -64,12 +65,17 @@ class StaffController extends Controller
     {
         return Staff::query()
             ->select([
-                'staff.id as id',
+                'staff.id as staff_id',
                 'staff.name as name',
                 'designations.name as designation',
             ])
-            ->join('designations', 'designations.id', 'staff.designation_id')
-            ->orderBy('designations.priority');
+            ->leftJoin('appointments', function($join) {
+                $join->on('appointments.staff_id', '=', 'staff.id');
+                $join->on('appointments.session', '=', DB::raw("'" . Staff::$current_session . "'"));
+            })
+            ->join('designations', 'designations.id', 'appointments.designation_id')
+            ->orderBy('designations.priority')
+            ;
     }
 
     private function getMaleStaffData()
@@ -152,20 +158,12 @@ class StaffController extends Controller
 
         // return $this->formatedData($staff);
 
-        return
-        $address = Address::query()
-            ->with([
-                'area'
-            ])
-            ->whereIn('id', [$staff->present_address_id, $staff->permanent_address_id])
-            ->get();
-
         return Inertia::render('Staff/Show', [
             'data' => [
                 'staff'     => $this->formatedData($staff),
                 'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
                 'districts' => DistrictResource::collection(District::orderBy('name')->get()),
-                'areas'     => AreaResource::collection($areas),
+                'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
             ]
         ]);
     }
@@ -173,16 +171,13 @@ class StaffController extends Controller
     public function edit(Staff $staff)
     {
         if(request()->step == 'salary') {
+            // return $this->data($staff);
+
             return Inertia::render('Staff/Edit', [
                 'data'  => $this->data($staff),
                 'step'  => 'salary',
             ]);
         }
-
-        $staff->load([
-            'present_address',
-            'permanent_address',
-        ]);
 
         // return $this->data($staff);
 
@@ -194,10 +189,11 @@ class StaffController extends Controller
     public function update(Request $request, Staff $staff)
     {
         if($request->step == 'salary') {
-            $staff->update([
+            $staff->current_appointment()->update([
                 "default_salaries" => $request->default_salaries,
             ]);
         } else {
+            return $request;
             $staff->update($this->validatedData($request, $staff->id));
         }
 
@@ -218,6 +214,9 @@ class StaffController extends Controller
     protected function data($staff)
     {
         DesignationResource::withoutWrapping();
+        DivisionResource::withoutWrapping();
+        DistrictResource::withoutWrapping();
+        AreaResource::withoutWrapping();
 
         return [
             'staff'         => $this->formatedData($staff),

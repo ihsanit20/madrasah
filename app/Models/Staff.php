@@ -25,17 +25,15 @@ class Staff extends Model
         'reference_info'    => 'json',
         'date_of_birth'     => 'date',
         'joining_date'      => 'date',
+
+        'present_address_info'      => 'json',
+        'permanent_address_info'    => 'json',
     ];
 
     protected $appends = [
         'due',
         'due_purpose_id',
     ];
-
-    public function getIsSameAddressAttribute()
-    {
-        return (boolean) ($this->present_address_id == $this->permanent_address_id);
-    }
 
     public function getDueAttribute()
     {
@@ -68,16 +66,6 @@ class Staff extends Model
     public function designation()
     {
         return $this->belongsTo(Designation::class);
-    }
-
-    public function present_address()
-    {
-        return $this->belongsTo(Address::class, 'present_address_id');
-    }
-
-    public function permanent_address()
-    {
-        return $this->belongsTo(Address::class, 'permanent_address_id');
     }
 
     public function image()
@@ -126,7 +114,5 @@ class Staff extends Model
         return $this->hasOne(Appointment::class)
             ->where('appointments.session', $session);
     }
-
-    
 
 }

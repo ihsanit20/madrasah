@@ -12,6 +12,10 @@ class Salary extends Model
 
     protected $guarded = [];
 
+    public static $previous_session = "43-44";
+
+    public static $current_session = "44-45";
+
     protected $casts = [
         'salaries' => 'array',
     ];

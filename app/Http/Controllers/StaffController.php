@@ -28,30 +28,7 @@ class StaffController extends Controller
 
         return 
         $collections
-            ->with([
-                'current_appointment',
-                'educational_qualifications',
-            ])
             ->first();
-
-        // $all_staff = $collections->get();
-
-        // foreach($all_staff as $staff) {
-        //     Appointment::updateOrCreate(
-        //         [
-        //             "staff_id" => $staff->id,
-        //         ],
-        //         [
-        //             "designation_id"    => $staff->designation_id,
-        //             "active"            => $staff->active,
-        //             "default_salaries"  => $staff->default_salaries,
-        //             "deleted_at"        => null,
-        //             "session"           => "43-44",
-        //         ]
-        //     );
-        // }
-
-        // return Appointment::get();
 
         return Inertia::render('Staff/List', [
             'data' => [

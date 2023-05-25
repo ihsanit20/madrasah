@@ -36,6 +36,7 @@ class SalaryController extends Controller
             [
                 'staff_id'      => $staff->id,
                 'purpose_id'    => $request->purpose_id,
+                'session'       => Salary::$current_session,  
             ] + $this->validatedData($request)
         );
 
@@ -46,6 +47,7 @@ class SalaryController extends Controller
 
     protected function save($request, $staff)
     {
+        return "Under Maintenance";
         return Salary::withTrashed()->updateOrCreate(
             [
                 'staff_id'      => $staff->id,

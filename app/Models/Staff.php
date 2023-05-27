@@ -53,6 +53,13 @@ class Staff extends Model
             : 0;
     }
 
+    public function scopePrincipal($query)
+    {
+        return $query->whereHas('current_appointment', function($query) {
+            $query->where('designation_id', 1);
+        });
+    }
+
     public function scopeMale($query)
     {
         return $query->where('gender', 1);

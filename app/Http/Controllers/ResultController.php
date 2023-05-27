@@ -129,7 +129,7 @@ class ResultController extends Controller
 
         $principal = Staff::query()
             ->with('signature')
-            ->where('designation_id', 1)
+            ->principal()
             ->first();
 
         $signature = $principal
@@ -237,7 +237,7 @@ class ResultController extends Controller
 
         $principal = Staff::query()
             ->with('signature')
-            ->where('designation_id', 1)
+            ->principal()
             ->first();
 
         $signature = $principal

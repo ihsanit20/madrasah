@@ -89,7 +89,7 @@ class IncomeController extends Controller
 
         return [
             'income'        => $this->formatedData($income),
-            'staff'         => StaffResource::collection(Staff::orderBy('designation_id')->get()),
+            'staff'         => StaffResource::collection(Staff::get()),
             'categories'    => CategoryResource::collection(Category::type(1)->orderBy('name')->get()),
             'hijriMonths'   => HijriMonth::get(),
         ];

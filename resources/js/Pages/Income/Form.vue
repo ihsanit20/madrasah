@@ -36,7 +36,7 @@
                         <optgroup
                             v-for="staff in data.staff"
                             :key="staff.id"
-                            :label="staff.designation.name"
+                            :label="staff.designationTitle"
                         >
                             <option :value="staff.id">{{ staff.name }}</option>
                         </optgroup>

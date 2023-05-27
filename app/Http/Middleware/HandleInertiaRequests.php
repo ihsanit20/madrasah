@@ -12,6 +12,7 @@ use App\Models\Expense;
 use App\Models\Fee;
 use App\Models\Income;
 use App\Models\Payment;
+use App\Models\Salary;
 use App\Models\Setting;
 use App\Models\Staff;
 use App\Models\StaffForm;
@@ -23,16 +24,17 @@ use Inertia\Middleware;
 class HandleInertiaRequests extends Middleware
 {
     const DYNAMIC_ACADEMIC_SESSION_ABLE_MODELS = [
-        Classes::class,
-        Student::class,
         Admission::class,
+        Classes::class,
+        Exam::class,
         Expense::class,
+        Fee::class,
         Income::class,
         Payment::class,
-        Exam::class,
-        Fee::class,
+        Salary::class,
         Staff::class,
         StaffForm::class,
+        Student::class,
     ];
 
     /**

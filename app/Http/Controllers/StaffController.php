@@ -52,6 +52,7 @@ class StaffController extends Controller
             })
             ->join('designations', 'designations.id', 'appointments.designation_id')
             ->orderBy('designations.priority')
+            ->where('appointments.active', 1)
             ;
     }
 
@@ -168,6 +169,15 @@ class StaffController extends Controller
         if($request->step == 'salary') {
             $staff->current_appointment()->update([
                 "default_salaries" => $request->default_salaries,
+            ]);
+        } elseif($request->step == 'current_appointment_active_status') {
+            $staff->current_appointment()->update([
+                "active" => $request->active
+            ]);
+
+            return response([
+                "message" => "success",
+                "active" => (boolean) ($staff->current_appointment->active ?? false),
             ]);
         } else {
             return $request;

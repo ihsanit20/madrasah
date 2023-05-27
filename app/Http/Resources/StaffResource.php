@@ -63,6 +63,8 @@ class StaffResource extends JsonResource
             'date_of_birth_with_format' => (string) ($this->date_of_birth ? $this->date_of_birth->format('d-m-Y') : ''),
 
             'educational_qualifications'    => EducationalQualificationResource::collection($this->whenLoaded('educational_qualifications')),
+
+            'active'    => (boolean) ($this->current_appointment->active ?? false),
         ];
     }
 

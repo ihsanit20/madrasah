@@ -76,6 +76,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('results/exams/{exam}/classes/{class}/subjects/{subject}', [ResultController::class, 'store'])->name('results.store');
     Route::get('results/exams/{exam}/classes/{class}/result-cards', [ResultController::class, 'resultCard'])->name('results.result-cards');
 
+    Route::get('results/exams/classes', [ResultController::class, 'finalClasses'])->name('results.final.classes');
+    Route::get('results/exams/classes/{class}/subjects', [ResultController::class, 'finalSubjects'])->name('results.final.subjects');
+
     Route::get('seat-plan', [SeatPlanController::class, 'index'])->name('seat-plan.index');
     Route::get('seat-plan/{exam}', [SeatPlanController::class, 'show'])->name('seat-plan.show');
     Route::post('seat-plan/{exam}', [SeatPlanController::class, 'store'])->name('seat-plan.store');

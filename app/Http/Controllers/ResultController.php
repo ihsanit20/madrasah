@@ -32,6 +32,17 @@ class ResultController extends Controller
         ]);
     }
 
+    public function finalClasses()
+    {
+        ClassesResource::withoutWrapping();
+
+        return Inertia::render('Result/FinalClass', [
+            'data' => [
+                'classes'   => ClassesResource::collection(Classes::with(['subjects', 'exams'])->has('exams')->get()),
+            ]
+        ]);
+    }
+
     public function classes(Exam $exam)
     {
         if($exam->academic_session !== request()->session) {
@@ -50,7 +61,116 @@ class ResultController extends Controller
             ]
         ]);
     }
+    
+    public function finalSubjects(Classes $class)
+    {
+        $class->load('exams');
 
+        // return $class;
+
+        $exams = $class->exams;
+
+        ClassesResource::withoutWrapping();
+        SubjectResource::withoutWrapping();
+        ResultResource::withoutWrapping();
+
+        $optional_subject_code = $class->optional_subject_code;
+
+        $admissions = Admission::query()
+            ->with([
+                'student:id,name',
+            ])
+            ->student()
+            ->current()
+            ->where([
+                'class_id' => $class->id,
+            ])
+            ->orderBy('roll')
+            ->get([
+                'id',
+                'class_id',
+                'student_id',
+                'roll',
+            ]);
+        
+
+        $final_results = [];
+
+        foreach($exams as $exam) {
+            // return
+            $results = Result::query()
+            ->where([
+                'exam_id'   => $exam->id,
+                'class_id'  => $class->id,
+            ])
+            ->get();
+
+            foreach($results as $result) {
+                foreach($result->marks as $mark) {
+                    // if($mark['writing'] == null && $mark['speaking'] == null) {
+                    //     continue;
+                    // }
+
+                    if(!isset($final_results[$exam->id][$mark['student_id']][$result->subject_code])) {
+                        $final_results[$exam->id][$mark['student_id']][$result->subject_code] = 0;
+                    }
+
+                    $final_results[$exam->id][$mark['student_id']][$result->subject_code] += (int) ($mark['writing'] ?? 0);
+                    $final_results[$exam->id][$mark['student_id']][$result->subject_code] += (int) ($mark['speaking'] ?? 0);
+                }
+            }
+
+            // dd($final_results);
+
+        }
+        
+        // foreach($final_results as $final_result) {
+        //     dd(array_sum($final_result));
+        // }
+
+        return $final_results;
+
+        $students = $admissions->map(function ($admission) use ($final_results, $optional_subject_code) {
+            return [
+                "id"        => $admission->student->id,
+                "name"      => $admission->student->name,
+                "roll"      => $admission->roll,
+                "total"     => array_sum($final_results[$admission->student->id] ?? []),
+                "result"    => $final_results[$admission->student->id] ?? [],
+            ];
+        });
+
+        // return $students->sortBy('total');
+        $students = $students->toArray();
+        
+        usort($students, function($a, $b) {
+            return strcmp($b['total'], $a['total']);
+        });
+
+        // return $students;
+
+        $principal = Staff::query()
+            ->with('signature')
+            ->principal()
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
+
+        // return $students;
+
+        return Inertia::render('Result/Subject', [
+            'data' => [
+                'exam'      => new ExamResource($exam),
+                'class'     => ClassesResource::make($class),
+                'subjects'  => SubjectResource::collection($class->subjects()->get()),
+                'students'  => $students,
+                'results'   => $results,
+            ],
+            'signature' => $signature,
+        ]);
+    }
     
     public function subjects(Exam $exam, Classes $class)
     {

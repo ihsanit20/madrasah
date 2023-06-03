@@ -27,6 +27,7 @@ class ClassesResource extends JsonResource
             'totalStudent'  => $this->when($this->whenLoaded('students', 1, 0), $this->students->count()),
             'totalSubject'  => $this->when($this->whenLoaded('subjects', 1, 0), $this->subjects->count()),
             'subjects'      => SubjectResource::collection($this->whenLoaded('subjects')),
+            'exams'         => ExamResource::collection($this->whenLoaded('exams')),
             'fees'          => FeeResource::collection($this->whenLoaded('fees')),
             'classFees'     => ClassFeeResource::collection($this->whenLoaded('class_fees')),
             'optional_subject_code' => (int) ($this->optional_subject_code ?? 0),

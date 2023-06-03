@@ -102,4 +102,11 @@ class Classes extends Model
     {
         return $this->hasMany(ClassFee::class, 'class_id');
     }
+
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'exam_classes', 'class_id', 'exam_id')
+            ->whereNull('exam_classes.deleted_at')
+            ->orderBy('exam_classes.exam_id');
+    }
 }

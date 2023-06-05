@@ -1,7 +1,7 @@
 <template>
-    <Head :title="`ক্লাস সমুহ`" />
+    <Head :title="`চূড়ান্ত ফলাফল : ক্লাস সমুহ`" />
 
-    <app-layout :pageTitle="`ক্লাস সমুহ`">
+    <app-layout :pageTitle="`চূড়ান্ত ফলাফল : ক্লাস সমুহ`">
         <div class="flex items-center justify-start py-2">
             <Link
                 :href="route('results.exams')"

@@ -70,6 +70,8 @@ class ResultController extends Controller
 
         $exams = $class->exams;
 
+        // return $exams;
+
         ClassesResource::withoutWrapping();
         SubjectResource::withoutWrapping();
         ResultResource::withoutWrapping();
@@ -128,26 +130,40 @@ class ResultController extends Controller
         //     dd(array_sum($final_result));
         // }
 
-        return $final_results;
+        // return $final_results;
 
-        $students = $admissions->map(function ($admission) use ($final_results, $optional_subject_code) {
+        $students = $admissions->map(function ($admission) use ($final_results, $optional_subject_code, $exams) {
+            $result = [];
+            $total = 0;
+
+            foreach($final_results as $exam_id => $final_result) {
+                $result[$exam_id] = $final_result[$admission->student->id] ?? [];
+
+                $parcent = $exams->where('id', $exam_id)->first()->final_result_parcent;
+
+                $exam_total = array_sum($final_result[$admission->student->id] ?? []);
+
+                $total += round(($exam_total / 100) * $parcent);
+            }
+
             return [
                 "id"        => $admission->student->id,
                 "name"      => $admission->student->name,
                 "roll"      => $admission->roll,
-                "total"     => array_sum($final_results[$admission->student->id] ?? []),
-                "result"    => $final_results[$admission->student->id] ?? [],
+                "total"     => $total,
+                "result"    => $result,
             ];
         });
 
-        // return $students->sortBy('total');
+        // return $students;
+
         $students = $students->toArray();
         
         usort($students, function($a, $b) {
             return strcmp($b['total'], $a['total']);
         });
 
-        // return $students;
+        return $students;
 
         $principal = Staff::query()
             ->with('signature')

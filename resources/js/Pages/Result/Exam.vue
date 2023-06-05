@@ -56,7 +56,7 @@
                 </div>
                 <div class="shrink grow">
                     <div class="text-md font-bold text-sky-600 md:text-xl">
-                        Final Result
+                        চূড়ান্ত ফলাফল
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="text-gray-600">

@@ -31,7 +31,7 @@
                 <div
                     class="rounded-md border px-4 py-0.5 text-center text-xl font-bold print:border-black print:text-black"
                 >
-                    চূড়ান্ত ফলাফল : {{ $e2bnumber($page.props.current_academic_session.value) }} হিজরি
+                    চূড়ান্ত ফলাফল : ১৪{{ $e2bnumber($page.props.current_academic_session.value) }} হিজরি
                 </div>
             </div>
 
@@ -67,6 +67,7 @@
                                 {{ $e2bnumber(exam.final_result_parcent) }}%
                             </span>
                         </th>
+                        <th class="border p-2 print:p-1">মেধাক্রম</th>
                     </tr>
                 </thead>
                 <tbody class="">
@@ -95,6 +96,13 @@
                         >
                             <div class="text-center">
                                 {{ $e2bnumber(student.total) }}
+                            </div>
+                        </td>
+                        <td
+                            class="border p-2 print:p-1"
+                        >
+                            <div class="text-center">
+                                {{ $e2bnumber(index + 1) }}
                             </div>
                         </td>
                     </tr>

@@ -17,7 +17,7 @@
             <print-button />
         </div>
         <div
-            v-for="student in data.students"
+            v-for="(student, index) in data.students"
             :key="student.id"
             class="print:break-before-page"
         >
@@ -25,6 +25,7 @@
                 :student="student"
                 :data="data"
                 :signature="signature"
+                :index="index"
             />
         </div>
     </app-layout>

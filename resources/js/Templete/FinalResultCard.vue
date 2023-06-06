@@ -150,6 +150,14 @@
                         {{ $e2bnumber(student.total) }}
                     </td>
                 </tr>
+                <tr>
+                    <td class="border p-2 text-right print:p-1 w-1/2">
+                        চূূড়ান্ত মেধাক্রম
+                    </td>
+                    <td class="border p-2 text-center print:p-1 w-1/2">
+                        {{ $e2bnumber(index + 1) }}
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -250,6 +258,10 @@ export default {
             type: String,
             default: "",
         },
+        index: {
+            type: Number,
+            default: 0,
+        },
     },
     data() {
         return {
@@ -257,211 +269,7 @@ export default {
         };
     },
     methods: {
-        getSubjectMark(subject_code) {
-            return this.student.results[Number(subject_code)];
-        },
-        getSubjectWritingMark(subject_code) {
-            if (!this.getSubjectMark(subject_code)) {
-                return "";
-            }
-
-            let writing = this.getSubjectMark(subject_code)["writing"] || "";
-
-            return writing === null ? "" : writing;
-        },
-        getSubjectSpeakingMark(subject_code) {
-            if (!this.getSubjectMark(subject_code)) {
-                return "";
-            }
-
-            let speaking = this.getSubjectMark(subject_code)["speaking"] || "";
-
-            return speaking === null ? "" : speaking;
-        },
-        getSubjectTotalMark(subject_code) {
-            return (
-                parseInt(this.getSubjectWritingMark(subject_code) || 0) +
-                parseInt(this.getSubjectSpeakingMark(subject_code) || 0)
-            );
-        },
-        getTotalMark() {
-            let total = 0;
-
-            Object.values(this.student.results).forEach((result) => {
-                total += parseInt(result["writing"] || 0);
-                total += parseInt(result["speaking"] || 0);
-            });
-
-            return total;
-        },
-        getStudentTotalMark(student) {
-            let total = 0;
-
-            Object.values(this.data.subjects).forEach((subject) => {
-                let result = Object.values(this.data.results).find(
-                    (result) =>
-                        Number(result.subject_code) === Number(subject.code)
-                );
-
-                if (result) {
-                    let mark = Object.values(result.marks).find(
-                        (mark) => Number(mark.student_id) === Number(student.id)
-                    );
-
-                    if (mark) {
-                        total += Number(mark.speaking) + Number(mark.writing);
-                    }
-                }
-            });
-
-            return total ? total : "";
-        },
-        getAverageMark() {
-            let total = this.getTotalMark();
-
-            let subjects_count = 0;
-
-            Object.values(this.data.subjects).forEach((subject) => {
-                if (
-                    Number(subject.code) ===
-                    Number(this.data.class.optional_subject_code)
-                ) {
-                    return;
-                }
-
-                let result = Object.values(this.data.results).find(
-                    (result) =>
-                        Number(result.subject_code) === Number(subject.code)
-                );
-
-                if (result) {
-                    let mark = Object.values(result.marks).find(
-                        (mark) =>
-                            Number(mark.student_id) === Number(this.student.id)
-                    );
-
-                    if (mark) {
-                        if (mark.speaking !== "" || mark.writing !== "") {
-                            subjects_count++;
-                        }
-                    }
-                }
-            });
-
-            return subjects_count && total
-                ? Number(total / subjects_count).toFixed(2)
-                : "";
-        },
-        getMinSubjectMark() {
-            const markArray = [];
-
-            Object.values(this.data.subjects).forEach((subject) => {
-                if (
-                    Number(subject.code) ===
-                    Number(this.data.class.optional_subject_code)
-                ) {
-                    return;
-                }
-
-                let result = Object.values(this.data.results).find(
-                    (result) =>
-                        Number(result.subject_code) === Number(subject.code)
-                );
-
-                if (result) {
-                    let mark = Object.values(result.marks).find(
-                        (mark) =>
-                            Number(mark.student_id) === Number(this.student.id)
-                    );
-
-                    if (mark) {
-                        if (mark.speaking !== "" || mark.writing !== "") {
-                            markArray.push(
-                                Number(mark.speaking) + Number(mark.writing)
-                            );
-                        }
-                    }
-                }
-            });
-
-            return Math.min.apply(
-                Math,
-                markArray.map((mark) => Number(mark))
-            );
-        },
-        getGrade() {
-            let min = this.getMinSubjectMark();
-
-            if (min < 35) {
-                return "F";
-            }
-
-            let average = this.getAverageMark();
-
-            if (average === "") {
-                return "";
-            }
-
-            if (average >= 80) {
-                return "A+";
-            }
-
-            if (average >= 70) {
-                return "A";
-            }
-
-            if (average >= 60) {
-                return "A-";
-            }
-
-            if (average >= 50) {
-                return "B";
-            }
-
-            if (average >= 40) {
-                return "C";
-            }
-
-            if (average >= 33) {
-                return "D";
-            }
-
-            return "F";
-        },
-        getMeritList() {
-            let totalMark = this.getTotalMark();
-
-            if (totalMark === "") {
-                return "";
-            }
-
-            let markArray = [];
-
-            Object.values(this.data.students).forEach((student) => {
-                let total = this.getStudentTotalMark(student);
-
-                total &&
-                    this.getGrade(student) !== "F" &&
-                    markArray.push(total);
-            });
-
-            markArray.sort((a, b) => a - b).reverse();
-
-            let markSet = new Set([...markArray]);
-
-            markArray = [...markSet];
-
-            let meritPosition = markArray.indexOf(totalMark) + 1;
-
-            return this.getMeritTextByPosition(meritPosition);
-        },
-        getMeritTextByPosition(position) {
-            if (position === 0) {
-                return "";
-            }
-
-            return position;
-        },
+        //
     },
 };
 </script>

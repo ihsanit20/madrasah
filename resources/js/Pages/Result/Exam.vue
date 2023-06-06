@@ -44,6 +44,9 @@
                     </g>
                 </svg>
             </Link>
+
+            <hr class="col-span-full my-3" />
+
             <Link
                 v-if="Object.keys(data.exams).length"
                 :href="route('results.final.classes')"

@@ -163,7 +163,7 @@ class ResultController extends Controller
             return strcmp($b['total'], $a['total']);
         });
 
-        return $students;
+        // return $students;
 
         $principal = Staff::query()
             ->with('signature')
@@ -176,9 +176,9 @@ class ResultController extends Controller
 
         // return $students;
 
-        return Inertia::render('Result/Subject', [
+        return Inertia::render('Result/FinalSubject', [
             'data' => [
-                'exam'      => new ExamResource($exam),
+                'exams'     => $exams,
                 'class'     => ClassesResource::make($class),
                 'subjects'  => SubjectResource::collection($class->subjects()->get()),
                 'students'  => $students,
@@ -295,6 +295,136 @@ class ResultController extends Controller
         return $total_subject
             ? round(array_sum($marks) / $total_subject, 2)
             : 0;
+    }
+
+    public function finalResultCard (Classes $class)
+    {
+        $class->load([
+            'exams',
+            'subjects',
+        ]);
+
+        // return $class;
+
+        $exams = $class->exams;
+
+        // return $exams;
+
+        ClassesResource::withoutWrapping();
+        SubjectResource::withoutWrapping();
+        ResultResource::withoutWrapping();
+
+        $optional_subject_code = $class->optional_subject_code;
+
+        $admissions = Admission::query()
+            ->with([
+                'student:id,name,registration',
+            ])
+            ->student()
+            ->current()
+            ->where([
+                'class_id' => $class->id,
+            ])
+            ->orderBy('roll')
+            ->get([
+                'id',
+                'class_id',
+                'student_id',
+                'roll',
+            ]);
+        
+
+        $final_results = [];
+
+        foreach($exams as $exam) {
+            // return
+            $results = Result::query()
+            ->where([
+                'exam_id'   => $exam->id,
+                'class_id'  => $class->id,
+            ])
+            ->get();
+
+            foreach($results as $result) {
+                foreach($result->marks as $mark) {
+                    // if($mark['writing'] == null && $mark['speaking'] == null) {
+                    //     continue;
+                    // }
+
+                    if(!isset($final_results[$exam->id][$mark['student_id']][$result->subject_code])) {
+                        $final_results[$exam->id][$mark['student_id']][$result->subject_code] = 0;
+                    }
+
+                    $final_results[$exam->id][$mark['student_id']][$result->subject_code] += (int) ($mark['writing'] ?? 0);
+                    $final_results[$exam->id][$mark['student_id']][$result->subject_code] += (int) ($mark['speaking'] ?? 0);
+                }
+            }
+
+            // dd($final_results);
+
+        }
+        
+        // foreach($final_results as $final_result) {
+        //     dd(array_sum($final_result));
+        // }
+
+        // return $final_results;
+
+        $students = $admissions->map(function ($admission) use ($final_results, $optional_subject_code, $exams) {
+            $result = [];
+            $total = 0;
+
+            foreach($final_results as $exam_id => $final_result) {
+                $result[$exam_id] = $final_result[$admission->student->id] ?? [];
+
+                $parcent = $exams->where('id', $exam_id)->first()->final_result_parcent;
+
+                $exam_total = array_sum($final_result[$admission->student->id] ?? []);
+
+                $total += round(($exam_total / 100) * $parcent);
+            }
+
+            return [
+                "id"            => $admission->student->id,
+                "name"          => $admission->student->name,
+                "roll"          => $admission->roll,
+                "registration"  => $admission->student->registration,
+                "total"         => $total,
+                "result"        => $result,
+            ];
+        });
+
+        // return $students;
+
+        $students = $students->toArray();
+        
+        usort($students, function($a, $b) {
+            return strcmp($b['total'], $a['total']);
+        });
+
+        // return $students;
+
+        $principal = Staff::query()
+            ->with('signature')
+            ->principal()
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
+
+        // return $students;
+
+        return Inertia::render('Result/FinalResultCard', [
+            'data' => [
+                'exams'     => $exams,
+                'class'     => ClassesResource::make($class),
+                'subjects'  => SubjectResource::collection($class->subjects()->get()),
+                'students'  => $students,
+                'results'   => $results,
+            ],
+            'signature' => $signature,
+        ]);
     }
 
     public function resultCard(Exam $exam, Classes $class)

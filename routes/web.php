@@ -78,6 +78,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('results/exams/classes', [ResultController::class, 'finalClasses'])->name('results.final.classes');
     Route::get('results/exams/classes/{class}/subjects', [ResultController::class, 'finalSubjects'])->name('results.final.subjects');
+    Route::get('results/exams/classes/{class}/result-cards', [ResultController::class, 'finalResultCard'])->name('results.final.result-cards');
 
     Route::get('seat-plan', [SeatPlanController::class, 'index'])->name('seat-plan.index');
     Route::get('seat-plan/{exam}', [SeatPlanController::class, 'show'])->name('seat-plan.show');

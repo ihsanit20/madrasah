@@ -14,7 +14,7 @@
         </nav>
 
         <main
-            class="flex-shrink flex-grow space-y-2 overflow-auto px-2 py-2 md:px-4 md:py-4 print:p-0"
+            class="flex-shrink flex-grow space-y-2 overflow-auto px-2 py-2 md:px-4 md:py-4 print:p-0 print:overflow-visible"
         >
             <div class="flex items-end justify-between gap-1.5 print:hidden">
                 <h2

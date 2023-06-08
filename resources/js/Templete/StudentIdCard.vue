@@ -22,7 +22,7 @@
                 </div>
                 <div class="mt-[50px] h-[118px] bg-blue-900">
                     <div
-                        class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-orange-500 rounded-xl"
+                        class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-orange-500 rounded-lg"
                     >
                         <img
                             :src="

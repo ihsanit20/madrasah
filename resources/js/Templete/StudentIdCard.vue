@@ -17,10 +17,10 @@
                         </h2>
                     </div>
                 </div>
-                <div class="flex h-[20px] items-center justify-center bg-blue-900 text-white mt-[-5px]">
+                <div class="flex h-[20px] items-center justify-center bg-green-600 text-white mt-[-5px]">
                     <h2 class="text-[11px] mt-[3px]">শিক্ষার্থীর পরিচয়পত্র</h2>
                 </div>
-                <div class="mt-[50px] h-[118px] bg-green-600">
+                <div class="mt-[50px] h-[118px] bg-blue-900">
                     <div
                         class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-orange-500 rounded-xl"
                     >
@@ -115,7 +115,7 @@
                                     data.student.currentAdmissionId,
                                 ])
                             "
-                            class="border border-black p-1"
+                            class="border border-black p-1 rounded-lg"
                             :size="91"
                             level="L"
                         />

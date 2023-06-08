@@ -1,30 +1,28 @@
 <template>
     <div class="flex flex-wrap gap-8 md:flex-row font-noto-sans-bengali">
-        <div class="w-[236px] space-y-2">
+        <div class="w-[204px] space-y-2">
             <h3 class="text-center font-bold print:hidden">সামনের অংশ</h3>
-            <div class="h-[375px] border bg-white">
+            <div class="h-[324px] border bg-white">
                 <div
-                    class="flex flex-col items-center justify-center gap-1 pt-3 pb-1.5"
+                    class="flex flex-col items-center justify-center gap-1 pt-2.5 pb-1.5"
                 >
-                    <application-logo class="h-10" />
+                    <application-logo class="h-9" />
                     <div
                         class="flex flex-col items-center justify-end space-y-1"
                     >
                         <h2
-                            class="text-[14px] font-bold text-blue-900 print:text-black"
+                            class="text-[13px] font-bold text-blue-900"
                         >
                             {{ $page.props.settings.siteName }}
                         </h2>
                     </div>
                 </div>
-                <div
-                    class="flex h-[27px] items-center justify-center bg-blue-900 text-white"
-                >
-                    <h2 class="text-[10px]">শিক্ষার্থীর পরিচয়পত্র</h2>
+                <div class="flex h-[20px] items-center justify-center bg-blue-900 text-white mt-[-5px]">
+                    <h2 class="text-[11px] mt-[3px]">শিক্ষার্থীর পরিচয়পত্র</h2>
                 </div>
-                <div class="mt-[65px] h-[135px] bg-green-600">
+                <div class="mt-[50px] h-[118px] bg-green-600">
                     <div
-                        class="mx-auto -mb-12 aspect-[40/48] w-[91px] -translate-y-1/2 overflow-hidden border-2 border-orange-500"
+                        class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-orange-500 rounded-xl"
                     >
                         <img
                             :src="
@@ -35,9 +33,9 @@
                         />
                     </div>
                     <div
-                        class="text-center text-[12px] font-semibold text-white"
+                        class="text-center text-[13px] font-semibold text-white"
                     >
-                        <h1 class="pb-1 line-clamp-1">
+                        <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-yellow-200">
                             {{ data.student.name }}
                         </h1>
                         <div
@@ -72,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex h-[40px] items-center justify-center">
+                <div class="flex h-[38px] items-center justify-center">
                     <img
                         v-if="signature"
                         :src="signature"
@@ -86,9 +84,9 @@
                 </div>
             </div>
         </div>
-        <div class="w-[236px] space-y-2">
+        <div class="w-[204px] space-y-2">
             <h3 class="text-center font-bold print:hidden">পিছনের অংশ</h3>
-            <div class="relative h-[375px] border bg-white py-4">
+            <div class="relative h-[324px] border bg-white py-2.5">
                 <div
                     class="flex items-center justify-center gap-1 text-[10px] font-bold"
                 >
@@ -97,10 +95,10 @@
                         {{ $page.props.settings.idCardTime }}
                     </div>
                 </div>
-                <p class="mt-2 text-center text-[9px]">
+                <p class="text-center text-[10px]">
                     তথ্য যাচাইয়ের জন্য স্ক্যান করুন
                 </p>
-                <div class="mt-2 flex items-center justify-center">
+                <div class="mt-1 flex items-center justify-center">
                     <Link
                         :href="
                             route('verifications.student-id-card', [
@@ -123,21 +121,20 @@
                         />
                     </Link>
                 </div>
-                <p class="mt-2 px-8 text-center text-[8px]">
-                    পরিচয়পত্রটি কোথাও পাওয়া গেলে দয়া করে নিম্নোক্ত যেকোন ঠিকানায়
+                <p class="mt-2 px-8 text-center text-[9px]">
+                    পরিচয়পত্রটি কোথাও পাওয়া গেলে নিম্নোক্ত যেকোন ঠিকানায়
                     পৌঁছে দিন
                 </p>
-                <h3 class="mt-3 text-center text-[10px] font-bold">
+                <h3 class="mt-2 text-center text-[10px] font-bold">
                     শিক্ষার্থীর ঠিকানা
                 </h3>
-                <div class="mt-1 px-8 text-center text-[8px]">
+                <div class="px-8 text-center text-[9px]">
                     {{ data.student.presentAddress.value }},
-                    {{ data.student.presentAddress.postoffice }},
                     {{ data.student.presentAddress.areaName }},
                     {{ data.student.presentAddress.districtName }}
                 </div>
                 <div
-                    class="mt-1 flex items-center justify-center gap-1 text-[8px]"
+                    class=" flex items-center justify-center gap-1 text-[9px] font-bold"
                 >
                     <div class="shrink-0 grow-0">অভিভাবকের ফোন :</div>
                     <div class="shrink-0 grow-0">
@@ -146,9 +143,9 @@
                 </div>
                 <div class="absolute bottom-0 left-0 right-0 z-10 w-full">
                     <div
-                        class="flex flex-col items-center justify-end space-y-2 bg-blue-900 py-4 text-white"
+                        class="flex flex-col items-center justify-end space-y-1 bg-blue-900 py-2 text-white"
                     >
-                        <h2 class="text-[14px] font-bold">
+                        <h2 class="text-[12px] font-bold text-yellow-200">
                             {{ $page.props.settings.siteName }}
                         </h2>
                         <h2
@@ -157,12 +154,12 @@
                             {{ $page.props.settings.siteAddress }}
                         </h2>
                         <div
-                            class="flex w-full items-center justify-center gap-1 text-[8px]"
+                            class="flex items-center justify-center gap-1 text-[9px] font-bold"
                         >
-                            <div class="w-20 shrink-0 grow-0 text-right">
+                            <div class="shrink-0 grow-0">
                                 ফোন :
                             </div>
-                            <div class="shrink grow text-left">
+                            <div class="shrink-0 grow-0">
                                 {{ $page.props.settings.sitePhone }}
                             </div>
                         </div>

@@ -13,8 +13,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                "noto-sans-bengali": '"Scheherazade New", "Noto Sans Bengali"',
-                "noto-serif-bengali": '"Scheherazade New", "Noto Serif Bengali"',
+                "noto-sans-bengali": '"Noto Sans Bengali", "Scheherazade New"',
+                "noto-serif-bengali": '"Noto Serif Bengali", "Scheherazade New"',
             },
             animation: {
                 "marquee-40": 'marquee 40s linear infinite',

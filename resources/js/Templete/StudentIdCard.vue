@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-wrap gap-8 md:flex-row">
+    <div class="flex flex-wrap gap-8 md:flex-row font-noto-sans-bengali">
         <div class="w-[236px] space-y-2">
             <h3 class="text-center font-bold print:hidden">সামনের অংশ</h3>
             <div class="h-[375px] border bg-white">

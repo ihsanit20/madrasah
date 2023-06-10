@@ -40,7 +40,7 @@
                         class="flex flex-col gap-2 w-12 shrink-0 grow-0 items-center justify-center text-2xl font-bold text-blue-800 md:text-4xl"
                     >
                         <AvatarView
-                            class="h-12 w-12 bg-gray-200"
+                            class="h-12 w-12 bg-gray-200 border"
                             :imageUrl="staff.imageUrl"
                             :firstLatter="staff.name[0]"
                         />

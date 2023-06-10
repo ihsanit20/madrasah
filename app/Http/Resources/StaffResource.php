@@ -26,6 +26,10 @@ class StaffResource extends JsonResource
             "address"   => "",
         ];
 
+        $default_image = $this->gender == 1
+            ? '/images/staff-male-default.png'
+            : '/images/staff-female-default.jpg';
+
         return [
             'id'                => (int) $this->id,
             'name'              => (string) ($this->name ?? ''),
@@ -35,7 +39,7 @@ class StaffResource extends JsonResource
             'designationTitle'  => (string) ($this->current_appointment->designation->name ?? ''),
             // 'designation'       => new DesignationResource($this->whenLoaded('designation')),
             'allowDeletion'     => (boolean) (true),
-            'imageUrl'          => (string) ($this->image->url ?? ''),
+            'imageUrl'          => (string) ($this->image->url ?? $default_image),
             'signatureUrl'      => (string) ($this->signature->url ?? ''),
             'paid_salaries'     => (object) ($this->salaries ?? []),
             'default_salaries'  => (array) ($this->current_appointment->default_salaries ?? []),

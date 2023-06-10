@@ -17,6 +17,10 @@ class StudentResource extends JsonResource
         // $current_admission = $this->current_admission()->first();
         // $latest_payments = $current_admission ? $current_admission->payments()->latest()->get() : [];
 
+        $default_image = $this->gender == 1
+            ? '/images/staff-male-default.png'
+            : '/images/staff-female-default.jpg';
+
         return [
             'id'                    => (int) $this->id,
             'name'                  => (string) ($this->name ?? ''),
@@ -53,7 +57,7 @@ class StudentResource extends JsonResource
             // 'paidPurpose'           => (array) ($latest_payments ? $latest_payments->pluck('purpose')->toArray() : []),
             // 'duePurposeId'          => (int) ($latest_payments ? $latest_payments->first()->purpose : 0),
             // 'due'                   => (double) ($latest_payments ? $latest_payments->first()->due : 0),
-            'imageUrl'              => (string) ($this->image->url ?? ''),
+            'imageUrl'              => (string) ($this->image->url ?? $default_image),
             // 'imageUrl'              => $this->when($this->whenLoaded('image', 1, 0), fn () => (string) $this->image->url ?? ''),
             'seatNumber'            => (string) ($this->seat_no ?? ''),
         ];

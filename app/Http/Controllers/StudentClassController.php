@@ -66,7 +66,52 @@ class StudentClassController extends Controller
             })
             ->active()
             ->student()
+            ->get();        
+            
+        // return
+        $students = $students->sortBy([
+            'current_admission.roll'
+        ]);
+
+        $principal = Staff::query()
+            ->with('signature')
+            ->principal()
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
+
+        StudentResource::withoutWrapping();
+
+        return Inertia::render('Student/AllIdCard', [
+            'students'  => StudentResource::collection($students),
+            'signature' => $signature,
+        ]);
+    }
+
+    public function allIdCard()
+    {
+        // return
+        $students = Student::query()
+            ->with([
+                'image',
+                'father_info',
+                'mother_info',
+                'guardian_info',
+                'present_address.area.district',
+                'current_admission',
+            ])
+            ->has('current_admission')
+            ->active()
+            ->student()
             ->get();
+
+        // return
+        $students = $students->sortBy([
+            'current_admission.class_id',
+            'current_admission.roll'
+        ]);
 
         $principal = Staff::query()
             ->with('signature')

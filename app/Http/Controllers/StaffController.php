@@ -198,6 +198,40 @@ class StaffController extends Controller
             ->with('status', 'The record has been delete successfully.');
     }
 
+    public function staffIdCard()
+    {
+        $collections = Staff::query()
+            ->with('current_appointment.designation')
+            ->has('current_appointment');
+
+        StaffResource::withoutWrapping();
+
+        $principal = Staff::query()
+            ->with('signature')
+            ->principal()
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
+
+        // return StaffResource::collection($collections->get());
+
+        $staff_list = $collections->get();
+
+        $staff_list = $staff_list->sortBy('current_appointment.designation.priority');
+
+        return Inertia::render('Staff/AllIdCard', [
+            'signature' => $signature,
+            'staffList' => StaffResource::collection($staff_list),
+            'data'      => [
+                'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
+                'districts' => DistrictResource::collection(District::orderBy('name')->get()),
+                'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
+            ],
+        ]);
+    }
+
     protected function data($staff)
     {
         DesignationResource::withoutWrapping();

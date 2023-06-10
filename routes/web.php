@@ -40,6 +40,7 @@ Route::get('/admission-form', [HomeController::class, 'admissionForm'])->name('p
 Route::get('/admission-form-blank', [HomeController::class, 'admissionFormBlank'])->name('page.admission-form-blank');
 
 Route::get('verify/{student}/{admission}', [VerificationController::class, 'studentIdCard'])->name('verifications.student-id-card');
+Route::get('verify/{staff}/{session}', [VerificationController::class, 'staffIdCard'])->name('verifications.staff-id-card');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -93,10 +94,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('other-purpose/{purpose}', [OtherPurposeController::class, 'show'])->name('others.purpose.show');
     Route::get('other-purpose/{purpose}/class/{class}', [OtherPurposeController::class, 'classes'])->name('others.purpose.class');
     
+    Route::get('student-all-id-card', [StudentClassController::class, 'allIdCard'])->name('students.all-id-card');
     Route::get('student-class/{class}/id-card', [StudentClassController::class, 'idCard'])->name('students.class.id-card');
 
     Route::get('staff-list', [StaffController::class, 'list'])->name('staff-list');
     Route::get('staff-attendance-page', [StaffController::class, 'attendancePage'])->name('staff-attendance-page');
+    Route::get('staff-id-card', [StaffController::class, 'staffIdCard'])->name('staff.id-card');
 
     Route::get('staff/{staff}/salaries/create', [SalaryController::class, 'create'])->name('staff.salaries.create');
     Route::post('staff/{staff}/salaries', [SalaryController::class, 'store'])->name('staff.salaries.store');

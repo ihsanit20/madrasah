@@ -18,8 +18,8 @@ class StudentResource extends JsonResource
         // $latest_payments = $current_admission ? $current_admission->payments()->latest()->get() : [];
 
         $default_image = $this->gender == 1
-            ? '/images/staff-male-default.png'
-            : '/images/staff-female-default.jpg';
+            ? '/images/student-male-default.png'
+            : '/images/student-female-default.jpg';
 
         return [
             'id'                    => (int) $this->id,

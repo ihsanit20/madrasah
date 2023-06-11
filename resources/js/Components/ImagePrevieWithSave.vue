@@ -7,7 +7,7 @@
                 :class="ratioClass"
             ></div>
         </div>
-        <div v-if="status" class="flex items-center justify-center">
+        <div v-if="status" class="flex items-center justify-center print:hidden">
             <div
                 v-if="status === 1"
                 class="flex gap-2 bg-green-500 px-4 py-2 font-bold text-white"
@@ -23,7 +23,7 @@
                 Processing
             </div>
         </div>
-        <div v-else class="flex items-center justify-center gap-4">
+        <div v-else class="flex items-center justify-center gap-4 print:hidden">
             <label
                 v-if="!edit"
                 class="cursor-pointer border border-sky-600 px-4 py-2 text-sky-600 hover:bg-sky-600 hover:text-white"

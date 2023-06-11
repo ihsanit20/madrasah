@@ -4,7 +4,7 @@
     <app-layout>
         <salary-component v-if="step === 'salary'" :data="data" />
         <education-component v-else-if="step === 'education'" :data="data" />
-        <form-component v-else :data="data" module-action="update" />
+        <form-component v-else-if="step === 'basic'" :data="data" module-action="update" />
     </app-layout>
 </template>
 

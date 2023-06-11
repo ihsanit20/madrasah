@@ -81,7 +81,7 @@
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.father_info.name"
+                        v-model="form.fathers_info.name"
                         required
                     />
                 </form-group>
@@ -89,14 +89,14 @@
                     <Input
                         type="number"
                         class="block w-full"
-                        v-model="form.father_info.phone"
+                        v-model="form.fathers_info.phone"
                     />
                 </form-group>
                 <form-group class="w-full" label="মাতার নাম">
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.mother_info.name"
+                        v-model="form.mothers_info.name"
                         required
                     />
                 </form-group>
@@ -104,7 +104,7 @@
                     <Input
                         type="number"
                         class="block w-full"
-                        v-model="form.mother_info.phone"
+                        v-model="form.mothers_info.phone"
                     />
                 </form-group>
             </div>
@@ -116,7 +116,7 @@
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.reference.name"
+                        v-model="form.reference_info.name"
                         required
                     />
                 </form-group>
@@ -124,21 +124,21 @@
                     <Input
                         type="number"
                         class="block w-full"
-                        v-model="form.reference.phone"
+                        v-model="form.reference_info.phone"
                     />
                 </form-group>
                 <form-group class="w-full" label="সম্পর্ক">
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.reference.relation"
+                        v-model="form.reference_info.relation"
                     />
                 </form-group>
                 <form-group class="col-span-full w-full" label="ঠিকানা">
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.reference.address"
+                        v-model="form.reference_info.address"
                     />
                 </form-group>
             </div>
@@ -149,13 +149,13 @@
                 <form-group label="বিভাগ">
                     <Select
                         class="block w-full"
-                        v-model="form.present_address.division"
+                        v-model="form.present_address_info.division"
                         @change="presentAddressDivisionSelectHandler"
                         required
                     >
                         <option value="">-- নির্বাচন করুন --</option>
                         <option
-                            v-for="division in present_address.divisions"
+                            v-for="division in data.divisions"
                             :key="division.id"
                             :value="division.id"
                         >
@@ -166,7 +166,7 @@
                 <form-group label="জেলা">
                     <Select
                         class="block w-full"
-                        v-model="form.present_address.district"
+                        v-model="form.present_address_info.district"
                         @change="presentAddressDistrictSelectHandler"
                         required
                     >
@@ -183,7 +183,7 @@
                 <form-group label="উপজেলা/থানা">
                     <Select
                         class="block w-full"
-                        v-model="form.present_address.area"
+                        v-model="form.present_address_info.area"
                     >
                         <option value="">-- নির্বাচন করুন --</option>
                         <option
@@ -200,7 +200,7 @@
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.present_address.postoffice"
+                        v-model="form.present_address_info.postoffice"
                         required
                     />
                 </form-group>
@@ -211,7 +211,7 @@
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.present_address.address"
+                        v-model="form.present_address_info.address"
                         required
                     />
                 </form-group>
@@ -238,7 +238,7 @@
                 <form-group label="বিভাগ">
                     <Select
                         class="block w-full"
-                        v-model="form.permanent_address.division"
+                        v-model="form.permanent_address_info.division"
                         @change="permanentAddressDivisionSelectHandler"
                         required
                     >
@@ -255,7 +255,7 @@
                 <form-group label="জেলা">
                     <Select
                         class="block w-full"
-                        v-model="form.permanent_address.district"
+                        v-model="form.permanent_address_info.district"
                         @change="permanentAddressDistrictSelectHandler"
                         required
                     >
@@ -272,7 +272,7 @@
                 <form-group label="উপজেলা/থানা">
                     <Select
                         class="block w-full"
-                        v-model="form.permanent_address.area"
+                        v-model="form.permanent_address_info.area"
                         required
                     >
                         <option value="">-- নির্বাচন করুন --</option>
@@ -289,7 +289,7 @@
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.permanent_address.postoffice"
+                        v-model="form.permanent_address_info.postoffice"
                         required
                     />
                 </form-group>
@@ -300,7 +300,7 @@
                     <Input
                         type="text"
                         class="block w-full"
-                        v-model="form.permanent_address.address"
+                        v-model="form.permanent_address_info.address"
                         required
                     />
                 </form-group>
@@ -308,7 +308,15 @@
 
             <hr class="my-4 w-full" />
 
-            <div class="flex items-center justify-end">
+            <div class="flex items-center justify-between">
+                <Link
+                    :href="
+                        route('staff.show', data.staff.id)
+                    "
+                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                >
+                    Cancel
+                </Link>
                 <Button
                     class=""
                     :class="{ 'opacity-25': form.processing }"
@@ -322,6 +330,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3"
 import ValidationErrors from "@/Components/ValidationErrors.vue";
 import Button from "@/Components/Button.vue";
 import Input from "@/Components/Input.vue";
@@ -332,6 +341,7 @@ import Textarea from "@/Components/Textarea.vue";
 
 export default {
     components: {
+        Link,
         ValidationErrors,
         Button,
         Input,
@@ -359,34 +369,6 @@ export default {
         this.permanent_address.divisions = this.data.divisions;
         this.permanent_address.districts = this.data.districts;
         this.permanent_address.areas = this.data.areas;
-
-        if (this.moduleAction == "update") {
-            this.form.father_info = this.data.staff.fatherInfo;
-            this.form.mother_info = this.data.staff.motherInfo;
-            this.form.guardian_info = this.data.staff.guardianInfo;
-
-            this.form.present_address.postoffice =
-                this.data.staff.presentAddress.postoffice;
-            this.form.present_address.address =
-                this.data.staff.presentAddress.value;
-            this.form.present_address.area =
-                this.data.staff.presentAddress.areaId;
-            this.form.present_address.district =
-                this.data.staff.presentAddress.area.districtId;
-            this.form.present_address.division =
-                this.data.staff.presentAddress.area.district.divisionId;
-
-            this.form.permanent_address.postoffice =
-                this.data.staff.permanentAddress.postoffice;
-            this.form.permanent_address.address =
-                this.data.staff.permanentAddress.value;
-            this.form.permanent_address.area =
-                this.data.staff.permanentAddress.areaId;
-            this.form.permanent_address.district =
-                this.data.staff.permanentAddress.area.districtId;
-            this.form.permanent_address.division =
-                this.data.staff.permanentAddress.area.district.divisionId;
-        }
     },
     data() {
         return {
@@ -403,33 +385,20 @@ export default {
                 areas: "",
             },
             form: this.$inertia.form({
-                name: this.data.staff.name || "",
-                phone: this.data.staff.phone || "",
-                alternative_phone: this.data.staff.alternative_phone || "",
-                date_of_birth: this.data.staff.date_of_birth || "",
+                step: "basic",
+                name: this.data.staff.name,
+                date_of_birth: this.data.staff.date_of_birth,
+                phone: this.data.staff.phone,
+                alternative_phone: this.data.staff.alternative_phone,
                 nid: this.data.staff.nid,
                 gender: this.data.staff.gender,
                 blood_group: this.data.staff.bloodGroup,
-                // designation_id: this.data.staff.designationId || "",
-                father_info: this.data.staff.father_info,
-                mother_info: this.data.staff.mother_info,
-                reference: this.data.staff.reference,
-                is_same_address:
-                    this.moduleAction == "update"
-                        ? this.data.staff.isSameAddress
-                        : 0,
-                present_address: {
-                    division: "",
-                    district: "",
-                    area: "",
-                    address: "",
-                },
-                permanent_address: {
-                    division: "",
-                    district: "",
-                    area: "",
-                    address: "",
-                },
+                fathers_info: this.data.staff.fathers_info,
+                mothers_info: this.data.staff.mothers_info,
+                reference_info: this.data.staff.reference_info,
+                is_same_address: this.data.staff.is_same_address,
+                present_address_info: this.data.staff.present_address_info,
+                permanent_address_info: this.data.staff.permanent_address_info,
             }),
         };
     },

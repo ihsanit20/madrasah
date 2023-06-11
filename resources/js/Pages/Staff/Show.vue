@@ -12,9 +12,8 @@
                     শিক্ষক/স্টাফ প্রফাইল
                 </h2>
                 <Link
-                    v-if="false"
-                    :href="route('staff.edit', data.staff.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border-green-600 px-2.5 pt-1 text-white"
+                    :href="route('staff.edit', data.staff.id) + `?step=basic`"
+                    class="rounded border border-green-600 px-2.5 pt-1 text-green-600 hover:text-white hover:bg-green-600"
                 >
                     তথ্য সম্পাদনা
                 </Link>
@@ -49,7 +48,7 @@
                     </div>
                     <div class="shrink grow border-y border-gray-400"></div>
                 </div>
-                <div class="flex flex-col gap-2 py-2 md:flex-row">
+                <div class="flex flex-col gap-2 py-2 md:flex-row print:flex-row">
                     <div class="shrink grow">
                         <div class="flex items-start gap-1.5">
                             <div
@@ -186,7 +185,7 @@
                 </div>
                 <div class="flex items-start gap-1.5">
                     <div
-                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                        class="w-28 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
                     >
                         ফোন নাম্বার:
                     </div>
@@ -198,7 +197,7 @@
                 </div>
                 <div class="flex items-start gap-1.5">
                     <div
-                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                        class="w-28 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
                     >
                         বর্তমান ঠিকানা:
                     </div>
@@ -210,14 +209,14 @@
                 </div>
                 <div class="flex items-start gap-1.5">
                     <div
-                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                        class="w-28 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
                     >
                         স্থায়ী ঠিকানা:
                     </div>
                     <div
                         class="shrink grow pt-1.5 text-sm font-semibold text-gray-800"
                     >
-                        {{ permanent_address_text }}
+                        {{ data.staff.is_same_address ? present_address_text : permanent_address_text }}
                     </div>
                 </div>
             </div>
@@ -235,7 +234,7 @@
                 </div>
                 <div class="flex items-start gap-1.5">
                     <div
-                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                        class="w-28 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
                     >
                         নাম:
                     </div>
@@ -247,7 +246,7 @@
                 </div>
                 <div class="flex items-start gap-1.5">
                     <div
-                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                        class="w-28 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
                     >
                         সম্পর্ক:
                     </div>
@@ -259,7 +258,7 @@
                 </div>
                 <div class="flex items-start gap-1.5">
                     <div
-                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                        class="w-28 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
                     >
                         ফোন নাম্বার:
                     </div>
@@ -271,7 +270,7 @@
                 </div>
                 <div class="flex items-start gap-1.5">
                     <div
-                        class="w-24 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
+                        class="w-28 shrink-0 grow-0 bg-gray-200 pt-1 pr-0.5 text-right text-sm font-semibold text-gray-800"
                     >
                         ঠিকানা:
                     </div>

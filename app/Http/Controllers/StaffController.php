@@ -171,11 +171,18 @@ class StaffController extends Controller
             ]);
         }
 
-        return ["withoutStep" => $this->data($staff)];
+        if(request()->step == 'basic') {
+            // return $this->formatedData($staff);
 
-        return Inertia::render('Staff/Edit', [
-            'data' => $this->data($staff)
-        ]);
+            return Inertia::render('Staff/Edit', [
+                'data'  => $this->data($staff),
+                'step'  => 'basic',
+            ]);
+        }
+
+        return redirect()
+            ->route('staff.show', $staff->id)
+            ->with('status', 'The record has been update successfully.');
     }
 
     public function update(Request $request, Staff $staff)
@@ -201,9 +208,8 @@ class StaffController extends Controller
                 "active" => (boolean) ($staff->current_appointment->active ?? false),
             ]);
         }
-        else
+        elseif($request->step == 'basic')
         {
-            return ["withoutStep" => $request];
             $staff->update($this->validatedData($request, $staff->id));
         }
 
@@ -293,14 +299,6 @@ class StaffController extends Controller
                 'required',
                 'string',
             ],
-            // 'designation_id' => [
-            //     'required',
-            //     'numeric',
-            // ],
-            'date_of_birth' => [
-                'required',
-                'string',
-            ],
             'phone' => [
                 'required',
                 'string',
@@ -312,15 +310,12 @@ class StaffController extends Controller
             'gender' => [
                 'required',
             ],
-            'father_info' => [
-                'required',
-            ],
-            'mother_info' => [
-                'required',
-            ],
-            'reference' => [
-                'required',
-            ],
+            'fathers_info' => [],
+            'mothers_info' => [],
+            'reference_info' => [],
+            'present_address_info' => [],
+            'permanent_address_info' => [],
+            'is_same_address' => [],
         ]);
     }
 

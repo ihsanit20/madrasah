@@ -14,6 +14,7 @@ use App\Models\Area;
 use App\Models\Designation;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\EducationalQualification;
 use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -157,7 +158,20 @@ class StaffController extends Controller
             ]);
         }
 
-        // return $this->data($staff);
+        if(request()->step == 'education') {
+            $staff->load('educational_qualifications');
+    
+            // return $this->formatedData($staff);
+
+            return Inertia::render('Staff/Edit', [
+                'data'  => [
+                    'staff' => $this->formatedData($staff),
+                ],
+                'step'  => 'education',
+            ]);
+        }
+
+        return ["withoutStep" => $this->data($staff)];
 
         return Inertia::render('Staff/Edit', [
             'data' => $this->data($staff)
@@ -166,11 +180,18 @@ class StaffController extends Controller
 
     public function update(Request $request, Staff $staff)
     {
-        if($request->step == 'salary') {
+        if($request->step == 'salary')
+        {
             $staff->current_appointment()->update([
                 "default_salaries" => $request->default_salaries,
             ]);
-        } elseif($request->step == 'current_appointment_active_status') {
+        }
+        elseif($request->step == 'education')
+        {
+            $this->storeEducationalQualification($request, $staff);
+        }
+        elseif($request->step == 'current_appointment_active_status')
+        {
             $staff->current_appointment()->update([
                 "active" => $request->active
             ]);
@@ -179,8 +200,10 @@ class StaffController extends Controller
                 "message" => "success",
                 "active" => (boolean) ($staff->current_appointment->active ?? false),
             ]);
-        } else {
-            return $request;
+        }
+        else
+        {
+            return ["withoutStep" => $request];
             $staff->update($this->validatedData($request, $staff->id));
         }
 
@@ -301,6 +324,33 @@ class StaffController extends Controller
         ]);
     }
 
+    protected function storeEducationalQualification($request, $staff)
+    {
+        $staff->load('educational_qualifications');
+
+        $staff->educational_qualifications()->delete();
+
+        if(count($request->educational_qualifications))
+        {
+            foreach($request->educational_qualifications as $educational_qualification)
+            {
+                EducationalQualification::onlyTrashed()->updateOrCreate(
+                    [
+
+                    ],
+                    [
+                        "staff_id"          => $staff->id,
+                        "exam_name"         => $educational_qualification["exam_name"],
+                        "year"              => $educational_qualification["year"],
+                        "institute_name"    => $educational_qualification["institute_name"],
+                        "board"             => $educational_qualification["board"],
+                        "result"            => $educational_qualification["result"],
+                        "deleted_at"        => null,
+                    ]
+                );
+            }
+        }
+    }
     
     protected function storeAddress($request, $staff = null)
     {

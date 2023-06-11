@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Traits\BloodGroup;
 use App\Traits\Gender;
+use App\Traits\GenderOlder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Staff extends Model
 {
-    use HasFactory, SoftDeletes, BloodGroup, Gender;
+    use HasFactory, SoftDeletes, BloodGroup, GenderOlder;
 
     protected $guarded = [];
 

@@ -3,6 +3,7 @@
 
     <app-layout>
         <salary-component v-if="step === 'salary'" :data="data" />
+        <education-component v-else-if="step === 'education'" :data="data" />
         <form-component v-else :data="data" module-action="update" />
     </app-layout>
 </template>
@@ -12,6 +13,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/App.vue";
 import FormComponent from "./Form.vue";
 import SalaryComponent from "./Salary.vue";
+import EducationComponent from "./Education.vue";
 
 export default {
     components: {
@@ -19,6 +21,7 @@ export default {
         AppLayout,
         FormComponent,
         SalaryComponent,
+        EducationComponent,
     },
 
     props: {

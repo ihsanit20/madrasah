@@ -2,31 +2,37 @@
     <Head title="Staff" />
 
     <app-layout>
-        <div class="max-w-3xl rounded p-3 md:p-4">
+        <div class="max-w-4xl rounded pb-3">
             <div
                 class="flex flex-wrap items-end justify-between gap-4 print:hidden"
             >
                 <h2
                     class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
                 >
-                    শিক্ষার্থীর প্রফাইল
+                    শিক্ষক/স্টাফ প্রফাইল
                 </h2>
                 <Link
                     v-if="false"
                     :href="route('staff.edit', data.staff.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border-green-600 px-2.5 pt-1 text-white"
                 >
                     তথ্য সম্পাদনা
                 </Link>
                 <Link
+                    :href="route('staff.edit', data.staff.id) + `?step=education`"
+                    class="rounded border border-green-600 px-2.5 pt-1 text-green-600 hover:text-white hover:bg-green-600"
+                >
+                    শিক্ষাগত যোগ্যতা সম্পাদনা
+                </Link>
+                <Link
                     :href="route('staff.edit', data.staff) + '?step=salary'"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
+                    class="rounded border border-green-600 px-2.5 pt-1 text-green-600 hover:text-white hover:bg-green-600"
                 >
                     বেতন সম্পাদনা
                 </Link>
                 <Link
                     :href="route('staff.salaries.create', data.staff.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 pt-1 text-white"
+                    class="rounded bg-green-600 px-2.5 pt-1 text-white border border-green-600 hover:bg-green-700"
                 >
                     বেতন দিন
                 </Link>
@@ -34,7 +40,7 @@
         </div>
 
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="max-w-4xl overflow-x-auto rounded border bg-white print:border-0"
         >
             <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
                 <div class="flex items-center gap-2">
@@ -49,7 +55,7 @@
                             <div
                                 class="w-32 shrink-0 grow-0 bg-gray-200 pt-1 pr-1 text-right text-sm font-semibold text-gray-800"
                             >
-                                শিক্ষার্থীর নাম:
+                                নাম:
                             </div>
                             <div
                                 class="shrink grow pt-1 text-sm font-semibold text-gray-800"
@@ -139,11 +145,8 @@
                         </div>
                     </div>
                     <div class="grid shrink-0 grow-0">
-                        <label class="shrink-0 grow-0 text-gray-700">
-                            ছবি
-                        </label>
                         <image-previe-with-save
-                            class="w-44"
+                            class="w-40"
                             ratioClass="aspect-[40/48]"
                             option="staff"
                             :imageUrl="data.staff.imageUrl"
@@ -151,11 +154,10 @@
                             :width="100"
                             :height="120"
                         />
-                        <label class="mt-4 shrink-0 grow-0 text-gray-700">
-                            সাক্ষর
-                        </label>
+                    </div>
+                    <div class="grid shrink-0 grow-0">
                         <image-previe-with-save
-                            class="w-44"
+                            class="w-60"
                             ratioClass="aspect-[16/9]"
                             option="staff"
                             :imageUrl="data.staff.signatureUrl"
@@ -164,13 +166,16 @@
                             :width="160"
                             :height="90"
                         />
+                        <label class="mt-4 shrink-0 grow-0 text-gray-700 font-bold">
+                            সাক্ষর
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
 
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="max-w-4xl overflow-x-auto rounded border bg-white print:border-0"
         >
             <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
                 <div class="flex items-center gap-2">
@@ -219,7 +224,7 @@
         </div>
 
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="max-w-4xl overflow-x-auto rounded border bg-white print:border-0"
         >
             <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
                 <div class="flex items-center gap-2">
@@ -280,7 +285,7 @@
         </div>
 
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="max-w-4xl overflow-x-auto rounded border bg-white print:border-0"
         >
             <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
                 <div class="flex items-center gap-2">
@@ -324,7 +329,7 @@
             </div>
         </div>
 
-        <div v-if="false" class="max-w-3xl rounded p-3 md:p-4">
+        <div v-if="false" class="max-w-4xl rounded p-3 md:p-4">
             <div
                 class="flex flex-wrap items-end justify-between gap-4 print:hidden"
             >

@@ -2,10 +2,6 @@
     <div class="w-full max-w-xl rounded border bg-white p-4 shadow">
         <validation-errors class="mb-4" />
 
-        <div class="fixed right-0 top-32 w-1/3">
-            {{ form }}
-        </div>
-
         <form @submit.prevent="submit" class="">
             <form-heading class="mb-2">ব্যক্তিগত তথ্য</form-heading>
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-2">

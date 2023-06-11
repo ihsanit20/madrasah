@@ -379,8 +379,8 @@ export default {
         present_address_text() {
             let addressText = '';
 
-            addressText += this.data.staff.present_address_info.address;
-            addressText += ", " + this.data.staff.present_address_info.postoffice;
+            let presentAddress = this.data.staff.present_address_info.address;
+            let presentPostOffice = this.data.staff.present_address_info.postoffice;
 
             let selectedArea = Object.values(this.data.areas).find((area) => {
                 return parseInt(area.id) === parseInt(this.data.staff.present_address_info.area);
@@ -394,6 +394,8 @@ export default {
                 return parseInt(division.id) === parseInt(this.data.staff.present_address_info.division);
             })
 
+            addressText += (presentAddress ? presentAddress : "");
+            addressText += ", " + (presentPostOffice ? presentPostOffice : "");
             addressText += ", " + (selectedArea ? selectedArea.name : "");
             addressText += ", " + (selectedArea ? selectedDistrict.name : "");
             addressText += ", " + (selectedArea ? selectedDivision.name : "");
@@ -403,8 +405,8 @@ export default {
         permanent_address_text() {
             let addressText = '';
 
-            addressText += this.data.staff.permanent_address_info.address;
-            addressText += ", " + this.data.staff.permanent_address_info.postoffice;
+            let permanentAddress = this.data.staff.permanent_address_info.address;
+            let permanentPostOffice = this.data.staff.permanent_address_info.postoffice;
 
             let selectedArea = Object.values(this.data.areas).find((area) => {
                 return parseInt(area.id) === parseInt(this.data.staff.permanent_address_info.area);
@@ -418,6 +420,8 @@ export default {
                 return parseInt(division.id) === parseInt(this.data.staff.permanent_address_info.division);
             })
 
+            addressText += (permanentAddress ? permanentAddress : "");
+            addressText += ", " + (permanentPostOffice ? permanentPostOffice : "");
             addressText += ", " + (selectedArea ? selectedArea.name : "");
             addressText += ", " + (selectedArea ? selectedDistrict.name : "");
             addressText += ", " + (selectedArea ? selectedDivision.name : "");

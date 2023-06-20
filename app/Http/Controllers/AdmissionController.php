@@ -239,13 +239,16 @@ class AdmissionController extends Controller
 
             if($admission->student->status == 2) {
                 $current_year = explode("-", $this->getCurrentSession())[0];
-    
-                $two_digit_class_code = str_pad($admission->class_id, 2,"0", STR_PAD_LEFT);
-    
-                $three_digit_roll = str_pad($new_roll, 3,"0", STR_PAD_LEFT);
+
+                $serial_number = Admission::query()
+                    ->current()
+                    ->student()
+                    ->count();
+
+                $frour_digit_serial_number = str_pad($serial_number, 4, "0", STR_PAD_LEFT);
 
                 $admission->student()->update([
-                    "registration"  => $current_year . $two_digit_class_code . $three_digit_roll,
+                    "registration"  => $current_year . $frour_digit_serial_number,
                     "status"        => 1,
                 ]);
             }

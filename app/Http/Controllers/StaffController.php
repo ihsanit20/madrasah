@@ -316,6 +316,7 @@ class StaffController extends Controller
             'present_address_info' => [],
             'permanent_address_info' => [],
             'is_same_address' => [],
+            'joining_date' => [],
         ]);
     }
 

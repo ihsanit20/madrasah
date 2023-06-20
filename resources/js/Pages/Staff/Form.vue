@@ -304,6 +304,19 @@
 
             <hr class="my-4 w-full" />
 
+            <div class="grid gap-4">
+                <form-group class="w-full md:flex-row-reverse justify-center items-center gap-2" label="নিয়োগের তারিখ:">
+                    <Input
+                        type="date"
+                        class="block w-full md:w-1/2"
+                        v-model="form.joining_date"
+                        required
+                    />
+                </form-group>
+            </div>
+
+            <hr class="my-4 w-full" />
+
             <div class="flex items-center justify-between">
                 <Link
                     :href="
@@ -395,6 +408,7 @@ export default {
                 is_same_address: this.data.staff.is_same_address,
                 present_address_info: this.data.staff.present_address_info,
                 permanent_address_info: this.data.staff.permanent_address_info,
+                joining_date: this.data.staff.joining_date,
             }),
         };
     },

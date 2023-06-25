@@ -302,8 +302,48 @@
             </template>
         </dropdown-nav-link>
         <dropdown-nav-link
-            :active="route().current('(staff|staff-form).*|staff-attendance-page')"
+            :active="route().current('sms-services.*')"
             :newBadge="true"
+        >
+            <PaymentSvg class="h-6 w-6 md:h-8 md:w-8" />
+            <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
+                SMS প্যানেল
+            </span>
+
+            <template #items>
+                <nav-link
+                    :href="route('sms-services.create')"
+                    :active="route().current('sms-services.create')"
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        সাধারণ বার্তা
+                    </span>
+                </nav-link>
+                <nav-link
+                    :href="route('sms-services.index')"
+                    :active="route().current('sms-services.(index|show|edit)')"
+                    class="flex items-center gap-2 md:gap-4"
+                    :newBadge="true"
+                >
+                    <PaymentSvg class="h-4 w-4 md:h-6 md:w-6" />
+                    <span
+                        class="-mb-1"
+                        :class="{ 'hidden md:block': !navigation }"
+                    >
+                        SMS তালিকা
+                    </span>
+                </nav-link>
+            </template>
+        </dropdown-nav-link>
+        <dropdown-nav-link
+            :active="route().current('(staff|staff-form).*|staff-attendance-page')"
+            :newBadge="false"
         >
             <TeacherSvg class="h-6 w-6 md:h-8 md:w-8" />
             <span class="-mb-1" :class="{ 'hidden md:block': !navigation }">
@@ -340,7 +380,7 @@
                     :href="route('staff-form.index')"
                     :active="route().current('staff-form.*')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
+                    :newBadge="false"
                 >
                     <TeacherSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span
@@ -354,7 +394,7 @@
                     :href="route('staff.id-card')"
                     :active="route().current('staff.id-card')"
                     class="flex items-center gap-2 md:gap-4"
-                    :newBadge="true"
+                    :newBadge="false"
                 >
                     <TeacherSvg class="h-4 w-4 md:h-6 md:w-6" />
                     <span

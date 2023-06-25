@@ -11,4 +11,9 @@ class Guardian extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'guardian_info_id');
+    }
 }

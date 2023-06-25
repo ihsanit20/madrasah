@@ -23,6 +23,7 @@ use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SeatPlanController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SmsServiceController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffFormController;
 use App\Http\Controllers\StudentClassController;
@@ -124,6 +125,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'payments'          => PaymentController::class,
         'purposes'          => PurposeController::class,
         'exams'             => ExamController::class,
+        'sms-services'      => SmsServiceController::class,
     ]);
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');

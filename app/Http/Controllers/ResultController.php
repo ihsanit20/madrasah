@@ -143,6 +143,8 @@ class ResultController extends Controller
 
                 $exam_total = array_sum($final_result[$admission->student->id] ?? []);
 
+                $result[$exam_id]["exam_total"] = $exam_total;
+
                 $total += round(($exam_total / 100) * $parcent);
             }
 
@@ -380,6 +382,8 @@ class ResultController extends Controller
                 $parcent = $exams->where('id', $exam_id)->first()->final_result_parcent;
 
                 $exam_total = array_sum($final_result[$admission->student->id] ?? []);
+
+                $result[$exam_id]["exam_total"] = $exam_total;
 
                 $total += round(($exam_total / 100) * $parcent);
             }

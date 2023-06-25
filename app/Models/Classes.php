@@ -105,7 +105,10 @@ class Classes extends Model
 
     public function exams()
     {
+        $session = "14" . self::$current_session;
+
         return $this->belongsToMany(Exam::class, 'exam_classes', 'class_id', 'exam_id')
+            ->where('exams.session', $session)
             ->whereNull('exam_classes.deleted_at')
             ->orderBy('exam_classes.exam_id');
     }

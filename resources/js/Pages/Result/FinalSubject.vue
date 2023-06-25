@@ -88,7 +88,7 @@
                             class="border p-2 print:p-1"
                         >
                             <div class="text-center">
-                                {{ $e2bnumber(Object.values(student.result[exam.id]).reduce((a, b) => a + b, 0)) }}
+                                {{ $e2bnumber(student.result[exam.id] ? student.result[exam.id]["exam_total"] : "") }}
                             </div>
                         </td>
                         <td

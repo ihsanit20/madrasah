@@ -48,6 +48,7 @@ class SmsServiceController extends Controller
             'sms'       => $this->formatedData($fee),
             'senders'   => ["MSZannat", "0000000000"],
             'guardians' => $this->getGuardianData(),
+            'classes'   => Classes::pluck('name', 'id'),
         ];
     }
 
@@ -68,22 +69,34 @@ class SmsServiceController extends Controller
             ])
             ->with([
                 'student:id,name,guardian_info_id',
-                'student.current_admission:id,student_id,class_id',
+                'student.current_admission:id,student_id,class_id,roll',
             ])
             ->has('student.current_admission')
             ->get();
 
         $maping_data_of_guardians = $guardians->map(function ($guardian) {
             return [
-                "student_name"      => (string) ($guardian->student->name ?? ""),
-                "student_class_id"  => (int) ($guardian->student->current_admission->class_id ?? ""),
-                "guardian_name"     => (string) ($guardian->name ?? ""),
-                "guardian_phone"    => (string) ($guardian->phone ?? ""),
+                "student_id"            => (int) ($guardian->student->id ?? 0),
+                "student_name"          => (string) ($guardian->student->name ?? ""),
+                "student_class_id"      => (int) ($guardian->student->current_admission->class_id ?? 0),
+                "student_class_roll"    => (int) ($guardian->student->current_admission->roll ?? 0),
+                "guardian_name"         => (string) ($guardian->name ?? ""),
+                "guardian_phone"        => (string) ($guardian->phone ?? ""),
             ];
         });
 
         // dd($maping_data_of_guardians->toArray());
 
-        return $maping_data_of_guardians;
+        $array_data_of_guardians = $maping_data_of_guardians->toArray();
+        
+        usort($array_data_of_guardians, function($a, $b) {
+            if(strcmp($a['student_class_id'], $b['student_class_id']) == 0) {
+                return strcmp($a['student_class_roll'], $b['student_class_roll']);
+            }
+
+            return strcmp($a['student_class_id'], $b['student_class_id']);
+        });
+
+        return $array_data_of_guardians;
     }
 }

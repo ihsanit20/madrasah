@@ -12,7 +12,7 @@
                     <div
                         class="overflow-hidden whitespace-normal break-all line-clamp-6"
                     >
-                        {{ sms }}
+                        {{ sms.body }}
                     </div>
                 </table-td>
             </template>

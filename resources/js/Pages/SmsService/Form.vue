@@ -125,7 +125,7 @@
                     <option
                         v-for="(sender, index) in data.senders"
                         :key="index"
-                        :value="index"
+                        :value="sender"
                     >
                         {{ sender }}
                     </option>
@@ -191,19 +191,31 @@ export default {
             form: this.$inertia.form({
                 body: this.data.sms.body || "",
                 sender: this.data.sms.sender || "",
+                receivers: this.data.sms.receivers || [],
             }),
         };
     },
     computed: {
         sms_filter_data() {
-            return Object.values(this.data.guardians).filter((guardian) => {
-                return this.classFilterIds.includes(parseInt(guardian.student_class_id));
+            return Object.values(this.data.receivers).filter((receiver) => {
+                return this.classFilterIds.includes(parseInt(receiver.student_class_id));
             });
         }
     },
     methods: {
         submit() {
             if (this.moduleAction == "store") {
+                const smsFinalFilterData = Object.values(this.data.receivers).filter((receiver) => {
+                    return this.studentFilterIds.includes(parseInt(receiver.student_id));
+                });
+
+                this.form.receivers = smsFinalFilterData.map((data) => {
+                    return {
+                        student_id: data.student_id,
+                        guardian_phone: data.guardian_phone,
+                    };
+                });
+
                 return this.form.post(this.route("sms-services.store"));
             }
             if (this.moduleAction == "update") {

@@ -7,6 +7,7 @@ use App\Models\Classes;
 use App\Models\Guardian;
 use App\Models\SmsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SmsServiceController extends Controller
@@ -30,9 +31,40 @@ class SmsServiceController extends Controller
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        return "store";
+        return $request;
+
+        $sms_service = SmsService::create(
+            $this->validatedData($request) + [
+                "created_by" => Auth::id(),
+            ]
+        );
+
+        return redirect()
+            ->route('sms-services.show', $sms_service->id)
+            ->with('status', 'The record has been added successfully.');
+    }
+
+    public function show(SmsService $sms_service)
+    {
+        // return $sms_service;
+
+        return Inertia::render('SmsService/Show', [
+            'data' => [
+                'sms_service' => $this->formatedData($sms_service)
+            ]
+        ]);
+    }
+    
+    protected function validatedData($request, $id = '')
+    {
+        return $request->validate([
+            'title' => [],
+            'body' => ['required'],
+            'sender' => ['required'],
+            'receivers' => ['required', 'array'],
+        ]);
     }
 
     protected function getFilterProperty()
@@ -47,7 +79,7 @@ class SmsServiceController extends Controller
         return [
             'sms'       => $this->formatedData($fee),
             'senders'   => ["MSZannat", "0000000000"],
-            'guardians' => $this->getGuardianData(),
+            'receivers' => $this->getReceivers(),
             'classes'   => Classes::pluck('name', 'id'),
         ];
     }
@@ -59,7 +91,7 @@ class SmsServiceController extends Controller
         return new SmsServiceResource($fee);
     }
 
-    protected function getGuardianData()
+    protected function getReceivers()
     {
         $guardians = Guardian::query()
             ->select([
@@ -74,7 +106,7 @@ class SmsServiceController extends Controller
             ->has('student.current_admission')
             ->get();
 
-        $maping_data_of_guardians = $guardians->map(function ($guardian) {
+        $collection_of_receivers = $guardians->map(function ($guardian) {
             return [
                 "student_id"            => (int) ($guardian->student->id ?? 0),
                 "student_name"          => (string) ($guardian->student->name ?? ""),
@@ -85,11 +117,11 @@ class SmsServiceController extends Controller
             ];
         });
 
-        // dd($maping_data_of_guardians->toArray());
+        // dd($collection_of_receivers->toArray());
 
-        $array_data_of_guardians = $maping_data_of_guardians->toArray();
+        $array_of_receivers = $collection_of_receivers->toArray();
         
-        usort($array_data_of_guardians, function($a, $b) {
+        usort($array_of_receivers, function($a, $b) {
             if(strcmp($a['student_class_id'], $b['student_class_id']) == 0) {
                 return strcmp($a['student_class_roll'], $b['student_class_roll']);
             }
@@ -97,6 +129,6 @@ class SmsServiceController extends Controller
             return strcmp($a['student_class_id'], $b['student_class_id']);
         });
 
-        return $array_data_of_guardians;
+        return $array_of_receivers;
     }
 }

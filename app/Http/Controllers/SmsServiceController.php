@@ -61,7 +61,17 @@ class SmsServiceController extends Controller
     {
         // return $sms_service;
 
-        // $this->sendSms();
+        $text = $sms_service->body;
+
+        $comma_separated_numbers = $this->getCommaSeparatedNumbers($sms_service);
+
+        // $to_message_format_json_data = $this->getToMessageFormatJsonData($sms_service);
+
+        $sender_id = $sms_service->sender;
+
+        $this->sendOneToManySms($text, $comma_separated_numbers, $sender_id);
+
+        // $this->sendManyToManySms($to_message_format_json_data, $sender_id);
 
         $sms_service->update([
             "status" => 2
@@ -76,7 +86,9 @@ class SmsServiceController extends Controller
     {
         // return $sms_service;
 
-        $sms_service->delete();
+        $sms_service
+            ->where('status', '!=', 2)
+            ->delete();
 
         return redirect()
             ->route('sms-services.index')
@@ -104,7 +116,7 @@ class SmsServiceController extends Controller
     {
         return [
             'sms'       => $this->formatedData($fee),
-            'senders'   => ["MSZannat", "0000000000"],
+            'senders'   => ["MSZannat", "8809617611021"],
             'receivers' => $this->getReceivers(),
             'classes'   => Classes::pluck('name', 'id'),
         ];
@@ -156,5 +168,96 @@ class SmsServiceController extends Controller
         });
 
         return $array_of_receivers;
+    }
+
+    protected function sendOneToManySms($text, $numbers, $sender_id = null)
+    {
+        $url = "http://bulksmsbd.net/api/smsapi";
+        $api_key = "aY6OQCp02j2ZAHkgDoLa";
+    
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $sender_id,
+            "number" => $numbers,
+            "message" => $text
+        ];
+
+        // dd($data);
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+    protected function sendManyToManySms($json_data, $sender_id = null)
+    {
+        $url = "http://bulksmsbd.net/api/smsapimany";
+        $api_key = "aY6OQCp02j2ZAHkgDoLa";
+
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $sender_id,
+            "messages" => json_encode($json_data)
+        ];
+
+        // dd($data);
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+    protected function getCommaSeparatedNumbers($sms_service)
+    {
+        $number = "";
+
+        foreach($sms_service->receivers as $index => $receiver) {
+            if($index) {
+                $number .= ",";
+            }
+
+            $guardian_number = "88" . substr($receiver["guardian_phone"], -11, 11);
+
+            $number .= $guardian_number;
+
+        }
+
+        return $number;
+    }
+
+    protected function getToMessageFormatJsonData($sms_service)
+    {
+        $data = [];
+
+        foreach($sms_service->receivers as $receiver) {
+            $guardian_number = "88" . substr($receiver["guardian_phone"], -11, 11);
+
+            $data[] = [
+              "to"      => $guardian_number,
+              "message" => $sms_service->body,
+            ];
+        }
+
+        return $data;
     }
 }

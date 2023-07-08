@@ -100,7 +100,7 @@ export default {
         },
         smsPrice() {
             return this.data.sms_service.sender === 'MSZannat'
-                ? 0.5
+                ? 0.56
                 : 0.25;
         },
     },

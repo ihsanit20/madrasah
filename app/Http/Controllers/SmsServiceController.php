@@ -57,25 +57,41 @@ class SmsServiceController extends Controller
         ]);
     }
 
-    public function update(SmsService $sms_service)
+    public function edit(SmsService $sms_service)
     {
         // return $sms_service;
 
-        $text = $sms_service->body;
-
-        $comma_separated_numbers = $this->getCommaSeparatedNumbers($sms_service);
-
-        // $to_message_format_json_data = $this->getToMessageFormatJsonData($sms_service);
-
-        $sender_id = $sms_service->sender;
-
-        $this->sendOneToManySms($text, $comma_separated_numbers, $sender_id);
-
-        // $this->sendManyToManySms($to_message_format_json_data, $sender_id);
-
-        $sms_service->update([
-            "status" => 2
+        return Inertia::render('SmsService/Edit', [
+            'data'  => $this->data($sms_service),
+            'step'  => 'edit',
         ]);
+    }
+
+    public function update(Request $request, SmsService $sms_service)
+    {
+        // return $sms_service;
+
+        if($request->step === 'edit') {
+            $sms_service->update($this->validatedData($request, $sms_service->id));
+        }
+
+        if($request->step === 'send') {
+            $text = $sms_service->body;
+
+            $comma_separated_numbers = $this->getCommaSeparatedNumbers($sms_service);
+
+            // $to_message_format_json_data = $this->getToMessageFormatJsonData($sms_service);
+
+            $sender_id = $sms_service->sender;
+
+            $this->sendOneToManySms($text, $comma_separated_numbers, $sender_id);
+
+            // $this->sendManyToManySms($to_message_format_json_data, $sender_id);
+
+            $sms_service->update([
+                "status" => 2
+            ]);
+        }
 
         return redirect()
             ->route('sms-services.show', $sms_service->id)
@@ -112,21 +128,21 @@ class SmsServiceController extends Controller
         ];
     }
 
-    protected function data($fee)
+    protected function data($sms, $default_receivers = true)
     {
         return [
-            'sms'       => $this->formatedData($fee),
+            'sms'       => $this->formatedData($sms),
             'senders'   => ["MSZannat", "8809617611021"],
-            'receivers' => $this->getReceivers(),
+            'receivers' => $default_receivers ? $this->getReceivers() : ($sms->receivers ?? []),
             'classes'   => Classes::pluck('name', 'id'),
         ];
     }
 
-    protected function formatedData($fee)
+    protected function formatedData($sms)
     {
         SmsServiceResource::withoutWrapping();
 
-        return new SmsServiceResource($fee);
+        return new SmsServiceResource($sms);
     }
 
     protected function getReceivers()

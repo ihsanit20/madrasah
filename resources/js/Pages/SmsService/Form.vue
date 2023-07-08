@@ -12,7 +12,7 @@
                         class="px-6 py-2 rounded-lg border flex justify-between items-center cursor-pointer"
                         @click="isShowClassFilter = !isShowClassFilter"
                     >
-                        <span>Class Filter</span>
+                        <span>Class Select</span>
                         <span>({{ classFilterIds.length || 0 }})</span>
                     </div>
                     <div
@@ -116,7 +116,7 @@
                         SMS Character: <b class="text-rose-600">{{ $e2bnumber(form.body.length) }}</b>
                     </div>
                 </div>
-                <Textarea v-model="form.body" required/>
+                <Textarea v-model="form.body" required></Textarea>
             </div>
             
             <form-group class="w-full mt-5" label="Sender ID">
@@ -173,15 +173,21 @@ export default {
         moduleAction: String,
         buttonValue: {
             type: String,
-            default: "Preview",
+            default: "Save & Preview",
         },
         data: {
             type: Object,
             default: {},
         },
+        step: {
+            type: String,
+            default: 'New',
+        }
     },
     created() {
-        this.selectAllFilterClass();
+        if(this.moduleAction == 'update') {
+            this.selectReceivers();
+        }
     },
     data() {
         return {
@@ -192,6 +198,7 @@ export default {
                 body: this.data.sms.body || "",
                 sender: this.data.sms.sender || "",
                 receivers: this.data.sms.receivers || [],
+                step: this.step || "new",
             }),
         };
     },
@@ -204,20 +211,21 @@ export default {
     },
     methods: {
         submit() {
+            const smsFinalFilterData = Object.values(this.data.receivers).filter((receiver) => {
+                return this.studentFilterIds.includes(parseInt(receiver.student_id));
+            });
+
+            this.form.receivers = smsFinalFilterData.map((data) => {
+                return {
+                    student_id: data.student_id,
+                    guardian_phone: data.guardian_phone,
+                };
+            });
+
             if (this.moduleAction == "store") {
-                const smsFinalFilterData = Object.values(this.data.receivers).filter((receiver) => {
-                    return this.studentFilterIds.includes(parseInt(receiver.student_id));
-                });
-
-                this.form.receivers = smsFinalFilterData.map((data) => {
-                    return {
-                        student_id: data.student_id,
-                        guardian_phone: data.guardian_phone,
-                    };
-                });
-
                 return this.form.post(this.route("sms-services.store"));
             }
+
             if (this.moduleAction == "update") {
                 return this.form.put(
                     this.route("sms-services.update", this.data.sms.id)
@@ -264,6 +272,36 @@ export default {
             return this.selectAllFilterStudent();
         },
         selectAllFilterStudent() {
+            this.studentFilterIds = Object.values(this.sms_filter_data).map((sms_data) => parseInt(sms_data.student_id));
+        },
+        selectReceivers() {
+            const customFormatReceivers = Object.values(this.data.sms.receivers).map((receiver) => {
+                return `${receiver.student_id}@@${receiver.guardian_phone}`;
+            });
+ 
+            const selectAllReceivers = Object.values(this.data.receivers).filter((receiver) => {
+                return customFormatReceivers.includes(`${receiver.student_id}@@${receiver.guardian_phone}`);
+            });
+
+            if(selectAllReceivers) {
+                const selectedClassIds = selectAllReceivers.map((receiver) => {
+                    return parseInt(receiver.student_class_id);
+                });
+
+                const selectedStudentIds = selectAllReceivers.map((receiver) => {
+                    return parseInt(receiver.student_id);
+                });
+
+                this.classFilterIds = [...new Set(selectedClassIds)];
+                this.studentFilterIds = [...new Set(selectedStudentIds)];
+            }
+        },
+        selectFilterClass() {
+            this.classFilterIds = Object.keys(this.data.classes).map((id) => parseInt(id));
+
+            return this.selectFilterStudent();
+        },
+        selectFilterStudent() {
             this.studentFilterIds = Object.values(this.sms_filter_data).map((sms_data) => parseInt(sms_data.student_id));
         }
     },

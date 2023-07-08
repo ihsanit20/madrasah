@@ -8,9 +8,31 @@
             :columns="columns"
         >
             <template #default="{ item: sms }">
+                <table-td class="text-center">
+                    <Link
+                        :href="route('sms-services.show', sms.id)"
+                        class="text-sky-600 hover:underline"
+                    >
+                        {{ sms.date }}
+                    </Link>
+                </table-td>
+                <table-td class="text-center">
+                    <div
+                        class=""
+                    >
+                        {{ sms.status_text }}
+                    </div>
+                </table-td>
+                <table-td class="text-center">
+                    <div
+                        class=""
+                    >
+                        {{ $e2bnumber(Object.keys(sms.receivers).length) }}
+                    </div>
+                </table-td>
                 <table-td class="text-left">
                     <div
-                        class="overflow-hidden whitespace-normal break-all line-clamp-6"
+                        class="overflow-hidden whitespace-normal break-all line-clamp-1"
                     >
                         {{ sms.body }}
                     </div>
@@ -53,6 +75,9 @@ export default {
     data() {
         return {
             columns: [
+                { title: "Date", align: "center" },
+                { title: "Status", align: "center" },
+                { title: "প্রাপক", align: "center" },
                 { title: "sms", align: "left" },
             ],
         };

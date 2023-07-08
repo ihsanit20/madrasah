@@ -33,7 +33,7 @@ class SmsServiceController extends Controller
 
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
 
         $sms_service = SmsService::create(
             $this->validatedData($request) + [
@@ -55,6 +55,32 @@ class SmsServiceController extends Controller
                 'sms_service' => $this->formatedData($sms_service)
             ]
         ]);
+    }
+
+    public function update(SmsService $sms_service)
+    {
+        // return $sms_service;
+
+        // $this->sendSms();
+
+        $sms_service->update([
+            "status" => 2
+        ]);
+
+        return redirect()
+            ->route('sms-services.show', $sms_service->id)
+            ->with('status', 'The sms has been send successfully.');
+    }
+
+    public function destroy(SmsService $sms_service)
+    {
+        // return $sms_service;
+
+        $sms_service->delete();
+
+        return redirect()
+            ->route('sms-services.index')
+            ->with('status', 'The record has been deleted successfully.');
     }
     
     protected function validatedData($request, $id = '')

@@ -173,7 +173,7 @@ export default {
         moduleAction: String,
         buttonValue: {
             type: String,
-            default: "Save",
+            default: "Preview",
         },
         data: {
             type: Object,

@@ -14,6 +14,16 @@ class SmsServiceResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "id"            => (int) ($this->id ?? 0),
+            "title"         => (string) ($this->title ?? ''),
+            "body"          => (string) ($this->body ?? ''),
+            "sender"        => (string) ($this->sender ?? ''),
+            "receivers"     => (array) ($this->receivers ?? []),
+            "status"        => (int) ($this->status ?? 0),
+            "status_text"   => (string) ($this->status_text ?? ''),
+            'created_by'    => (int) ($this->created_by ?? 0),
+            'date'          => (string) ($this->date ?? '-'),
+        ];
     }
 }

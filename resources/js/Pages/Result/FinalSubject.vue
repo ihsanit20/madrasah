@@ -6,7 +6,7 @@
     <app-layout
         :pageTitle="`${data.class.name} ক্লাস এর চূড়ান্ত ফলাফল`"
     >
-        <div class="flex items-center justify-between py-2 print:hidden">
+        <div class="w-full flex items-center justify-between py-2 print:hidden">
             <Link
                 :href="route('results.final.classes')"
                 class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { ClassSvg, ExamSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ArrowLeftIcon } from "@heroicons/vue/outline";

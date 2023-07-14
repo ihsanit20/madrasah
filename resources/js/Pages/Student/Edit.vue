@@ -9,7 +9,7 @@
 
 <script>
 import { Head } from "@inertiajs/inertia-vue3";
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import FormComponent from "./Form.vue";
 import FeeComponent from "./Fee.vue";
 

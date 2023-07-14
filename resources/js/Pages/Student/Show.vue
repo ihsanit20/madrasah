@@ -2,7 +2,7 @@
     <Head title="Student" />
 
     <app-layout>
-        <div class="max-w-3xl rounded p-3 md:p-4">
+        <div class="w-full max-w-4xl rounded p-3 md:p-4">
             <div
                 class="flex flex-wrap items-end justify-between gap-4 print:hidden"
             >
@@ -33,7 +33,7 @@
         </div>
 
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="w-full max-w-4xl overflow-x-auto rounded border bg-white print:border-0"
         >
             <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
                 <div class="flex items-center gap-2">
@@ -205,7 +205,7 @@
         </div>
 
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="w-full max-w-4xl overflow-x-auto rounded border bg-white print:border-0"
         >
             <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
                 <div class="flex items-center gap-2">
@@ -296,7 +296,7 @@
         </div>
 
         <div
-            class="max-w-3xl overflow-x-auto rounded border bg-white print:border-0"
+            class="w-full max-w-4xl overflow-x-auto rounded border bg-white print:border-0"
         >
             <div class="space-y-1 bg-white px-6 py-4 print:py-0 print:px-4">
                 <div class="flex items-center gap-2">
@@ -340,7 +340,7 @@
             </div>
         </div>
 
-        <div class="max-w-3xl rounded p-3 md:p-4">
+        <div class="w-full max-w-4xl rounded p-3 md:p-4">
             <div
                 class="flex flex-wrap items-end justify-between gap-4 print:hidden"
             >
@@ -386,7 +386,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Link, Head } from "@inertiajs/inertia-vue3";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import FormHeading from "@/Components/FormHeading.vue";

@@ -44,7 +44,23 @@ Route::get('verify/{student}/{admission}', [VerificationController::class, 'stud
 Route::get('verify/{staff}/{session}', [VerificationController::class, 'staffIdCard'])->name('verifications.staff-id-card');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::redirect('/dashboard', '/home');
+    Route::redirect('/dashboard/{any}', '/home/{any}');
+
+    Route::get('/home', [DashboardController::class, 'dashboard'])->name('dashboard');
+    
+    Route::get('/home/admission', [DashboardController::class, 'admission'])->name('dashboard.admission');
+    Route::get('/home/student', [DashboardController::class, 'student'])->name('dashboard.student');
+    Route::get('/home/income', [DashboardController::class, 'income'])->name('dashboard.income');
+    Route::get('/home/expence', [DashboardController::class, 'expence'])->name('dashboard.expence');
+    Route::get('/home/staff', [DashboardController::class, 'staff'])->name('dashboard.staff');
+    Route::get('/home/exam', [DashboardController::class, 'exam'])->name('dashboard.exam');
+    Route::get('/home/sms-panel', [DashboardController::class, 'smsPanel'])->name('dashboard.sms-panel');
+    Route::get('/home/notice', [DashboardController::class, 'notice'])->name('dashboard.notice');
+    Route::get('/home/routine', [DashboardController::class, 'routine'])->name('dashboard.routine');
+    Route::get('/home/report', [DashboardController::class, 'report'])->name('dashboard.report');
+    Route::get('/home/article', [DashboardController::class, 'article'])->name('dashboard.article');
+    Route::get('/home/setting', [DashboardController::class, 'setting'])->name('dashboard.setting');
 
     Route::get('settings/site-setup', [SettingController::class, 'siteSetup'])->name('settings.site-setup');
     Route::get('settings/home-page', [SettingController::class, 'homePage'])->name('settings.home-page');

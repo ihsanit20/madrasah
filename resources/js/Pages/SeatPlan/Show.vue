@@ -130,7 +130,7 @@
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AvatarView from "@/Components/AvatarView.vue";
 import PrintButton from "@/Components/PrintButton.vue";
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import SeatPlan from "../../Templete/SeatPlan.vue";
 import Input from "@/Components/Input.vue";

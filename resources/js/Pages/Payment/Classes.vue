@@ -2,7 +2,7 @@
     <Head title="ক্লাস/বিভাগ সমুহ" />
 
     <app-layout :pageTitle="`ক্লাস/বিভাগ সমুহ (${data.purpose.title})`">
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 md:gap-4">
             <div
                 v-for="classes in data.classes"
                 :key="classes.id"
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { MoneyReceiptSvg } from "@/Layouts/Navigation/SvgIcon";
 

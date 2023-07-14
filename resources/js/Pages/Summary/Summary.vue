@@ -3,7 +3,7 @@
 
     <app-layout pageTitle="আয়-ব্যয় সামারি">
         <div>
-            <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
+            <div class="w-full grid grid-cols-2 gap-2 md:grid-cols-4">
                 <Input
                     type="date"
                     class="w-full"
@@ -30,7 +30,7 @@
 
             <hr class="my-3" />
 
-            <div class="grid gap-3 print:grid-cols-2 md:grid-cols-2">
+            <div class="w-full grid gap-3 print:grid-cols-2 md:grid-cols-2">
                 <simple-table
                     :collections="data.incomes"
                     :totalRow="true"
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { MoneyReceiptSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import SimpleTable from "@/Components/SimpleTable.vue";

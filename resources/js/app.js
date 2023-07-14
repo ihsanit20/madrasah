@@ -5,6 +5,16 @@ import { InertiaProgress } from '@inertiajs/progress';
 import axios from 'axios';
 import { createApp, h } from 'vue';
 
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
+
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
@@ -32,6 +42,7 @@ createInertiaApp({
                     },
                 } 
             })
+            .component('font-awesome-icon', FontAwesomeIcon)
             .mount(el);
     },
 });

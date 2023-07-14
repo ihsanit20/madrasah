@@ -3,7 +3,7 @@
 
     <app-layout>
         <div
-            class="flex flex-wrap items-end justify-between gap-4 print:hidden"
+            class="w-full flex flex-wrap items-end justify-between gap-4 print:hidden"
         >
             <h2
                 class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import SimpleTable from "@/Components/DataTable.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";

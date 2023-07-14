@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 lg:grid-cols-3 md:gap-4">
             <div
                 v-for="student in data.students"
                 :key="student.id"
@@ -92,7 +92,7 @@
         <div v-if="data.paidStudents" class="pt-12 text-2xl font-bold">
             আদায় তালিকা
         </div>
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 md:gap-4">
             <div
                 v-for="student in data.paidStudents"
                 :key="student.id"
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ClassSvg } from "@/Layouts/Navigation/SvgIcon";
 

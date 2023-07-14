@@ -20,7 +20,7 @@
                 </Link>
             </div>
         </div>
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
             <div
                 v-for="staff in data.staff"
                 :key="staff.id"
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import SimpleTable from "@/Components/DataTable.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";

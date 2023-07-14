@@ -29,7 +29,7 @@
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AvatarView from "@/Components/AvatarView.vue";
 import PrintButton from "@/Components/PrintButton.vue";
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import AdmitCard from "../../Templete/AdmitCard.vue";
 export default {

@@ -107,7 +107,7 @@
         <paginator-links :collections="collections" />
     </div>
 
-    <div class="relative overflow-auto">
+    <div class="w-full relative overflow-auto">
         <table class="w-full min-w-max table-auto">
             <thead>
                 <tr

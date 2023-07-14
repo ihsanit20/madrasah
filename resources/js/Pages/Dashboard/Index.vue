@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import Card from "./Card.vue";
 

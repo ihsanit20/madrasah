@@ -6,7 +6,7 @@
     <app-layout
         :pageTitle="`${data.exam.name} : ${data.class.name} ক্লাস এর বিষয় সমুহ`"
     >
-        <div class="flex items-center justify-between py-2 print:hidden">
+        <div class="w-full flex items-center justify-between py-2 print:hidden">
             <Link
                 :href="
                     route('results.subjects', [data.exam.id, data.class.id]) +
@@ -23,7 +23,7 @@
         <div
             v-for="student in data.students"
             :key="student.id"
-            class="print:break-before-page"
+            class="w-full print:break-before-page"
         >
             <ResultCardTemplete
                 :student="student"
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ArrowLeftIcon } from "@heroicons/vue/outline";
 import PrintButton from "@/Components/PrintButton.vue";

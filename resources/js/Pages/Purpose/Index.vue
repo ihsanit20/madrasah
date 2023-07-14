@@ -2,7 +2,7 @@
     <Head title="বাবদ তালিকা" />
 
     <app-layout pageTitle="বাবদ তালিকা" :addNewHref="route('purposes.create')">
-        <div class="grid gap-2 md:grid-cols-3">
+        <div class="w-full grid gap-2 md:grid-cols-3">
             <Link
                 v-for="purpose in data.collections.data"
                 :key="purpose.id"
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import SimpleTable from "@/Components/DataTable.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";

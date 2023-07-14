@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import FormHeading from "@/Components/FormHeading.vue";

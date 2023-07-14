@@ -8,15 +8,28 @@
 
     <div class="mx-auto flex max-w-6xl">
         <nav
+            v-if="false"
             class="-mt-10 min-h-screen flex-shrink-0 flex-grow-0 bg-white pt-10 print:hidden md:-mt-20 md:pt-20"
         >
             <app-navigation :navigation="navigation" />
         </nav>
 
         <main
-            class="flex-shrink flex-grow space-y-2 overflow-auto px-2 py-2 md:px-4 md:py-4 print:p-0 print:overflow-visible"
+            class="flex-shrink flex-grow space-y-2 md:space-y-4 overflow-auto px-2 py-2 md:px-4 md:py-4 print:p-0 print:overflow-visible"
         >
-            <div class="flex items-end justify-between gap-1.5 print:hidden">
+            <div 
+                v-if="backHref" 
+                class="mx-auto flex max-w-6xl items-center justify-end print:hidden"
+            >
+                <Link
+                    v-if="backHref"
+                    class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700" 
+                    :href="backHref"
+                >
+                    ← Back
+                </Link>
+            </div>
+            <div class="flex items-center justify-center gap-1.5 print:hidden text-center">
                 <h2
                     v-if="pageTitle"
                     class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
@@ -33,7 +46,9 @@
                 </Link>
             </div>
 
-            <slot />
+            <div class="flex flex-row justify-center">
+                <slot />
+            </div>
         </main>
     </div>
 

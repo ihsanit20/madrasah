@@ -6,7 +6,7 @@
     <app-layout
         :pageTitle="`${data.class.name} ক্লাস এর চূড়ান্ত ফলাফল`"
     >
-        <div class="flex items-center justify-between py-2 print:hidden">
+        <div class="w-full flex items-center justify-between py-2 print:hidden">
             <Link
                 :href="route('results.final.subjects', [data.class.id])"
                 class="flex items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-1 text-white"
@@ -19,7 +19,7 @@
         <div
             v-for="(student, index) in data.students"
             :key="student.id"
-            class="print:break-before-page"
+            class="w-full print:break-before-page"
         >
             <FinalResultCardTemplete
                 :student="student"
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ArrowLeftIcon } from "@heroicons/vue/outline";
 import PrintButton from "@/Components/PrintButton.vue";

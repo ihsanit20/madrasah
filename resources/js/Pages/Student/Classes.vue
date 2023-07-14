@@ -2,7 +2,7 @@
     <Head title="ক্লাস/বিভাগ সমুহ" />
 
     <app-layout pageTitle="ক্লাস/বিভাগ সমুহ">
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 lg:grid-cols-3 md:gap-4">
             <Link
                 :href="route('students.class.show', classes.id)"
                 v-for="classes in data.classes"
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ClassSvg } from "@/Layouts/Navigation/SvgIcon";
 

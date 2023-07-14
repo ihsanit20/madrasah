@@ -2,7 +2,7 @@
     <Head :title="`${data.exam.name} এর ক্লাস সমুহ`" />
 
     <app-layout :pageTitle="`${data.exam.name} এর ক্লাস সমুহ`">
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 md:gap-4">
             <Link
                 v-for="classes in data.classes"
                 :key="classes.id"
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { ClassSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 

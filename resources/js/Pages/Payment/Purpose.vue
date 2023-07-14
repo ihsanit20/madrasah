@@ -2,7 +2,7 @@
     <Head title="বাবদ সমুহ" />
 
     <app-layout pageTitle="বাবদ সমুহ">
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 md:gap-4">
             <Link
                 :href="route('payments.purpose.show', index)"
                 v-for="(purpose, index) in data.purposes"
@@ -32,7 +32,7 @@
             <hr class="my-3" />
         </div>
         <div v-if="false">
-            <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+            <div class="w-full grid gap-2 md:grid-cols-2 md:gap-4">
                 <Link
                     v-for="otherPurpose in data.otherPurposes"
                     :key="otherPurpose.id"
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { MoneyReceiptSvg } from "@/Layouts/Navigation/SvgIcon";
 

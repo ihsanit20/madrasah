@@ -2,7 +2,7 @@
     <Head :title="`${data.exam.name} এর ক্লাস সমুহ`" />
 
     <app-layout :pageTitle="`${data.exam.name} এর ক্লাস সমুহ`">
-        <div class="flex items-center justify-start py-2">
+        <div class="w-full flex items-center justify-start py-2">
             <Link
                 :href="
                     route('results.exams') +
@@ -15,7 +15,7 @@
                 <span>পূর্বের পেজ</span>
             </Link>
         </div>
-        <div class="grid gap-2 md:grid-cols-2 md:gap-4">
+        <div class="w-full grid gap-2 md:grid-cols-2 lg:grid-cols-3 md:gap-4">
             <Link
                 v-for="classes in data.classes"
                 :key="classes.id"
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import { ClassSvg } from "@/Layouts/Navigation/SvgIcon";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ArrowLeftIcon } from "@heroicons/vue/outline";

@@ -117,7 +117,7 @@
 
 <script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import AppLayout from "@/Layouts/App.vue";
+import AppLayout from "@/Layouts/GridApp.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import PrintButton from "@/Components/PrintButton.vue";
 import LetterHead from "@/Templete/LetterHead.vue";

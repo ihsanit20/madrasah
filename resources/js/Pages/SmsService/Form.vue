@@ -106,7 +106,7 @@
                     </tbody>
                 </table>
             </div>
-        
+            
             <div class="grid">
                 <div class="bg-gray-200 flex justify-between items-center px-2 py-3 rounded-lg -mb-2">
                     <div class="">SMS লিখুন (<span class="text-rose-600">
@@ -116,7 +116,24 @@
                         SMS Character: <b class="text-rose-600">{{ $e2bnumber(form.body.length) }}</b>
                     </div>
                 </div>
-                <Textarea v-model="form.body" required></Textarea>
+                <div class="w-full grid md:grid-cols-2 mb-2">
+                    <Select @change="purposeSelectHandler" v-if="data.is_financial" class="w-full">
+                        <option value="" selected>
+                            -- বাবদ নির্বাচন করুন --
+                        </option>
+                        <option
+                            v-for="(purpose, purpose_id) in data.purposes"
+                            :key="purpose_id"
+                            :value="purpose_id"
+                        >
+                            {{ $e2bnumber(purpose.title) }}
+                        </option>
+                    </Select>
+                </div>
+                <div class="w-full relative">
+                    <Textarea class="w-full" v-model="form.body" required></Textarea>
+                    <div v-if="data.is_financial" class="absolute inset-0 w-full h-full"></div>
+                </div>
             </div>
             
             <form-group class="w-full mt-5" label="Sender ID">
@@ -136,7 +153,7 @@
 
             <div class="flex items-center justify-end">
                 <Button
-                    v-if="studentFilterIds.length"
+                    v-if="validationHandler"
                     class=""
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
@@ -207,7 +224,10 @@ export default {
             return Object.values(this.data.receivers).filter((receiver) => {
                 return this.classFilterIds.includes(parseInt(receiver.student_class_id));
             });
-        }
+        },
+        validationHandler() {
+            return this.studentFilterIds.length && this.form.body && this.form.sender;
+        },
     },
     methods: {
         submit() {
@@ -303,7 +323,23 @@ export default {
         },
         selectFilterStudent() {
             this.studentFilterIds = Object.values(this.sms_filter_data).map((sms_data) => parseInt(sms_data.student_id));
-        }
+        },
+        purposeSelectHandler(event) {
+            const selectedPurporseId = event.target.value;
+
+            let smsBodyText = '';
+
+            if(selectedPurporseId) {
+
+                let selectedPurporseTitle = this.data.purposes[selectedPurporseId].title;
+
+                selectedPurporseTitle = selectedPurporseTitle.split(" : ").reverse()[0];
+
+                smsBodyText = `প্রিয় অভিভাবক, আপনার সন্তানের ${selectedPurporseTitle} এর প্রদেয় যথা সময়ে পরিশোধ করুন। ধন্যবাদ, mszannat.com`;
+            } 
+
+            return this.form.body = this.$e2bnumber(smsBodyText);
+        },
     },
 };
 </script>

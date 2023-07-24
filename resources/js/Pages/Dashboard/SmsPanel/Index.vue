@@ -10,7 +10,7 @@
                 সাধারণ বার্তা
             </GridViewCard>
             <GridViewCard
-                :href="route('sms-services.create')"
+                :href="route('sms-services.create') + '?type=financial'"
                 icon-class="fa-solid fa-comment-dollar"
             >
                 ফিনানশিয়াল বার্তা

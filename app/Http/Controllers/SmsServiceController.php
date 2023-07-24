@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SmsServiceResource;
 use App\Models\Classes;
+use App\Models\Fee;
 use App\Models\Guardian;
 use App\Models\SmsService;
 use Illuminate\Http\Request;
@@ -26,8 +27,10 @@ class SmsServiceController extends Controller
 
     public function create()
     {
+        $is_financial = request()->type === 'financial' ? true : false;
+
         return Inertia::render('SmsService/Create', [
-            'data' => $this->data(new SmsService())
+            'data' => $this->data(new SmsService(), $is_financial)
         ]);
     }
 
@@ -128,14 +131,25 @@ class SmsServiceController extends Controller
         ];
     }
 
-    protected function data($sms, $default_receivers = true)
+    protected function data($sms, $is_financial = false)
     {
-        return [
-            'sms'       => $this->formatedData($sms),
-            'senders'   => ["MSZannat", "8809617611021"],
-            'receivers' => $default_receivers ? $this->getReceivers() : ($sms->receivers ?? []),
-            'classes'   => Classes::pluck('name', 'id'),
-        ];
+        $data = [];
+
+        $data['sms'] = $this->formatedData($sms);
+
+        $data['senders'] = ["MSZannat", "8809617611021"];
+
+        $data['receivers'] = $this->getReceivers();
+
+        $data['classes'] = Classes::pluck('name', 'id');
+
+        $data['is_financial'] = (boolean) ($is_financial);
+
+        if($is_financial) {
+            $data["purposes"] = Fee::getPurpose();
+        }
+
+        return $data;
     }
 
     protected function formatedData($sms)

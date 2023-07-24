@@ -335,7 +335,7 @@ export default {
 
                 selectedPurporseTitle = selectedPurporseTitle.split(" : ").reverse()[0];
 
-                smsBodyText = `প্রিয় অভিভাবক, আপনার সন্তানের ${selectedPurporseTitle} এর প্রদেয় যথা সময়ে পরিশোধ করুন। ধন্যবাদ, mszannat.com`;
+                smsBodyText = `প্রিয় অভিভাবক, আপনার সন্তানের ${selectedPurporseTitle} এর প্রদেয় পরিশোধ করুন।`;
             } 
 
             return this.form.body = this.$e2bnumber(smsBodyText);

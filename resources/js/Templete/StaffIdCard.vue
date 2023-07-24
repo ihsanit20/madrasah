@@ -4,14 +4,14 @@
             <h3 class="text-center font-bold print:hidden">সামনের অংশ</h3>
             <div class="h-[324px] border bg-white">
                 <div
-                    class="flex flex-col items-center justify-center gap-1 pt-2.5 pb-1.5"
+                    class="flex flex-col items-center justify-center gap-1 pt-2.5 pb-1.5 bg-blue-900"
                 >
-                    <application-logo class="h-9" />
+                    <application-logo class="h-9 bg-white rounded-full p-0.5" />
                     <div
                         class="flex flex-col items-center justify-end space-y-1"
                     >
                         <h2
-                            class="text-[13px] font-bold text-blue-900"
+                            class="text-[13px] font-bold text-white"
                         >
                             {{ $page.props.settings.siteName }}
                         </h2>
@@ -20,7 +20,7 @@
                 <div class="flex h-[20px] items-center justify-center bg-blue-900 text-white mt-[-5px]">
                     <h2 class="text-[11px] mt-[3px]">পরিচয়পত্র</h2>
                 </div>
-                <div class="mt-[50px] h-[118px] bg-green-600">
+                <div class="mt-[50px] h-[118px] bg-white">
                     <div
                         class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-orange-500 rounded-lg"
                     >
@@ -33,9 +33,9 @@
                         />
                     </div>
                     <div
-                        class="text-center text-[13px] font-semibold text-white"
+                        class="text-center text-[13px] font-semibold text-black"
                     >
-                        <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-yellow-200">
+                        <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-blue-900 font-bold">
                             {{ staff.name }}
                         </h1>
                         <div
@@ -48,26 +48,29 @@
                                 {{ staff.designationTitle }}
                             </div>
                         </div>
+                        <!-- <div
+                            class="flex items-center justify-center gap-2 text-[10px]"
+                        >
+                            <div class="w-20 shrink-0 grow-0 text-right">
+                                জন্ম :
+                            </div>
+                            <div class="shrink grow text-left">
+                                {{
+                                    $e2bnumber(staff.date_of_birth_with_format)
+                                    }}
+                            </div>
+                        </div> -->
                         <div
                             class="flex items-center justify-center gap-2 text-[10px]"
                         >
                             <div class="w-20 shrink-0 grow-0 text-right">
-                                রক্তের গ্রুপ :
+                                আইডি :
                             </div>
                             <div class="shrink grow text-left">
-                                {{ staff.bloodGroupText }}
+                                ID{{staff.id}}D{{staff.designationId}}G{{staff.gender}}
                             </div>
                         </div>
-                        <div
-                            class="flex items-center justify-center gap-2 text-[10px]"
-                        >
-                            <div class="w-20 shrink-0 grow-0 text-right">
-                                NID :
-                            </div>
-                            <div class="shrink grow text-left">
-                                {{ staff.nid }}
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="flex h-[38px] items-center justify-center">
@@ -78,7 +81,7 @@
                     />
                 </div>
                 <div class="flex items-center justify-center">
-                    <p class="text-[10px] font-bold text-blue-900">
+                    <p class="text-[10px] font-bold text-black">
                         অধ্যক্ষের স্বাক্ষর
                     </p>
                 </div>

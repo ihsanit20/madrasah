@@ -67,7 +67,7 @@
                                 আইডি :
                             </div>
                             <div class="shrink grow text-left">
-                                ID{{staff.id}}D{{staff.designationId}}G{{staff.gender}}
+                                ID{{ staff.id }}D{{ staff.designationId }}G{{ staff.gender }}
                             </div>
                         </div>
                         

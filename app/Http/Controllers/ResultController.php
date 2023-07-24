@@ -162,6 +162,7 @@ class ResultController extends Controller
         $students = $students->toArray();
         
         usort($students, function($a, $b) {
+            return ($a < $b) ? -1 : (($a > $b) ? 1 : 0);
             return strcmp($b['total'], $a['total']);
         });
 
@@ -260,6 +261,7 @@ class ResultController extends Controller
         $students = $students->toArray();
         
         usort($students, function($a, $b) {
+            return ($a < $b) ? -1 : (($a > $b) ? 1 : 0);
             return strcmp($b['total'], $a['total']);
         });
 
@@ -403,6 +405,7 @@ class ResultController extends Controller
         $students = $students->toArray();
         
         usort($students, function($a, $b) {
+            return ($a < $b) ? -1 : (($a > $b) ? 1 : 0);
             return strcmp($b['total'], $a['total']);
         });
 

@@ -1,46 +1,26 @@
 <template>
     <div class="flex flex-wrap gap-8 md:flex-row font-noto-sans-bengali">
-        <div class="w-[204px] space-y-2">
+        <div class="w-[204px] space-y-2" >
             <h3 class="text-center font-bold print:hidden">সামনের অংশ</h3>
-            <div class="h-[324px] border bg-white">
-                <div
-                    class="flex flex-col items-center justify-center gap-1 pt-2.5 pb-1.5 bg-blue-900"
-                >
-                    <application-logo class="h-9 bg-white rounded-full p-0.5" />
-                    <div
-                        class="flex flex-col items-center justify-end space-y-1"
-                    >
-                        <h2
-                            class="text-[13px] font-bold text-white"
-                        >
+            <div class="h-[324px] border bg-white" style="background-image: url('/images/id-card-bg.svg')">
+                <div class="flex flex-col items-center justify-center gap-1 pt-2 pb-1.5">
+                    <application-logo class="h-10 bg-white rounded-full p-0.5" />
+                    <div class="flex flex-col items-center justify-end space-y-1 bg-white pt-0.5 pr-[9px] pl-[9px]">
+                        <h2 class="text-[13px] font-bold text-blue-900">
                             {{ $page.props.settings.siteName }}
                         </h2>
                     </div>
                 </div>
-                <div class="flex h-[20px] items-center justify-center bg-blue-900 text-white mt-[-5px]">
-                    <h2 class="text-[11px] mt-[3px]">পরিচয়পত্র</h2>
-                </div>
-                <div class="mt-[50px] h-[118px] bg-white">
-                    <div
-                        class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-orange-500 rounded-lg"
-                    >
-                        <img
-                            :src="
-                                staff.imageUrl ||
-                                '/images/hijab-icon.jpg'
-                            "
-                            class="h-full w-full object-cover"
-                        />
+                <h1 class="text-[13px] p-0.51 text-white font-semibold text-center">পরিচয়পত্র</h1>
+                <div class="mt-[55px] h-[118px]">
+                    <div class="mx-auto -mb-11 aspect-[50/50] w-[100px] -translate-y-1/2 overflow-hidden border-[3px] border-orange-400 rounded-[10px]">
+                        <img :src=" staff.imageUrl || '/images/hijab-icon.jpg'" class="h-full w-full object-cover"/>
                     </div>
-                    <div
-                        class="text-center text-[13px] font-semibold text-black"
-                    >
+                    <div class="text-center text-[13px] font-semibold text-black" >
                         <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-blue-900 font-bold">
                             {{ staff.name }}
                         </h1>
-                        <div
-                            class="flex items-center justify-center gap-2 text-[10px]"
-                        >
+                        <div class="flex items-center justify-center gap-2 text-[10px]">
                             <div class="w-20 shrink-0 grow-0 text-right">
                                 পদবি :
                             </div>
@@ -73,7 +53,7 @@
                         
                     </div>
                 </div>
-                <div class="flex h-[38px] items-center justify-center">
+                <div class="flex h-[30px] items-center justify-center">
                     <img
                         v-if="signature"
                         :src="signature"
@@ -89,7 +69,7 @@
         </div>
         <div class="w-[204px] space-y-2">
             <h3 class="text-center font-bold print:hidden">পিছনের অংশ</h3>
-            <div class="relative h-[324px] border bg-white py-2.5">
+            <div class="relative h-[324px] border bg-white py-2" style="background-image: url('/images/id-card-bg-back.svg')">
                 <div
                     class="flex items-center justify-center gap-1 text-[10px] font-bold"
                 >
@@ -128,7 +108,7 @@
                     পরিচয়পত্রটি কোথাও পাওয়া গেলে নিম্নোক্ত যেকোন ঠিকানায়
                     পৌঁছে দিন
                 </p>
-                <h3 class="mt-2 text-center text-[10px] font-bold">
+                <h3 class="mt-1 text-center text-[10px] font-bold">
                     ঠিকানা
                 </h3>
                 <div class="px-8 text-center text-[9px]">
@@ -143,10 +123,8 @@
                     </div>
                 </div>
                 <div class="absolute bottom-0 left-0 right-0 z-10 w-full">
-                    <div
-                        class="flex flex-col items-center justify-end space-y-1 bg-blue-900 py-2 text-white"
-                    >
-                        <h2 class="text-[12px] font-bold text-yellow-200">
+                    <div class="flex flex-col items-center justify-end space-y-1 py-2 text-white">
+                        <h2 class="text-[12px] font-bold text-white">
                             {{ $page.props.settings.siteName }}
                         </h2>
                         <h2
@@ -155,7 +133,7 @@
                             {{ $page.props.settings.siteAddress }}
                         </h2>
                         <div
-                            class="flex items-center justify-center gap-1 text-[9px] font-bold"
+                            class="flex items-center justify-center gap-0.5 text-[9px] font-bold"
                         >
                             <div class="shrink-0 grow-0">
                                 ফোন :

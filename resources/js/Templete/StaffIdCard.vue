@@ -86,7 +86,6 @@
                         :href="
                             route('verifications.staff-id-card', [
                                 staff.id,
-                                $page.props.current_academic_session.value,
                             ])
                         "
                         class="h-[91px] w-[91px]"
@@ -94,8 +93,7 @@
                         <QrcodeVue
                             :value="
                                 route('verifications.staff-id-card', [
-                                    staff.id,
-                                    $page.props.current_academic_session.value,
+                                    staff.id
                                 ])
                             "
                             class="border border-black p-1 rounded-lg"

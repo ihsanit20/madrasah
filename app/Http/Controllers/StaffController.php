@@ -231,7 +231,10 @@ class StaffController extends Controller
     {
         $collections = Staff::query()
             ->with('current_appointment.designation')
-            ->has('current_appointment');
+            ->has('current_appointment')
+            ->whereHas('current_appointment', function($query) {
+                $query->where('active', 1);
+            });
 
         StaffResource::withoutWrapping();
 
@@ -246,6 +249,7 @@ class StaffController extends Controller
 
         // return StaffResource::collection($collections->get());
 
+        // return
         $staff_list = $collections->get();
 
         $staff_list = $staff_list->sortBy('current_appointment.designation.priority');

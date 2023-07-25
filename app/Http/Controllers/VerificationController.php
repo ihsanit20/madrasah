@@ -6,6 +6,7 @@ use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassesResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
+use App\Http\Resources\StaffResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Area;
 use App\Models\Classes;
@@ -37,6 +38,34 @@ class VerificationController extends Controller
 
         return Inertia::render('Verification/StudentIdCard', [
             'data'      => $this->studentData($student),
+            'signature' => $signature,
+        ]);
+    }
+
+    public function staffIdCard(Staff $staff)
+    {
+        // return $staff;
+
+        $staff->load('current_appointment.designation');
+
+        StaffResource::withoutWrapping();   
+
+        $principal = Staff::query()
+            ->with('signature')
+            ->principal()
+            ->first();
+
+        $signature = $principal
+            ? ($principal->signature->url ?? '')
+            : '';
+
+        return Inertia::render('Verification/StaffIdCard', [
+            'data'      => [
+                'staff'     => StaffResource::make($staff),
+                'divisions' => DivisionResource::collection(Division::orderBy('name')->get()),
+                'districts' => DistrictResource::collection(District::orderBy('name')->get()),
+                'areas'     => AreaResource::collection(Area::orderBy('name')->get()),
+            ],
             'signature' => $signature,
         ]);
     }

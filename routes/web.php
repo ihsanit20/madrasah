@@ -40,8 +40,8 @@ Route::get('/class/{class}', [HomeController::class, 'class'])->name('page.class
 Route::get('/admission-form', [HomeController::class, 'admissionForm'])->name('page.admission-form');
 Route::get('/admission-form-blank', [HomeController::class, 'admissionFormBlank'])->name('page.admission-form-blank');
 
+Route::get('verify/{staff}', [VerificationController::class, 'staffIdCard'])->name('verifications.staff-id-card');
 Route::get('verify/{student}/{admission}', [VerificationController::class, 'studentIdCard'])->name('verifications.student-id-card');
-Route::get('verify/{staff}/{session}', [VerificationController::class, 'staffIdCard'])->name('verifications.staff-id-card');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/home');

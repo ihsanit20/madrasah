@@ -41,6 +41,7 @@ class SmsServiceController extends Controller
         $sms_service = SmsService::create(
             $this->validatedData($request) + [
                 "created_by" => Auth::id(),
+                "title" => $request->purpose_id ?? "সাধারণ বার্তা",
             ]
         );
 
@@ -64,8 +65,10 @@ class SmsServiceController extends Controller
     {
         // return $sms_service;
 
+        $is_financial = $sms_service->title === 'সাধারণ বার্তা' ? false : true;
+
         return Inertia::render('SmsService/Edit', [
-            'data'  => $this->data($sms_service),
+            'data'  => $this->data($sms_service, $is_financial),
             'step'  => 'edit',
         ]);
     }
@@ -174,6 +177,8 @@ class SmsServiceController extends Controller
             ->has('student.current_admission')
             ->get();
 
+        // dd($guardians->toArray());
+
         $collection_of_receivers = $guardians->map(function ($guardian) {
             return [
                 "student_id"            => (int) ($guardian->student->id ?? 0),
@@ -182,6 +187,7 @@ class SmsServiceController extends Controller
                 "student_class_roll"    => (int) ($guardian->student->current_admission->roll ?? 0),
                 "guardian_name"         => (string) ($guardian->name ?? ""),
                 "guardian_phone"        => (string) ($guardian->phone ?? ""),
+                "paid_purpose_ids"      => (array) ($guardian->student->payment_purpose ?? []),
             ];
         });
 

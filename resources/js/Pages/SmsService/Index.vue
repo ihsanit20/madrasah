@@ -1,7 +1,7 @@
 <template>
     <Head title="SMS Service" />
 
-    <app-layout pageTitle="SMS Service" :addNewHref="route('sms-services.create')">
+    <app-layout>
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
@@ -15,6 +15,13 @@
                     >
                         {{ sms.date }}
                     </Link>
+                </table-td>
+                <table-td class="text-center">
+                    <div
+                        class=""
+                    >
+                        {{ sms.title === 'সাধারণ বার্তা' ? 'সাধারণ বার্তা' : 'ফিনানশিয়াল বার্তা' }}
+                    </div>
                 </table-td>
                 <table-td class="text-center">
                     <div
@@ -76,6 +83,7 @@ export default {
         return {
             columns: [
                 { title: "Date", align: "center" },
+                { title: "Type", align: "center" },
                 { title: "Status", align: "center" },
                 { title: "প্রাপক", align: "center" },
                 { title: "sms", align: "left" },

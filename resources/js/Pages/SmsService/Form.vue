@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="w-full grid md:grid-cols-2 mb-2">
-                    <Select @change="purposeSelectHandler" v-if="data.is_financial" class="w-full">
+                    <Select @change="purposeSelectHandler" v-model="form.purpose_id" v-if="data.is_financial" class="w-full">
                         <option value="" selected>
                             -- বাবদ নির্বাচন করুন --
                         </option>
@@ -204,6 +204,10 @@ export default {
     created() {
         if(this.moduleAction == 'update') {
             this.selectReceivers();
+            
+            if(this.data.is_financial) {
+                this.form.purpose_id = parseInt(this.data.sms.title) || "";
+            }
         }
     },
     data() {
@@ -216,6 +220,7 @@ export default {
                 sender: this.data.sms.sender || "",
                 receivers: this.data.sms.receivers || [],
                 step: this.step || "new",
+                purpose_id: "",
             }),
         };
     },
@@ -231,9 +236,7 @@ export default {
     },
     methods: {
         submit() {
-            const smsFinalFilterData = Object.values(this.data.receivers).filter((receiver) => {
-                return this.studentFilterIds.includes(parseInt(receiver.student_id));
-            });
+            const smsFinalFilterData = this.getStudentFinalData();
 
             this.form.receivers = smsFinalFilterData.map((data) => {
                 return {
@@ -252,7 +255,18 @@ export default {
                 );
             }
         },
+        getStudentFinalData() {
+            return Object.values(this.data.receivers).filter((receiver) => {
+                return this.studentFilterIds.includes(parseInt(receiver.student_id));
+            });
+        },
         classFilterHandler(event, class_id) {
+            this.form.purpose_id = "";
+
+            if(this.data.is_financial) {
+                this.form.body = "";
+            }
+
             if(class_id === 'all' && event.target.checked) {
                 return this.selectAllFilterClass();
             }
@@ -324,19 +338,29 @@ export default {
         selectFilterStudent() {
             this.studentFilterIds = Object.values(this.sms_filter_data).map((sms_data) => parseInt(sms_data.student_id));
         },
-        purposeSelectHandler(event) {
-            const selectedPurporseId = event.target.value;
+        purposeSelectHandler() {
+            this.selectFilterStudent();
+
+            const selectedPurposeId = parseInt(this.form.purpose_id);
 
             let smsBodyText = '';
 
-            if(selectedPurporseId) {
+            if(selectedPurposeId) {
 
-                let selectedPurporseTitle = this.data.purposes[selectedPurporseId].title;
+                let selectedPurposeTitle = this.data.purposes[selectedPurposeId].title;
 
-                selectedPurporseTitle = selectedPurporseTitle.split(" : ").reverse()[0];
+                selectedPurposeTitle = selectedPurposeTitle.split(" : ").reverse()[0];
 
-                smsBodyText = `প্রিয় অভিভাবক, আপনার সন্তানের ${selectedPurporseTitle} এর প্রদেয় পরিশোধ করুন।`;
-            } 
+                smsBodyText = `প্রিয় অভিভাবক, আপনার সন্তানের ${selectedPurposeTitle} এর প্রদেয় পরিশোধ করুন।`;
+                
+                const studentFinalData = this.getStudentFinalData();
+                
+                const unpaidStudentData = studentFinalData.filter((item) => {
+                    return !item.paid_purpose_ids.includes(String(selectedPurposeId) || Number(selectedPurposeId));
+                })
+
+                this.studentFilterIds = unpaidStudentData.map(item => parseInt(item.student_id))
+            }
 
             return this.form.body = this.$e2bnumber(smsBodyText);
         },

@@ -6,6 +6,7 @@ use App\Http\Resources\SmsServiceResource;
 use App\Models\Classes;
 use App\Models\Fee;
 use App\Models\Guardian;
+use App\Models\Purpose;
 use App\Models\SmsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -149,7 +150,23 @@ class SmsServiceController extends Controller
         $data['is_financial'] = (boolean) ($is_financial);
 
         if($is_financial) {
-            $data["purposes"] = Fee::getPurpose();
+            $purposes = [];
+
+            foreach(Fee::getPurpose() as $purpose_id => $purpose) {
+                $purposes[$purpose_id] = [
+                    "title" => $purpose["title"],
+                ];
+            }
+
+            foreach(Purpose::get(['id', 'title']) as $purpose) {
+                $purposes[$purpose->id] = [
+                    "title" => $purpose->title,
+                ];
+            }
+
+            // dd($purposes);
+
+            $data["purposes"] = $purposes;
         }
 
         return $data;

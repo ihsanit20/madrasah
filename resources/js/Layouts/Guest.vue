@@ -12,9 +12,9 @@
             </Link>
 
             <div
-                class="mt-4 text-center text-2xl font-bold text-blue-900 md:text-3xl"
+                class="mt-4 text-center text-2xl font-bold text-brand-950 md:text-3xl"
             >
-                মাদরাসা সায়্যিদাতুল জান্নাত (রা.)
+                {{ $page.props.settings.siteName }}
             </div>
             <hr class="my-5" />
             <slot />

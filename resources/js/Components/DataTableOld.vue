@@ -111,13 +111,13 @@
         <table class="w-full min-w-max table-auto">
             <thead>
                 <tr
-                    class="bg-blue-600 text-sm uppercase leading-normal text-white"
+                    class="bg-brand-600 text-sm uppercase leading-normal text-white"
                 >
-                    <!-- <th v-if="serialColumn" class="py-3 px-2 text-left sticky left-0 bg-blue-600">SL</th> -->
+                    <!-- <th v-if="serialColumn" class="py-3 px-2 text-left sticky left-0 bg-brand-600">SL</th> -->
 
                     <th
                         v-if="serialColumn"
-                        class="sticky left-0 bg-blue-600 py-3 px-2 text-left"
+                        class="sticky left-0 bg-brand-600 py-3 px-2 text-left"
                     >
                         <div class="inline-flex items-center gap-1">
                             <div>SL</div>
@@ -146,7 +146,7 @@
                     <th
                         v-for="(column, index) in columns"
                         :key="index"
-                        class="bg-blue-600 py-3 px-2"
+                        class="bg-brand-600 py-3 px-2"
                         :class="{
                             'text-left': column.align == 'left',
                             'text-center': column.align == 'center',

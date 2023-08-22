@@ -19,7 +19,7 @@
                 <div
                     class="col-span-2 rounded-md border py-2 text-center text-white shadow"
                     :class="{
-                        'bg-green-600': totalIncome >= totalExpence,
+                        'bg-brand-600': totalIncome >= totalExpence,
                         'bg-rose-600': totalIncome < totalExpence,
                     }"
                 >

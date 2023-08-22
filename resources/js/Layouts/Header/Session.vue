@@ -9,7 +9,7 @@
                             type="button"
                             class="flex items-center gap-1 rounded-md border border-transparent bg-white py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                         >
-                            <span class="-mb-0.5 hidden text-blue-900 md:block">
+                            <span class="-mb-0.5 hidden text-brand-950 md:block">
                                 <b>সেশন {{ selectedAcademicSession }}</b>
                             </span>
 
@@ -38,7 +38,7 @@
                         @click="setSession(academic_session.value)"
                         class="w-full rounded-md py-2 text-center hover:bg-gray-200"
                         :class="{
-                            'text-blue-900': session === academic_session.value,
+                            'text-brand-950': session === academic_session.value,
                         }"
                     >
                         <b>সেশন {{ academic_session.bengali }}</b>

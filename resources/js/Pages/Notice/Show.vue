@@ -11,7 +11,7 @@
             <button
                 @click="print"
                 type="button"
-                class="flex items-center justify-center gap-2 text-sky-600"
+                class="flex items-center justify-center gap-2 text-brand-600"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

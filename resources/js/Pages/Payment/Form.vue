@@ -3,7 +3,7 @@
         <validation-errors />
 
         <h2
-            class="mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+            class="mb-2 text-center text-2xl font-bold text-brand-600 print:text-black"
         >
             টাকা জমার রশিদ
         </h2>
@@ -109,7 +109,7 @@
                 <tr>
                     <th
                         colspan="3"
-                        class="py-1 text-right text-xs font-bold uppercase tracking-wider text-green-600 dark:text-gray-400 print:text-black md:text-sm"
+                        class="py-1 text-right text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-gray-400 print:text-black md:text-sm"
                     >
                         <div class="flex items-center justify-end gap-1">
                             <span>জমা:</span>
@@ -157,7 +157,7 @@
             <div class="mt-4 flex items-center justify-between">
                 <Link
                     :href="route('payments.create')"
-                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                    class="rounded-md border border-brand-600 px-4 py-2 font-semibold text-brand-600 hover:bg-brand-700 hover:text-white"
                 >
                     &#8592; পূর্ববর্তী ধাপ
                 </Link>

@@ -2,7 +2,7 @@
     <Head title="Dashboard" />
 
     <app-layout>
-        <div class="overflow-hidden bg-rose-600 text-white">
+        <div class="overflow-hidden bg-brand-900 text-white">
             <div class="mx-auto flex w-full flex-wrap overflow-hidden py-3">
                 <marquee scrollamount="5" class="space-x-8">
                     {{ data.headline.value }}
@@ -19,13 +19,13 @@
                         class="h-full w-full object-cover"
                     />
                     <div
-                        class="absolute inset-0 z-10 flex flex-col items-start justify-center bg-gradient-to-r from-blue-900 to-blue-900/0 px-4 text-white md:px-12"
+                        class="absolute inset-0 z-10 flex flex-col items-start justify-center bg-gradient-to-r from-brand-900 to-brand-900/0 px-4 text-white md:px-12"
                     >
                         <p class="text-base md:text-lg md:font-semibold">
                             আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহ
                         </p>
                         <p class="text-base md:text-lg md:font-semibold">
-                            মাদরাসা সায়্যিদাতুল জান্নাত (রা.)-এর ওয়েব সাইটে
+                            {{ $page.props.settings.siteName }}-এর ওয়েব সাইটে
                         </p>
                         <h3 class="mt-2 text-3xl font-bold md:text-5xl">
                             আপনাকে স্বাগতম
@@ -33,11 +33,10 @@
                         <p
                             class="py-2 text-base md:py-4 md:text-lg md:font-semibold"
                         >
-                            ১৪৪৪-৪৫ হি. শিক্ষাবর্ষে ভর্তি চলছে । অনলাইনে আবেদন
-                            করুন
+                            {{ $page.props.current_academic_session.bengali }} হি. শিক্ষাবর্ষে ভর্তি চলছে। অনলাইনে আবেদন করুন
                         </p>
                         <Link
-                            class="rounded-lg bg-orange-500 px-8 py-1.5 text-lg font-semibold text-white"
+                            class="rounded-lg bg-brand-600 px-8 py-1.5 text-lg font-semibold text-white"
                         >
                             ভর্তির আবেদন
                         </Link>
@@ -47,7 +46,7 @@
                 <div
                     class="h-72 overflow-y-auto rounded-lg border border-gray-400 bg-white p-4 text-center"
                 >
-                    <h3 class="text-2xl font-bold text-blue-900">
+                    <h3 class="text-2xl font-bold text-brand-950">
                         {{ data.principalMessage.name }}
                     </h3>
                     <p class="text-justify text-lg">
@@ -60,7 +59,7 @@
                     class="h-80 overflow-y-auto rounded-lg border border-gray-400 bg-white text-center lg:h-96"
                 >
                     <h3
-                        class="sticky top-0 z-10 bg-white pt-4 text-2xl font-bold text-blue-900"
+                        class="sticky top-0 z-10 bg-white pt-4 text-2xl font-bold text-brand-950"
                     >
                         নোটিশ বোর্ড
                     </h3>
@@ -74,7 +73,7 @@
                                 :href="route('page.notice', notice.id)"
                                 class="block"
                             >
-                                <p class="text-xl font-bold text-orange-500">
+                                <p class="text-xl font-bold text-brand-600">
                                     {{ $e2bnumber(notice.formatedDate) }}
                                 </p>
                                 <h3 class="line-clamp-2">
@@ -94,7 +93,7 @@
         </section>
 
         <section class="mx-auto max-w-6xl pt-4 pb-4 md:pt-8 md:pb-8">
-            <h2 class="my-6 text-center text-4xl font-bold text-blue-900">
+            <h2 class="my-6 text-center text-4xl font-bold text-brand-950">
                 আমাদের বিভাগসমূহ
             </h2>
             <div class="grid gap-4 md:grid-cols-3">
@@ -105,7 +104,7 @@
                     class="overflow-hidden rounded-lg border bg-white pb-4"
                 >
                     <h3
-                        class="bg-orange-500 py-2 text-center text-2xl font-semibold text-white"
+                        class="bg-brand-600 py-2 text-center text-2xl font-semibold text-white"
                     >
                         {{ classes.name }}
                     </h3>
@@ -120,7 +119,7 @@
                     class="overflow-hidden rounded-lg border bg-white pb-4"
                 >
                     <h3
-                        class="bg-orange-500 py-2 text-center text-2xl font-semibold text-white"
+                        class="bg-brand-600 py-2 text-center text-2xl font-semibold text-white"
                     >
                         বিভাগের নাম
                     </h3>
@@ -138,7 +137,7 @@
                     class="overflow-hidden rounded-lg border bg-white pb-4"
                 >
                     <h3
-                        class="bg-orange-500 py-2 text-center text-2xl font-semibold text-white"
+                        class="bg-brand-600 py-2 text-center text-2xl font-semibold text-white"
                     >
                         বিভাগের নাম
                     </h3>
@@ -156,7 +155,7 @@
                     class="overflow-hidden rounded-lg border bg-white pb-4"
                 >
                     <h3
-                        class="bg-orange-500 py-2 text-center text-2xl font-semibold text-white"
+                        class="bg-brand-600 py-2 text-center text-2xl font-semibold text-white"
                     >
                         বিভাগের নাম
                     </h3>
@@ -174,7 +173,7 @@
 
         <section class="mx-auto max-w-6xl pt-4 pb-4 md:pt-8 md:pb-8">
             <div class="rounded-lg border border-gray-400 bg-white">
-                <h2 class="mt-8 text-center text-4xl font-bold text-blue-900">
+                <h2 class="mt-8 text-center text-4xl font-bold text-brand-950">
                     {{ data.ourMessage.name }}
                 </h2>
                 <div class="px-8 py-4 text-justify text-lg">
@@ -183,9 +182,9 @@
             </div>
         </section>
 
-        <section class="bg-blue-900 pt-4 pb-4 text-white md:pt-8 md:pb-8">
+        <section class="bg-brand-900 pt-4 pb-4 text-white md:pt-8 md:pb-8">
             <div
-                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-8 py-4 text-justify text-lg lg:flex-row"
+                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-0 py-4 text-justify text-lg lg:flex-row"
             >
                 <div
                     class="order-2 flex-1 shrink grow space-y-2 text-center lg:order-1 lg:text-left"
@@ -205,33 +204,30 @@
                 />
 
                 <div
-                    class="order-3 flex flex-1 shrink grow grid-cols-2 flex-col items-center justify-end gap-4 lg:flex-row"
+                    class="order-3 flex flex-1 shrink grow grid-cols-2 flex-col items-end justify-end gap-4"
                 >
-                    <div class="shrink-0 grow-0">
-                        <div class="flex items-center justify-center gap-2">
+                    <div class="max-w-max shrink grow flex flex-col gap-2 items-center lg:items-start">
+                        <div class="flex items-center justify-center gap-1 lg:gap-2">
                             <PhoneIcon
-                                class="w-5 rounded bg-white p-0.5 text-blue-900 md:w-6"
+                                class="w-4 rounded bg-white p-0.5 text-brand-950 md:w-7"
                             />
-                            <p class="text-xl font-bold md:text-2xl">
-                                01923204939
-                            </p>
+                            <div class="flex">
+                                <a
+                                    v-for="(phoneNumber, index) in $page.props.settings.sitePhone.split(',')"
+                                    :key="index"
+                                    :href="`tel:${phoneNumber.trim()}`"
+                                    class="text-sm font-bold md:text-xl"
+                                >
+                                {{ (index ? ', ' : '') + phoneNumber.trim() }}
+                                </a>
+                            </div>
                         </div>
-                        <div class="flex items-center justify-center gap-2">
-                            <PhoneIcon
-                                class="w-5 rounded bg-white p-0.5 text-blue-900 md:w-6"
-                            />
-                            <p class="text-xl font-bold md:text-2xl">
-                                01833056363
-                            </p>
-                        </div>
-                    </div>
-                    <div class="max-w-max shrink grow">
                         <div
                             class="flex items-center justify-center gap-2 md:justify-start"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="w-6 fill-white md:w-8"
+                                class="w-4 fill-white md:w-7"
                                 viewBox="0 0 35.662 25.473"
                             >
                                 <path
@@ -240,14 +236,18 @@
                                 />
                             </svg>
 
-                            <p class="text-xl font-bold md:text-2xl">
-                                MSZannat
-                            </p>
+                            <a 
+                                target="_blank"
+                                :href="$page.props.settings.youtube.link"
+                                class="text-sm font-bold md:text-xl"
+                            >
+                                {{ $page.props.settings.youtube.name }}
+                            </a>
                         </div>
                         <div class="flex items-center justify-start gap-2">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="w-6 fill-white md:w-8"
+                                class="w-4 fill-white md:w-7"
                                 viewBox="0 0 34.875 34.664"
                             >
                                 <path
@@ -256,9 +256,13 @@
                                 />
                             </svg>
 
-                            <p class="text-xl font-bold md:text-2xl">
-                                fb.com/MSZannat
-                            </p>
+                            <a 
+                                target="_blank"
+                                :href="$page.props.settings.facebook.link"
+                                class="text-sm font-bold md:text-xl"
+                            >
+                                {{ $page.props.settings.facebook.name }}
+                            </a>
                         </div>
                     </div>
                 </div>

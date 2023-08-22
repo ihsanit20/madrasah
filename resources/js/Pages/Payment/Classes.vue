@@ -14,7 +14,7 @@
                     {{ $e2bnumber(classes.code).padStart(2, $e2bnumber("0")) }}
                 </div>
                 <div class="shrink grow">
-                    <div class="text-md font-bold text-sky-600 md:text-xl">
+                    <div class="text-md font-bold text-brand-600 md:text-xl">
                         {{ classes.name }}
                     </div>
                     <div class="flex items-center gap-2">

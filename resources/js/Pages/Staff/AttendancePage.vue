@@ -15,7 +15,7 @@
                                     class="flex flex-col items-center justify-center"
                                 >
                                     <h1
-                                        class="text-3xl font-bold text-blue-900 print:text-3xl print:text-black"
+                                        class="text-3xl font-bold text-brand-950 print:text-3xl print:text-black"
                                     >
                                         {{ $page.props.settings.siteName }}
                                     </h1>
@@ -147,7 +147,7 @@
                                     class="flex flex-col items-center justify-center"
                                 >
                                     <h1
-                                        class="text-3xl font-bold text-blue-900 print:text-3xl print:text-black"
+                                        class="text-3xl font-bold text-brand-950 print:text-3xl print:text-black"
                                     >
                                         {{ $page.props.settings.siteName }}
                                     </h1>

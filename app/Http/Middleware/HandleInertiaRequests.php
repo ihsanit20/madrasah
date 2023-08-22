@@ -93,12 +93,16 @@ class HandleInertiaRequests extends Middleware
         Controller::$current_academic_session = $current_academic_session->value ?? "";
         Controller::$previous_academic_session = $previous_academic_session->value ?? "";
 
+        $youtube = $this->getSettingValueByProperty($settings, 'youtube');
+        $facebook = $this->getSettingValueByProperty($settings, 'facebook');
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
             ],
             'request'   => $request,
             'settings'  => [
+                'logoLink'          => url($this->getSettingValueByProperty($settings, 'logo')),
                 'siteName'          => $this->getSettingValueByProperty($settings, 'site-name'),
                 'siteAddress'       => $this->getSettingValueByProperty($settings, 'site-address'),
                 'sitePhone'         => $this->getSettingValueByProperty($settings, 'site-phone'),
@@ -106,6 +110,14 @@ class HandleInertiaRequests extends Middleware
                 'guardianAgreement' => $this->getSettingValueByProperty($settings, 'guardian-agreement'),
                 'idCardTime'        => $this->getSettingValueByProperty($settings, 'id-card-time'),
                 'admitCardText'     => $this->getSettingValueByProperty($settings, 'admit-card-text'),
+                'youtube'           => [
+                    "name" => explode('|', $youtube)[0] ?? '',
+                    "link" => explode('|', $youtube)[1] ?? '',
+                ],
+                'facebook'           => [
+                    "name" => explode('|', $facebook)[0] ?? '',
+                    "link" => explode('|', $facebook)[1] ?? '',
+                ],
             ],
             'academic_sessions'     => AcademicSession::query()
                 ->latest()

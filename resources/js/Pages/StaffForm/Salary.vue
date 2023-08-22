@@ -1,6 +1,6 @@
 <template>
     <div class="w-full max-w-xl rounded border bg-white p-4 shadow">
-        <h3 class="text-center text-2xl font-bold text-sky-600">
+        <h3 class="text-center text-2xl font-bold text-brand-600">
             বেতন নির্ধারণ
         </h3>
 
@@ -39,7 +39,7 @@
                             <label
                                 class="flex-shrink flex-grow bg-white px-2 font-bold line-clamp-1"
                             >
-                                বেতন বিবারণ
+                                বেতন বিবরণ
                             </label>
                             <label
                                 class="w-28 flex-shrink-0 flex-grow-0 bg-white px-2 font-bold line-clamp-1"
@@ -76,7 +76,7 @@
                     :href="
                         route('staff-form.show', data.staff.id)
                     "
-                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                    class="rounded-md border border-brand-600 px-4 py-2 font-semibold text-brand-600 hover:bg-brand-700 hover:text-white"
                 >
                     &#8592; পূর্ববর্তী ধাপ
                 </Link>

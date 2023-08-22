@@ -28,7 +28,7 @@
                     {{ $e2bnumber(classes.code).padStart(2, $e2bnumber("0")) }}
                 </div>
                 <div class="shrink grow">
-                    <div class="text-md font-bold text-sky-600 md:text-xl">
+                    <div class="text-md font-bold text-brand-600 md:text-xl">
                         {{ classes.name }}
                     </div>
                     <div class="flex items-center gap-2">
@@ -52,7 +52,7 @@
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 40 40"
-                    class="h-10 w-10 shrink-0 grow-0 fill-sky-600"
+                    class="h-10 w-10 shrink-0 grow-0 fill-brand-600"
                 >
                     <g id="right_arrow" transform="translate(-0.287 0)">
                         <path

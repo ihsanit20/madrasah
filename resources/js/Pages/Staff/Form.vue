@@ -322,7 +322,7 @@
                     :href="
                         route('staff.show', data.staff.id)
                     "
-                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                    class="rounded-md border border-brand-600 px-4 py-2 font-semibold text-brand-600 hover:bg-brand-700 hover:text-white"
                 >
                     Cancel
                 </Link>

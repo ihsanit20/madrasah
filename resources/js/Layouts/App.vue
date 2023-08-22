@@ -39,7 +39,7 @@
                 <Link
                     v-if="addNewHref"
                     :href="addNewHref"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-brand-600 px-2.5 py-0.5 text-white"
                 >
                     <span>+</span>
                     <span class="hidden md:block">নতুন যোগ করুন</span>

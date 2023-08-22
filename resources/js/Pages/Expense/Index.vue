@@ -17,7 +17,7 @@
                     >
                         <Link
                             :href="route('expenses.edit', expense.id)"
-                            class="text-sky-600 hover:underline"
+                            class="text-brand-600 hover:underline"
                         >
                             {{ expense.id }}
                         </Link>

@@ -11,18 +11,18 @@
                         class="flex flex-col items-center justify-end space-y-1"
                     >
                         <h2
-                            class="text-[13px] font-bold text-blue-900"
+                            class="text-[13px] font-bold text-brand-950"
                         >
                             {{ $page.props.settings.siteName }}
                         </h2>
                     </div>
                 </div>
-                <div class="flex h-[20px] items-center justify-center bg-green-600 text-white mt-[-5px]">
+                <div class="flex h-[20px] items-center justify-center bg-brand-600 text-white mt-[-5px]">
                     <h2 class="text-[11px] mt-[3px]">শিক্ষার্থীর পরিচয়পত্র</h2>
                 </div>
-                <div class="mt-[50px] h-[118px] bg-blue-900">
+                <div class="mt-[50px] h-[118px] bg-brand-900">
                     <div
-                        class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-orange-500 rounded-lg"
+                        class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-brand-500 rounded-lg"
                     >
                         <img
                             :src="
@@ -78,7 +78,7 @@
                     />
                 </div>
                 <div class="flex items-center justify-center">
-                    <p class="text-[10px] font-bold text-blue-900">
+                    <p class="text-[10px] font-bold text-brand-950">
                         অধ্যক্ষের স্বাক্ষর
                     </p>
                 </div>
@@ -143,7 +143,7 @@
                 </div>
                 <div class="absolute bottom-0 left-0 right-0 z-10 w-full">
                     <div
-                        class="flex flex-col items-center justify-end space-y-1 bg-blue-900 py-2 text-white"
+                        class="flex flex-col items-center justify-end space-y-1 bg-brand-900 py-2 text-white"
                     >
                         <h2 class="text-[12px] font-bold text-yellow-200">
                             {{ $page.props.settings.siteName }}

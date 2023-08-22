@@ -51,8 +51,8 @@
                             required
                         >
                             <option value="">-- নির্বাচন করুন --</option>
-                            <option :value="1">ছেলে</option>
-                            <option :value="2">মেয়ে</option>
+                            <option :value="1">পুরুষ</option>
+                            <option :value="2">মহিলা</option>
                         </Select>
                     </form-group>
                     <form-group class="flex-1" label="রক্তের গ্রুপ">
@@ -392,7 +392,7 @@
             <form-heading class="mt-8">প্রত্যাশা</form-heading>
 
             <div class="grid gap-x-2 gap-y-4 md:grid-cols-2">
-                <form-group class="w-full" label="আপনি অত্র প্রতিষ্ঠানে কোন পদে আবেদন করছেন?">
+                <form-group class="w-full" label="প্রত্যাশিত পদ">
                     <Select
                         class="block w-full"
                         v-model="form.designation_id"
@@ -408,7 +408,7 @@
                         </option>
                     </Select>
                 </form-group>
-                <form-group class="w-full" label="আপনি মাসিক কি পরিমাণ হাদিয়া প্রত্যাশা করেন?">
+                <form-group class="w-full" label="প্রত্যাশিত মাসিক হাদিয়া (বেতন)">
                     <Input
                         type="text"
                         class="block w-full"

@@ -4,7 +4,7 @@
 
         <form @submit.prevent="submit" class="space-y-4">
             <h2
-                class="mt-4 mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+                class="mt-4 mb-2 text-center text-2xl font-bold text-brand-600 print:text-black"
             >
                 ভর্তির যোগ্যতা যাচাই
             </h2>
@@ -214,12 +214,12 @@
             <div class="flex items-center justify-between">
                 <Link
                     :href="route('admissions.show', data.admission.id)"
-                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                    class="rounded-md border border-brand-600 px-4 py-2 font-semibold text-brand-600 hover:bg-brand-700 hover:text-white"
                 >
                     &#8592; পূর্ববর্তী ধাপ
                 </Link>
                 <Button
-                    class="bg-green-600 hover:bg-green-500"
+                    class="bg-brand-600 hover:bg-brand-600"
                     :disabled="form.processing"
                     v-html="buttonValue"
                 >

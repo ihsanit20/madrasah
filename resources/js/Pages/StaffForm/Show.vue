@@ -13,13 +13,13 @@
                 </h2>
                 <Link
                     :href="route('staff-form.edit', data.staff.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-green-600 px-4 pt-1 text-green-600"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 px-4 pt-1 text-brand-600"
                 >
                     তথ্য সম্পাদনা
                 </Link>
                 <Link
                     :href="route('staff-form.edit', data.staff.id) + '?step=salary'"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-green-600 bg-green-600 px-4 pt-1 text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 bg-brand-600 px-4 pt-1 text-white"
                 >
                     পরবর্তী ধাপ &#8594;
                 </Link>
@@ -344,7 +344,7 @@
             >
                 <Link
                     href="#"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:bg-brand-600 hover:text-white"
                 >
                     রশিদগুলা
                 </Link>

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full max-w-xl rounded border bg-white p-4 shadow">
-        <h3 class="text-center text-2xl font-bold text-sky-600">
+        <h3 class="text-center text-2xl font-bold text-brand-600">
             বেতন নির্ধারণ
         </h3>
 
@@ -35,7 +35,7 @@
                             <label
                                 class="flex-shrink flex-grow bg-white px-2 font-bold line-clamp-1"
                             >
-                                বেতন বিবারণ
+                                বেতন বিবরণ
                             </label>
                             <label
                                 class="w-28 flex-shrink-0 flex-grow-0 bg-white px-2 font-bold line-clamp-1"

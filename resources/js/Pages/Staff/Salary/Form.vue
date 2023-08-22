@@ -1,6 +1,6 @@
 <template>
     <div class="w-full max-w-xl rounded border bg-white p-4 shadow">
-        <h3 class="text-center text-2xl font-bold text-sky-600">বেতন রশিদ</h3>
+        <h3 class="text-center text-2xl font-bold text-brand-600">বেতন রশিদ</h3>
 
         <div class="flex items-center justify-between">
             <inline-data title="রশিদ নং:" />
@@ -46,7 +46,7 @@
                 <div
                     class="flex justify-between bg-gray-200 py-2 px-3 font-bold"
                 >
-                    <div>বেতন বিবরণী</div>
+                    <div>বেতনের বিবরণ</div>
                     <div>নির্ধারিত টাকা</div>
                 </div>
                 <div

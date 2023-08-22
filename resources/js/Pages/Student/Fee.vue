@@ -10,9 +10,9 @@
         <form @submit.prevent="submit" class="space-y-4">
             <letter-head />
             <h2
-                class="mt-4 mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+                class="mt-4 mb-2 text-center text-2xl font-bold text-brand-600 print:text-black"
             >
-                প্রদেয় ফি নির্ধারন
+                প্রদেয় ফি নির্ধারণ
             </h2>
             <div class="grid gap-x-2 print:grid-cols-3 md:grid-cols-3">
                 <div class="col-span-2">
@@ -324,7 +324,7 @@
 
             <div class="hidden print:block">
                 <h3
-                    class="mt-10 hidden text-center text-2xl font-bold text-sky-600 print:block print:text-black"
+                    class="mt-10 hidden text-center text-2xl font-bold text-brand-600 print:block print:text-black"
                 >
                     অভিভাবকের অঙ্গিকার
                 </h3>

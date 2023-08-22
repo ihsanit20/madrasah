@@ -6,18 +6,18 @@
                 <div class="flex flex-col items-center justify-center gap-1 pt-2 pb-1.5">
                     <application-logo class="h-10 bg-white rounded-full p-0.5" />
                     <div class="flex flex-col items-center justify-end space-y-1 bg-white pt-0.5 pr-[9px] pl-[9px]">
-                        <h2 class="text-[13px] font-bold text-blue-900">
+                        <h2 class="text-[13px] font-bold text-brand-950">
                             {{ $page.props.settings.siteName }}
                         </h2>
                     </div>
                 </div>
                 <h1 class="text-[13px] p-0.51 text-white font-semibold text-center">পরিচয়পত্র</h1>
                 <div class="mt-[55px] h-[118px]">
-                    <div class="mx-auto -mb-11 aspect-[50/50] w-[100px] -translate-y-1/2 overflow-hidden border-[3px] border-orange-400 rounded-[10px]">
+                    <div class="mx-auto -mb-11 aspect-[50/50] w-[100px] -translate-y-1/2 overflow-hidden border-[3px] border-brand-400 rounded-[10px]">
                         <img :src=" staff.imageUrl || '/images/hijab-icon.jpg'" class="h-full w-full object-cover"/>
                     </div>
                     <div class="text-center text-[13px] font-semibold text-black" >
-                        <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-blue-900 font-bold">
+                        <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-brand-950 font-bold">
                             {{ staff.name }}
                         </h1>
                         <div class="flex items-center justify-center gap-2 text-[10px]">

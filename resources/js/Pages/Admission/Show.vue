@@ -14,7 +14,7 @@
                 <print-button />
                 <Link
                     :href="route('admissions.edit', data.admission.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-brand-600 px-2.5 py-0.5 text-white"
                 >
                     <PencilAltIcon class="w-5" />
                     <span class="hidden md:block">সম্পাদনা</span>
@@ -29,7 +29,7 @@
         <div class="flex max-w-3xl items-center justify-end pt-2 print:hidden">
             <Link
                 :href="route('admissions.edit', data.admission.id) + '?step=2'"
-                class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-3 py-2 text-white"
+                class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-brand-600 px-3 py-2 text-white"
             >
                 পরবর্তী ধাপ &#8594;
             </Link>

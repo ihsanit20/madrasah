@@ -5,7 +5,14 @@
         <div class="w-full max-w-xl rounded py-2 print:hidden">
             <print-button class="" />
         </div>
-        <div class="min-w-max mx-auto scale-x-90 print:scale-100 px-2 print:px-0 bg-white bg-[url('/images/wmlogo.png')] bg-center bg-no-repeat">
+        <div class="min-w-max mx-auto scale-x-90 print:scale-100 px-2 print:px-0 bg-white relative -z-20 overflow-hidden">
+            <div class="absolute inset-0 w-full h-full -z-10 flex justify-center items-center">
+                <img 
+                    class="opacity-10"
+                    :src="$page.props.settings.logoLink"
+                />
+            </div>
+
             <letter-head></letter-head>
             <h2
                 class="text-center text-xl font-bold leading-5 text-gray-700 mt-2"

@@ -4,7 +4,7 @@
     <app-layout>
         <div class="w-full max-w-lg rounded border bg-white p-4 shadow">
             <h2
-                class="mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+                class="mb-2 text-center text-2xl font-bold text-brand-600 print:text-black"
             >
                 টাকা জমার রশিদ
             </h2>

@@ -7,11 +7,7 @@ use App\Http\Resources\NoticeResource;
 use App\Models\Classes;
 use App\Models\HijriMonth;
 use App\Models\Notice;
-use App\Models\Setting;
 use App\Models\Student;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Resources\AdmissionResource;
@@ -19,6 +15,7 @@ use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
+use App\Http\Resources\SimpleNoticeResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Admission;
 use App\Models\Area;
@@ -32,7 +29,15 @@ class HomeController extends Controller
     {
         $classes = Classes::get();
 
+        // return
         $notices = Notice::query()
+            ->select([
+                'id',
+                'date',
+                'title',
+                'staff_id',
+            ])
+            ->with('staff')
             ->whereDate('date', '<=', date('Y-m-d'))
             ->latest('date')
             ->take(10)
@@ -55,10 +60,12 @@ class HomeController extends Controller
             'startFrom'     => $this->getStratFromOfWeekDay(Hijri::Date('w', $date), Hijri::Date('d', $date)),
         ];
 
+        // return SimpleNoticeResource::collection($notices);
+
         return Inertia::render('Home/Index', [
             'data' => [
                 'classes' => $classes,
-                'notices' => NoticeResource::collection($notices),
+                'notices' => SimpleNoticeResource::collection($notices),
                 'principalMessage' => $this->getSettingProperty('principal-message'),
                 'headline' => $this->getSettingProperty('headline'),
                 'ourMessage' => $this->getSettingProperty('our-message'),

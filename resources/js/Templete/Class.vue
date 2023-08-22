@@ -2,7 +2,7 @@
     <div class="bg-white px-10 py-8">
         <letter-head class="hidden print:block" />
         <div class="flex flex-col items-center justify-center pt-3">
-            <h2 class="text-3xl font-bold text-sky-600 print:text-black">
+            <h2 class="text-3xl font-bold text-brand-600 print:text-black">
                 {{ data.classes.name }}
             </h2>
             <p class="font-semibold text-gray-500 print:text-black">

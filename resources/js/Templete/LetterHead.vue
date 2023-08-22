@@ -4,7 +4,7 @@
             <application-logo v-if="hasLogo" class="w-16" />
             <div class="flex flex-col items-center justify-end space-y-1">
                 <h1
-                    class="text-3xl font-bold text-blue-900 print:text-3xl print:text-black"
+                    class="text-3xl font-bold text-brand-950 print:text-3xl print:text-black"
                 >
                     {{ $page.props.settings.siteName }}
                 </h1>

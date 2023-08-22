@@ -54,7 +54,9 @@ class SettingController extends Controller
 
     public function index($type)
     {
-        $collections = Setting::query()->type($type);
+        $collections = Setting::query()
+            ->orderBy('priority')
+            ->type($type);
 
         return Inertia::render('Setting/Index', [
             'data' => [

@@ -39,7 +39,7 @@
                     </span>
                     <button
                         type="submit"
-                        class="bg-sky-600 py-1 px-3 text-white"
+                        class="bg-brand-600 py-1 px-3 text-white"
                         :class="{
                             'cursor-not-allowed opacity-50':
                                 !form.class_ids.length,
@@ -88,7 +88,7 @@
                                 :value="classId"
                                 :checked="true"
                                 :disabled="true"
-                                class="text-green-600"
+                                class="text-brand-600"
                             />
                             <span>
                                 {{
@@ -174,19 +174,19 @@ export default {
             bgClors: [
                 "bg-red-500/25",
                 "bg-yellow-500/25",
-                "bg-green-500/25",
-                "bg-blue-500/25",
+                "bg-brand-600/25",
+                "bg-brand-500/25",
                 "bg-indigo-500/25",
-                "bg-orange-500/25",
+                "bg-brand-600/25",
                 "bg-pink-500/25",
                 "bg-purple-500/25",
                 "bg-teal-500/25",
                 "bg-gray-500/25",
                 "bg-rose-400/25",
-                "bg-sky-400/25",
+                "bg-brand-400/25",
                 "bg-lime-400/25",
                 "bg-indigo-400/25",
-                "bg-orange-400/25",
+                "bg-brand-400/25",
                 "bg-pink-400/25",
                 "bg-purple-400/25",
                 "bg-teal-400/25",

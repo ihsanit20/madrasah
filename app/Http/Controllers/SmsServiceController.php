@@ -7,6 +7,7 @@ use App\Models\Classes;
 use App\Models\Fee;
 use App\Models\Guardian;
 use App\Models\Purpose;
+use App\Models\Setting;
 use App\Models\SmsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -141,7 +142,15 @@ class SmsServiceController extends Controller
 
         $data['sms'] = $this->formatedData($sms);
 
-        $data['senders'] = ["MSZannat", "8809617611021"];
+        $sms_senderid_setting = Setting::query()
+            ->where('key', 'sms-senderid')
+            ->first();
+        
+        $sms_senderid_string = $sms_senderid_setting->value ?? "";
+
+        $sms_senderid_array = explode(',', $sms_senderid_string);
+
+        $data['senders'] = $sms_senderid_array;
 
         $data['receivers'] = $this->getReceivers();
 
@@ -226,7 +235,12 @@ class SmsServiceController extends Controller
     protected function sendOneToManySms($text, $numbers, $sender_id = null)
     {
         $url = "http://bulksmsbd.net/api/smsapi";
-        $api_key = "aY6OQCp02j2ZAHkgDoLa";
+
+        $sms_api_key_setting = Setting::query()
+            ->where('key', 'sms-api-key')
+            ->first();
+        
+        $api_key = $sms_api_key_setting->value ?? "";
     
         $data = [
             "api_key" => $api_key,
@@ -255,7 +269,12 @@ class SmsServiceController extends Controller
     protected function sendManyToManySms($json_data, $sender_id = null)
     {
         $url = "http://bulksmsbd.net/api/smsapimany";
-        $api_key = "aY6OQCp02j2ZAHkgDoLa";
+        
+        $sms_api_key_setting = Setting::query()
+            ->where('key', 'sms-api-key')
+            ->first();
+    
+    $api_key = $sms_api_key_setting->value ?? "";
 
         $data = [
             "api_key" => $api_key,

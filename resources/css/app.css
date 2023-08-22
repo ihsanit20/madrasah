@@ -28,8 +28,9 @@ input[type="number"] {
 *::-webkit-scrollbar-thumb {
     width: 3px !important;
     height: 3px !important;
-    background: #f27c00;
+    /* background: #f27c00; */
     border-radius: 5px;
+    @apply bg-brand-600;
 }
 
 /* width of the entire scrollbar */
@@ -46,8 +47,8 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
     width: 6px !important;
     height: 6px !important;
-    background: #f27c00;
     border-radius: 10px;
+    @apply bg-brand-600;
 }
 
 [required] + label:after {

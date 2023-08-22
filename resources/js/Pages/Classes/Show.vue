@@ -12,7 +12,7 @@
                 <print-button />
                 <Link
                     :href="route('classes.edit', data.classes.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-brand-600 px-2.5 py-0.5 text-white"
                 >
                     <PencilAltIcon class="w-5" />
                     <span class="hidden md:block">Edit</span>

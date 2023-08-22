@@ -8,7 +8,7 @@
             <application-logo class="h-12 md:h-16" />
 
             <h1
-                class="hidden text-xs font-bold text-blue-900 md:block md:text-4xl"
+                class="hidden text-xs font-bold text-brand-950 md:block md:text-4xl"
             >
                 {{ $page.props.settings.siteName }}
             </h1>

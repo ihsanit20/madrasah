@@ -31,7 +31,7 @@
                     <Link
                         v-if="data.sms_service.status === 1"
                         :href="route('sms-services.edit', data.sms_service.id)"
-                        class="w-40 bg-blue-400 text-white text-center rounded-lg pt-3 pb-2"
+                        class="w-40 bg-brand-400 text-white text-center rounded-lg pt-3 pb-2"
                     >
                         Edit
                     </Link>
@@ -47,7 +47,7 @@
                         v-if="data.sms_service.status === 1"
                         @click="sendSms"
                         type="button"
-                        class="w-40 bg-green-600 text-white text-center rounded-lg pt-3 pb-2"
+                        class="w-40 bg-brand-600 text-white text-center rounded-lg pt-3 pb-2"
                     >
                         Send
                     </button>
@@ -56,7 +56,7 @@
                         class="list-disc ml-auto"
                     >
                         <li
-                            class="pt-3 pb-2 text-green-600"
+                            class="pt-3 pb-2 text-brand-600"
                         >
                             {{ data.sms_service.status_text }}
                         </li>

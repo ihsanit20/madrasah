@@ -10,7 +10,7 @@
         <div v-if="status" class="flex items-center justify-center print:hidden">
             <div
                 v-if="status === 1"
-                class="flex gap-2 bg-green-500 px-4 py-2 font-bold text-white"
+                class="flex gap-2 bg-brand-600 px-4 py-2 font-bold text-white"
             >
                 <span>&check;</span>
                 Success
@@ -26,7 +26,7 @@
         <div v-else class="flex items-center justify-center gap-4 print:hidden">
             <label
                 v-if="!edit"
-                class="cursor-pointer border border-sky-600 px-4 py-2 text-sky-600 hover:bg-sky-600 hover:text-white"
+                class="cursor-pointer border border-brand-600 px-4 py-2 text-brand-600 hover:bg-brand-600 hover:text-white"
             >
                 {{ imagePreview ? "পরিবর্তন" : "আপলোড" }}
                 <input
@@ -40,15 +40,15 @@
                 v-if="edit"
                 type="button"
                 @click="cancel"
-                class="cursor-pointer border border-rose-500 px-4 py-2 text-rose-500 hover:bg-rose-500 hover:text-white"
+                class="w-1/2 text-sm cursor-pointer border border-rose-500 px-1 py-2 text-rose-500 hover:bg-rose-500 hover:text-white"
             >
-                cancel
+                Cancel
             </button>
             <button
                 v-if="edit"
                 type="button"
                 @click="save"
-                class="cursor-pointer border border-green-500 px-4 py-2 text-green-500 hover:bg-green-500 hover:text-white"
+                class="w-1/2 text-sm cursor-pointer border border-brand-500 px-1 py-2 text-brand-600 hover:bg-brand-600 hover:text-white"
             >
                 Save
             </button>

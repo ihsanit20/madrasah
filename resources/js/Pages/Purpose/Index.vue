@@ -9,7 +9,7 @@
                 class="rounded bg-white p-4 shadow"
                 :href="route('purposes.edit', purpose.id)"
             >
-                <div class="text-sky-600 hover:underline">
+                <div class="text-brand-600 hover:underline">
                     {{ purpose.title }}
                 </div>
                 <div>ফি যুক্ত আছে {{ purpose.purpose_fees_count }} টি</div>

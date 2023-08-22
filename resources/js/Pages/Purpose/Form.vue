@@ -4,7 +4,7 @@
 
         <form @submit.prevent="submit" class="">
             <div class="grid gap-x-10 md:grid-cols-2">
-                <form-group label="বাবদের শিরনাম" class="col-span-2">
+                <form-group label="বাবদের শিরোনাম" class="col-span-2">
                     <Input
                         type="text"
                         class="block w-full"
@@ -15,7 +15,7 @@
                 <div class="col-span-full grid gap-4 md:grid-cols-2">
                     <div class="flex items-center gap-2">
                         <label
-                            class="flex items-center gap-2 py-4 text-blue-500"
+                            class="flex items-center gap-2 py-4 text-brand-500"
                         >
                             <Input
                                 :checked="all_amount_same === true"
@@ -37,7 +37,7 @@
                         />
                     </div>
                     <div class="flex items-center gap-2">
-                        <label class="flex items-center gap-2 text-blue-500">
+                        <label class="flex items-center gap-2 text-brand-500">
                             <Input
                                 :checked="all_amount_same === false"
                                 type="radio"

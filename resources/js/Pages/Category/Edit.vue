@@ -1,7 +1,7 @@
 <template>
-    <Head title="Category" />
+    <Head :title="$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত'" />
 
-    <app-layout pageTitle="ব্যয়ের খাত">
+    <app-layout :pageTitle="$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত'">
         <form-component :data="data" module-action="update" />
     </app-layout>
 </template>

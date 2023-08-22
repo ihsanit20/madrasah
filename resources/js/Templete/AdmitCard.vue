@@ -1,7 +1,14 @@
 <template>
     <div
-        class="w-full bg-white bg-[url('/images/wmlogo.png')] bg-center bg-no-repeat px-12 py-4 print:py-0 print:px-4"
+        class="w-full bg-white px-12 py-4 print:py-0 print:px-4 relative -z-20 overflow-hidden"
     >
+        <div class="absolute inset-0 w-full h-full -z-10 flex justify-center items-center">
+            <img 
+                class="opacity-10"
+                :src="$page.props.settings.logoLink"
+            />
+        </div>
+
         <letter-head :photoUrl="student.imageUrl || '/images/hijab-icon.jpg'" />
 
         <div
@@ -11,7 +18,7 @@
             <div>{{ $e2bnumber(data.exam.session) }} হিজরি</div>
         </div>
 
-        <div class="mt-1.5 mb-2 flex items-center justify-center">
+        <div class="mt-1.5 mb-2 flex items-center justify-center z-10">
             <div
                 class="rounded-md border px-4 py-0.5 text-center text-2xl font-bold print:border-black print:text-black"
             >

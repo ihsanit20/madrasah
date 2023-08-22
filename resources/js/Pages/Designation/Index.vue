@@ -17,7 +17,7 @@
                     >
                         <Link
                             :href="route('designations.edit', designation.id)"
-                            class="text-sky-600 hover:underline"
+                            class="text-brand-600 hover:underline"
                         >
                             {{ designation.name }}
                         </Link>

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full max-w-5xl rounded border bg-white p-4 shadow">
-        <h3 class="text-center text-2xl font-bold text-sky-600">
+        <h3 class="text-center text-2xl font-bold text-brand-600">
             শিক্ষাগত যোগ্যতা
         </h3>
 
@@ -98,7 +98,7 @@
                     :href="
                         route('staff.show', data.staff.id)
                     "
-                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                    class="rounded-md border border-brand-600 px-4 py-2 font-semibold text-brand-600 hover:bg-brand-700 hover:text-white"
                 >
                     Cancel
                 </Link>

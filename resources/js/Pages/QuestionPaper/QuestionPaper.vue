@@ -25,7 +25,7 @@
                     <print-button />
                     <button
                         type="button"
-                        class="flex items-center justify-center gap-2 rounded bg-sky-600 px-3 py-1 text-white"
+                        class="flex items-center justify-center gap-2 rounded bg-brand-600 px-3 py-1 text-white"
                         @click="isEdit = true"
                     >
                         <PencilAltIcon class="w-5" />
@@ -214,7 +214,7 @@
                             v-model="question.title"
                             @keyup="resizeTextarea"
                             @focus="resizeTextarea"
-                            placeholder="প্রশ্ন/প্রশ্নের শিরনাম (Bold Font)"
+                            placeholder="প্রশ্ন/প্রশ্নের শিরোনাম (Bold Font)"
                         ></Textarea>
                         <Textarea
                             :dir="
@@ -243,7 +243,7 @@
                 <div class="flex justify-end">
                     <button
                         type="button"
-                        class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-bold text-white"
+                        class="rounded-lg bg-brand-500 px-4 py-2 text-sm font-bold text-white"
                         @click="addQuestionSlot"
                     >
                         প্রশ্ন যোগ করুন

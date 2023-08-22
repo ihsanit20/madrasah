@@ -55,7 +55,7 @@ export default {
 
     computed: {
         classes() {
-            return this.active ? "text-sky-600" : "text-gray-500";
+            return this.active ? "text-brand-600" : "text-gray-500";
         },
     },
 };

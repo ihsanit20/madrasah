@@ -13,25 +13,25 @@
                 </h2>
                 <Link
                     :href="route('staff.edit', data.staff.id) + `?step=basic`"
-                    class="rounded border border-green-600 px-2.5 pt-1 text-green-600 hover:text-white hover:bg-green-600"
+                    class="rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:text-white hover:bg-brand-600"
                 >
                     তথ্য সম্পাদনা
                 </Link>
                 <Link
                     :href="route('staff.edit', data.staff.id) + `?step=education`"
-                    class="rounded border border-green-600 px-2.5 pt-1 text-green-600 hover:text-white hover:bg-green-600"
+                    class="rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:text-white hover:bg-brand-600"
                 >
                     শিক্ষাগত যোগ্যতা সম্পাদনা
                 </Link>
                 <Link
                     :href="route('staff.edit', data.staff) + '?step=salary'"
-                    class="rounded border border-green-600 px-2.5 pt-1 text-green-600 hover:text-white hover:bg-green-600"
+                    class="rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:text-white hover:bg-brand-600"
                 >
                     বেতন সম্পাদনা
                 </Link>
                 <Link
                     :href="route('staff.salaries.create', data.staff.id)"
-                    class="rounded bg-green-600 px-2.5 pt-1 text-white border border-green-600 hover:bg-green-700"
+                    class="rounded bg-brand-600 px-2.5 pt-1 text-white border border-brand-600 hover:bg-brand-700"
                 >
                     বেতন দিন
                 </Link>
@@ -334,13 +334,13 @@
             >
                 <Link
                     href="#"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:bg-brand-600 hover:text-white"
                 >
                     রশিদগুলা
                 </Link>
                 <Link
                     :href="route('staff.salaries.create', data.staff.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:bg-brand-600 hover:text-white"
                 >
                     বেতন দিন
                 </Link>

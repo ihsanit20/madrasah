@@ -13,13 +13,13 @@
             <a
                 target="_blank"
                 href="/images/admission-blank-form.pdf"
-                class="flex items-center justify-center gap-2 rounded border border-sky-600 px-4 py-0.5 text-sky-600"
+                class="flex items-center justify-center gap-2 rounded border border-brand-600 px-4 py-0.5 text-brand-600"
             >
                 ব্লাঙ্ক ফরম
             </a>
             <Link
                 :href="route('admissions.create')"
-                class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-green-600 px-2.5 py-0.5 text-white"
+                class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-brand-600 px-2.5 py-0.5 text-white"
             >
                 <span>+</span>
                 <span class="hidden md:block">নতুন যোগ করুন</span>
@@ -35,7 +35,7 @@
                 <table-td class="text-left">
                     <Link
                         :href="route('admissions.show', admission.id)"
-                        class="text-sky-600 hover:underline"
+                        class="text-brand-600 hover:underline"
                     >
                         {{ $e2bnumber(admission.id) }}
                     </Link>

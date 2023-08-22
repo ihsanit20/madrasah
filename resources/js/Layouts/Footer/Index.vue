@@ -1,7 +1,7 @@
 <template>
     <div class="bg-gray-300 py-4 text-sm md:text-base">
         <p class="text-center">
-            © {{ year }} mszannat.com | Developed by <a href="https://www.muaawanah.com">Muaawanah</a>
+            © {{ year }} {{ route('home').replace('http://', '').replace('https://', '') }} | Developed by <a href="https://www.muaawanah.com">Muaawanah</a>
         </p>
     </div>
 </template>

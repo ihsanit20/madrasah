@@ -1,7 +1,7 @@
 <template>
-    <Head title="ব্যয়ের খাত" />
+    <Head :title="$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত'" />
 
-    <app-layout pageTitle="ব্যয়ের খাত">
+    <app-layout :pageTitle="$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত'">
         <div class="max-w-xl rounded border bg-white p-3 shadow md:p-4">
             <div class="flex items-end justify-end">
                 <div class="flex items-center gap-2">
@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="grid">
-                <inline-data title="ব্যয়ের খাত :" :value="data.category.name" />
+                <inline-data :title="$page.props.request.type === '2' ? 'ব্যয়ের খাত :' : 'আয়ের খাত :'" :value="data.category.name" />
             </div>
         </div>
     </app-layout>

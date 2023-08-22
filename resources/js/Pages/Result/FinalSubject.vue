@@ -16,15 +16,22 @@
             </Link>
             <Link
                 :href="route('results.final.result-cards', [data.class.id])"
-                class="flex items-center justify-center gap-2 rounded-md bg-sky-600 px-4 py-1 text-white"
+                class="flex items-center justify-center gap-2 rounded-md bg-brand-600 px-4 py-1 text-white"
             >
                 রেজাল্ট কার্ড
             </Link>
             <print-button />
         </div>
         <div
-            class="grid w-full space-y-2 bg-white bg-[url('/images/wmlogo.png')] bg-center bg-no-repeat px-6 py-4 print:py-0 print:px-4"
+            class="grid w-full space-y-2 bg-white relative -z-20 overflow-hidden px-6 py-4 print:py-0 print:px-4"
         >
+            <div class="absolute inset-0 w-full h-full -z-10 flex justify-center items-center">
+                <img 
+                    class="opacity-10"
+                    :src="$page.props.settings.logoLink"
+                />
+            </div>
+
             <letter-head />
 
             <div class="mt-1.5 mb-2 flex items-center justify-center">

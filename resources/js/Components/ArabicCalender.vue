@@ -25,7 +25,7 @@
                     </button>
 
                     <div
-                        class="flex items-center justify-center gap-2 text-lg font-bold text-blue-900 focus:outline-none dark:text-gray-100"
+                        class="flex items-center justify-center gap-2 text-lg font-bold text-brand-950 focus:outline-none dark:text-gray-100"
                     >
                         <span>{{ calendar.currentMonth.bn }}</span>
                         <span>{{ $e2bnumber(calendar.currentYear) }}</span>
@@ -127,7 +127,7 @@
                                 <div
                                     class="flex h-6 w-6 items-center justify-center rounded-full"
                                     :class="{
-                                        'bg-orange-600 text-white':
+                                        'bg-brand-600 text-white':
                                             Number(day) ===
                                             Number(calendar.currentDay),
                                     }"

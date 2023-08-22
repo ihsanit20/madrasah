@@ -136,6 +136,16 @@ class Controller extends BaseController
         if(request()->option == 'staff') {
             $model_instance = Staff::find(request()->id);
         }
+        
+        if(request()->option == 'logo') {
+            Setting::query()
+                ->where('id', request()->id)
+                ->update([
+                    'value' => $image_path,
+                ]);
+
+            return $image_path;
+        }
 
         if($model_instance && $image_path) {
             $this->imageUpdateOrCreate($model_instance, $image_path, $type);

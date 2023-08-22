@@ -18,7 +18,7 @@
                     <table-td class="text-left">
                         <Link
                             :href="route('classes.show', classes.id)"
-                            class="text-sky-600 hover:underline"
+                            class="text-brand-600 hover:underline"
                         >
                             {{ classes.name }}
                         </Link>

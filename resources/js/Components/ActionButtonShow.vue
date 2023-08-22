@@ -2,7 +2,7 @@
     <Link
         :href="href"
         title="Show"
-        class="flex items-center justify-center text-blue-500"
+        class="flex items-center justify-center text-brand-500"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"

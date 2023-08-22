@@ -1,8 +1,8 @@
 <template>
-    <Head title="ব্যয়ের খাত" />
+    <Head :title="$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত'" />
 
     <app-layout
-        pageTitle="ব্যয়ের খাত"
+        :pageTitle="$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত'"
         :addNewHref="
             route('categories.create', [{ type: $page.props.request.type }])
         "
@@ -24,7 +24,7 @@
                                     { type: $page.props.request.type },
                                 ])
                             "
-                            class="text-sky-600 hover:underline"
+                            class="text-brand-600 hover:underline"
                         >
                             {{ category.name }}
                         </Link>
@@ -71,7 +71,7 @@ export default {
     },
     data() {
         return {
-            columns: [{ title: "ব্যয়ের খাত", align: "left" }, {}],
+            columns: [{ title: this.$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত', align: "left" }, {}],
         };
     },
 };

@@ -12,7 +12,7 @@
                 <application-logo class="h-12 md:h-16" />
 
                 <h1
-                    class="hidden text-xs font-bold text-blue-900 md:block md:text-4xl"
+                    class="hidden text-xs font-bold text-brand-950 md:block md:text-4xl"
                 >
                     {{ $page.props.settings.siteName }}
                 </h1>
@@ -21,13 +21,13 @@
             <div class="flex gap-4">
                 <Link
                     :href="route('page.admission-form')"
-                    class="w-28 rounded-lg bg-orange-500 py-1.5 text-center text-sm font-semibold text-white md:w-40 md:text-lg"
+                    class="w-28 rounded-lg bg-brand-600 py-1.5 text-center text-sm font-semibold text-white md:w-40 md:text-lg"
                 >
                     ভর্তির আবেদন
                 </Link>
                 <Link
                     :href="route('login')"
-                    class="w-28 rounded-lg bg-blue-900 py-1.5 text-center text-sm font-semibold text-white md:w-40 md:text-lg"
+                    class="w-28 rounded-lg bg-brand-900 py-1.5 text-center text-sm font-semibold text-white md:w-40 md:text-lg"
                 >
                     লগইন
                 </Link>

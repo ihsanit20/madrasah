@@ -4,7 +4,7 @@
 
         <form @submit.prevent="submit" class="">
             <div class="grid gap-4">
-                <form-group class="w-full" label="ব্যয়ের খাত">
+                <form-group class="w-full" :label="$page.props.request.type === '2' ? 'ব্যয়ের খাত' : 'আয়ের খাত'">
                     <Input
                         type="text"
                         class="block w-full"

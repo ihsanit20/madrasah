@@ -11,7 +11,7 @@
                 <table-td class="text-left">
                     <Link
                         :href="route('admins.show', admin.id)"
-                        class="text-sky-600 hover:underline"
+                        class="text-brand-600 hover:underline"
                     >
                         {{ admin.name }}
                     </Link>

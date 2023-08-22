@@ -3,7 +3,26 @@
         <validation-errors class="mb-4" />
 
         <form @submit.prevent="submit" class="">
-            <div class="grid gap-4">
+            <div v-if="data.setting.key === 'youtube' || data.setting.key === 'facebook'" class="grid gap-4">
+                <form-group class="w-full" label="Name">
+                    <Input
+                        type="text"
+                        class="block w-full"
+                        v-model="name"
+                        required
+                    />
+                </form-group>
+                <form-group class="w-full" label="Link">
+                    <Input
+                        type="text"
+                        class="block w-full"
+                        v-model="link"
+                        required
+                    />
+                </form-group>
+            </div>
+
+            <div v-else class="grid gap-4">
                 <form-group class="w-full" :label="form.name">
                     <Textarea
                         class="block h-full min-h-max w-full resize-none text-sm md:text-lg"
@@ -57,6 +76,15 @@ export default {
             default: {},
         },
     },
+    created() {
+        if(this.data.setting.key === 'youtube' || this.data.setting.key === 'facebook') {
+            const setting = this.data.setting.value.split('|');
+
+            this.name = (setting[0] || "").trim();
+
+            this.link = (setting[1] || "").trim();
+        }
+    },
     data() {
         return {
             form: this.$inertia.form({
@@ -64,10 +92,16 @@ export default {
                 name: this.data.setting.name || "",
                 value: this.data.setting.value || "",
             }),
+            name: "",
+            link: "",
         };
     },
     methods: {
         submit() {
+            if(this.data.setting.key === 'youtube' || this.data.setting.key === 'facebook') {
+                this.form.value = this.name + '|' + this.link;
+            }
+
             if (this.moduleAction == "store") {
                 return this.form.post(this.route("settings.store"));
             }

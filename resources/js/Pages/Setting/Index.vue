@@ -9,15 +9,36 @@
         >
             <template #default="{ item: setting }">
                 <table-td class="text-left">
+                    <span
+                        v-if="setting.key === 'logo'"
+                    >
+                        {{ setting.name }}
+                    </span>
                     <Link
+                        v-else
                         :href="route('settings.edit', setting.id)"
-                        class="text-sky-600 hover:underline"
+                        class="text-brand-600 hover:underline"
                     >
                         {{ setting.name }}
                     </Link>
                 </table-td>
                 <table-td class="text-left">
                     <div
+                        v-if="setting.key === 'logo'"
+                        class="overflow-hidden whitespace-pre-wrap break-all line-clamp-6"
+                    >
+                        <image-previe-with-save
+                            class="w-40"
+                            ratioClass="aspect-[1/1]"
+                            option="logo"
+                            :imageUrl="`/${setting.value}`"
+                            :id="setting.id"
+                            :width="320"
+                            :height="320"
+                        />
+                    </div>
+                    <div
+                        v-else
                         class="overflow-hidden whitespace-pre-wrap break-all line-clamp-6"
                     >
                         {{ setting.value }}
@@ -36,6 +57,7 @@ import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";
 import TableTd from "@/Components/TableTd.vue";
+import ImagePrevieWithSave from "@/Components/ImagePrevieWithSave.vue";
 
 export default {
     components: {
@@ -47,6 +69,7 @@ export default {
         ActionButtonEdit,
         AddNewButton,
         TableTd,
+        ImagePrevieWithSave,
     },
     props: {
         data: {

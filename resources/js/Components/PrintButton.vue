@@ -2,7 +2,7 @@
     <button
         @click="print"
         type="button"
-        class="flex items-center justify-center gap-2 rounded border border-sky-600 px-4 py-0.5 text-sky-600 print:hidden"
+        class="flex items-center justify-center gap-2 rounded border border-brand-600 px-4 py-0.5 text-brand-600 print:hidden"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"

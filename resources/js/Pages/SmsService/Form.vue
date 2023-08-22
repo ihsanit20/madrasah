@@ -4,7 +4,9 @@
 
         <form @submit.prevent="submit" class="">
         
-            <form-heading class="mb-2 md:text-3xl">সাধারণ বার্তা</form-heading>
+            <form-heading class="mb-2 md:text-3xl">
+                {{ data.is_financial ? 'ফিনানশিয়াল বার্তা' : 'সাধারণ বার্তা' }}
+            </form-heading>
 
             <div class="grid grid-cols-3 gap-3">
                 <div class="relative">
@@ -48,6 +50,20 @@
                             {{ class_name }}
                         </div>
                     </div>
+                </div>
+                <div class="w-full grid">
+                    <Select @change="purposeSelectHandler" v-model="form.purpose_id" v-if="data.is_financial" class="w-full">
+                        <option value="" selected>
+                            -- বাবদ নির্বাচন করুন --
+                        </option>
+                        <option
+                            v-for="(purpose, purpose_id) in data.purposes"
+                            :key="purpose_id"
+                            :value="purpose_id"
+                        >
+                            {{ $e2bnumber(purpose.title) }}
+                        </option>
+                    </Select>
                 </div>
                 <div
                     class="px-6 py-2 rounded-lg border flex justify-between items-center col-start-3 bg-gray-100"
@@ -115,20 +131,6 @@
                     <div>
                         SMS Character: <b class="text-rose-600">{{ $e2bnumber(form.body.length) }}</b>
                     </div>
-                </div>
-                <div class="w-full grid md:grid-cols-2 mb-2">
-                    <Select @change="purposeSelectHandler" v-model="form.purpose_id" v-if="data.is_financial" class="w-full">
-                        <option value="" selected>
-                            -- বাবদ নির্বাচন করুন --
-                        </option>
-                        <option
-                            v-for="(purpose, purpose_id) in data.purposes"
-                            :key="purpose_id"
-                            :value="purpose_id"
-                        >
-                            {{ $e2bnumber(purpose.title) }}
-                        </option>
-                    </Select>
                 </div>
                 <div class="w-full relative">
                     <Textarea class="w-full" v-model="form.body" required></Textarea>

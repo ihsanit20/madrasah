@@ -4,9 +4,9 @@
 
         <form @submit.prevent="submit" class="space-y-4">
             <h2
-                class="mt-4 mb-2 text-center text-2xl font-bold text-sky-600 print:text-black"
+                class="mt-4 mb-2 text-center text-2xl font-bold text-brand-600 print:text-black"
             >
-                ভর্তি সম্পন্ন করন
+                ভর্তি সম্পন্নকরণ
             </h2>
             <div class="grid gap-x-2 print:grid-cols-3 md:grid-cols-3">
                 <div class="col-span-2">
@@ -46,7 +46,7 @@
 
                 <div>
                     <inline-data
-                        title="ভর্তি কার‌্যক্রম সম্পাদনকারীর নাম:"
+                        title="ভর্তি কার্যক্রম সম্পাদনকারীর নাম:"
                         :value="verifiedBy"
                     />
                 </div>
@@ -59,12 +59,12 @@
                     :href="
                         route('admissions.edit', data.admission.id) + '?step=3'
                     "
-                    class="rounded-md border border-orange-600 px-4 py-2 font-semibold text-orange-600 hover:bg-orange-700 hover:text-white"
+                    class="rounded-md border border-brand-600 px-4 py-2 font-semibold text-brand-600 hover:bg-brand-700 hover:text-white"
                 >
                     &#8592; পূর্ববর্তী ধাপ
                 </Link>
                 <Button
-                    class="bg-green-600 hover:bg-green-500"
+                    class="bg-brand-600 hover:bg-brand-600"
                     :disabled="form.processing"
                     v-html="buttonValue"
                 >

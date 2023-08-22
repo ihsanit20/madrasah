@@ -7,7 +7,7 @@
                     class="flex flex-col items-center justify-end space-y-1 print:space-y-0"
                 >
                     <h1
-                        class="text-2xl font-bold text-blue-900 print:text-lg print:text-black"
+                        class="text-2xl font-bold text-brand-950 print:text-lg print:text-black"
                     >
                         {{ $page.props.settings.siteName }}
                     </h1>
@@ -81,7 +81,7 @@
 
             <div class="flex items-center justify-center py-2">
                 <span
-                    class="rounded-full bg-sky-600 px-8 pt-1.5 pb-0.5 text-center text-base font-bold text-white print:bg-gray-500 print:text-sm"
+                    class="rounded-full bg-brand-600 px-8 pt-1.5 pb-0.5 text-center text-base font-bold text-white print:bg-gray-500 print:text-sm"
                 >
                     টাকা জমার রশিদ
                 </span>

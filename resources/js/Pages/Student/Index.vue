@@ -13,14 +13,14 @@
                 <Link
                     v-if="data?.classes?.id"
                     :href="route('students.class.id-card', data.classes.id)"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:bg-brand-600 hover:text-white"
                 >
                     পরিচয় পত্র
                 </Link>
                 <Link
                     v-else
                     :href="route('students.all-id-card')"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:bg-brand-600 hover:text-white"
                 >
                     পরিচয় পত্র
                 </Link>
@@ -29,7 +29,7 @@
                     :href="
                         route('students.class.attendance-page', data.classes.id)
                     "
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-sky-600 px-2.5 pt-1 text-sky-600 hover:bg-sky-600 hover:text-white"
+                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded border border-brand-600 px-2.5 pt-1 text-brand-600 hover:bg-brand-600 hover:text-white"
                 >
                     হাজিরা খাতা
                 </Link>
@@ -50,7 +50,7 @@
                 <div class="shrink grow">
                     <Link
                         :href="route('students.show', student.id)"
-                        class="text-md font-bold text-sky-600 hover:underline md:text-xl"
+                        class="text-md font-bold text-brand-600 hover:underline md:text-xl"
                     >
                         {{ student.name }}
                     </Link>
@@ -79,7 +79,7 @@
                                         ? '&purpose=' + data.purposeId
                                         : '')
                                 "
-                                class="rounded bg-orange-100 px-3 py-1 text-sm text-orange-500"
+                                class="rounded bg-brand-100 px-3 py-1 text-sm text-brand-600"
                             >
                                 টাকা জমা নিন
                             </Link>
@@ -106,7 +106,7 @@
                 <div class="shrink grow">
                     <Link
                         :href="route('students.show', student.id)"
-                        class="text-md font-bold text-sky-600 hover:underline md:text-xl"
+                        class="text-md font-bold text-brand-600 hover:underline md:text-xl"
                     >
                         {{ student.name }}
                     </Link>
@@ -135,7 +135,7 @@
                                         ? '&purpose=' + data.purposeId
                                         : '')
                                 "
-                                class="rounded bg-orange-100 px-3 py-1 text-sm text-orange-500"
+                                class="rounded bg-brand-100 px-3 py-1 text-sm text-brand-600"
                             >
                                 টাকা জমা নিন
                             </Link>

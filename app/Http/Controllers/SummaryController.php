@@ -107,7 +107,7 @@ class SummaryController extends Controller
             ->when($to, function($query, $to) {
                 $query->whereDate('created_at', '<=', $to);
             })
-            ->sum('total');
+            ->sum('paid');
 
         $expenses->push([
             "id"    => (int) (0),

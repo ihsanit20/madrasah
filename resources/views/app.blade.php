@@ -16,12 +16,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Mirza:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
-        <!-- Scripts -->
         @routes
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        @vite(['resources/js/app.js'])
+        @inertiaHead
     </head>
     <body class="font-noto-serif-bengali antialiased bg-gray-100 print:bg-white overflow-y-scroll">
         @inertia

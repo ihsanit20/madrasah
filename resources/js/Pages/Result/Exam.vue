@@ -93,7 +93,7 @@
 <script>
 import AppLayout from "@/Layouts/GridApp.vue";
 import { ClassSvg, ExamSvg } from "@/Layouts/Navigation/SvgIcon";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 
 export default {
     components: {

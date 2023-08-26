@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/vue3";
 import AppFooter from "./Footer/Index.vue";
 import AppHeader from "./Header/Index.vue";
 import AppNavigation from "./Navigation/Index.vue";

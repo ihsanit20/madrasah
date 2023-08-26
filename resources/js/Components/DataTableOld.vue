@@ -231,7 +231,7 @@
 <script>
 import Label from "./Label.vue";
 import PaginatorLinks from "./PaginatorLinks.vue";
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 export default {
     components: {
         PaginatorLinks,

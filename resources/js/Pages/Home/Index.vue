@@ -273,7 +273,7 @@
 
 <script>
 import AppLayout from "@/Layouts/Master.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import MainBanner from "@/Components/MainBanner.vue";
 import ArabicCalender from "@/Components/ArabicCalender.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";

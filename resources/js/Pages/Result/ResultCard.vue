@@ -36,7 +36,7 @@
 
 <script>
 import AppLayout from "@/Layouts/GridApp.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { ArrowLeftIcon } from "@heroicons/vue/outline";
 import PrintButton from "@/Components/PrintButton.vue";
 import ResultCardTemplete from "@/Templete/ResultCard.vue";

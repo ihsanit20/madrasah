@@ -151,7 +151,7 @@
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AvatarView from "@/Components/AvatarView.vue";
 import AppLayout from "@/Layouts/Master.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import QrcodeVue from "qrcode.vue";
 export default {
     components: {

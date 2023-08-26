@@ -355,7 +355,7 @@
 
 <script>
 import AppLayout from "@/Layouts/GridApp.vue";
-import { Link, Head } from "@inertiajs/inertia-vue3";
+import { Link, Head } from "@inertiajs/vue3";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import FormHeading from "@/Components/FormHeading.vue";
 import InlineData from "@/Components/InlineData.vue";

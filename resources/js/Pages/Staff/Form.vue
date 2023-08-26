@@ -339,7 +339,7 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3"
+import { Link } from "@inertiajs/vue3";
 import ValidationErrors from "@/Components/ValidationErrors.vue";
 import Button from "@/Components/Button.vue";
 import Input from "@/Components/Input.vue";

@@ -32,7 +32,7 @@
 
 <script>
 import AppLayout from "@/Layouts/GridApp.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import ShowTableRow from "@/Components/ShowTableRow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import SimpleTable from "@/Components/SimpleTable.vue";

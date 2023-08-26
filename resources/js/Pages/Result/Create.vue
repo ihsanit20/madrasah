@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/GridApp.vue";
 import FormComponent from "./Form.vue";
 import { ArrowLeftIcon } from "@heroicons/vue/outline";

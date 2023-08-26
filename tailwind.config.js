@@ -1,6 +1,11 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
+import defaultTheme from 'tailwindcss/defaultTheme';
+import colors from 'tailwindcss/colors';
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+
 module.exports = {
     darkMode: 'class',
     content: [
@@ -45,9 +50,7 @@ module.exports = {
     },
 
     plugins: [
-        require('@tailwindcss/typography'),
-        require('@tailwindcss/forms'),
-        require('@tailwindcss/line-clamp'),
-        require('@tailwindcss/aspect-ratio'),
+        typography,
+        forms
     ],
 };

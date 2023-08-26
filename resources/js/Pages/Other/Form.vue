@@ -176,7 +176,7 @@ import Select from "@/Components/Select.vue";
 import FormGroup from "@/Components/FormGroup.vue";
 import Textarea from "@/Components/Textarea.vue";
 import LetterHead from "@/Templete/LetterHead.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/vue3";
 import InlineData from "@/Components/InlineData.vue";
 
 export default {

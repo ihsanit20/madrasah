@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/vue3";
 import ValidationErrors from "@/Components/ValidationErrors.vue";
 import Label from "@/Components/Label.vue";
 import Button from "@/Components/Button.vue";

@@ -95,7 +95,7 @@
 <script>
 import AppLayout from "@/Layouts/GridApp.vue";
 import { MoneyReceiptSvg } from "@/Layouts/Navigation/SvgIcon";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import SimpleTable from "@/Components/SimpleTable.vue";
 import TableTd from "@/Components/TableTd.vue";
 import Select from "@/Components/Select.vue";

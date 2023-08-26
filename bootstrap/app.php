@@ -56,7 +56,7 @@ $server_name = $_SERVER['SERVER_NAME'] ?? null;
 
 $default_path = null;
 
-$default_path = "../../madrasah-env/markajulfikri.org/";
+// $default_path = "../../madrasah-env/markajulfikri.org/";
 
 if($server_name) 
 {

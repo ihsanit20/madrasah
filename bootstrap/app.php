@@ -52,4 +52,37 @@ $app->singleton(
 |
 */
 
+$server_name = $_SERVER['SERVER_NAME'] ?? null;
+
+$default_path = null;
+
+$default_path = "../../madrasah-env/markajulfikri.org/";
+
+if($server_name) 
+{
+    $pattern = "/.test$/i";
+
+    $domain = preg_replace($pattern, "", $server_name);
+
+    $allow_domains = [
+        'mszannat.com',
+        'markajulfikri.org',
+        'mazahirululoom.org',
+    ];
+
+    $path = '../../madrasah-env/' . $domain . '/';
+
+    if(in_array($domain, $allow_domains) && file_exists($path . '.env'))
+    {
+        $app->useEnvironmentPath($path);
+    } 
+    elseif(file_exists($default_path . '.env'))
+    {
+        $app->useEnvironmentPath($default_path);
+    }
+
+}
+
+// dd($app);
+
 return $app;

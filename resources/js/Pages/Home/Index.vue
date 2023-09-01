@@ -36,6 +36,7 @@
                             {{ $page.props.current_academic_session.bengali }} হি. শিক্ষাবর্ষে ভর্তি চলছে। অনলাইনে আবেদন করুন
                         </p>
                         <Link
+                            href="#"
                             class="rounded-lg bg-brand-600 px-8 py-1.5 text-lg font-semibold text-white"
                         >
                             ভর্তির আবেদন
@@ -182,6 +183,29 @@
             </div>
         </section>
 
+        <div v-if="Object.keys(data.posts).length" class="mx-auto max-w-6xl pt-4 pb-4 md:pt-8 md:pb-8">
+            <section-card title="আর্টিকেল">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-2 md:px-0">
+                    <Link
+                        v-for="(post, index) in data.posts"
+                        :key="index"
+                        :href="route('article.show', post.id)"
+                        class="border bg-white flex flex-col rounded-xl overflow-hidden"
+                    >
+                        <PostCard :post="post" />
+                    </Link>
+                </div>
+                <div class="flex justify-center items-center my-3 pt-4">
+                    <Link 
+                        :href="route('article.index')"
+                        class="px-4 pt-2 pb-1 rounded-xl border border-brand-600 text-brand-500 bg-white hover:bg-brand-600 hover:text-white"
+                    >
+                        সকল আর্টিকেল পড়ুন
+                    </Link>
+                </div>
+            </section-card>
+        </div>
+
         <section class="bg-brand-900 pt-4 pb-4 text-white md:pt-8 md:pb-8">
             <div
                 class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-0 py-4 text-justify text-lg lg:flex-row"
@@ -278,6 +302,8 @@ import MainBanner from "@/Components/MainBanner.vue";
 import ArabicCalender from "@/Components/ArabicCalender.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import { PhoneIcon } from "@heroicons/vue/solid";
+import PostCard from "@/Components/PostCard.vue";
+import SectionCard from '@/Components/SectionCard.vue';
 
 export default {
     components: {
@@ -288,6 +314,8 @@ export default {
         ArabicCalender,
         ApplicationLogo,
         PhoneIcon,
+        PostCard,
+        SectionCard,
     },
     props: {
         data: {

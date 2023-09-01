@@ -15,6 +15,7 @@ use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassFeeResource;
 use App\Http\Resources\DistrictResource;
 use App\Http\Resources\DivisionResource;
+use App\Http\Resources\PostResource;
 use App\Http\Resources\SimpleNoticeResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Admission;
@@ -22,6 +23,7 @@ use App\Models\Area;
 use App\Models\ClassFee;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -62,6 +64,8 @@ class HomeController extends Controller
 
         // return SimpleNoticeResource::collection($notices);
 
+        PostResource::withoutWrapping();
+
         return Inertia::render('Home/Index', [
             'data' => [
                 'classes' => $classes,
@@ -70,6 +74,7 @@ class HomeController extends Controller
                 'headline' => $this->getSettingProperty('headline'),
                 'ourMessage' => $this->getSettingProperty('our-message'),
                 'calendar' => $calender,
+                "posts" => PostResource::collection(Post::inRandomOrder()->take(3)->get()),
             ]
         ]);
     }

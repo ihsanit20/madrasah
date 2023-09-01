@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Resources\SettingResource;
 use App\Models\HijriMonth;
+use App\Models\Post;
 use App\Models\Setting;
 use App\Models\Staff;
 use App\Models\Student;
@@ -135,6 +136,10 @@ class Controller extends BaseController
         
         if(request()->option == 'staff') {
             $model_instance = Staff::find(request()->id);
+        }
+        
+        if(request()->option == 'post') {
+            $model_instance = Post::find(request()->id);
         }
         
         if(request()->option == 'logo') {

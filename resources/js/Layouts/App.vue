@@ -70,7 +70,7 @@ export default {
         AppHeader,
         AppNavigation,
     },
-    props: ["pageTitle", "addNewHref"],
+    props: ["pageTitle", "addNewHref", "backHref"],
     data() {
         return {
             navigation: false,
@@ -83,3 +83,10 @@ export default {
     },
 };
 </script>
+
+
+<style>
+    .ProseMirror h3 {
+        font-size: 24px;
+    }
+</style>

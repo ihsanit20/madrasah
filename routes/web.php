@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AdmitCardController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OtherPurposeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentPurposeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PurposeController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SalaryController;
@@ -39,6 +41,9 @@ Route::get('/notice/{notice}', [HomeController::class, 'notice'])->name('page.no
 Route::get('/class/{class}', [HomeController::class, 'class'])->name('page.class');
 Route::get('/admission-form', [HomeController::class, 'admissionForm'])->name('page.admission-form');
 Route::get('/admission-form-blank', [HomeController::class, 'admissionFormBlank'])->name('page.admission-form-blank');
+
+Route::get('/article', [ArticleController::class, 'index'])->name('article.index');
+Route::get('/article/{post}', [ArticleController::class, 'show'])->name('article.show');
 
 Route::get('verify/{staff}', [VerificationController::class, 'staffIdCard'])->name('verifications.staff-id-card');
 Route::get('verify/{student}/{admission}', [VerificationController::class, 'studentIdCard'])->name('verifications.student-id-card');
@@ -142,6 +147,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'purposes'          => PurposeController::class,
         'exams'             => ExamController::class,
         'sms-services'      => SmsServiceController::class,
+        'posts'             => PostController::class,
     ]);
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');

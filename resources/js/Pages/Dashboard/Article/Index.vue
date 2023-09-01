@@ -1,13 +1,23 @@
 <template>
-    <Head title="ড্যাশবোর্ড" />
+    <Head title="আর্টিকেল" />
 
     <app-layout
         :backHref="route('dashboard')"
     >
         <div class="w-full grid gap-2 grid-cols-2 md:gap-4 md:grid-cols-3 lg:grid-cols-4">
-            <div class="col-span-full text-center text-2xl md:text-6xl bg-white h-96 rounded flex justify-center items-center text-brand-600">
-                Coming Soon...
-            </div>
+            <GridViewCard
+                :href="route('posts.create')"
+                icon-class="fa-solid fa-file-circle-plus"
+                class="lg:col-start-2"
+            >
+                নতুন আর্টিকেল
+            </GridViewCard>
+            <GridViewCard
+                :href="route('posts.index')"
+                icon-class="fa-solid fa-list-check"
+            >
+                আর্টিকেল তালিকা
+            </GridViewCard>
         </div>
     </app-layout>
 </template>

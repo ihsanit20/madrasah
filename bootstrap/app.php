@@ -64,6 +64,10 @@ if($server_name)
 
     $domain = preg_replace($pattern, "", $server_name);
 
+    $pattern = "/^www./i";
+
+    $domain = preg_replace($pattern, "", $domain);
+
     $allow_domains = [
         'mszannat.com',
         'markajulfikri.org',

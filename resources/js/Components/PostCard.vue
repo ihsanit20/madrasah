@@ -1,7 +1,7 @@
 <template>
     <div class="overflow-hidden w-full aspect-video">
         <img
-            :src="post.imageUrl || '/images/article.jpg'"
+            :src="post.imageUrl || '/images/article.webp'"
             class="w-full bg-gray-200 h-full object-cover hover:scale-110 transition-all ease-in-out"
             @error="$defaultImage"
         />

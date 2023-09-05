@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\SettingResource;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-
-use function PHPUnit\Framework\returnSelf;
 
 class SettingController extends Controller
 {
@@ -57,6 +56,8 @@ class SettingController extends Controller
         $collections = Setting::query()
             ->orderBy('priority')
             ->type($type);
+
+        // dd($collections->paginate());
 
         return Inertia::render('Setting/Index', [
             'data' => [

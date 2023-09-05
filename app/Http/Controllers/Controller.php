@@ -117,7 +117,7 @@ class Controller extends BaseController
 
             $fileName = Str::random(10) . time() . '.' . $extention;
 
-            $path = 'image/';
+            // $path = 'image/';
 
             $finalImage = ImageManagerStatic::make($image);
 
@@ -125,9 +125,25 @@ class Controller extends BaseController
 
             $finalImage = $finalImage->encode($extention);
 
-            Storage::put('public/' . $path . $fileName, $finalImage->__toString());
+            $primary_directory =  "storage";
+            
+            $server_name = $_SERVER['SERVER_NAME'] ?? null;
 
-            $image_path = 'storage/' . $path . $fileName;
+            if($server_name) {
+                $primary_directory = str_replace(".", "-", $server_name);
+            }
+
+            if(request()->option) {
+                $primary_directory .= ("/" . request()->option);
+            }
+
+            if(request()->id) {
+                $primary_directory .= ("/" . request()->id);
+            }
+
+            Storage::put($primary_directory . '/' . $fileName, $finalImage->__toString());
+
+            $image_path = $primary_directory . '/' . $fileName;
         }
         
         if(request()->option == 'student') {

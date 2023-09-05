@@ -31,7 +31,7 @@
                             class="w-40"
                             ratioClass="aspect-[1/1]"
                             option="logo"
-                            :imageUrl="`/${setting.value}`"
+                            :imageUrl="`${setting.value}`"
                             :id="setting.id"
                             :width="320"
                             :height="320"

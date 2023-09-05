@@ -27,7 +27,7 @@
                     class="bg-gray-300 flex-initial flex-col justify-center items-center rounded-xl overflow-hidden"
                 >
                     <img
-                        :src="post.imageUrl || '/images/article.jpg'"
+                        :src="post.imageUrl || '/images/article.webp'"
                         class="w-full aspect-video border border-gray-300"
                         @error="$defaultImage"
                     />

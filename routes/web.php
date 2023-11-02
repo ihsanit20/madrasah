@@ -15,6 +15,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OtherPurposeController;
 use App\Http\Controllers\PaymentController;
@@ -130,6 +131,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('admissions/admission', [AdmissionController::class, 'admission'])->name('admissions.admission');
 
+    // resource routes
     Route::resources([
         'fees'              => FeeController::class,
         'classes'           => ClassesController::class,
@@ -148,6 +150,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'exams'             => ExamController::class,
         'sms-services'      => SmsServiceController::class,
         'posts'             => PostController::class,
+        'departments'       => DepartmentController::class,
+    ]);
+
+    // nested resource routes
+    Route::resources([
+        // 'departments.academic_sessions' => DepartmentAcademicSessionController::class,
     ]);
 
     Route::post('/image-upload-get-link', [Controller::class, 'imageUploadGetLink'])->name('image-upload-get-link');

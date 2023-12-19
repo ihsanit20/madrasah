@@ -6,7 +6,7 @@
     <app-layout
         :pageTitle="`${data.exam.name} : ${data.class.name} ক্লাস এর বিষয় সমুহ`"
     >
-        <div class="w-full flex items-center justify-between py-2 print:hidden">
+        <div class="flex w-full items-center justify-between py-2 print:hidden">
             <Link
                 :href="
                     route('results.classes', [data.exam.id]) +
@@ -27,20 +27,19 @@
                     '?session=' +
                     $page.props.current_academic_session.value
                 "
-                class="flex items-center justify-center gap-2 rounded-md bg-brand-600 px-4 py-1 text-white"
+                class="bg-brand-600 flex items-center justify-center gap-2 rounded-md px-4 py-1 text-white"
             >
                 রেজাল্ট কার্ড
             </Link>
             <print-button />
         </div>
         <div
-            class="grid w-full space-y-2 bg-white relative -z-20 overflow-hidden px-6 py-4 print:py-0 print:px-4"
+            class="relative grid w-full space-y-2 overflow-hidden bg-white px-6 py-4 print:py-0 print:px-4"
         >
-            <div class="absolute inset-0 w-full h-full -z-10 flex justify-center items-center">
-                <img 
-                    class="opacity-10"
-                    :src="$page.props.settings.logoLink"
-                />
+            <div
+                class="absolute inset-0 h-full w-full items-center justify-center hidden print:flex"
+            >
+                <img class="opacity-10" :src="$page.props.settings.logoLink" />
             </div>
 
             <letter-head />

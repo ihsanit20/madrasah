@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-col">
+    <div class="flex w-full flex-col">
         <div class="overflow-x-auto">
             <div class="inline-block min-w-full align-middle">
                 <div class="overflow-hidden">
@@ -83,7 +83,11 @@ export default {
     },
     computed: {
         request() {
-            return usePage().props?.value?.request;
+            return (
+                usePage().props?.value?.request ||
+                usePage().props?.request ||
+                {}
+            );
         },
     },
     props: {

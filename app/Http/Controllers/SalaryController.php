@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\DesignationResource;
 use App\Http\Resources\SalaryResource;
 use App\Http\Resources\StaffResource;
+use App\Models\Appointment;
 use App\Models\Staff;
 use App\Models\Salary;
 use Illuminate\Http\Request;
@@ -17,8 +18,8 @@ class SalaryController extends Controller
         $collections = Salary::query()
             ->with('staff:id,name')
             ->latest()
-            // ->search(['id'])
-            // ->filter(request())
+            ->search(['id'])
+            ->filter(request())
             ->latest('id');
 
         // return SalaryResource::collection($collections->paginate(request()->perpage)->appends(request()->input()));
@@ -33,8 +34,11 @@ class SalaryController extends Controller
 
     public function show(Salary $salary)
     {
+        // return
         $salary->load([
             'staff:id,name',
+            'staff.current_appointment:id,staff_id,session,designation_id',
+            'staff.current_appointment.designation:id,name',
         ]);
 
         return Inertia::render('Staff/Salary/Show', compact('salary'));
@@ -92,7 +96,7 @@ class SalaryController extends Controller
 
         return [
             'staff' => $this->formatedData($staff),
-            'purposes' => Salary::getPurpose(),
+            'purposes' => array_slice(Salary::getPurpose(), -12, 12, true),
         ];
     }
 
@@ -106,7 +110,8 @@ class SalaryController extends Controller
     protected function getFilterProperty()
     {
         return [
-            //
+            'purpose'   => Salary::getPurpose(),
+            'staff'     => Staff::pluck('name', 'id'),
         ];
     }
 

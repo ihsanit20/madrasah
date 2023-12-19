@@ -1,7 +1,7 @@
 <template>
-    <div class="w-full flex flex-wrap gap-2 py-2">
+    <div class="flex w-full flex-wrap gap-2 py-2">
         <div
-            class="flex order-1 lg:order-2 w-full sm:w-auto"
+            class="order-1 flex w-full sm:w-auto lg:order-2"
             v-for="(filter, key) in filters"
             :key="key"
         >
@@ -34,13 +34,13 @@
 
         <div
             v-if="dateFilter"
-            class="ml-auto w-full lg:max-w-xl lg:w-auto flex flex-col sm:flex-row justify-between items-end gap-2 order-1 lg:order-2"
+            class="order-1 ml-auto flex w-full flex-col items-end justify-between gap-2 sm:flex-row lg:order-2 lg:w-auto lg:max-w-xl"
         >
-            <div class="w-full max-w-sm flex justify-end items-center gap-1">
+            <div class="flex w-full max-w-sm items-center justify-end gap-1">
                 <select
                     @change="dateSearchHandler"
                     v-model="valueDateFilter"
-                    class="block w-full min-w-max shadow-sm focus:outline-none focus:ring-0 cursor-pointer"
+                    class="block w-full min-w-max cursor-pointer shadow-sm focus:outline-none focus:ring-0"
                 >
                     <option value="">Custom Date</option>
                     <option
@@ -52,7 +52,7 @@
                     </option>
                 </select>
             </div>
-            <div class="w-full max-w-sm flex justify-end items-center gap-1">
+            <div class="flex w-full max-w-sm items-center justify-end gap-1">
                 <!-- <label class="w-12 text-right">From</label> -->
                 <input
                     v-show="!valueDateFilter"
@@ -63,7 +63,7 @@
                     class="block w-full max-w-xs shadow-sm focus:outline-none focus:ring-0"
                 />
             </div>
-            <div class="w-full max-w-sm flex justify-end items-center gap-1">
+            <div class="flex w-full max-w-sm items-center justify-end gap-1">
                 <!-- <label class="w-12 text-right">To</label> -->
                 <input
                     v-show="!valueDateFilter"
@@ -76,11 +76,11 @@
             </div>
         </div>
 
-        <div class="sm:w-24 flex order-2 lg:order-1">
+        <div class="order-2 flex sm:w-24 lg:order-1">
             <select
                 @change="searchHandler"
                 v-model="perpage"
-                class="block w-full shadow-sm focus:outline-none focus:ring-0 cursor-pointer"
+                class="block w-full cursor-pointer shadow-sm focus:outline-none focus:ring-0"
             >
                 <option
                     v-for="pageLengthItem in pageLength"
@@ -92,7 +92,7 @@
             </select>
         </div>
 
-        <div class="ml-auto w-2/3 max-w-xs lg:w-auto flex order-4 lg:order-4">
+        <div class="order-4 ml-auto flex w-2/3 max-w-xs lg:order-4 lg:w-auto">
             <input
                 @input="searchHandler"
                 class="block w-full shadow-sm focus:outline-none focus:ring-0"
@@ -107,15 +107,15 @@
         <paginator-links :collections="collections" />
     </div>
 
-    <div class="overflow-auto relative">
-        <table class="min-w-max w-full table-auto">
+    <div class="relative overflow-auto">
+        <table class="w-full min-w-max table-auto">
             <thead>
                 <tr
-                    class="bg-brand-600 text-white uppercase text-sm leading-normal"
+                    class="bg-brand-600 text-sm uppercase leading-normal text-white"
                 >
                     <th
                         v-if="serialColumn"
-                        class="py-3 px-2 text-left sticky left-0 bg-brand-600"
+                        class="bg-brand-600 sticky left-0 py-3 px-2 text-left"
                     >
                         SL
                     </th>
@@ -124,7 +124,7 @@
                 </tr>
             </thead>
 
-            <tbody class="text-gray-600 text-sm font-light bg-white">
+            <tbody class="bg-white text-sm font-light text-gray-600">
                 <tr
                     v-for="(item, index) in collections.data"
                     :key="index"
@@ -132,7 +132,7 @@
                 >
                     <td
                         v-if="serialColumn"
-                        class="py-3 px-2 text-left sticky left-0 bg-white"
+                        class="sticky left-0 bg-white py-3 px-2 text-left"
                     >
                         {{ collections.meta.from + index }}
                     </td>
@@ -171,7 +171,11 @@ export default {
     },
     computed: {
         request() {
-            return usePage().props.request;
+            return (
+                usePage().props?.value?.request ||
+                usePage().props?.request ||
+                {}
+            );
         },
     },
     props: {

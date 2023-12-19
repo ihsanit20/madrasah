@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\ScopeSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Salary extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, ScopeSearch;
 
     protected $guarded = [];
 
@@ -22,6 +23,7 @@ class Salary extends Model
 
     protected $appends = [
         'purpose_text',
+        'created_at_as_text',
     ];
 
     protected static $purposes =  [
@@ -58,6 +60,22 @@ class Salary extends Model
     public function getPurposeTextAttribute()
     {
         return self::getPurpose($this->purpose_id ?? 0) ?? '';
+    }
+
+    public function getcreatedAtAsTextAttribute()
+    {
+        return $this->created_at ? $this->created_at->format('d-m-Y') : '';
+    }
+
+    public function scopeFilter($query, $request)
+    {
+        return $query
+            ->when($request->staff, function($query, $staff_id) {
+                $query->where('staff_id', $staff_id);
+            })
+            ->when($request->purpose, function($query, $purpose_id) {
+                $query->where('purpose_id', $purpose_id);
+            });
     }
 
     public function staff()

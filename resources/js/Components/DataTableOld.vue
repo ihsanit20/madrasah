@@ -239,7 +239,11 @@ export default {
     },
     computed: {
         request() {
-            return usePage().props?.value?.request;
+            return (
+                usePage().props?.value?.request ||
+                usePage().props?.request ||
+                {}
+            );
         },
     },
     props: {

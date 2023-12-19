@@ -1,7 +1,7 @@
 <template>
     <Head title="টাকা জমার রশিদ" />
 
-    <app-layout pageTitle="টাকা জমার রশিদ">
+    <app-layout pageTitle="স্টাফ বেতন তালিকা">
         <simple-table
             :collections="data.collections"
             :filters="data.filters"
@@ -24,10 +24,10 @@
                     {{ salary.purpose_text }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ salary?.total }}
+                    {{ $e2bnumber(salary?.total) }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ salary?.cut }}
+                    {{ $e2bnumber(salary?.cut) }}
                 </table-td>
                 <table-td class="text-right">
                     <b>{{ $e2bnumber(salary.paid) }}</b>
@@ -40,7 +40,7 @@
 <script>
 import AppLayout from "@/Layouts/GridApp.vue";
 import { Head, Link } from "@inertiajs/vue3";
-import SimpleTable from "@/Components/DataTable.vue";
+import SimpleTable from "@/Components/DataTableOld.vue";
 import ActionButtonShow from "@/Components/ActionButtonShow.vue";
 import ActionButtonEdit from "@/Components/ActionButtonEdit.vue";
 import AddNewButton from "@/Components/AddNewButton.vue";

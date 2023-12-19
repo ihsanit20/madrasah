@@ -18,16 +18,16 @@
                     </Link>
                 </table-td>
                 <table-td class="text-left">
-                    {{ payment.admission.studentName }}
+                    {{
+                        payment.admission?.student?.name ||
+                        payment.admission.student_id
+                    }}
                 </table-td>
                 <table-td class="text-left">
                     {{ $e2bnumber(payment.admission.roll) }}
                 </table-td>
                 <table-td class="text-left">
-                    {{ payment.admission.className }}
-                </table-td>
-                <table-td class="text-left">
-                    {{ payment.purposeText }}
+                    {{ payment.admission.class.name }}
                 </table-td>
                 <table-td class="text-right">
                     {{ $e2bnumber(payment.paid) }} TK
@@ -70,7 +70,6 @@ export default {
                 { title: "শিক্ষার্থী", align: "left" },
                 { title: "রোল", align: "left" },
                 { title: "ক্লাস", align: "left" },
-                { title: "বাবদ", align: "left" },
                 { title: "জমা", align: "right" },
             ],
         };

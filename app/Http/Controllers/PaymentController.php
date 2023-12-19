@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AdmissionResource;
 use App\Http\Resources\ClassesResource;
 use App\Http\Resources\ClassFeeResource;
+use App\Http\Resources\PaymentIndexResource;
 use App\Http\Resources\PaymentResource;
 use App\Models\Admission;
 use App\Models\Classes;
@@ -31,12 +32,17 @@ class PaymentController extends Controller
             ->filter(request())
             ->latest('id')
             ->with([
-                'admission',
+                'admission:id,student_id,class_id,roll',
+                'admission.class:id,name',
+                'admission.student:id,name',
+                'admission.student.current_admission',
             ]);
+
+        // return PaymentIndexResource::collection($collections->paginate(request()->perpage)->appends(request()->input()));
 
         return Inertia::render('Payment/Index', [
             'data' => [
-                'collections'   => PaymentResource::collection($collections->paginate(request()->perpage)->appends(request()->input())),
+                'collections'   => PaymentIndexResource::collection($collections->paginate(request()->perpage)->appends(request()->input())),
                 'filters'       => $this->getFilterProperty(),
             ]
         ]);

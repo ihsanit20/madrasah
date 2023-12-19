@@ -9,19 +9,32 @@
         <div
             class="grid w-full max-w-lg gap-4 rounded-lg border bg-white p-4 print:border-none"
         >
-            <div class="grid w-full grid-cols-3 gap-4 print:grid-cols-3">
+            <LetterHead />
+            <div class="grid w-full grid-cols-2 gap-4 print:grid-cols-2">
+                <div class="text-left">
+                    রশিদ নং: <b>{{ $e2bnumber(salary.id) }}</b>
+                </div>
+                <div class="text-right">
+                    তারিখ: <b>{{ $e2bnumber(salary.created_at_as_text) }}</b>
+                </div>
+                <div class="text-left">
+                    নাম: <b>{{ salary?.staff?.name }}</b>
+                </div>
+                <div class="text-right">
+                    পদবি:
+                    <b>
+                        {{
+                            salary?.staff?.current_appointment?.designation
+                                ?.name
+                        }}
+                    </b>
+                </div>
                 <div class="col-span-full flex items-center justify-center">
                     <div
                         class="col-span-full rounded-full border bg-gray-200 px-3 pt-1 text-center font-bold"
                     >
                         {{ salary?.purpose_text }}
                     </div>
-                </div>
-                <div class="text-left">
-                    নং: <b>{{ salary.id }}</b>
-                </div>
-                <div class="col-span-2 text-right">
-                    নাম: <b>{{ salary?.staff?.name }}</b>
                 </div>
             </div>
             <div class="grid w-full">
@@ -64,12 +77,14 @@
 import AppLayout from "@/Layouts/GridApp.vue";
 import { Head } from "@inertiajs/vue3";
 import PrintButton from "@/Components/PrintButton.vue";
+import LetterHead from "../../../Templete/LetterHead.vue";
 
 export default {
     components: {
         AppLayout,
         Head,
         PrintButton,
+        LetterHead,
     },
     props: {
         salary: {

@@ -15,6 +15,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -173,6 +174,8 @@ class Controller extends BaseController
                 ->update([
                     'value' => $image_path,
                 ]);
+
+            Cache::forget(Setting::ALL_SETTING_DATA_CACHE_KEY);
 
             return $image_path;
         }

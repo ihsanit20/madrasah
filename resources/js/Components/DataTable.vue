@@ -83,7 +83,7 @@ export default {
     },
     computed: {
         request() {
-            return usePage().props.value.request;
+            return usePage().props?.value?.request;
         },
     },
     props: {

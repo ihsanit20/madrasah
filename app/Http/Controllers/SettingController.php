@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\SettingResource;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -79,6 +80,8 @@ class SettingController extends Controller
     {
         $setting->update($this->validatedData($request, $setting->id));
 
+        $this->removeCache();
+
         return redirect()
             ->route($this->getRouteName($setting->type))
             ->with('status', 'The record has been update successfully.');
@@ -114,6 +117,11 @@ class SettingController extends Controller
             ],
             'value' => '',
         ]);
+    }
+
+    protected function removeCache()
+    {
+        Cache::forget(Setting::ALL_SETTING_DATA_CACHE_KEY);
     }
 
 }

@@ -24,6 +24,7 @@ use App\Models\ClassFee;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Post;
+use App\Models\Setting;
 
 class HomeController extends Controller
 {
@@ -66,13 +67,21 @@ class HomeController extends Controller
 
         PostResource::withoutWrapping();
 
+        $settings = Setting::query()
+            ->properties([
+                'principal-message',
+                'headline',
+                'our-message'
+            ])
+            ->get();
+
         return Inertia::render('Home/Index', [
             'data' => [
                 'classes' => $classes,
                 'notices' => SimpleNoticeResource::collection($notices),
-                'principalMessage' => $this->getSettingProperty('principal-message'),
-                'headline' => $this->getSettingProperty('headline'),
-                'ourMessage' => $this->getSettingProperty('our-message'),
+                'principalMessage' => $this->getSettingProperty('principal-message', $settings),
+                'headline' => $this->getSettingProperty('headline', $settings),
+                'ourMessage' => $this->getSettingProperty('our-message', $settings),
                 'calendar' => $calender,
                 "posts" => PostResource::collection(Post::inRandomOrder()->take(3)->get()),
             ]

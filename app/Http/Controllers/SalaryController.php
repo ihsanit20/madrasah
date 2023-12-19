@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\DesignationResource;
+use App\Http\Resources\SalaryResource;
 use App\Http\Resources\StaffResource;
 use App\Models\Staff;
 use App\Models\Salary;
@@ -11,6 +12,34 @@ use Inertia\Inertia;
 
 class SalaryController extends Controller
 {
+    public function index()
+    {
+        $collections = Salary::query()
+            ->with('staff:id,name')
+            ->latest()
+            // ->search(['id'])
+            // ->filter(request())
+            ->latest('id');
+
+        // return SalaryResource::collection($collections->paginate(request()->perpage)->appends(request()->input()));
+
+        return Inertia::render('Staff/Salary/Index', [
+            'data' => [
+                'collections'  => SalaryResource::collection($collections->paginate(request()->perpage)->appends(request()->input())),
+                'filters'   => $this->getFilterProperty(),
+            ]
+        ]);
+    }
+
+    public function show(Salary $salary)
+    {
+        $salary->load([
+            'staff:id,name',
+        ]);
+
+        return Inertia::render('Staff/Salary/Show', compact('salary'));
+    }
+
     public function create(Staff $staff)
     {
         // return

@@ -1,14 +1,39 @@
 <template>
-    <div class="w-full flex justify-between">
-        <div class="hidden lg:flex items-center">
-            Showing {{ collections.meta.from }} to {{ collections.meta.to }} of {{ collections.meta.total }} results
+    <div class="flex w-full justify-between">
+        <div class="hidden items-center lg:flex">
+            Showing {{ collections.meta.from }} to {{ collections.meta.to }} of
+            {{ collections.meta.total }} results
         </div>
         <div class="hidden lg:flex" v-if="collections.meta.last_page > 1">
-            <Link v-for="link in collections.meta.links" :key="link.index" :class="{ 'bg-brand-600 text-white border-brand-600' : link.active, 'bg-white text-gray-700 border-gray-300' : ! link.active }" class="inline-flex items-center ml-0.5 px-3.5 py-1.5 text-sm border leading-5 rounded-md focus:outline-none focus:ring-0" :href="link.url" v-html="link.label" />
+            <component
+                :is="link.url ? 'Link' : 'div'"
+                v-for="link in collections.meta.links"
+                :key="link.index"
+                :class="{
+                    'bg-brand-600 border-brand-600 text-white': link.active,
+                    'border-gray-300 bg-white text-gray-700': !link.active,
+                }"
+                class="ml-0.5 inline-flex items-center rounded-md border px-3.5 py-1.5 text-sm leading-5 focus:outline-none focus:ring-0"
+                :href="link.url"
+                v-html="link.label"
+            />
         </div>
-        <div class="w-full flex justify-between lg:hidden" v-if="collections.meta.last_page > 1">
-            <Link class="inline-flex items-center px-3.5 py-1.5 border leading-5 rounded-md focus:outline-none focus:ring-0" :href="collections.links.prev" v-html="`&laquo; Previous`" />
-            <Link class="inline-flex items-center px-3.5 py-1.5 border leading-5 rounded-md focus:outline-none focus:ring-0" :href="collections.links.next" v-html="`Next &raquo;`" />
+        <div
+            class="flex w-full justify-between lg:hidden"
+            v-if="collections.meta.last_page > 1"
+        >
+            <component
+                :is="collections.links.prev ? 'Link' : 'div'"
+                class="inline-flex items-center rounded-md border px-3.5 py-1.5 leading-5 focus:outline-none focus:ring-0"
+                :href="collections.links.prev"
+                v-html="`&laquo; Previous`"
+            />
+            <component
+                :is="collections.links.next ? 'Link' : 'div'"
+                class="inline-flex items-center rounded-md border px-3.5 py-1.5 leading-5 focus:outline-none focus:ring-0"
+                :href="collections.links.next"
+                v-html="`Next &raquo;`"
+            />
         </div>
     </div>
 </template>
@@ -22,5 +47,5 @@ export default {
     props: {
         collections: { type: Object, default: {} },
     },
-}
+};
 </script>

@@ -8,9 +8,12 @@
 
     <div class="mx-auto flex max-w-6xl">
         <main
-            class="w-full space-y-2 md:space-y-4 overflow-auto px-2 py-2 md:px-4 md:py-4 print:p-0 print:overflow-visible"
+            class="w-full space-y-2 overflow-auto px-2 py-2 print:overflow-visible print:p-0 md:space-y-4 md:px-4 md:py-4"
         >
-            <div v-if="pageTitle || addNewHref" class="flex items-center justify-center gap-1.5 print:hidden text-center">
+            <div
+                v-if="pageTitle || addNewHref"
+                class="flex items-center justify-center gap-1.5 text-center print:hidden"
+            >
                 <h2
                     v-if="pageTitle"
                     class="text-xl font-bold leading-5 text-gray-700"
@@ -20,26 +23,26 @@
                 <Link
                     v-if="addNewHref"
                     :href="addNewHref"
-                    class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded bg-brand-600 px-2.5 py-0.5 text-white"
+                    class="bg-brand-600 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-1 rounded px-2.5 py-0.5 text-white"
                 >
                     <span>+</span>
                     <span class="hidden md:block">নতুন যোগ করুন</span>
                 </Link>
             </div>
 
-            <div class="flex flex-col gap-2 md:gap-4 items-center w-full">
+            <div class="flex w-full flex-col items-center gap-2 md:gap-4">
                 <slot />
             </div>
 
-            <hr />
+            <hr class="print:hidden" />
 
             <div
                 v-if="!route().current('dashboard')"
-                class="w-full flex justify-between max-w-6xl print:hidden"
+                class="flex w-full max-w-6xl justify-between print:hidden"
             >
                 <Link
                     v-if="backHref"
-                    class="text-xl font-bold leading-5 text-gray-700" 
+                    class="text-xl font-bold leading-5 text-gray-700"
                     :href="backHref"
                 >
                     ← Back
@@ -47,13 +50,13 @@
                 <div
                     v-else
                     type="button"
-                    class="cursor-pointer text-xl font-bold leading-5 text-gray-700 inline-block" 
+                    class="inline-block cursor-pointer text-xl font-bold leading-5 text-gray-700"
                     onclick="history.back()"
                 >
                     ← Back
                 </div>
                 <Link
-                    class="text-xl font-bold leading-5 text-gray-700" 
+                    class="text-xl font-bold leading-5 text-gray-700"
                     :href="route('dashboard')"
                 >
                     <font-awesome-icon icon="fa-solid fa-house" />
@@ -78,9 +81,9 @@ export default {
         AppNavigation,
     },
     props: {
-        pageTitle: {type: String, default: ""},
-        addNewHref: {type: String, default: ""},
-        backHref: {type: String, default: ""},
+        pageTitle: { type: String, default: "" },
+        addNewHref: { type: String, default: "" },
+        backHref: { type: String, default: "" },
     },
     data() {
         return {
@@ -90,7 +93,7 @@ export default {
     methods: {
         navigationController() {
             this.navigation = !this.navigation;
-        }
+        },
     },
 };
 </script>

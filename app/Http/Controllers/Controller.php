@@ -28,12 +28,12 @@ class Controller extends BaseController
 
     public static $previous_academic_session = "43-44";
 
-    protected function getSettingProperty($key)
+    protected function getSettingProperty($key, $settings = null)
     {
         SettingResource::withoutWrapping();
 
-        $setting = Setting::query()
-            ->property($key)
+        $setting = ($settings ?? Setting::query())
+            ->where('key', $key)
             ->first();
 
         if($setting) {
@@ -41,6 +41,15 @@ class Controller extends BaseController
         }
 
         return new SettingResource($setting);
+    }
+
+    protected function getSettingValueByProperty($settings, $property)
+    {
+        $setting = $settings->where('key', $property)->first();
+
+        return $setting
+            ? ($setting->value ?? $setting->dummy) 
+            : '';
     }
 
     protected function getLastSession()

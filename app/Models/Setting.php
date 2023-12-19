@@ -11,6 +11,8 @@ class Setting extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const ALL_SETTING_DATA_CACHE_KEY = 'ALL_SETTING_DATA_CACHE_KEY';
+
     protected $guarded = [];
 
     public function getValueAttribute($value)
@@ -26,6 +28,11 @@ class Setting extends Model
         }
 
         return $value;
+    }
+
+    public function scopeProperties($query, array $properties = [])
+    {
+        $query->whereIn('key', $properties);
     }
 
     public function scopeProperty($query, $property)

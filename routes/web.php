@@ -124,6 +124,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('staff-attendance-page', [StaffController::class, 'attendancePage'])->name('staff-attendance-page');
     Route::get('staff-id-card', [StaffController::class, 'staffIdCard'])->name('staff.id-card');
 
+    Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');
+    Route::get('salaries/{salary}', [SalaryController::class, 'show'])->name('salaries.show');
+
     Route::get('staff/{staff}/salaries/create', [SalaryController::class, 'create'])->name('staff.salaries.create');
     Route::post('staff/{staff}/salaries', [SalaryController::class, 'store'])->name('staff.salaries.store');
 

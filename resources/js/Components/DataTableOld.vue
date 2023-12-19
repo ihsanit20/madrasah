@@ -107,7 +107,7 @@
         <paginator-links :collections="collections" />
     </div>
 
-    <div class="w-full relative overflow-auto">
+    <div class="relative w-full overflow-auto">
         <table class="w-full min-w-max table-auto">
             <thead>
                 <tr
@@ -117,7 +117,7 @@
 
                     <th
                         v-if="serialColumn"
-                        class="sticky left-0 bg-brand-600 py-3 px-2 text-left"
+                        class="bg-brand-600 sticky left-0 py-3 px-2 text-left"
                     >
                         <div class="inline-flex items-center gap-1">
                             <div>SL</div>
@@ -239,7 +239,7 @@ export default {
     },
     computed: {
         request() {
-            return usePage().props.value.request;
+            return usePage().props?.value?.request;
         },
     },
     props: {

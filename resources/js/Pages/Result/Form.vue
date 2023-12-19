@@ -52,7 +52,7 @@
                                     type="number"
                                     class="w-24 text-center print:hidden"
                                     v-model="
-                                        data.result.marks.find(
+                                        form.result.marks.find(
                                             (mark) =>
                                                 Number(mark.student_id) ===
                                                 student.id
@@ -65,7 +65,7 @@
                                     type="number"
                                     class="w-24 text-center print:hidden"
                                     v-model="
-                                        data.result.marks.find(
+                                        form.result.marks.find(
                                             (mark) =>
                                                 Number(mark.student_id) ===
                                                 student.id

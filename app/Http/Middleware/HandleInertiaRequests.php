@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SettingResource;
 use App\Models\AcademicSession;
 use App\Models\Admission;
 use App\Models\Classes;
@@ -19,7 +18,6 @@ use App\Models\StaffForm;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -64,9 +62,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $settings = Cache::rememberForever(Setting::ALL_SETTING_DATA_CACHE_KEY, function() {
-            return Setting::get();
-        });
+        $settings = Setting::get();
 
         if($request->session) {
             Auth::user()->update(['active_academic_session' => $request->session]);

@@ -96,7 +96,7 @@ class SalaryController extends Controller
 
         return [
             'staff' => $this->formatedData($staff),
-            'purposes' => array_slice(Salary::getPurpose(), -12, 12, true),
+            'purposes' => array_slice(Salary::getPurpose(), -24, 24, true),
         ];
     }
 

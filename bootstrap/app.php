@@ -72,6 +72,7 @@ if($server_name)
         'mszannat.com',
         'markajulfikri.org',
         'mazahirululoom.org',
+        'mui.madrasah.cc',
     ];
 
     $path = '../../madrasah-env/' . $domain . '/';

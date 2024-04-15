@@ -40,7 +40,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/notice/{notice}', [HomeController::class, 'notice'])->name('page.notice');
 Route::get('/class/{class}', [HomeController::class, 'class'])->name('page.class');
+Route::get('/admission', [HomeController::class, 'admission'])->name('page.admission');
 Route::get('/admission-form', [HomeController::class, 'admissionForm'])->name('page.admission-form');
+Route::post('/admission-form', [HomeController::class, 'admissionFormSubmit'])->name('page.admission-form-submit');
 Route::get('/admission-form-blank', [HomeController::class, 'admissionFormBlank'])->name('page.admission-form-blank');
 
 Route::get('/article', [ArticleController::class, 'index'])->name('article.index');

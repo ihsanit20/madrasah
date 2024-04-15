@@ -25,6 +25,7 @@ use App\Models\District;
 use App\Models\Division;
 use App\Models\Post;
 use App\Models\Setting;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -179,21 +180,81 @@ class HomeController extends Controller
         ]);
     }
 
+    public function admission()
+    {
+        // return
+        $admissions = Admission::query()
+            ->with([
+                'student:id,name,registration',
+            ])
+            ->where('session', "44-45")
+            ->student()
+            ->get([
+                // '*'
+                'id',
+                'student_id',
+                'class_id',
+                'session',
+                'status',
+                'roll',
+            ]);
+
+        $classes = Classes::query()
+            ->get([
+                'id',
+                'name',
+            ]);
+
+        return Inertia::render('Home/Admission', [
+            'data' => [
+                'admissions'    => $admissions,
+                'classes'       => $classes,
+            ],
+        ]);
+    }
+
     public function admissionForm()
     {
-        $type = 'new';
+        $student = Student::find((int) (request()->student ?? 0));
+        
+        $type = request()->type === 'old' ? 'old' : 'new';
+        
+        if($student && $type == 'old') {
+            // return
+            $admission = Admission::query()
+                ->with('class')
+                ->where('session', "44-45")
+                ->student()
+                ->where('student_id', $student->id)
+                ->first();
+
+            if($admission) {
+                // return
+                $setting = Setting::where('key', 'site-name')->first();
+
+                $school_name = $setting
+                    ? ($setting->value ?? $setting->dummy) 
+                    : '';
+
+                $previous_school_info = [
+                    "previous_school" => $school_name ?? "",
+                    "previous_class" => $admission->class->name ?? "",
+                    "previous_roll" => $admission->roll ?? "",
+                    "previous_result" => "",
+                ];
+            }
+        }
 
         return Inertia::render('Page/AdmissionForm', [
-            'data' => $this->data(new Admission(), $previous_school_info ?? null),
+            'data' => $this->data(new Admission(), $student, $previous_school_info ?? null),
             'type' => $type,
             'old_student_id' => (int) (0),
         ]);
+    }
 
-        return Inertia::render('Page/AdmissionForm', [
-            'data' => [
-                //
-            ]
-        ]);
+    public function admissionFormSubmit(Request $request)
+    {
+        return $request;
     }
 
     public function admissionFormBlank()

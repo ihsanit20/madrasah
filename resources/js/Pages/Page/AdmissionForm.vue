@@ -510,7 +510,7 @@ export default {
         moduleAction: String,
         buttonValue: {
             type: String,
-            default: "সংরক্ষণ করুন",
+            default: "আবেদন করুন",
         },
         data: {
             type: Object,
@@ -635,15 +635,7 @@ export default {
     methods: {
         submit() {
             return console.log(this.form);
-
-            if (this.moduleAction == "store") {
-                return this.form.post(this.route("admissions.store"));
-            }
-            if (this.moduleAction == "update") {
-                return this.form.put(
-                    this.route("admissions.update", this.data.admission.id)
-                );
-            }
+            return this.form.post(this.route("page.admission-form-submit"));
         },
         sameAsPresentHandler(event) {
             this.form.is_same_address = event.target.checked;

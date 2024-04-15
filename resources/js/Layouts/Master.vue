@@ -35,7 +35,7 @@
         </div>
     </header>
 
-    <main class="flex-shrink flex-grow space-y-4 overflow-auto">
+    <main class="flex-shrink flex-grow space-y-4 overflow-auto" style="min-height: calc(100vh - 145px);">
         <slot />
     </main>
 

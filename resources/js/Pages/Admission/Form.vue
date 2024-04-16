@@ -528,6 +528,76 @@ export default {
                 this.data.student.permanentAddress.area.districtId;
             this.form.permanent_address.division =
                 this.data.student.permanentAddress.area.district.divisionId;
+        } else if (this.data.has_online_form) {
+            this.form.type = this.data.online_form.type;
+
+            this.form.name = this.data.online_form.name;
+            this.form.gender = this.data.online_form.gender;
+            this.form.date_of_birth = this.data.online_form.date_of_birth;
+            this.form.birth_certificate =
+                this.data.online_form.birth_certificate;
+            this.form.blood_group = this.data.online_form.blood_group;
+
+            this.form.father_info.name =
+                this.data.online_form.fathers_info?.name;
+            this.form.father_info.phone =
+                this.data.online_form.fathers_info?.phone;
+            this.form.father_info.occupation =
+                this.data.online_form.fathers_info?.occupation;
+
+            this.form.mother_info.name =
+                this.data.online_form.mothers_info?.name;
+            this.form.mother_info.phone =
+                this.data.online_form.mothers_info?.phone;
+            this.form.mother_info.occupation =
+                this.data.online_form.mothers_info?.occupation;
+
+            this.form.guardian_type = this.data.online_form.guardian_type;
+
+            this.form.guardian_info.name =
+                this.data.online_form.guardian_info?.name;
+            this.form.guardian_info.phone =
+                this.data.online_form.guardian_info?.phone;
+            this.form.guardian_info.occupation =
+                this.data.online_form.guardian_info?.occupation;
+            this.form.guardian_info.relation =
+                this.data.online_form.guardian_info?.relation;
+
+            this.form.is_same_address = this.data.online_form.is_same_address;
+
+            this.form.present_address.division =
+                this.data.online_form.present_address_info?.division;
+            this.form.present_address.district =
+                this.data.online_form.present_address_info?.district;
+            this.form.present_address.area =
+                this.data.online_form.present_address_info?.area;
+            this.form.present_address.address =
+                this.data.online_form.present_address_info?.address;
+            this.form.present_address.postoffice =
+                this.data.online_form.present_address_info?.postoffice;
+
+            this.form.permanent_address.division =
+                this.data.online_form.permanent_address_info?.division;
+            this.form.permanent_address.district =
+                this.data.online_form.permanent_address_info?.district;
+            this.form.permanent_address.area =
+                this.data.online_form.permanent_address_info?.area;
+            this.form.permanent_address.address =
+                this.data.online_form.permanent_address_info?.address;
+            this.form.permanent_address.postoffice =
+                this.data.online_form.permanent_address_info?.postoffice;
+
+            this.form.class_id = this.data.online_form.class_id;
+            this.form.resident = this.data.online_form.resident;
+
+            this.form.previous_school =
+                this.data.online_form.previous_info?.previous_school;
+            this.form.previous_class =
+                this.data.online_form.previous_info?.previous_class;
+            this.form.previous_roll =
+                this.data.online_form.previous_info?.previous_roll;
+            this.form.previous_result =
+                this.data.online_form.previous_info?.previous_result;
         }
     },
     data() {

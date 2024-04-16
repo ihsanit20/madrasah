@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AdmissionFormResource;
 use App\Http\Resources\AdmissionResource;
 use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassesResource;
@@ -13,6 +14,7 @@ use App\Http\Resources\FeeResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Address;
 use App\Models\Admission;
+use App\Models\AdmissionForm;
 use App\Models\Area;
 use App\Models\Classes;
 use App\Models\ClassFee;
@@ -44,6 +46,69 @@ class AdmissionController extends Controller
                 'filters'       => $this->getFilterProperty(),
             ]
         ]);
+    }
+
+    public function onlineForms()
+    {
+        // return
+        $collections = AdmissionForm::query()
+            ->with([
+                'choice_class:id,name'
+            ])
+            ->where('session', Admission::$current_session);
+
+        return Inertia::render('Admission/OnlineForms', [
+            'data' => [
+                'collections'   => AdmissionFormResource::collection($collections->paginate()->appends(request()->input())),
+                'filters'       => $this->getFilterProperty(),
+            ]
+        ]);
+    }
+
+    public function onlineFormShow(AdmissionForm $admission_form)
+    {
+        // return $admission_form;
+
+        if($admission_form->session != Admission::$current_session) {
+            return redirect()->route('admissions.online-forms.index');
+        }
+
+        $admission_form->present_address = [
+            "address"       => $admission_form->present_address_info["address"] ?? "",
+            "postoffice"    => $admission_form->present_address_info["postoffice"] ?? "",
+            "area"          => Area::where("id", $admission_form->present_address_info["area"])->value('name') ?? "",
+            "district"      => District::where("id", $admission_form->present_address_info["district"])->value('name') ?? "",
+            "division"      => Division::where("id", $admission_form->present_address_info["division"])->value('name') ?? "",
+        ];
+
+        $admission_form->permanent_address = $admission_form->is_same_address
+            ? $admission_form->present_address
+            : [
+                "address"       => $admission_form->permanent_address_info["address"] ?? "",
+                "postoffice"    => $admission_form->permanent_address_info["postoffice"] ?? "",
+                "area"          => Area::where("id", $admission_form->permanent_address_info["area"])->value('name') ?? "",
+                "district"      => District::where("id", $admission_form->permanent_address_info["district"])->value('name') ?? "",
+                "division"      => Division::where("id", $admission_form->permanent_address_info["division"])->value('name') ?? "",
+            ];
+
+        // return $admission_form;
+
+        return Inertia::render('Admission/OnlineFormShow', [
+            'data' => $admission_form,
+        ]);
+    }
+
+    public function onlineFormDestroy(AdmissionForm $admission_form)
+    {
+        // return $admission_form;
+
+        if($admission_form->session != Admission::$current_session) {
+            return redirect()->route('admissions.online-forms.index');
+        }
+
+        $admission_form->delete();
+
+        return redirect()->route('admissions.online-forms.index');
     }
 
     public function admission(Request $request)
@@ -87,11 +152,15 @@ class AdmissionController extends Controller
 
     public function create()
     {
-        $student = Student::find((int) (request()->student ?? 0));
+        // return
+        $student = request()->student
+            ? Student::find((int) (request()->student ?? 0))
+            : null;
 
         $type = request()->type === 'old' ? 'old' : 'new';
 
-        if($student && $type == 'old') {
+        if ($student && $type == 'old')
+        {
             $admission = Admission::query()
                 ->with('class')
                 ->lastSession()
@@ -113,12 +182,23 @@ class AdmissionController extends Controller
                     "previous_result" => "",
                 ];
             }
+        } 
+        elseif (request('online-form') && $type == "new")
+        {
+            // return
+            $onlineForm = request('online-form')
+                ? AdmissionForm::query()
+                    ->where('session', Admission::$current_session)
+                    ->find((int) (request('online-form') ?? 0))
+                : null;
         }
 
         return Inertia::render('Admission/Create', [
-            'data' => $this->data(new Admission(), $student ?? null, $previous_school_info ?? null),
-            'type' => $type,
-            'old_student_id' => (int) ($student && $type == 'old' ? $student->id : 0),
+            'data'              => $this->data(new Admission(), $student ?? null, $previous_school_info ?? null),
+            'type'              => $type,
+            'old_student_id'    => (int) ($student && $type == 'old' ? $student->id : 0),
+            'has_online_form'   => (bool) (($onlineForm ?? null) ? true : false),
+            'online_form'       => $onlineForm,
         ]);
     }
 

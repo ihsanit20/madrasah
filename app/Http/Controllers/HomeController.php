@@ -232,27 +232,27 @@ class HomeController extends Controller
                 ])
                 ->find($get_admission_form_id_from_cookie);
 
-            $admission_form->present_address = [
-                "address"       => $admission_form->present_address_info["address"] ?? "",
-                "postoffice"    => $admission_form->present_address_info["postoffice"] ?? "",
-                "area"          => Area::where("id", $admission_form->present_address_info["area"])->value('name') ?? "",
-                "district"      => District::where("id", $admission_form->present_address_info["district"])->value('name') ?? "",
-                "division"      => Division::where("id", $admission_form->present_address_info["division"])->value('name') ?? "",
-            ];
-
-            $admission_form->permanent_address = $admission_form->is_same_address
-                ? $admission_form->present_address
-                : [
-                    "address"       => $admission_form->permanent_address_info["address"] ?? "",
-                    "postoffice"    => $admission_form->permanent_address_info["postoffice"] ?? "",
-                    "area"          => Area::where("id", $admission_form->permanent_address_info["area"])->value('name') ?? "",
-                    "district"      => District::where("id", $admission_form->permanent_address_info["district"])->value('name') ?? "",
-                    "division"      => Division::where("id", $admission_form->permanent_address_info["division"])->value('name') ?? "",
-                ];
-
-            // return $admission_form;
-
             if($admission_form) {
+                $admission_form->present_address = [
+                    "address"       => $admission_form->present_address_info["address"] ?? "",
+                    "postoffice"    => $admission_form->present_address_info["postoffice"] ?? "",
+                    "area"          => Area::where("id", $admission_form->present_address_info["area"])->value('name') ?? "",
+                    "district"      => District::where("id", $admission_form->present_address_info["district"])->value('name') ?? "",
+                    "division"      => Division::where("id", $admission_form->present_address_info["division"])->value('name') ?? "",
+                ];
+    
+                $admission_form->permanent_address = $admission_form->is_same_address
+                    ? $admission_form->present_address
+                    : [
+                        "address"       => $admission_form->permanent_address_info["address"] ?? "",
+                        "postoffice"    => $admission_form->permanent_address_info["postoffice"] ?? "",
+                        "area"          => Area::where("id", $admission_form->permanent_address_info["area"])->value('name') ?? "",
+                        "district"      => District::where("id", $admission_form->permanent_address_info["district"])->value('name') ?? "",
+                        "division"      => Division::where("id", $admission_form->permanent_address_info["division"])->value('name') ?? "",
+                    ];
+    
+                // return $admission_form;
+
                 return Inertia::render('Page/AdmissionCongratulation', [
                     'data' => $admission_form,
                 ]);

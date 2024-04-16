@@ -134,6 +134,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('summary', SummaryController::class)->name('summary');
 
+    Route::get('admissions/online-forms', [AdmissionController::class, 'onlineForms'])->name('admissions.online-forms.index');
+    Route::get('admissions/online-forms/{admission_form}', [AdmissionController::class, 'onlineFormShow'])->name('admissions.online-forms.show');
+    Route::delete('admissions/online-forms/{admission_form}', [AdmissionController::class, 'onlineFormDestroy'])->name('admissions.online-forms.destroy');
+
     Route::get('admissions/admission', [AdmissionController::class, 'admission'])->name('admissions.admission');
 
     // resource routes

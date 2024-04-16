@@ -6,7 +6,7 @@
             <GridViewCard
                 :href="route('admissions.admission')"
                 icon-class="fa-solid fa-file-circle-plus"
-                class="lg:col-start-2"
+                class=""
             >
                 ভর্তির আবেদন
             </GridViewCard>
@@ -15,6 +15,12 @@
                 icon-class="fa-solid fa-list-check"
             >
                 আবেদন তালিকা
+            </GridViewCard>
+            <GridViewCard
+                :href="route('admissions.online-forms.index')"
+                icon-class="fa-solid fa-globe"
+            >
+                Online আবেদন তালিকা
             </GridViewCard>
         </div>
     </app-layout>

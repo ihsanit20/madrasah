@@ -40,7 +40,9 @@ class AdmissionForm extends Model
 
     public function getApplicationDateAttribute()
     {
-        return $this->created_at->format('Y-m-d');
+        return $this->created_at
+            ? $this->created_at->format('Y-m-d')
+            : "";
     }
 
     public function choice_class()

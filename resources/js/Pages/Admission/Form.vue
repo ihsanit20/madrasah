@@ -565,6 +565,8 @@ export default {
 
             this.form.is_same_address = !!this.data.online_form.is_same_address;
 
+            console.log(!!this.data.online_form.is_same_address, this.form.is_same_address);
+
             this.form.present_address.division =
                 this.data.online_form.present_address_info?.division;
             this.form.present_address.district =

@@ -563,7 +563,7 @@ export default {
             this.form.guardian_info.relation =
                 this.data.online_form.guardian_info?.relation;
 
-            this.form.is_same_address = this.data.online_form.is_same_address;
+            this.form.is_same_address = !!this.data.online_form.is_same_address;
 
             this.form.present_address.division =
                 this.data.online_form.present_address_info?.division;

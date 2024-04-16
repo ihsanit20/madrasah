@@ -21,14 +21,16 @@ class AdmissionForm extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'fathers_info'                  => 'json',
-        'mothers_info'                  => 'json',
-        'guardian_info'                 => 'json',
+        'fathers_info'              => 'json',
+        'mothers_info'              => 'json',
+        'guardian_info'             => 'json',
 
-        'present_address_info'          => 'json',
-        'permanent_address_info'        => 'json',
+        'present_address_info'      => 'json',
+        'permanent_address_info'    => 'json',
 
-        'previous_info'                 => 'json',
+        'previous_info'             => 'json',
+
+        'is_same_address'           => 'bool',
     ];
 
     protected $appends = [

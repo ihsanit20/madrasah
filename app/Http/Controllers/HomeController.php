@@ -10,6 +10,7 @@ use App\Models\Notice;
 use App\Models\Student;
 use Inertia\Inertia;
 use Alkoumi\LaravelHijriDate\Hijri;
+use App\Http\Resources\AdmissionFormResource;
 use App\Http\Resources\AdmissionResource;
 use App\Http\Resources\AreaResource;
 use App\Http\Resources\ClassFeeResource;
@@ -19,6 +20,7 @@ use App\Http\Resources\PostResource;
 use App\Http\Resources\SimpleNoticeResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Admission;
+use App\Models\AdmissionForm;
 use App\Models\Area;
 use App\Models\ClassFee;
 use App\Models\District;
@@ -26,6 +28,7 @@ use App\Models\Division;
 use App\Models\Post;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
@@ -187,7 +190,7 @@ class HomeController extends Controller
             ->with([
                 'student:id,name,registration',
             ])
-            ->where('session', "44-45")
+            ->where('session', AdmissionForm::FORCE_PREVIOUS_SESSION)
             ->student()
             ->get([
                 // '*'
@@ -205,7 +208,7 @@ class HomeController extends Controller
                 'name',
             ]);
 
-        return Inertia::render('Home/Admission', [
+        return Inertia::render('Page/Admission', [
             'data' => [
                 'admissions'    => $admissions,
                 'classes'       => $classes,
@@ -215,15 +218,58 @@ class HomeController extends Controller
 
     public function admissionForm()
     {
+        // cookie()->queue(cookie()->forever(AdmissionForm::COOKIE_KEY_FORM_ID, 3));
+
+        $get_admission_form_id_from_cookie = request()->cookie(AdmissionForm::COOKIE_KEY_FORM_ID);
+
+        if($get_admission_form_id_from_cookie) {
+            // dd($get_admission_form_id_from_cookie);
+
+            // return
+            $admission_form = AdmissionForm::query()
+                ->with([
+                    'choice_class:id,name',
+                ])
+                ->find($get_admission_form_id_from_cookie);
+
+            $admission_form->present_address = [
+                "address"       => $admission_form->present_address_info["address"] ?? "",
+                "postoffice"    => $admission_form->present_address_info["postoffice"] ?? "",
+                "area"          => Area::where("id", $admission_form->present_address_info["area"])->value('name') ?? "",
+                "district"      => District::where("id", $admission_form->present_address_info["district"])->value('name') ?? "",
+                "division"      => Division::where("id", $admission_form->present_address_info["division"])->value('name') ?? "",
+            ];
+
+            $admission_form->permanent_address = $admission_form->is_same_address
+                ? $admission_form->present_address
+                : [
+                    "address"       => $admission_form->permanent_address_info["address"] ?? "",
+                    "postoffice"    => $admission_form->permanent_address_info["postoffice"] ?? "",
+                    "area"          => Area::where("id", $admission_form->permanent_address_info["area"])->value('name') ?? "",
+                    "district"      => District::where("id", $admission_form->permanent_address_info["district"])->value('name') ?? "",
+                    "division"      => Division::where("id", $admission_form->permanent_address_info["division"])->value('name') ?? "",
+                ];
+
+            // return $admission_form;
+
+            if($admission_form) {
+                return Inertia::render('Page/AdmissionCongratulation', [
+                    'data' => $admission_form,
+                ]);
+            }
+            
+            cookie()->queue(cookie()->forget(AdmissionForm::COOKIE_KEY_FORM_ID));
+        }
+
         $student = Student::find((int) (request()->student ?? 0));
         
-        $type = request()->type === 'old' ? 'old' : 'new';
+        $type = "new"; // request()->type === 'old' ? 'old' : 'new';
         
         if($student && $type == 'old') {
             // return
             $admission = Admission::query()
                 ->with('class')
-                ->where('session', "44-45")
+                ->where('session', AdmissionForm::FORCE_PREVIOUS_SESSION)
                 ->student()
                 ->where('student_id', $student->id)
                 ->first();
@@ -254,7 +300,57 @@ class HomeController extends Controller
 
     public function admissionFormSubmit(Request $request)
     {
-        return $request;
+        // return $request;
+
+        $request->validate([
+            "name"              => "required",
+            "date_of_birth"     => "required",
+            "gender"            => "required",
+            "father_info.name"  => "required",
+            "mother_info.name"  => "required",
+            "guardian_type"     => "required",
+            "is_same_address"   => "required",
+            "class_id"          => "required",
+            "resident"          => "required",
+        ]);
+
+        // return
+        $data = [
+            "session"           => AdmissionForm::FORCE_CURRENT_SESSION,
+            "type"              => "new", // $request->type === 'old' ? 'old' : 'new'
+            "student_id"        => $request->student ?? null,
+
+            "name"              => $request->name,
+            "gender"            => $request->gender,
+            "blood_group"       => $request->blood_group,
+            "date_of_birth"     => $request->date_of_birth,
+            "birth_certificate" => $request->birth_certificate,
+
+            "fathers_info"      => $request->father_info,
+            "mothers_info"      => $request->mother_info,
+            "guardian_type"     => $request->guardian_type,
+            "guardian_info"     => $request->guardian_info,
+
+            "present_address_info"      => $request->present_address,
+            "is_same_address"           => $request->is_same_address,
+            "permanent_address_info"    => $request->permanent_address,
+
+            "class_id"    => $request->class_id,
+            "resident"    => $request->resident,
+
+            "previous_info"     => [
+                "previous_school"   => $request->previous_school,
+                "previous_class"    => $request->previous_class,
+                "previous_roll"     => $request->previous_roll,
+                "previous_result"   => $request->previous_result,
+            ],
+        ];
+
+        $admission_form = AdmissionForm::create($data);
+
+        cookie()->queue(cookie()->forever(AdmissionForm::COOKIE_KEY_FORM_ID, $admission_form->id));
+
+        return back();
     }
 
     public function admissionFormBlank()

@@ -3,14 +3,14 @@
 
     <app-layout :hasFooter="false">
         <div
-            class="mx-auto mt-4 flex max-w-3xl items-center justify-end print:hidden"
+            class="mx-auto mt-4 flex max-w-3xl items-center justify-between print:hidden"
         >
             <Link
                 :href="route('home')"
-                class="flex-shrink flex-grow text-xl font-bold leading-5 text-gray-700"
+                class="text-xl font-bold leading-5 text-gray-700"
             >
                 &#8592; Back to Home
-            </Link>
+            </Link>AdmissionCongratulation
             <print-button />
         </div>
 
@@ -634,7 +634,7 @@ export default {
     },
     methods: {
         submit() {
-            return console.log(this.form);
+            // return console.log(this.form);
             return this.form.post(this.route("page.admission-form-submit"));
         },
         sameAsPresentHandler(event) {

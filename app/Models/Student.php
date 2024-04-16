@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Traits\BloodGroup;
 use App\Traits\Gender;
+use App\Traits\Resident;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Student extends Model
 {
-    use HasFactory, SoftDeletes, BloodGroup, Gender;
+    use HasFactory, SoftDeletes, BloodGroup, Gender, Resident;
 
     protected $guarded = [];
 
@@ -30,23 +31,6 @@ class Student extends Model
     public static $previous_session = "43-44";
 
     public static $current_session = "44-45";
-
-    public static $resident_array = [
-        1 => 'আবাসিক',
-        2 => 'অনাবাসিক',
-        3 => 'ডে-কেয়ার',
-        4 => 'সেমি-আবাসিক',
-    ];
-
-    public static function getResidentArrayData()
-    {
-        return self::$resident_array;
-    }
-
-    public function getResidentTextAttribute()
-    {
-        return self::getResidentArrayData()[$this->resident] ?? '';
-    }
 
     public function getPaymentPurposeAttribute()
     {

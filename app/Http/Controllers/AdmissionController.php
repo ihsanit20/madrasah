@@ -198,7 +198,7 @@ class AdmissionController extends Controller
             'type'              => $type,
             'old_student_id'    => (int) ($student && $type == 'old' ? $student->id : 0),
             'has_online_form'   => (bool) (($onlineForm ?? null) ? true : false),
-            'online_form'       => $onlineForm,
+            'online_form'       => $onlineForm ?? ((object) []),
         ]);
     }
 

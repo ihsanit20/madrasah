@@ -87,17 +87,53 @@ class StaffController extends Controller
         ]);
     }
 
+    public function appointmentDuplicateToCurrentSession()
+    {
+        // return
+        $exists_current_session_appointment = Appointment::query()
+            ->where('session', Staff::$current_session)
+            ->exists();
+
+        if(!$exists_current_session_appointment) {
+            // return
+            $appointments = Appointment::query()
+                ->where([
+                    'session'   => Staff::$previous_session,
+                    'active'    => 1,
+                ])
+                ->get();
+        
+            foreach($appointments as $appointment) {
+                Appointment::create([
+                    'staff_id'          => $appointment->staff_id,
+                    'session'           => Staff::$current_session,
+                    'designation_id'    => $appointment->designation_id,
+                    'default_salaries'  => $appointment->default_salaries,
+                    'active'            => 1,
+                ]);
+            }
+
+        }
+    }
+
     public function index()
     {
         $collections = Staff::query()
             ->with('current_appointment.designation')
             ->has('current_appointment');
 
+        if(!$collections->exists()) {
+            // return 
+            $this->appointmentDuplicateToCurrentSession();
+        }
+
+        $staff = $collections->get();
+
         StaffResource::withoutWrapping();
 
         return Inertia::render('Staff/Index', [
             'data' => [
-                'staff'     => StaffResource::collection($collections->get()),
+                'staff'     => StaffResource::collection($staff),
                 'filters'   => $this->getFilterProperty(),
             ]
         ]);

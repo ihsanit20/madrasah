@@ -69,7 +69,7 @@ if($server_name)
     $domain = preg_replace($pattern, "", $domain);
 
     $allow_domains = [
-        'mszannat.com',
+        'msz.madrasah.cc',
         'markajulfikri.org',
         'mazahirululoom.org',
         'mui.madrasah.cc',

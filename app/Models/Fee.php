@@ -18,6 +18,8 @@ class Fee extends Model
 
     public static $prefix = "14";
 
+    public static $eng_prefix = "20";
+
     protected $appends = [
         'period_name',
     ];
@@ -41,61 +43,73 @@ class Fee extends Model
         2 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : শাওয়াল PRFP",
+            "eng_title" => "মাসিক প্রদেয় : এপ্রিল PRFP",
             "monthId"   => 10,
         ],
         3 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : জ্বিলকদ PRFP",
+            "eng_title" => "মাসিক প্রদেয় : মে PRFP",
             "monthId"   => 11,
         ],
         4 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : জ্বিলহজ্জ PRFP",
+            "eng_title" => "মাসিক প্রদেয় : জুন PRFP",
             "monthId"   => 12,
         ],
         5 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : মুহররম PRLP",
+            "eng_title" => "মাসিক প্রদেয় : জুলাই PRFP",
             "monthId"   => 1,
         ],
         6 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : সফর PRLP",
+            "eng_title" => "মাসিক প্রদেয় : আগস্ট PRFP",
             "monthId"   => 2,
         ],
         7 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : রবিউল আউয়াল PRLP",
+            "eng_title" => "মাসিক প্রদেয় : সেপ্টেম্বর PRFP",
             "monthId"   => 3,
         ],
         8 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : রবিউস সানি PRLP",
+            "eng_title" => "মাসিক প্রদেয় : অক্টোবর PRFP",
             "monthId"   => 4,
         ],
         9 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : জমাদিউল আউয়াল PRLP",
+            "eng_title" => "মাসিক প্রদেয় : নভেম্বর PRFP",
             "monthId"   => 5,
         ],
         10 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : জমাদিউস সানি PRLP",
+            "eng_title" => "মাসিক প্রদেয় : ডিসেম্বর PRFP",
             "monthId"   => 6,
         ],
         11 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : রজব PRLP",
+            "eng_title" => "মাসিক প্রদেয় : জানুয়ারি PRLP",
             "monthId"   => 7,
         ],
         12 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : শা'বান PRLP",
+            "eng_title" => "মাসিক প্রদেয় : ফেব্রুয়ারি PRLP",
             "monthId"   => 8,
         ],
         13 => [
             "period"    => 2,
             "title"     => "মাসিক প্রদেয় : রমজান PRLP",
+            "eng_title" => "মাসিক প্রদেয় : মার্চ PRLP",
             "monthId"   => 9,
         ],
     ];
@@ -109,10 +123,14 @@ class Fee extends Model
     {
         $purposes = self::$purposes;
 
-        $purposes = array_map(function($purpose) {
-            $title = $purpose["title"];
+        $is_arabic = substr(self::$current_session, 0, 2) > 42;
 
-            $title = str_replace("PR", self::$prefix, $title);
+        $prefix = $is_arabic ? self::$prefix : self::$eng_prefix;
+
+        $purposes = array_map(function($purpose) use ($prefix, $is_arabic) {
+            $title = $is_arabic ? $purpose["title"] : ($purpose["eng_title"] ?? $purpose["title"]);
+
+            $title = str_replace("PR", $prefix, $title);
 
             $title = str_replace("FP", substr(self::$current_session, 0, 2), $title);
 

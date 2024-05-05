@@ -16,7 +16,7 @@ class AdmissionForm extends Model
     const COOKIE_KEY_FORM_ID = '_ADMISSION_FORM_ID_';
 
     const FORCE_PREVIOUS_SESSION = "44-45";
-    const FORCE_CURRENT_SESSION = "45-46";
+    const FORCE_CURRENT_SESSION = "24-25";
 
     protected $guarded = [];
 

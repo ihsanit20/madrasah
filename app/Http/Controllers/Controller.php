@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Setting;
 use App\Models\Staff;
 use App\Models\Student;
+use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -83,15 +84,21 @@ class Controller extends BaseController
             $date_array = array_reverse($date_array);
         }
 
-        $date = implode("-", $date_array);
+        // $date = implode("-", $date_array);
 
-        $day = Hijri::Date("d", $date);
-        $month = Hijri::Date("m", $date);
-        $year = Hijri::Date("Y", $date);
+        // $day = Hijri::Date("d", $date);
+        // $month = Hijri::Date("m", $date);
+        // $year = Hijri::Date("Y", $date);
 
-        $month = HijriMonth::find($month)->bengali ?? $month;
+        // $month_name = HijriMonth::find($month)->bengali ?? $month;
+
+        $day = $date_array[2];
+        $month = $date_array[1];
+        $year = $date_array[0];
+
+        $month_name = AppServiceProvider::BANGLA_OF_GREGORIAN_MONTHS[$month] ?? "";
         
-        return "{$day} - {$month} - {$year}";
+        return "{$day} - {$month_name} - {$year}";
     }
 
     public function getHijriMonth($date = null)

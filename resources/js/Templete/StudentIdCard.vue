@@ -2,80 +2,83 @@
     <div class="flex flex-wrap gap-8 md:flex-row font-noto-sans-bengali">
         <div class="w-[204px] space-y-2">
             <h3 class="text-center font-bold print:hidden">সামনের অংশ</h3>
-            <div class="h-[324px] border bg-white">
+            <div class="h-[324px] border bg-white py-3 flex flex-col justify-between" style="background-image: url(/images/new-bg.svg); background-repeat: no-repeat;">
+                
                 <div
-                    class="flex flex-col items-center justify-center gap-1 pt-2.5 pb-1.5"
+                    class="flex flex-col items-center justify-center"
                 >
                     <application-logo class="h-9" />
-                    <div
-                        class="flex flex-col items-center justify-end space-y-1"
+                    <!-- <img class="h-9 rounded-full" src="/images/logo-ms.png" alt=""> -->
+                    <h2
+                        class="text-[13px] font-bold text-white"
                     >
-                        <h2
-                            class="text-[13px] font-bold text-brand-950"
-                        >
-                            {{ $page.props.settings.siteName }}
-                        </h2>
-                    </div>
+                        {{ $page.props.settings.siteName }}
+                    </h2>
                 </div>
-                <div class="flex h-[20px] items-center justify-center bg-brand-600 text-white mt-[-5px]">
-                    <h2 class="text-[11px] mt-[3px]">শিক্ষার্থীর পরিচয়পত্র</h2>
+
+                
+                <div class="flex justify-center">
+                   <div :class="[ 'px-2 rounded-full', data.student.resident == 2 ? 'bg-brand-500' : 'bg-orange-600']">
+                        <h2 class="text-[10px] mt-[3px] text-center text-white" >{{ data.student.residentText }} শিক্ষার্থীর পরিচয়পত্র</h2>
+                    </div> 
                 </div>
-                <div class="mt-[50px] h-[118px] bg-brand-900">
+                <div :class="[ 'mx-auto aspect-square w-[80px] overflow-hidden border-4 border-double bg-white rounded-full', data.student.resident == 2 ? 'border-brand-500' : 'border-orange-600']"
+                >
+                    <img
+                        :src="
+                            data.student.imageUrl ||
+                            '/images/hijab-icon.jpg'
+                        "
+                        class="h-full w-full object-cover"
+                    />
+                </div>
+
+                <div class="text-center text-[13px] font-semibold"
+                >
+                    <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-brand-700">
+                        {{ data.student.name }}
+                    </h1>
                     <div
-                        class="mx-auto -mb-11 aspect-[50/50] w-[90px] -translate-y-1/2 overflow-hidden border-2 border-brand-500 rounded-lg"
+                        class="flex items-center justify-center gap-2 text-[10px]"
                     >
-                        <img
-                            :src="
-                                data.student.imageUrl ||
-                                '/images/hijab-icon.jpg'
-                            "
-                            class="h-full w-full object-cover"
-                        />
+                        <div class="w-20 shrink-0 grow-0 text-right">
+                            শ্রেণী :
+                        </div>
+                        <div class="shrink grow text-left">
+                            {{ data.student.currentClassName }}
+                        </div>
                     </div>
                     <div
-                        class="text-center text-[13px] font-semibold text-white"
+                        class="flex items-center justify-center gap-2 text-[10px]"
                     >
-                        <h1 class="pb-[2px] line-clamp-1 mt-[2px] text-yellow-200">
-                            {{ data.student.name }}
-                        </h1>
-                        <div
-                            class="flex items-center justify-center gap-2 text-[10px]"
-                        >
-                            <div class="w-20 shrink-0 grow-0 text-right">
-                                শ্রেণী :
-                            </div>
-                            <div class="shrink grow text-left">
-                                {{ data.student.currentClassName }}
-                            </div>
+                        <div class="w-20 shrink-0 grow-0 text-right">
+                            রোল :
                         </div>
-                        <div
-                            class="flex items-center justify-center gap-2 text-[10px]"
-                        >
-                            <div class="w-20 shrink-0 grow-0 text-right">
-                                রোল :
-                            </div>
-                            <div class="shrink grow text-left">
-                                {{ data.student.currentClassRoll }}
-                            </div>
+                        <div class="shrink grow text-left">
+                            {{ data.student.currentClassRoll }}
                         </div>
-                        <div
-                            class="flex items-center justify-center gap-2 text-[10px]"
-                        >
-                            <div class="w-20 shrink-0 grow-0 text-right">
-                                রেজি. নং :
-                            </div>
-                            <div class="shrink grow text-left">
-                                {{ data.student.registration }}
-                            </div>
+                    </div>
+                    <div
+                        class="flex items-center justify-center gap-2 text-[10px]"
+                    >
+                        <div class="w-20 shrink-0 grow-0 text-right">
+                            রেজি. নং :
+                        </div>
+                        <div class="shrink grow text-left">
+                            {{ data.student.registration }}
                         </div>
                     </div>
                 </div>
-                <div class="flex h-[38px] items-center justify-center">
+
+                <div class="flex h-[35px] items-center justify-center">
                     <img
                         v-if="signature"
                         :src="signature"
-                        class="h-full w-full object-contain"
-                    />
+                        class="h-full w-full object-contain" />
+                    <!-- <img
+                        src="/images/sign180X80.jpg"
+                        class="h-full w-full object-contain" /> -->
+                    
                 </div>
                 <div class="flex items-center justify-center">
                     <p class="text-[10px] font-bold text-brand-950">
@@ -143,7 +146,7 @@
                 </div>
                 <div class="absolute bottom-0 left-0 right-0 z-10 w-full">
                     <div
-                        class="flex flex-col items-center justify-end space-y-1 bg-brand-900 py-2 text-white"
+                        class="flex flex-col items-center justify-end space-y-1 bg-sky-700 py-2 text-white"
                     >
                         <h2 class="text-[12px] font-bold text-yellow-200">
                             {{ $page.props.settings.siteName }}

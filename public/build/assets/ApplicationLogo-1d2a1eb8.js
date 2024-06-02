@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-c27b6911.js";import{o as s,c}from"./app-47542bc8.js";const n={},r=["src"];function t(o,l){return s(),c("img",{class:"bg-white rounded-full",src:o.$page.props.settings.logoLink||"/images/logo.png",alt:"logo"},null,8,r)}const p=e(n,[["render",t]]);export{p as A};

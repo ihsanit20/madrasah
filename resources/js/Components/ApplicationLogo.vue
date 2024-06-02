@@ -1,3 +1,3 @@
 <template>
-    <img :src="$page.props.settings.logoLink || '/images/logo.png'" alt="logo">
+    <img class="bg-white rounded-full" :src="$page.props.settings.logoLink || '/images/logo.png'" alt="logo">
 </template>

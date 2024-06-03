@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\BloodGroup;
 use App\Traits\Gender;
 use App\Traits\Resident;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +22,7 @@ class Student extends Model
         'guardian_type',
         'payment_purpose',
         'due',
+        'age',
         // 'due_purpose_id',
     ];
     
@@ -31,6 +33,16 @@ class Student extends Model
     public static $previous_session = "43-44";
 
     public static $current_session = "44-45";
+
+    public function getAgeAttribute()
+    {
+        if ($this->date_of_birth) {
+            return Carbon::parse($this->date_of_birth)->age;
+        }
+
+        return 0;
+    }
+    
 
     public function getPaymentPurposeAttribute()
     {

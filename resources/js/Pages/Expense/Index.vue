@@ -9,6 +9,7 @@
             :collections="data.collections"
             :filters="data.filters"
             :columns="columns"
+            :dateFilter="true"
         >
             <template #default="{ item: expense }">
                 <table-td class="text-left">

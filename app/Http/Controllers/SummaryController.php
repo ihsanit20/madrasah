@@ -48,7 +48,7 @@ class SummaryController extends Controller
                 'expenses' => function($query) use ($from, $to) {
                     $query
                         ->select(['id', 'amount', 'category_id', 'date'])
-                        ->where('session', $this->getCurrentSession())
+                        // ->where('session', $this->getCurrentSession())
                         ->when($from, function($query, $from) {
                             $query->whereDate('date', '>=', $from);
                         })
@@ -59,7 +59,7 @@ class SummaryController extends Controller
                 'incomes' => function($query) use ($from, $to) {
                     $query
                         ->select(['id', 'amount', 'category_id', 'date'])
-                        ->where('session', $this->getCurrentSession())
+                        // ->where('session', $this->getCurrentSession())
                         ->when($from, function($query, $from) {
                             $query->whereDate('date', '>=', $from);
                         })

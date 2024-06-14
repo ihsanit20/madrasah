@@ -22,7 +22,13 @@ class ExpenseController extends Controller
     public function index()
     {
         $collections = Expense::query()
+            ->dateFilter('date')
+            ->when(request()->category, function ($query, $category_id) {
+                $query->where('category_id', $category_id);
+            })
             ->latest('id');
+
+        // return $this->getFilterProperty();
 
         return Inertia::render('Expense/Index', [
             'data' => [
@@ -97,7 +103,7 @@ class ExpenseController extends Controller
                 'expenses' => function($query) use ($from, $to) {
                     $query
                         ->select(['id', 'amount', 'category_id', 'date'])
-                        ->where('session', $this->getCurrentSession())
+                        // ->where('session', $this->getCurrentSession())
                         ->when($from, function($query, $from) {
                             $query->whereDate('date', '>=', $from);
                         })
@@ -129,7 +135,7 @@ class ExpenseController extends Controller
     public function monthsIndex()
     {
         $expenses = Expense::query()
-            ->where('session', $this->getCurrentSession())
+            // ->where('session', $this->getCurrentSession())
             ->get([
                 'id',
                 'date',
@@ -163,7 +169,7 @@ class ExpenseController extends Controller
     public function monthsShow(HijriMonth $month)
     {
         $expenses = Expense::query()
-            ->where('session', $this->getCurrentSession())
+            // ->where('session', $this->getCurrentSession())
             ->get([
                 'id',
                 'date',
@@ -190,7 +196,7 @@ class ExpenseController extends Controller
     public function monthsCategoriesIndex(HijriMonth $month)
     {
         $expenses = Expense::query()
-            ->where('session', $this->getCurrentSession())
+            // ->where('session', $this->getCurrentSession())
             ->get([
                 'id',
                 'date',
@@ -226,9 +232,9 @@ class ExpenseController extends Controller
     {
         $categories = Category::query()
             ->with('expenses:id,category_id,amount,session')
-            ->whereHas('expenses', function($query) {
-                $query->where('session', $this->getCurrentSession());
-            })
+            // ->whereHas('expenses', function($query) {
+            //     $query->where('session', $this->getCurrentSession());
+            // })
             ->withCount('expenses')
             ->get();
 
@@ -247,7 +253,7 @@ class ExpenseController extends Controller
     {
         $collections = Expense::query()
             ->where('category_id', $category->id)
-            ->where('session', $this->getCurrentSession())
+            // ->where('session', $this->getCurrentSession())
             ->latest('id');
 
         return Inertia::render('Expense/Index', [
@@ -261,7 +267,7 @@ class ExpenseController extends Controller
     public function CategoriesmonthsIndex(Category $category)
     {
         $expenses = Expense::query()
-            ->where('session', $this->getCurrentSession())
+            // ->where('session', $this->getCurrentSession())
             ->where('category_id', $category->id)
             ->get([
                 'id',
@@ -317,7 +323,9 @@ class ExpenseController extends Controller
     protected function getFilterProperty()
     {
         return [
-            //
+            'category' => Category::query()
+                ->whereHas('expenses')
+                ->pluck('name', 'id'),
         ];
     }
 

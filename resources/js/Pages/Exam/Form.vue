@@ -19,7 +19,8 @@
                         required
                     >
                         <!-- <option value="1443-44">১৪৪৩-৪৪</option> -->
-                        <option value="1444-45">১৪৪৪-৪৫</option>
+                        <!-- <option value="1444-45">১৪৪৪-৪৫</option> -->
+                        <option value="2024-25">২০২৪-২৫</option>
                     </Select>
                 </form-group>
             </div>

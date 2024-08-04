@@ -25,7 +25,9 @@ class Exam extends Model
     {
         $current_session = self::$current_session;
 
-        $prefix = "14";
+        $is_arabic = substr(self::$current_session, 0, 2) > 42;
+
+        $prefix = $is_arabic ? "14" : "20";
 
         return $query->where('session', $prefix . $current_session);
     }

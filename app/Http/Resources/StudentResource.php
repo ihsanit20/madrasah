@@ -21,7 +21,7 @@ class StudentResource extends JsonResource
             ? '/images/student-male-default.png'
             : '/images/student-female-default.jpg';
 
-        if($this->gender != 1 && $this->age >= 12) {
+        if($this->gender != 1 && $this->age >= 10) {
             $image_url = $default_image;
         } else {
             $image_url = $this->image->url ?? $default_image;

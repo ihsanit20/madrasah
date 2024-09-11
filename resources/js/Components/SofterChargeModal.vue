@@ -63,17 +63,17 @@ const proceedToPayment = async () => {
             <div class="mb-4 space-y-2 text-center">
                 <p class="text-lg">
                     মাস:
-                    <strong>{{ software_charge.purpose }}</strong>
+                    <strong>{{ software_charge?.purpose }}</strong>
                 </p>
                 <p class="text-lg">
                     শিক্ষার্থী সংখ্যা:
-                    <strong>{{ software_charge.total_student }}</strong>
+                    <strong>{{ software_charge?.total_student }}</strong>
                 </p>
                 <p class="text-lg">
                     চার্জ (শিক্ষার্থী প্রতি):
                     <strong
                         >{{
-                            software_charge.per_student_charge.toFixed(2)
+                            software_charge?.per_student_charge
                         }}
                         TK</strong
                     >

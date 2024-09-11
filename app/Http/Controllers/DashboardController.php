@@ -7,6 +7,7 @@ use App\Models\Classes;
 use App\Models\Expense;
 use App\Models\Notice;
 use App\Models\Payment;
+use App\Models\SoftwareCharge;
 use App\Models\Staff;
 use App\Models\Student;
 use App\Models\User;
@@ -37,7 +38,11 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        return Inertia::render('Dashboard/Home');
+        $software_charge = SoftwareCharge::query()
+            ->where('amount', 0)
+            ->first();
+
+        return Inertia::render('Dashboard/Home', compact('software_charge'));
     }
 
     public function admission()

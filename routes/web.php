@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AdmitCardController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BkashController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\Controller;
@@ -50,6 +51,9 @@ Route::get('/article/{post}', [ArticleController::class, 'show'])->name('article
 
 Route::get('verify/{staff}', [VerificationController::class, 'staffIdCard'])->name('verifications.staff-id-card');
 Route::get('verify/{student}/{admission}', [VerificationController::class, 'studentIdCard'])->name('verifications.student-id-card');
+
+Route::get('/software-charges/{software_charge}/bkash/create-payment', [BkashController::class, 'create']);
+Route::get('/software-charge/{software_charge}/bkash/execute-payment', [BkashController::class, 'execute']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/home');

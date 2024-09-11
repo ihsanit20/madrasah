@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a85f3b381833f8723529390a7d3430e4",
+    "content-hash": "68c1f7099bdadc5a2e45e770409ea99c",
     "packages": [
         {
             "name": "alkoumi/laravel-hijri-date",
@@ -646,86 +646,6 @@
             "time": "2023-01-14T14:17:03+00:00"
         },
         {
-            "name": "fruitcake/laravel-cors",
-            "version": "v3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fruitcake/laravel-cors.git",
-                "reference": "7c036ec08972d8d5d9db637e772af6887828faf5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/7c036ec08972d8d5d9db637e772af6887828faf5",
-                "reference": "7c036ec08972d8d5d9db637e772af6887828faf5",
-                "shasum": ""
-            },
-            "require": {
-                "fruitcake/php-cors": "^1.2",
-                "illuminate/contracts": "^6|^7|^8|^9",
-                "illuminate/support": "^6|^7|^8|^9",
-                "php": "^7.4|^8.0"
-            },
-            "require-dev": {
-                "laravel/framework": "^6|^7.24|^8",
-                "orchestra/testbench-dusk": "^4|^5|^6|^7",
-                "phpunit/phpunit": "^9",
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Fruitcake\\Cors\\CorsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Fruitcake\\Cors\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fruitcake",
-                    "homepage": "https://fruitcake.nl"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Laravel application",
-            "keywords": [
-                "api",
-                "cors",
-                "crossdomain",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/fruitcake/laravel-cors/issues",
-                "source": "https://github.com/fruitcake/laravel-cors/tree/v3.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://fruitcake.nl",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/barryvdh",
-                    "type": "github"
-                }
-            ],
-            "abandoned": true,
-            "time": "2022-02-23T14:53:22+00:00"
-        },
-        {
             "name": "fruitcake/php-cors",
             "version": "v1.2.0",
             "source": {
@@ -1269,28 +1189,32 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v0.6.3",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "540b953ec383364264f9bd633849db16560a4461"
+                "reference": "36730d13b1dab9017069004fd458b3e67449a326"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/540b953ec383364264f9bd633849db16560a4461",
-                "reference": "540b953ec383364264f9bd633849db16560a4461",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/36730d13b1dab9017069004fd458b3e67449a326",
+                "reference": "36730d13b1dab9017069004fd458b3e67449a326",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^6.0|^7.0|^8.74|^9.0",
-                "php": "^7.2|~8.0.0|~8.1.0"
+                "laravel/framework": "^8.74|^9.0|^10.0|^11.0",
+                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0",
+                "symfony/console": "^5.3|^6.0|^7.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3.3",
-                "orchestra/testbench": "^4.0|^5.0|^6.4|^7.0",
-                "phpunit/phpunit": "^8.0|^9.5.8",
+                "orchestra/testbench": "^6.4|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^8.0|^9.5.8|^10.4",
                 "roave/security-advisories": "dev-master"
+            },
+            "suggest": {
+                "ext-pcntl": "Recommended when running the Inertia SSR server via the `inertia:start-ssr` artisan command."
             },
             "type": "library",
             "extra": {
@@ -1298,6 +1222,9 @@
                     "providers": [
                         "Inertia\\ServiceProvider"
                     ]
+                },
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -1326,7 +1253,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v0.6.3"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.3.0"
             },
             "funding": [
                 {
@@ -1334,7 +1261,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-27T23:21:15+00:00"
+            "time": "2024-06-13T01:25:09+00:00"
         },
         {
             "name": "intervention/image",
@@ -2361,6 +2288,61 @@
                 }
             ],
             "time": "2023-02-06T13:44:46+00:00"
+        },
+        {
+            "name": "msilabs/bkash",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/msilabs/bkash.git",
+                "reference": "702f440caaa4c814f788dac9691fc7081a59535d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/msilabs/bkash/zipball/702f440caaa4c814f788dac9691fc7081a59535d",
+                "reference": "702f440caaa4c814f788dac9691fc7081a59535d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6|^7|^8|^9|^10",
+                "php": "^7.4|^8.0|^8.1|^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Msilabs\\Bkash\\BkashServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Msilabs\\Bkash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "msisaif",
+                    "email": "msi313.bd@gmail.com"
+                }
+            ],
+            "description": "bKash Payment Gateway API for Laravel Framework.",
+            "homepage": "https://github.com/msilabs/bkash",
+            "keywords": [
+                "bkash",
+                "bkash laravel",
+                "laravel-package",
+                "payment gateway"
+            ],
+            "support": {
+                "issues": "https://github.com/msilabs/bkash/issues",
+                "source": "https://github.com/msilabs/bkash"
+            },
+            "time": "2024-09-01T12:02:15+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",

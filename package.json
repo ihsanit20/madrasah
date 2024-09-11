@@ -29,7 +29,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/vue-fontawesome": "^3.0.3",
         "@heroicons/vue": "^1.0.5",
-        "@inertiajs/vue3": "^1.0.10",
+        "@inertiajs/vue3": "^1.2.0",
         "@tiptap/extension-color": "^2.1.7",
         "@tiptap/extension-heading": "^2.1.7",
         "@tiptap/extension-link": "^2.1.7",

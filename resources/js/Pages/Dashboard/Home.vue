@@ -2,7 +2,9 @@
     <Head title="ড্যাশবোর্ড" />
 
     <app-layout>
-        <div class="w-full grid gap-2 grid-cols-2 md:gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <div
+            class="grid w-full grid-cols-2 gap-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4"
+        >
             <GridViewCard
                 :href="route('dashboard.admission')"
                 icon-class="fa-solid fa-person-circle-plus"
@@ -27,14 +29,16 @@
             >
                 ব্যয় ও খরচ
             </GridViewCard>
-            <GridViewCard 
-                :href="route('dashboard.staff')" 
-                icon-class="fa-solid fa-users-line">
+            <GridViewCard
+                :href="route('dashboard.staff')"
+                icon-class="fa-solid fa-users-line"
+            >
                 শিক্ষক ও স্টাফ
             </GridViewCard>
-            <GridViewCard 
-                :href="route('dashboard.exam')" 
-                icon-class="fa-solid fa-clipboard-question">
+            <GridViewCard
+                :href="route('dashboard.exam')"
+                icon-class="fa-solid fa-clipboard-question"
+            >
                 পরীক্ষা সংক্রান্ত
             </GridViewCard>
             <GridViewCard
@@ -75,21 +79,28 @@
             </GridViewCard>
         </div>
     </app-layout>
+
+    <SofterChargeModal
+        v-if="software_charge"
+        :software_charge="software_charge"
+    />
 </template>
 
 <script>
 import AppLayout from "@/Layouts/GridApp.vue";
 import { Head } from "@inertiajs/vue3";
 import GridViewCard from "@/Components/GridViewCard.vue";
+import SofterChargeModal from "@/Components/SofterChargeModal.vue";
 
 export default {
     components: {
         AppLayout,
         Head,
         GridViewCard,
+        SofterChargeModal,
     },
     props: {
-        data: {
+        software_charge: {
             type: Object,
             default: {},
         },

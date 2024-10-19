@@ -27,6 +27,20 @@ const proceedToPayment = async () => {
         window.location.href = `/software-charges/${props.software_charge.id}/bkash/create-payment`;
     }
 };
+
+const isWithin15Days = computed(() => {
+    if (!props.software_charge?.created_at) {
+        return false;
+    }
+
+    const createdAt = new Date(props.software_charge.created_at);
+    const currentDate = new Date();
+
+    const diffTime = currentDate - createdAt;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays <= 15;
+});
 </script>
 
 <template>
@@ -40,6 +54,7 @@ const proceedToPayment = async () => {
                     মাসিক সাবস্ক্রিপশন চার্জ
                 </h1>
                 <button
+                    v-if="isWithin15Days"
                     @click="closeModal"
                     class="text-gray-500 hover:text-gray-800"
                 >
@@ -71,12 +86,9 @@ const proceedToPayment = async () => {
                 </p>
                 <p class="text-lg">
                     চার্জ (শিক্ষার্থী প্রতি):
-                    <strong
-                        >{{
-                            software_charge?.per_student_charge
-                        }}
-                        TK</strong
-                    >
+                    <strong>
+                        {{ software_charge?.per_student_charge }} TK
+                    </strong>
                 </p>
                 <p class="text-lg">
                     মোট চার্জ:
